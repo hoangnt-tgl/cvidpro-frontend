@@ -4,6 +4,7 @@ import Header from './../Layout/Header';
 import Footer from './../Layout/Footer';
 import PageTitle from './../Layout/PageTitle';
 
+
 var bnr = require('./../../images/banner/bnr2.jpg');
 
 function Loginpage1(){

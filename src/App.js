@@ -11,9 +11,17 @@ import './css/skin/skin-1.css';
 import './plugins/slick/slick.min.css';
 import './plugins/slick/slick-theme.min.css';
 
-
+// import { ToastContainer } from 'react-toastify';
 import Login from './markup/Pages/Loginpage2';
+import HomePage from './markup/Pages/Homepage1';
 import SignUp from './markup/Pages/Register2';
+import EmployeeRegister from './markup/Pages/EmployeeRegister';
+// import CompanyRegister from './markup/Pages/CompanyRegister';
+// import EmployeeLogin from './markup/Pages/EmployeeLogin';
+// import CompanyLogin from './markup/Pages/CompanyLogin';
+
+
+
 
 //const SignUp = lazy(() => import('./markup/Pages/Register2'));
 //const ForgotPassword = lazy(() => import('./markup/pages/ForgotPassword'));
@@ -32,7 +40,12 @@ function App (props) {
     
     let routes = (  
         <Switch>
+            <Route path='/' exact component={HomePage} />
             <Route path='/login' component={Login} />
+            <Route path='/employee/login' component={Login} />
+            <Route path='/company/login' component={Login} />
+            <Route path='/employee/register' component={EmployeeRegister} />
+            <Route path='/company/register' component={Login} />
             <Route path='/register-2' component={SignUp} />
         </Switch>
     );
