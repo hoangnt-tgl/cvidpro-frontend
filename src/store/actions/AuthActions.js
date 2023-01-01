@@ -50,10 +50,23 @@ export function employeeSignupAction(data, history) {
 export function logout(history) {
   localStorage.removeItem("userDetails");
   console.log(history);
-  let accessHref = ['/', '/login', '/employee/login', '/company/login', '/employee/register', '/company/register', '/register-2']
-  if (history && history.location && history.location.pathname && accessHref.indexOf(history.location.pathname) === -1) {
+  let accessHref = [
+    "/",
+    "/login",
+    "/employee/login",
+    "/company/login",
+    "/employee/register",
+    "/company/register",
+    "/register-2",
+  ];
+  if (
+    history &&
+    history.location &&
+    history.location.pathname &&
+    accessHref.indexOf(history.location.pathname) === -1
+  ) {
     history.push("/login");
-    }
+  }
   return {
     type: LOGOUT_ACTION,
   };
@@ -70,7 +83,6 @@ export function loginAction(email, password, history) {
         history.push("/home");
       })
       .catch((error) => {
-        //console.log(error);
         const errorMessage = formatError(error.response.data);
         dispatch(loginFailedAction(errorMessage));
       });

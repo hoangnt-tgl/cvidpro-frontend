@@ -16,9 +16,9 @@ import Login from './markup/Pages/Loginpage2';
 import HomePage from './markup/Pages/Homepage1';
 import SignUp from './markup/Pages/Register2';
 import EmployeeRegister from './markup/Pages/EmployeeRegister';
-// import CompanyRegister from './markup/Pages/CompanyRegister';
-// import EmployeeLogin from './markup/Pages/EmployeeLogin';
-// import CompanyLogin from './markup/Pages/CompanyLogin';
+import CompanyRegister from './markup/Pages/CompanyRegister';
+import EmployeeLogin from './markup/Pages/EmployeeLogin';
+import CompanyLogin from './markup/Pages/CompanyLogin';
 
 
 
@@ -34,18 +34,18 @@ import EmployeeRegister from './markup/Pages/EmployeeRegister';
 
 function App (props) {
     const dispatch = useDispatch();
-    useEffect(() => {
-        checkAutoLogin(dispatch, props.history);
-    }, [dispatch, props.history]);
+    // useEffect(() => {
+    //     checkAutoLogin(dispatch, props.history);
+    // }, [dispatch, props.history]);
     
     let routes = (  
         <Switch>
             <Route path='/' exact component={HomePage} />
-            <Route path='/login' component={Login} />
-            <Route path='/employee/login' component={Login} />
-            <Route path='/company/login' component={Login} />
+            {/* <Route path='/login' component={Login} /> */}
+            <Route path='/employee/login' exact component={EmployeeLogin} />
+            <Route path='/company/login' component={CompanyLogin} />
             <Route path='/employee/register' component={EmployeeRegister} />
-            <Route path='/company/register' component={Login} />
+            <Route path='/company/register' component={CompanyRegister} />
             <Route path='/register-2' component={SignUp} />
         </Switch>
     );
@@ -95,4 +95,3 @@ const mapStateToProps = (state) => {
 
 export default withRouter(connect(mapStateToProps)(App)); 
 
-//export default App;

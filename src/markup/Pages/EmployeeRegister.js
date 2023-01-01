@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
+import Select from "react-select";
+import {
+  getListSchools,
+  getListProvince,
+  getListJobTitle,
+  getListMajorByLevel,
+  getListLevel,
+  getListDistrict,
+  getListWard,
+} from "../../services/GetListService";
 import {
   loadingToggleAction,
   employeeSignupAction,
 } from "../../store/actions/AuthActions";
-var bnr = require("./../../images/background/bg6.jpg");
 
+var bnr = require("./../../images/background/bg6.jpg");
 function Register2(props) {
   let errorsObj = {
     name: "",
@@ -50,11 +60,62 @@ function Register2(props) {
   const [schools, setSchools] = useState([]);
   const [majors, setMajors] = useState([]);
   const [jobTitles, setJobTitles] = useState([]);
+  const genderOptions = [
+    { value: "Nam", label: "Nam" },
+    { value: "Nữ", label: "Nữ" },
+  ];
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(loadingToggleAction(false));
+    async function fetchData() {
+      // let listProvince = await getListProvince();
+      // setProvinces(listProvince);
+      let listLevel = await getListLevel();
+      setLevels(listLevel.data.map((item) => ({ value: item, label: item })));
+      // let listMajor = await getListMajor();
+      // setMajors(listMajor);
+      // let listJobTitle = await getListJobTitle();
+      // setJobTitles(listJobTitle);
+      let listSchool = await getListSchools();
+      setSchools(
+        listSchool.data.map((item) => ({ value: item._id, label: item.name }))
+      );
+      let listProvince = await getListProvince();
+      setProvinces(
+        listProvince.data.map((item) => ({ value: item, label: item }))
+      );
+    }
+    fetchData();
   }, []);
+
+  useEffect(() => {
+    async function fetchDistrictAndWard() {
+      if (province !== "") {
+        let listDistrict = await getListDistrict(province);
+        setDistricts(
+          listDistrict.data.map((item) => ({ value: item, label: item }))
+        );
+      }
+      if (district !== "") {
+        let listWard = await getListWard(province, district);
+        setWards(listWard.data.map((item) => ({ value: item, label: item })));
+        setWard("");
+      }
+    }
+    fetchDistrictAndWard();
+  }, [province, district]);
+
+  useEffect(() => {
+    async function fetchSchoolAndMajor() {
+      if (level !== "") {
+        let listMajor = await getListMajorByLevel(level);
+        setMajors(listMajor.data.map((item) => ({ value: item, label: item })));
+        setMajor("");
+      }
+    }
+    fetchSchoolAndMajor();
+  }, [level]);
+
   function onSignUp(e) {
     e.preventDefault();
     let error = false;
@@ -154,12 +215,16 @@ function Register2(props) {
     };
     dispatch(employeeSignupAction(data, props.history));
   }
+  useEffect(() => {
+    console.log("school", school);
+  }, [school]);
+
   return (
     <div className="page-wraper">
       <div className="browse-job login-style3">
         <div className="bg-img-fix" style={{ backgroundImage: `url(${bnr})` }}>
-          <div className="row">
-            <div className="col-xl-4 col-lg-5 col-md-6 col-sm-12 bg-white z-index2 relative p-a0 content-scroll skew-section left-bottom">
+          <div className="row mx-0">
+            <div className="col-xl-4 col-lg-5 col-md-7 col-sm-12 bg-white z-index2 relative p-a0 content-scroll skew-section left-bottom">
               <div className="login-form style-2">
                 <div className="logo-header text-center p-tb30">
                   <Link to={"./"}>
@@ -177,7 +242,9 @@ function Register2(props) {
                       <div className="">{props.successMessage}</div>
                     )}
                     <form className=" dez-form p-b30" onSubmit={onSignUp}>
-                      <h3 className="form-title m-t0">Đăng kí người tìm việc</h3>
+                      <h3 className="form-title m-t0">
+                        Đăng kí người tìm việc
+                      </h3>
                       <div className="dez-separator-outer m-b5">
                         <div className="dez-separator bg-primary style-liner"></div>
                       </div>
@@ -217,64 +284,48 @@ function Register2(props) {
                         </div>
                       </div>
                       <div className="form-group">
-                        <select
-                          className="form-control"
-                          onChange={(e) => setGender(e.target.value)}
-                        >
-                          <option value="">Chọn giới tính</option>
-                          <option value="Nam">Nam</option>
-                          <option value="Nữ">Nữ</option>
-                        </select>
+                        <Select
+                          placeholder="Chọn giới tính"
+                          onChange={(e) => setGender(e.label)}
+                          options={genderOptions}
+                        />
                         <div className="text-danger">
                           {errors.gender && <div>{errors.gender}</div>}
                         </div>
                       </div>
                       <div className="form-group">
-                        <select
-                          className="form-control"
-                          onChange={(e) => setProvince(e.target.value)}
-                        >
-                          <option value="">Chọn tỉnh/thành phố</option>
-                          {provinces.map((province) => (
-                            <option value={province.name}>
-                              {province.name}
-                            </option>
-                          ))}
-                        </select>
+                        <Select
+                          placeholder="Chọn tỉnh/thành phố"
+                          onChange={(e) => setProvince(e.label)}
+                          options={provinces}
+                        />
                         <div className="text-danger">
                           {errors.province && <div>{errors.province}</div>}
                         </div>
                       </div>
                       <div className="form-group">
-                        <select
-                          className="form-control"
-                          onChange={(e) => setDistrict(e.target.value)}
-                        >
-                          <option value="">Chọn quận/huyện</option>
-                          {districts.map((district) => (
-                            <option value={district.name}>
-                              {district.name}
-                            </option>
-                          ))}
-                        </select>
+                        <Select
+                          placeholder="Chọn quận/huyện"
+                          onChange={(e) => setDistrict(e.label)}
+                          options={districts}
+                        />
                         <div className="text-danger">
                           {errors.district && <div>{errors.district}</div>}
                         </div>
                       </div>
+
                       <div className="form-group">
-                        <select
-                          className="form-control"
-                          onChange={(e) => setWard(e.target.value)}
-                        >
-                          <option value="">Chọn phường/xã</option>
-                          {wards.map((ward) => (
-                            <option value={ward.name}>{ward.name}</option>
-                          ))}
-                        </select>
+                        <Select
+                          defaultValue=""
+                          placeholder="Chọn phường/xã"
+                          onChange={(e) => setWard(e.label)}
+                          options={wards}
+                        />
                         <div className="text-danger">
                           {errors.ward && <div>{errors.ward}</div>}
                         </div>
                       </div>
+
                       <div className="form-group">
                         <input
                           value={address}
@@ -287,43 +338,32 @@ function Register2(props) {
                         </div>
                       </div>
                       <div className="form-group">
-                        <select
-                          onChange={(e) => setLevel(e.target.value)}
-                          className="form-control"
-                        >
-                          <option value="">Chọn cấp bậc</option>
-                          {levels.map((level) => (
-                            <option value={level.name}>{level.name}</option>
-                          ))}
-                        </select>
+                        <Select
+                          placeholder="Chọn trình độ"
+                          onChange={(e) => setLevel(e.label)}
+                          options={levels}
+                        />
                         <div className="text-danger">
                           {errors.level && <div>{errors.level}</div>}
                         </div>
                       </div>
                       <div className="form-group">
-                        <select
-                          onChange={(e) => setSchool(e.target.value)}
-                          className="form-control"
-                        >
-                          <option value="">Chọn trường</option>
-                          {schools.map((school) => (
-                            <option value={school.name}>{school.name}</option>
-                          ))}
-                        </select>
+                        <Select
+                          placeholder="Chọn trường"
+                          onChange={(e) => setSchool(e.label)}
+                          options={schools}
+                        />
                         <div className="text-danger">
                           {errors.school && <div>{errors.school}</div>}
                         </div>
                       </div>
+
                       <div className="form-group">
-                        <select
-                          className="form-control"
-                          onChange={(e) => setMajor(e.target.value)}
-                        >
-                          <option value="">Chọn ngành</option>
-                          {majors.map((major) => (
-                            <option value={major.name}>{major.name}</option>
-                          ))}
-                        </select>
+                        <Select
+                          placeholder="Chọn ngành"
+                          onChange={(e) => setMajor(e.label)}
+                          options={majors}
+                        />
                         <div className="text-danger">
                           {errors.major && <div>{errors.major}</div>}
                         </div>
@@ -452,7 +492,7 @@ function Register2(props) {
                     </form>
                     <div className="text-center bottom">
                       <Link
-                        to="/login"
+                        to="/employee/login"
                         className="site-button button-md btn-block text-white"
                       >
                         Đăng nhập

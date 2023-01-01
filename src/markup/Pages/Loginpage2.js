@@ -3,7 +3,6 @@ import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { loadingToggleAction,loginAction,
 } from '../../store/actions/AuthActions';
-import { store } from "../../store/store";
 
 // image
 //import logo from "../../images/logo-full-white.png";
@@ -36,12 +35,6 @@ function Login (props) {
 		}
 		dispatch(loadingToggleAction(true));	
         dispatch(loginAction(email, password, props.history));
-		setTimeout(() => {
-			let state = store.getState();
-			console.log(state);
-		}, 1000);
-
-
     }
 
   return (
