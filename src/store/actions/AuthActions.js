@@ -34,14 +34,20 @@ export function employeeSignupAction(data, history) {
   return (dispatch) => {
     employeeSignUp(data)
       .then((response) => {
-        console.log(response);
-        saveTokenInLocalStorage(response.data);
+        let auth = {
+          idToken: response.data.idToken,
+          refreshToken: response.data.refreshToken,
+          expiresIn: response.data.expiresIn,
+          id: response.data._id,
+        };
+        saveTokenInLocalStorage(auth);
         runLogoutTimer(dispatch, response.data.expiresIn * 1000, history);
         dispatch(confirmedSignupAction(response.data));
-        history.push("/home");
+        history.push("/");
       })
       .catch((error) => {
-        const errorMessage = formatError(error.response.data);
+        console.log(error);
+        const errorMessage = formatError("");
         dispatch(signupFailedAction(errorMessage));
       });
   };
@@ -80,7 +86,7 @@ export function loginAction(email, password, history) {
         saveTokenInLocalStorage(response.data);
         runLogoutTimer(dispatch, response.data.expiresIn * 1000, history);
         dispatch(loginConfirmedAction(response.data));
-        history.push("/home");
+        history.push("/");
       })
       .catch((error) => {
         const errorMessage = formatError(error.response.data);

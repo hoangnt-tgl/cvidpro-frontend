@@ -129,7 +129,11 @@ function Register2(props) {
       error = true;
     }
     if (username === "") {
-      errorObj.username = "Vui lòng nhập tên đăng nhập";
+      errorObj.username = "Vui lòng nhập số điện thoại";
+      error = true;
+    }
+    if (username !== "" && username.length !== 10) {
+      errorObj.username = "Số điện thoại không hợp lệ";
       error = true;
     }
     if (birthday === "") {
@@ -253,7 +257,7 @@ function Register2(props) {
                         <input
                           value={name}
                           onChange={(e) => setName(e.target.value)}
-                          className="form-control"
+                          className="form-control small"
                           placeholder="Nhập họ và tên"
                         />
                         <div className="text-danger">
@@ -263,9 +267,10 @@ function Register2(props) {
                       <div className="form-group">
                         <input
                           value={username}
+                          text="text"
                           onChange={(e) => setUsername(e.target.value)}
                           className="form-control"
-                          placeholder="Nhập tên đăng nhập"
+                          placeholder="Nhập số điện thoại"
                         />
                         <div className="text-danger">
                           {errors.username && <div>{errors.username}</div>}

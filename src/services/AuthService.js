@@ -2,6 +2,8 @@ import axios from "axios";
 import swal from "sweetalert";
 import { loginConfirmedAction, logout } from "../store/actions/AuthActions";
 
+const API_URL = "http://localhost:8080/";
+
 export function signUp(email, password) {
   //axios call
   const postData = {
@@ -19,16 +21,15 @@ export function employeeSignUp(data) {
   //axios call
   const postData = {
     ...data,
-    returnSecureToken: true,
   };
-  return axios.post("user/register", postData);
+  return axios.post(`${API_URL}employee/register`, postData);
 }
 
 export function login(email, password) {
   const postData = {
     email,
     password,
-    returnSecureToken: true,
+    returnSecureToken: false,
   };
   return axios.post(
     `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,

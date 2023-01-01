@@ -9,16 +9,18 @@ export const getListJobTitle = async () => {
 };
 
 export const getListLevel = async () => {
-    return axiosInstance.get(`major/get-list-level`).then(res => res.data);
-}
+  return axiosInstance.get(`major/get-list-level`).then((res) => res.data);
+};
 
 export const getListMajorByLevel = async (level) => {
-    return axiosInstance.get(`major/get-list-major-by-level/${level}`).then(res => res.data);
-}
+  return axiosInstance
+    .get(`major/get-list-major-by-level/${level}`)
+    .then((res) => res.data);
+};
 
 export const getAllListMajor = async () => {
-    return axiosInstance.get(`major/get-all-list-major`).then((res) => res.data);
-}
+  return axiosInstance.get(`major/get-all-list-major`).then((res) => res.data);
+};
 
 export const getListProvince = async () => {
   return axiosInstance
