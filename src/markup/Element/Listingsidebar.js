@@ -9,7 +9,7 @@ function Listingsidebar(){
 				<ul>
 					<li>
 						<Link activeClass="active" 
-							className="scroll-bar nav-link" to="resume_headline_bx" smooth={true} offset={-70} duration={500}><span>Resume Headline</span> 
+							className="scroll-bar nav-link" to="resume_headline_bx" smooth={true} offset={-70} duration={500}><span>Kinh nghiệm làm việc</span> 
 						</Link>
 						
 						</li>
@@ -25,7 +25,7 @@ function Listingsidebar(){
 					</li>
 					<li>
 						<Link activeClass="active"
-							className="scroll-bar nav-link" to="education_bx" smooth={true}  offset={-70} duration={500}><span>Education</span> 
+							className="scroll-bar nav-link" to="education_bx" smooth={true}  offset={-70} duration={500}><span>Quá trình học tập</span> 
 						</Link>
 					</li>
 					<li>
@@ -56,11 +56,6 @@ function Listingsidebar(){
 					<li>
 						<Link activeClass="active"
 							className="scroll-bar nav-link" to="personal_details_bx" smooth={true}  offset={-70} duration={500}><span>Personal Details</span> 
-						</Link>
-					</li>
-					<li>
-						<Link activeClass="active"
-							className="scroll-bar nav-link" to="attach_resume_bx" smooth={true}  offset={-70} duration={500}><span>Attach Resume</span> 
 						</Link>
 					</li>									
 				</ul>

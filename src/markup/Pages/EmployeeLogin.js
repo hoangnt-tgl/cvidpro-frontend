@@ -3,7 +3,7 @@ import { connect, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   loadingToggleAction,
-  loginAction,
+  employeeLoginAction,
 } from "../../store/actions/AuthActions";
 import { store } from "../../store/store";
 
@@ -13,10 +13,10 @@ import loginbg from "./../../images/bg6.jpg";
 import logo2 from "./../../images/logo-white2.png";
 
 function Login(props) {
-  const [username, setUsername] = useState("demo@example.com");
+  const [username, setUsername] = useState("");
   let errorsObj = { username: "", password: "" };
   const [errors, setErrors] = useState(errorsObj);
-  const [password, setPassword] = useState("123456");
+  const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
 
@@ -37,7 +37,7 @@ function Login(props) {
       return;
     }
     dispatch(loadingToggleAction(true));
-    dispatch(loginAction(username, password, props.history));
+    dispatch(employeeLoginAction(username, password, props.history));
   }
 
   return (
@@ -56,7 +56,8 @@ function Login(props) {
                 <div className="text-white max-w400 align-self-center">
                   <div className="logo">
                     <Link to={"/"}>
-                      <img src={logo2} alt="" />
+                      {/* <img src={logo2} alt="" /> */}
+                      <h1>CVIDPRO</h1>
                     </Link>
                   </div>
                   <h2 className="m-b10">Đăng nhập</h2>
@@ -64,7 +65,7 @@ function Login(props) {
                     Lorem Ipsum is simply dummy text of the printing and
                     typesetting industry has been the industry.
                   </p>
-                  <ul className="list-inline m-a0">
+                  {/* <ul className="list-inline m-a0">
                     <li>
                       <Link to={""} className="m-r10 text-white ">
                         <i className="fa fa-facebook"></i>
@@ -90,7 +91,7 @@ function Login(props) {
                         <i className="fa fa-twitter"></i>
                       </Link>
                     </li>
-                  </ul>
+                  </ul> */}
                 </div>
               </div>
               <div className="col-lg-6 col-md-6">
@@ -98,7 +99,7 @@ function Login(props) {
                   <div className="nav">
                     <form onSubmit={onLogin} className="col-12 p-a0 ">
                       <p className="font-weight-600">
-                        If you have an account with us, please log in.
+                        Đăng nhập để tìm kiếm việc làm
                       </p>
                       {props.errorMessage && (
                         <div className="bg-red-300 text-red-900 border border-red-900 p-1 my-2">
@@ -110,22 +111,22 @@ function Login(props) {
                           {props.successMessage}
                         </div>
                       )}
-                      <div className="form-group ">
+                      <div className="form-group">
                         <label>E-Mail Address*</label>
                         <div className="input-group">
                           <input
                             type="text"
                             className="form-control"
-                            placeholder="Type Your Username Address"
+                            placeholder="Nhập số điện thoại"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                           />
-                          {errors.username && (
-                            <div className="text-danger fs-12">
-                              {errors.username}
-                            </div>
-                          )}
                         </div>
+                        {errors.username && (
+                          <div className="text-danger fs-12">
+                            {errors.username}
+                          </div>
+                        )}
                       </div>
                       <div className="form-group">
                         <label>Password *</label>
@@ -134,25 +135,25 @@ function Login(props) {
                             type="password"
                             className="form-control"
                             value={password}
-                            placeholder="Type Your Password"
+                            placeholder="Nhập mật khẩu"
                             onChange={(e) => setPassword(e.target.value)}
                           />
-                          {errors.password && (
-                            <div className="text-danger fs-12">
-                              {errors.password}
-                            </div>
-                          )}
                         </div>
+                        {errors.password && (
+                          <div className="text-danger fs-12">
+                            {errors.password}
+                          </div>
+                        )}
                       </div>
                       <div className="text-center">
                         <button className="site-button float-left">
-                          login
+                          Đăng nhập
                         </button>
                         <Link
-                          to="register-2"
+                          to="register"
                           className="site-button-link forget-pass m-t15 float-right"
                         >
-                          <i className="fa fa-unlock-alt"></i> Sign up
+                          <i className="fa fa-unlock-alt"></i> Đăng ký
                         </Link>
                       </div>
                     </form>

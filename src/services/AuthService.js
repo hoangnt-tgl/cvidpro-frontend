@@ -25,27 +25,32 @@ export function employeeSignUp(data) {
   return axios.post(`${API_URL}employee/register`, postData);
 }
 
-export function login(email, password) {
+export function employeeLogin(username, password) {
   const postData = {
-    email,
+    username,
     password,
-    returnSecureToken: false,
   };
-  return axios.post(
-    `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
-    postData
-  );
+  return axios.post(`${API_URL}employee/login`, postData);
 }
 
 export function formatError(errorResponse) {
-  switch (errorResponse.error.message) {
+  console.log(errorResponse);
+  switch (errorResponse) {
     case "EMAIL_EXISTS":
       //return 'Email already exists';
       swal("Oops", "Email already exists", "error");
       break;
+    case "PHONE_EXISTS":
+      //return 'Phone already exists';
+      swal("Oops", "Phone already exists", "error");
+      break;
     case "EMAIL_NOT_FOUND":
       //return 'Email not found';
       swal("Oops", "Email not found", "error", { button: "Try Again!" });
+      break;
+    case "PHONE_NOT_FOUND":
+      //return 'Email not found';
+      swal("Oops", "Phone not found", "error", { button: "Try Again!" });
       break;
     case "INVALID_PASSWORD":
       //return 'Invalid Password';
@@ -53,6 +58,12 @@ export function formatError(errorResponse) {
       break;
     case "USER_DISABLED":
       return "User Disabled";
+
+    case "USER_NOT_CONFIRMED":
+        return "Tài khoản chưa được xác nhận";
+    case "SERVER_ERROR":
+      swal("Oops", "Server Error", "error", { button: "Try Again!" });
+      break;
 
     default:
       return "";

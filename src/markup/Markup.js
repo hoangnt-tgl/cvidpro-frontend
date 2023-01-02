@@ -44,6 +44,7 @@ import Portfoliogrid2 from './Pages/Portfoliogrid2';
 
 import Register1 from './Pages/Register1';
 import EmployeeRegister from './Pages/EmployeeRegister';
+import EmployeeLogin from './Pages/EmployeeLogin';
 import Register2 from './Pages/Register2';
 import Error404 from './Pages/Error404';
 
@@ -107,6 +108,7 @@ const Markup= () => {
 					<Route path='/login-3' exact component={Loginpage3} /> */}
 					
 					<Route path='/employee/register' exact component={EmployeeRegister} />
+					<Route path='/employee/login' exact component={EmployeeLogin} />
 					{/* <Route path='/register-2' exact component={Register2} /> */}
 					<Route path='/error-404' exact component={Error404} />
 					

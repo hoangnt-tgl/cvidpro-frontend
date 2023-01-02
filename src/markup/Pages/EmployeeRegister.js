@@ -437,20 +437,7 @@ function Register2(props) {
                         >
                           Đăng ký
                         </button>
-                        <span className="custom-control custom-checkbox">
-                          <input
-                            type="checkbox"
-                            className="custom-control-input"
-                            id="check1"
-                            name="example1"
-                          />
-                          <label
-                            className="custom-control-label"
-                            htmlFor="check1"
-                          >
-                            Remember me
-                          </label>
-                        </span>
+                       
                         <Link
                           data-toggle="tab"
                           to="#forgot-password"

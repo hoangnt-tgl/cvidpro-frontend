@@ -1,6 +1,6 @@
 import {
   formatError,
-  login,
+  employeeLogin,
   runLogoutTimer,
   saveTokenInLocalStorage,
   employeeSignUp,
@@ -25,30 +25,57 @@ export function signupAction(data, history) {
         history.push("/home");
       })
       .catch((error) => {
-        const errorMessage = formatError(error.response.data);
+        console.log(error);
+        const errorMessage = formatError("");
         dispatch(signupFailedAction(errorMessage));
       });
   };
 }
+export function loginAction(email, password, history) {
+    return (dispatch) => {
+      employeeLogin(email, password)
+        .then((response) => {
+          saveTokenInLocalStorage(response.data);
+          runLogoutTimer(dispatch, response.data.expiresIn * 1000, history);
+          dispatch(loginConfirmedAction(response.data));
+          history.push("/employee");
+        })
+        .catch((error) => {
+            let message = error.response.data.message || "";
+            message = message.message || message;
+            console.log(message);
+          const errorMessage = formatError(message);
+          dispatch(loginFailedAction(errorMessage));
+        });
+    };
+  }
 export function employeeSignupAction(data, history) {
   return (dispatch) => {
     employeeSignUp(data)
       .then((response) => {
-        let auth = {
-          idToken: response.data.idToken,
-          refreshToken: response.data.refreshToken,
-          expiresIn: response.data.expiresIn,
-          id: response.data._id,
-        };
-        saveTokenInLocalStorage(auth);
-        runLogoutTimer(dispatch, response.data.expiresIn * 1000, history);
-        dispatch(confirmedSignupAction(response.data));
-        history.push("/");
+        dispatch(confirmedSignupAction({}));
+        history.push("/employee/login");
       })
       .catch((error) => {
-        console.log(error);
-        const errorMessage = formatError("");
+        const errorMessage = formatError(error.response.data.message || "");
         dispatch(signupFailedAction(errorMessage));
+      });
+  };
+}
+
+export function employeeLoginAction(email, password, history) {
+  return (dispatch) => {
+    employeeLogin(email, password)
+      .then((response) => {
+        console.log(response);
+        saveTokenInLocalStorage(response.data);
+        runLogoutTimer(dispatch, response.data.expiresIn * 1000, history);
+        dispatch(loginConfirmedAction(response.data));
+        history.push("/jobs-my-resume");
+      })
+      .catch((error) => {
+        const errorMessage = formatError(error.response.data.message || "");
+        dispatch(loginFailedAction(errorMessage));
       });
   };
 }
@@ -78,22 +105,22 @@ export function logout(history) {
   };
 }
 
-export function loginAction(email, password, history) {
-  return (dispatch) => {
-    login(email, password)
-      .then((response) => {
-        console.log(response);
-        saveTokenInLocalStorage(response.data);
-        runLogoutTimer(dispatch, response.data.expiresIn * 1000, history);
-        dispatch(loginConfirmedAction(response.data));
-        history.push("/");
-      })
-      .catch((error) => {
-        const errorMessage = formatError(error.response.data);
-        dispatch(loginFailedAction(errorMessage));
-      });
-  };
-}
+// export function loginAction(email, password, history) {
+//   return (dispatch) => {
+//     login(email, password)
+//       .then((response) => {
+//         console.log(response);
+//         saveTokenInLocalStorage(response.data);
+//         runLogoutTimer(dispatch, response.data.expiresIn * 1000, history);
+//         dispatch(loginConfirmedAction(response.data));
+//         history.push("/");
+//       })
+//       .catch((error) => {
+//         const errorMessage = formatError(error.response.data);
+//         dispatch(loginFailedAction(errorMessage));
+//       });
+//   };
+// }
 
 export function loginFailedAction(data) {
   return {
