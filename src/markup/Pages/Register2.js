@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
-import {
-  loadingToggleAction,
-  signupAction,
-} from "../../store/actions/AuthActions";
+// import {
+//   loadingToggleAction,
+//   signupAction,
+// } from "../../store/actions/AuthActions";
 var bnr = require("./../../images/background/bg6.jpg");
 
 function Register2(props) {
@@ -29,9 +29,9 @@ function Register2(props) {
     }
     setErrors(errorObj);
     if (error) return;
-    dispatch(loadingToggleAction(true));
-    let data = { email, password };
-    dispatch(signupAction(data, props.history));
+    // dispatch(loadingToggleAction(true));
+    // let data = { email, password };
+    // dispatch(signupAction(data, props.history));
   }
   return (
     <div className="page-wraper">

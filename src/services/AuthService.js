@@ -3,19 +3,7 @@ import swal from "sweetalert";
 import { loginConfirmedAction, logout } from "../store/actions/AuthActions";
 
 const API_URL = "https://cvidpro.herokuapp.com/";
-
-export function signUp(email, password) {
-  //axios call
-  const postData = {
-    email,
-    password,
-    returnSecureToken: true,
-  };
-  return axios.post(
-    `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
-    postData
-  );
-}
+// const API_URL = "http://localhost:8080/";
 
 export function employeeSignUp(data) {
   const postData = {
@@ -58,6 +46,10 @@ export function formatError(errorResponse) {
       //return 'Phone already exists';
       swal("Oops", "Phone already exists", "error");
       break;
+    case "TAXCODE_EXISTS":
+      //return 'Taxcode already exists';
+      swal("Oops", "Taxcode already exists", "error");
+      break;
     case "EMAIL_NOT_FOUND":
       //return 'Email not found';
       swal("Oops", "Email not found", "error", { button: "Try Again!" });
@@ -66,19 +58,21 @@ export function formatError(errorResponse) {
       //return 'Email not found';
       swal("Oops", "Phone not found", "error", { button: "Try Again!" });
       break;
+    case "TAXCODE_NOT_FOUND":
+      //return 'Taxcode not found';
+      swal("Oops", "Taxcode not found", "error", { button: "Try Again!" });
+      break;
     case "INVALID_PASSWORD":
       //return 'Invalid Password';
       swal("Oops", "Invalid Password", "error", { button: "Try Again!" });
       break;
     case "USER_DISABLED":
       return "User Disabled";
-
     case "USER_NOT_CONFIRMED":
         return "Tài khoản chưa được xác nhận";
     case "SERVER_ERROR":
       swal("Oops", "Server Error", "error", { button: "Try Again!" });
       break;
-
     default:
       return "";
   }

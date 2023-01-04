@@ -4,7 +4,7 @@ import Select from "react-select";
 import { connect, useDispatch } from "react-redux";
 import {
   loadingToggleAction,
-  signupAction,
+  companySignupAction,
 } from "../../store/actions/AuthActions";
 import {
   getListCompanyType,
@@ -23,7 +23,7 @@ function Register2(props) {
   const [companyName, setCompanyName] = useState("");
   const [address, setAddress] = useState("");
   const [taxCode, setTaxCode] = useState("");
-  const [field, setField] = useState("");
+  const [field, setField] = useState([]);
   const [mainIndustry, setMainIndustry] = useState("");
   const [businessLicense, setBusinessLicense] = useState("");
   const [companyPhone, setCompanyPhone] = useState("");
@@ -154,8 +154,24 @@ function Register2(props) {
     setErrors(errorObj);
     if (error) return;
     dispatch(loadingToggleAction(true));
-    let data = { email, password };
-    dispatch(signupAction(data, props.history));
+    let data = {
+      email,
+      password,
+      name,
+      position,
+      phone,
+      companyType,
+      field,
+      companyName,
+      address,
+      username: taxCode,
+      mainIndustry,
+      businessLicense,
+      original,
+      engName,
+      sortName,
+    };
+    dispatch(companySignupAction(data, props.history));
   }
   return (
     <div className="page-wraper">
@@ -236,7 +252,6 @@ function Register2(props) {
                         <input
                           value={password}
                           className="form-control"
-                          defaultValue="Password"
                           type="password"
                           placeholder="Nhập mật khẩu"
                           onChange={(e) => setPassword(e.target.value)}
@@ -263,7 +278,7 @@ function Register2(props) {
                           isMulti
                           closeMenuOnSelect={false}
                           placeholder="Chọn lĩnh vực hoạt động"
-                          onChange={(e) => setField(e.label)}
+                          onChange={(e) => setField(e.map((item) => item.label))}
                           options={fieldOptions}
                         />
                         <div className="text-danger">
@@ -287,14 +302,14 @@ function Register2(props) {
                             <input
                               value={companyName}
                               className="form-control"
-                              onChange={()=>{}}
+                              onChange={() => {}}
                             />
                           </div>
                           <div className="form-group">
                             <input
                               value={address}
                               className="form-control"
-                              onChange={()=>{}}
+                              onChange={() => {}}
                             />
                           </div>
                         </>
