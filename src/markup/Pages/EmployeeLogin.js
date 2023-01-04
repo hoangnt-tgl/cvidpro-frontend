@@ -5,12 +5,9 @@ import {
   loadingToggleAction,
   employeeLoginAction,
 } from "../../store/actions/AuthActions";
-import { store } from "../../store/store";
 
 // image
-//import logo from "../../images/logo-full-white.png";
 import loginbg from "./../../images/bg6.jpg";
-import logo2 from "./../../images/logo-white2.png";
 
 function Login(props) {
   const [username, setUsername] = useState("");
@@ -112,7 +109,7 @@ function Login(props) {
                         </div>
                       )}
                       <div className="form-group">
-                        <label>E-Mail Address*</label>
+                        <label>Số điện thoại *</label>
                         <div className="input-group">
                           <input
                             type="text"
@@ -129,7 +126,7 @@ function Login(props) {
                         )}
                       </div>
                       <div className="form-group">
-                        <label>Password *</label>
+                        <label>Mật khẩu *</label>
                         <div className="input-group">
                           <input
                             type="password"

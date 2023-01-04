@@ -41,12 +41,10 @@ function App (props) {
     let routes = (  
         <Switch>
             <Route path='/' exact component={HomePage} />
-            {/* <Route path='/login' component={Login} /> */}
             <Route path='/employee/login' exact component={EmployeeLogin} />
             <Route path='/company/login' component={CompanyLogin} />
             <Route path='/employee/register' component={EmployeeRegister} />
             <Route path='/company/register' component={CompanyRegister} />
-            <Route path='/register-2' component={SignUp} />
         </Switch>
     );
     if (props.isAuthenticated) {

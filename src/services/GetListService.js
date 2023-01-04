@@ -39,3 +39,11 @@ export const getListWard = async (province, district) => {
     .get(`province/get-list-ward/${province}/${district}`)
     .then((res) => res.data);
 };
+
+export const getListCompanyType = async () => {
+  return axiosInstance.get(`company-type/getall`).then((res) => res.data);
+};
+
+export const getListIndustry = async () => {
+  return axiosInstance.get(`industry/getall`).then((res) => res.data);
+}

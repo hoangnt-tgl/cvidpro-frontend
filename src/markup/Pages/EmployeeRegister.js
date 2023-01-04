@@ -60,6 +60,7 @@ function Register2(props) {
   const [schools, setSchools] = useState([]);
   const [majors, setMajors] = useState([]);
   const [jobTitles, setJobTitles] = useState([]);
+  const [isAgree, setIsAgree] = useState(false);
   const genderOptions = [
     { value: "Nam", label: "Nam" },
     { value: "Nữ", label: "Nữ" },
@@ -228,7 +229,7 @@ function Register2(props) {
       <div className="browse-job login-style3">
         <div className="bg-img-fix" style={{ backgroundImage: `url(${bnr})` }}>
           <div className="row mx-0">
-            <div className="col-xl-4 col-lg-5 col-md-7 col-sm-12 bg-white z-index2 relative p-a0 content-scroll skew-section left-bottom">
+            <div className="col-xl-4 col-lg-5 col-md-6 col-sm-12 bg-white z-index2 relative p-a0 content-scroll skew-section left-bottom">
               <div className="login-form style-2">
                 <div className="logo-header text-center p-tb30">
                   <Link to={"./"}>
@@ -238,16 +239,16 @@ function Register2(props) {
                 </div>
                 <div className="clearfix"></div>
                 <div className="tab-content nav p-b30 tab">
-                  <div id="login" className="tab-pane active ">
+                  <div id="login" className="tab-pane active">
                     {props.errorMessage && (
                       <div className="">{props.errorMessage}</div>
                     )}
                     {props.successMessage && (
                       <div className="">{props.successMessage}</div>
                     )}
-                    <form className=" dez-form p-b30" onSubmit={onSignUp}>
+                    <form className=" dez-form p-b30 mx-4" onSubmit={onSignUp}>
                       <h3 className="form-title m-t0">
-                        Đăng kí người tìm việc
+                        Đăng ký người tìm việc
                       </h3>
                       <div className="dez-separator-outer m-b5">
                         <div className="dez-separator bg-primary style-liner"></div>
@@ -411,9 +412,11 @@ function Register2(props) {
                       <div className="form-group">
                         <input
                           value={email}
+                          type="email"
                           onChange={(e) => setEmail(e.target.value)}
                           className="form-control"
                           placeholder="Nhập email"
+                          required
                         />
                         <div className="text-danger">
                           {errors.email && <div>{errors.email}</div>}
@@ -431,12 +434,33 @@ function Register2(props) {
                         </div>
                       </div>
                       <div className="form-group text-left">
+                      
+                      <span className="custom-control custom-checkbox">
+                          <input
+                            type="checkbox"
+                            className="custom-control-input"
+                            id="check1"
+                            checked={isAgree}
+                            onChange={(e) => setIsAgree(e.target.checked)}
+                          />
+                          <label
+                            className="custom-control-label"
+                            htmlFor="check1"
+                          >
+                            Tôi đồng ý với các điều khoản và điều kiện
+                          </label>
+                        </span>
+                      </div>
+                      <div className="form-group text-left">
+                      
                         <button
                           type="submit"
                           className="site-button dz-xs-flex m-r5"
+                          disabled={!isAgree}
                         >
                           Đăng ký
                         </button>
+                  
                        
                         <Link
                           data-toggle="tab"

@@ -18,7 +18,6 @@ export function signUp(email, password) {
 }
 
 export function employeeSignUp(data) {
-  //axios call
   const postData = {
     ...data,
   };
@@ -31,6 +30,21 @@ export function employeeLogin(username, password) {
     password,
   };
   return axios.post(`${API_URL}employee/login`, postData);
+}
+
+export function companySignUp(data) {
+  const postData = {
+    ...data,
+  };
+  return axios.post(`${API_URL}company/register`, postData);
+}
+
+export function companyLogin(username, password) {
+  const postData = {
+    username,
+    password,
+  };
+  return axios.post(`${API_URL}company/login`, postData);
 }
 
 export function formatError(errorResponse) {

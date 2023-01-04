@@ -66,6 +66,17 @@ function Jobmyresume() {
     }
     fetchData();
   }, []);
+
+  const uploadAvatar = async (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = async () => {
+      const base64 = reader.result;
+      setUserInformation({ ...userInformation, avatar: base64 });
+    };
+  };
+
   return (
     <>
       <Header />
@@ -88,7 +99,12 @@ function Jobmyresume() {
                       data-toggle="tooltip"
                       data-placement="right"
                     >
-                      <input type="file" className="update-flie" />
+                      <input
+                        type="file"
+                        className="update-flie"
+                        accept="image/*"
+                        onChange={uploadAvatar}
+                      />
                       <i className="fa fa-camera"></i>
                     </div>
                   </div>
@@ -161,9 +177,15 @@ function Jobmyresume() {
                   <div className="pending-info text-white p-a25">
                     <h5>Trạng thái CVID</h5>
                     <ul className="list-check secondry">
-                      <li>Đã xác thực E-mail</li>
-                      <li>Đã xác thực số điện thoại</li>
-                      <li>Đã được duyệt</li>
+                      {userInformation.confirmEmail && (
+                        <li>Đã xác thực E-mail</li>
+                      )}
+                      {userInformation.confirmPhone && (
+                        <li>Đã xác thực số điện thoại</li>
+                      )}
+                      {userInformation.confirm2?.confirmed && (
+                        <li>Đã được duyệt</li>
+                      )}
                     </ul>
                   </div>
                 </Link>
@@ -385,33 +407,30 @@ function Jobmyresume() {
                                   </div>
                                 </div>
                                 <div className="col-lg-12 col-md-12">
-                                  <label>
-                                    Quá trình làm việc
-                                  </label>
-								  <div className="mx-2">
-									<div className="row">
-									<div className="col-md-6 col-sm-12">
-                                    <div className="form-group">
-                                      <label>Từ</label>
-                                      <input
-                                      className="form-control"
-                                      placeholder="Địa chỉ"
-                                    />
+                                  <label>Quá trình làm việc</label>
+                                  <div className="mx-2">
+                                    <div className="row">
+                                      <div className="col-md-6 col-sm-12">
+                                        <div className="form-group">
+                                          <label>Từ</label>
+                                          <input
+                                            className="form-control"
+                                            placeholder="Địa chỉ"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div className="col-md-6 col-sx-12">
+                                        <div className="form-group">
+                                          <label>Đến</label>
+                                          <input
+                                            className="form-control"
+                                            placeholder="Địa chỉ"
+                                          />
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
-								  <div className="col-md-6 col-sx-12">
-                                    <div className="form-group">
-                                      <label>Đến</label>
-                                      <input
-                                      className="form-control"
-                                      placeholder="Địa chỉ"
-                                    />
-                                    </div>
-                                  </div>
-									</div>
-									</div>
-                                
-								  
+
                                   {/* <div className="form-group">
 									<label>Địa chỉ</label>
                                     <input

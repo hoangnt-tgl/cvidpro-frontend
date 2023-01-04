@@ -1,6 +1,7 @@
 import {
   formatError,
   employeeLogin,
+  companyLogin,
   runLogoutTimer,
   saveTokenInLocalStorage,
   employeeSignUp,
@@ -67,7 +68,6 @@ export function employeeLoginAction(email, password, history) {
   return (dispatch) => {
     employeeLogin(email, password)
       .then((response) => {
-        console.log(response);
         saveTokenInLocalStorage(response.data);
         runLogoutTimer(dispatch, response.data.expiresIn * 1000, history);
         dispatch(loginConfirmedAction(response.data));
@@ -80,6 +80,21 @@ export function employeeLoginAction(email, password, history) {
   };
 }
 
+export function companyLoginAction(email, password, history) {
+  return (dispatch) => {
+    companyLogin(email, password)
+      .then((response) => {
+        saveTokenInLocalStorage(response.data);
+        runLogoutTimer(dispatch, response.data.expiresIn * 1000, history);
+        dispatch(loginConfirmedAction(response.data));
+        history.push("/business-dashboard");
+      })
+      .catch((error) => {
+        const errorMessage = formatError(error.response.data.message || "");
+        dispatch(loginFailedAction(errorMessage));
+      });
+  };
+}
 export function logout(history) {
   localStorage.removeItem("userDetails");
   console.log(history);

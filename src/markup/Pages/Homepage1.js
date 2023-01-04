@@ -15,16 +15,16 @@ var bnr2 = require("./../../images/background/bg4.jpg");
 var bnr3 = require("./../../images/lines.png");
 
 function Homepage() {
-  useEffect(() => {
-    const state = store.getState();
-    const token = state.auth;
-    console.log(token);
-  }, []);
+  // useEffect(() => {
+  //   const state = store.getState();
+  //   const token = state.auth;
+  //   console.log(token);
+  // }, []);
   return (
     <div className="page-wraper">
       <Header />
       <div className="page-content">
-        {/* <IndexBanner />
+        {/* <IndexBanner /> */}
 				<div className="section-full job-categories content-inner-2 bg-white">
 					<div className="container">
 						<div className="section-head d-flex head-counter clearfix">
@@ -33,21 +33,21 @@ function Homepage() {
 								<h6 className="fw3">20+ Catetories work wating for you</h6>
 							</div>
 							<div className="head-counter-bx">
-								<h2 className="m-b5 counter"><CountUp end={1800} duration={5}/></h2>
-								<h6 className="fw3">Jobs Posted</h6>
+								<h2 className="m-b5 counter"><CountUp end={0} duration={5}/></h2>
+								<h6 className="fw3">CVID</h6>
 							</div>
 							<div className="head-counter-bx">
-								<h2 className="m-b5 counter"><CountUp end={4500} duration={5}/></h2>
-								<h6 className="fw3">Tasks Posted</h6>
+								<h2 className="m-b5 counter"><CountUp end={0} duration={5}/></h2>
+								<h6 className="fw3">Doanh nghiệp</h6>
 							</div>
 							<div className="head-counter-bx">
-								<h2 className="m-b5 counter"><CountUp end={1500} duration={5}/></h2>
-								<h6 className="fw3">Freelancers</h6>
+								<h2 className="m-b5 counter"><CountUp end={0} duration={5}/></h2>
+								<h6 className="fw3">Vị trí</h6>
 							</div>
 						</div>
-						<Jobcategories />
+						{/* <Jobcategories /> */}
 					</div>
-				</div>		 */}
+				</div>		
         {/* <Featureblog /> */}
         {/* <Jobsection /> */}
         {/* <div className="section-full p-tb70 overlay-black-dark text-white text-center bg-img-fix" style={{backgroundImage: "url(" + bnr2 + ")"}}>
@@ -91,7 +91,7 @@ function Homepage() {
                             to={"/employee/register"}
                             className="site-button radius-xl"
                           >
-                            <span className="p-lr30">Đăng kí</span>
+                            <span className="p-lr30">Đăng ký</span>
                           </Link>
                         </div>
                       </div>
@@ -126,7 +126,7 @@ function Homepage() {
                             to={"/company/register"}
                             className="site-button radius-xl"
                           >
-                            <span className="p-lr30">Đăng kí</span>
+                            <span className="p-lr30">Đăng ký</span>
                           </Link>
                         </div>
                       </div>
