@@ -416,7 +416,6 @@ function Register2(props) {
                           onChange={(e) => setEmail(e.target.value)}
                           className="form-control"
                           placeholder="Nhập email"
-                          required
                         />
                         <div className="text-danger">
                           {errors.email && <div>{errors.email}</div>}
