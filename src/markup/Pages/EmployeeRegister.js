@@ -460,14 +460,7 @@ function Register2(props) {
                           Đăng ký
                         </button>
                   
-                       
-                        <Link
-                          data-toggle="tab"
-                          to="#forgot-password"
-                          className="forget-pass m-l5"
-                        >
-                          <i className="fa fa-unlock-alt"></i> Quên mật khẩu
-                        </Link>
+                      
                       </div>
                       <div className="dz-social clearfix d-none">
                         <h5 className="form-title m-t5 pull-left">

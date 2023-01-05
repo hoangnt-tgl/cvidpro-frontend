@@ -31,6 +31,7 @@ function Register2(props) {
   const [engName, setEngName] = useState("");
   const [sortName, setSortName] = useState("");
   const [isAgree, setIsAgree] = useState(false);
+  const [step, setStep] = useState(1);
 
   const [companyTypeOptions, setCompanyTypeOptions] = useState([]);
   const [fieldOptions, setFieldOptions] = useState([]);
@@ -203,179 +204,195 @@ function Register2(props) {
                         <div className="dez-separator bg-primary style-liner"></div>
                       </div>
                       <p>Vui lòng cung cấp thông tin chính xác</p>
-                      <div className="form-group">
-                        <input
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          className="form-control"
-                          placeholder="Nhập họ và tên"
-                        />
-                        <div className="text-danger">
-                          {errors.name && <div>{errors.name}</div>}
-                        </div>
-                      </div>
-                      <div className="form-group">
-                        <input
-                          value={position}
-                          onChange={(e) => setPosition(e.target.value)}
-                          className="form-control"
-                          placeholder="Nhập chức vụ"
-                        />
-                        <div className="text-danger">
-                          {errors.position && <div>{errors.position}</div>}
-                        </div>
-                      </div>
-                      <div className="form-group">
-                        <input
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                          className="form-control"
-                          placeholder="Nhập số điện thoại"
-                        />
-                        <div className="text-danger">
-                          {errors.phone && <div>{errors.phone}</div>}
-                        </div>
-                      </div>
-                      <div className="form-group">
-                        <input
-                          value={email}
-                          type="email"
-                          onChange={(e) => setEmail(e.target.value)}
-                          className="form-control"
-                          placeholder="Nhập email"
-                        />
-                        <div className="text-danger">
-                          {errors.email && <div>{errors.email}</div>}
-                        </div>
-                      </div>
-                      <div className="form-group">
-                        <input
-                          value={password}
-                          className="form-control"
-                          type="password"
-                          placeholder="Nhập mật khẩu"
-                          onChange={(e) => setPassword(e.target.value)}
-                          minLength="6"
-                        />
-                        <div className="text-danger">
-                          {errors.password && <div>{errors.password}</div>}
-                        </div>
-                      </div>
-                      <div className="form-group">
-                        <Select
-                          placeholder="Chọn loại hình công ty"
-                          onChange={(e) => setCompanyType(e.label)}
-                          options={companyTypeOptions}
-                        />
-                        <div className="text-danger">
-                          {errors.companyType && (
-                            <div>{errors.companyType}</div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="form-group">
-                        <Select
-                          isMulti
-                          closeMenuOnSelect={false}
-                          placeholder="Chọn lĩnh vực hoạt động"
-                          onChange={(e) => setField(e.map((item) => item.label))}
-                          options={fieldOptions}
-                        />
-                        <div className="text-danger">
-                          {errors.field && <div>{errors.field}</div>}
-                        </div>
-                      </div>
-                      <div className="form-group">
-                        <input
-                          name={taxCode}
-                          onBlur={(e) => getCompanyInfo(e)}
-                          className="form-control"
-                          placeholder="Nhập mã số thuế"
-                        />
-                        <div className="text-danger">
-                          {errors.taxCode && <div>{errors.taxCode}</div>}
-                        </div>
-                      </div>
-                      {taxCode && (
+                      {step === 1 && (
                         <>
                           <div className="form-group">
                             <input
-                              value={companyName}
+                              value={name}
+                              onChange={(e) => setName(e.target.value)}
                               className="form-control"
-                              onChange={() => {}}
+                              placeholder="Nhập họ và tên"
                             />
+                            <div className="text-danger">
+                              {errors.name && <div>{errors.name}</div>}
+                            </div>
                           </div>
                           <div className="form-group">
                             <input
-                              value={address}
+                              value={position}
+                              onChange={(e) => setPosition(e.target.value)}
                               className="form-control"
-                              onChange={() => {}}
+                              placeholder="Nhập chức vụ"
                             />
+                            <div className="text-danger">
+                              {errors.position && <div>{errors.position}</div>}
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <input
+                              value={phone}
+                              onChange={(e) => setPhone(e.target.value)}
+                              className="form-control"
+                              placeholder="Nhập số điện thoại"
+                            />
+                            <div className="text-danger">
+                              {errors.phone && <div>{errors.phone}</div>}
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <input
+                              value={email}
+                              type="email"
+                              onChange={(e) => setEmail(e.target.value)}
+                              className="form-control"
+                              placeholder="Nhập email"
+                            />
+                            <div className="text-danger">
+                              {errors.email && <div>{errors.email}</div>}
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <input
+                              value={password}
+                              className="form-control"
+                              type="password"
+                              placeholder="Nhập mật khẩu"
+                              onChange={(e) => setPassword(e.target.value)}
+                              minLength="6"
+                            />
+                            <div className="text-danger">
+                              {errors.password && <div>{errors.password}</div>}
+                            </div>
+                          </div>
+                          <div className="form-group text-right">
+                            <button className="site-button dz-xs-flex m-r5" onClick={()=>setStep(2)}>
+                              Tiếp tục <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            </button>
                           </div>
                         </>
                       )}
-                      <div className="form-group">
-                        <input
-                          value={mainIndustry}
-                          onChange={(e) => setMainIndustry(e.target.value)}
-                          className="form-control"
-                          placeholder="Nhập ngành nghề chính"
-                        />
-                        <div className="text-danger">
-                          {errors.mainIndustry && (
-                            <div>{errors.mainIndustry}</div>
+                      {step === 2 && (
+                        <>
+                          <div className="form-group">
+                            <Select
+                              placeholder="Chọn loại hình công ty"
+                              onChange={(e) => setCompanyType(e.label)}
+                              options={companyTypeOptions}
+                            />
+                            <div className="text-danger">
+                              {errors.companyType && (
+                                <div>{errors.companyType}</div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <Select
+                              isMulti
+                              closeMenuOnSelect={false}
+                              placeholder="Chọn lĩnh vực hoạt động"
+                              onChange={(e) =>
+                                setField(e.map((item) => item.label))
+                              }
+                              options={fieldOptions}
+                            />
+                            <div className="text-danger">
+                              {errors.field && <div>{errors.field}</div>}
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <input
+                              name={taxCode}
+                              onBlur={(e) => getCompanyInfo(e)}
+                              className="form-control"
+                              placeholder="Nhập mã số thuế"
+                            />
+                            <div className="text-danger">
+                              {errors.taxCode && <div>{errors.taxCode}</div>}
+                            </div>
+                          </div>
+                          {taxCode && (
+                            <>
+                              <div className="form-group">
+                                <input
+                                  value={companyName}
+                                  className="form-control"
+                                  onChange={() => {}}
+                                />
+                              </div>
+                              <div className="form-group">
+                                <input
+                                  value={address}
+                                  className="form-control"
+                                  onChange={() => {}}
+                                />
+                              </div>
+                            </>
                           )}
-                        </div>
-                      </div>
-                      <div className="form-group">
-                        <input
-                          type="file"
-                          className="form-control"
-                          accept="image/*"
-                          onChange={uploadBusinessLicense}
-                        />
-                        <div className="text-danger">
-                          {errors.businessLicense && (
-                            <div>{errors.businessLicense}</div>
-                          )}
-                        </div>
-                      </div>
+                          <div className="form-group">
+                            <input
+                              value={mainIndustry}
+                              onChange={(e) => setMainIndustry(e.target.value)}
+                              className="form-control"
+                              placeholder="Nhập ngành nghề chính"
+                            />
+                            <div className="text-danger">
+                              {errors.mainIndustry && (
+                                <div>{errors.mainIndustry}</div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <input
+                              type="file"
+                              className="form-control"
+                              accept="image/*"
+                              onChange={uploadBusinessLicense}
+                            />
+                            <div className="text-danger">
+                              {errors.businessLicense && (
+                                <div>{errors.businessLicense}</div>
+                              )}
+                            </div>
+                          </div>
 
-                      <div className="form-group text-left">
-                        <span className="custom-control custom-checkbox">
-                          <input
-                            type="checkbox"
-                            className="custom-control-input"
-                            id="check1"
-                            checked={isAgree}
-                            onChange={(e) => setIsAgree(e.target.checked)}
-                          />
-                          <label
-                            className="custom-control-label"
-                            htmlFor="check1"
-                          >
-                            Tôi đồng ý với các điều khoản và điều kiện
-                          </label>
-                        </span>
-                      </div>
-
-                      <div className="form-group text-left">
+                          <div className="form-group text-left">
+                            <span className="custom-control custom-checkbox">
+                              <input
+                                type="checkbox"
+                                className="custom-control-input"
+                                id="check1"
+                                checked={isAgree}
+                                onChange={(e) => setIsAgree(e.target.checked)}
+                              />
+                              <label
+                                className="custom-control-label"
+                                htmlFor="check1"
+                              >
+                                Tôi đồng ý với các điều khoản và điều kiện
+                              </label>
+                            </span>
+                          </div>
+                          {/* Next Step Button */}
+                          <div className="form-group ">
+                        <button
+                          type="button"
+                          className="site-button dz-xs-flex m-r5 "
+                          onClick={() => setStep(1)}
+                        >
+                          <i class="fa fa-arrow-left" aria-hidden="true"></i> Quay lại
+                        </button>
                         <button
                           type="submit"
-                          className="site-button dz-xs-flex m-r5"
+                          className="site-button dz-xs-flex m-r5 float-right"
                           disabled={!isAgree}
                         >
                           Đăng ký
                         </button>
-
-                        <Link
-                          data-toggle="tab"
-                          to="#forgot-password"
-                          className="forget-pass m-l5"
-                        >
-                          <i className="fa fa-unlock-alt"></i> Quên mật khẩu
-                        </Link>
                       </div>
+                        </>
+                      )}
+
+                      
                       <div className="dz-social clearfix d-none">
                         <h5 className="form-title m-t5 pull-left">
                           Đăng ký với

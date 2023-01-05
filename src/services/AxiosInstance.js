@@ -3,7 +3,7 @@ import { store } from "../store/store";
 
 const axiosInstance = axios.create({
   baseURL: `https://cvidpro.herokuapp.com/`,
-  // baseURL: `http://localhost:8080/`,
+  // baseURL: `http://localhost:3030/`,
 });
 
 axiosInstance.interceptors.request.use((config) => {

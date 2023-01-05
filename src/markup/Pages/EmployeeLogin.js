@@ -125,7 +125,7 @@ function Login(props) {
                           </div>
                         )}
                       </div>
-                      <div className="form-group">
+                      <div className="form-group mb-5">
                         <label>Mật khẩu *</label>
                         <div className="input-group">
                           <input
@@ -141,7 +141,27 @@ function Login(props) {
                             {errors.password}
                           </div>
                         )}
+                        <Link
+                          data-toggle="tab"
+                          to="#forgot-password"
+                          className="forget-pass mt-1 float-right"
+                        >
+                          <i className="fa fa-unlock-alt"></i> Quên mật khẩu
+                      </Link>
                       </div>
+                      
+                   
+
+                      {/* <div className="h6">
+                      <Link
+                          data-toggle="tab"
+                          to="#forgot-password"
+                          className="forget-pass float-right"
+                        >
+                          <i className="fa fa-unlock-alt"></i> Quên mật khẩu
+                      </Link>
+                      </div>
+                       */}
                       <div className="text-center">
                         <button className="site-button float-left">
                           Đăng nhập
@@ -150,7 +170,7 @@ function Login(props) {
                           to="register"
                           className="site-button-link forget-pass m-t15 float-right"
                         >
-                          <i className="fa fa-unlock-alt"></i> Đăng ký
+                          <i className="fa fa-pencil-square-o"></i> Đăng ký
                         </Link>
                       </div>
                     </form>
