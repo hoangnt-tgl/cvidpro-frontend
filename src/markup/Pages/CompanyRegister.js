@@ -19,6 +19,7 @@ function Register2(props) {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [companyType, setCompanyType] = useState("");
   const [field, setField] = useState([]);
   const [mainIndustry, setMainIndustry] = useState("");
@@ -44,6 +45,7 @@ function Register2(props) {
   let errorsObj = {
     email: "",
     password: "",
+    confirmPassword: "",
     name: "",
     position: "",
     phone: "",
@@ -122,6 +124,14 @@ function Register2(props) {
     }
     if (password === "") {
       errorObj.password = "Vui lòng nhập mật khẩu";
+      error = true;
+    }
+    if (confirmPassword === "") {
+      errorObj.confirmPassword = "Vuì lòng nhập lại mật khẩu";
+      error = true;
+    }
+    if (password !== confirmPassword && confirmPassword !== "") {
+      errorObj.confirmPassword = "Mật khẩu không khớp";
       error = true;
     }
     if (name === "") {
@@ -294,6 +304,21 @@ function Register2(props) {
                             />
                             <div className="text-danger">
                               {errors.password && <div>{errors.password}</div>}
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <input
+                              value={confirmPassword}
+                              className="form-control"
+                              type="password"
+                              placeholder="Nhập lại mật khẩu"
+                              onChange={(e) => setConfirmPassword(e.target.value)}
+                              minLength="6"
+                            />
+                            <div className="text-danger">
+                              {errors.confirmPassword && (
+                                <div>{errors.confirmPassword}</div>
+                              )}
                             </div>
                           </div>
                           <div className="form-group text-right">

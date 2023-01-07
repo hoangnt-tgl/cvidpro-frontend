@@ -21,3 +21,9 @@ export const createDepartment = async (id, data) => {
     .post(`company/create-department/${id}`, data)
     .then((res) => res.data);
 }
+
+export const getCountCompany = async () => {
+  return axiosInstance
+    .get(`company/get-count`)
+    .then((res) => res.data);
+}

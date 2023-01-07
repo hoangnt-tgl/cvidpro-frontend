@@ -35,6 +35,7 @@ function Register2(props) {
     endYear: "",
     email: "",
     password: "",
+    confirmPassword: "",
   };
   const [errors, setErrors] = useState(errorsObj);
   const [name, setName] = useState("");
@@ -53,6 +54,7 @@ function Register2(props) {
   const [endYear, setEndYear] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
@@ -69,14 +71,9 @@ function Register2(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     async function fetchData() {
-      // let listProvince = await getListProvince();
-      // setProvinces(listProvince);
       let listLevel = await getListLevel();
       setLevels(listLevel.data.map((item) => ({ value: item, label: item })));
-      // let listMajor = await getListMajor();
-      // setMajors(listMajor);
-      // let listJobTitle = await getListJobTitle();
-      // setJobTitles(listJobTitle);
+
       let listSchool = await getListSchools();
       setSchools(
         listSchool.data.map((item) => ({ value: item._id, label: item.name }))
@@ -195,6 +192,23 @@ function Register2(props) {
     }
     if (password === "") {
       errorObj.password = "Vui lòng nhập mật khẩu";
+      error = true;
+    }
+    if (password !== "" && password.length < 6) {
+      errorObj.password = "Mật khẩu phải có ít nhất 6 ký tự";
+      error = true;
+    }
+    if (password !== "" && password.length > 20) {
+      errorObj.password
+        = "Mật khẩu không được quá 20 ký tự";
+      error = true;
+    }
+    if (confirmPassword === "") {
+      errorObj.confirmPassword = "Vui lòng nhập lại mật khẩu";
+      error = true;
+    }
+    if (confirmPassword !== "" && confirmPassword !== password) {
+      errorObj.confirmPassword = "Mật khẩu không khớp";
       error = true;
     }
     setErrors(errorObj);
@@ -432,6 +446,19 @@ function Register2(props) {
                           {errors.password && <div>{errors.password}</div>}
                         </div>
                       </div>
+                      <div className="form-group">
+                        <input
+                          value={confirmPassword}
+                          className="form-control"
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          placeholder="Nhập lại mật khẩu"
+                        />
+                        <div className="text-danger">
+                          {errors.confirmPassword && (
+                            <div>{errors.confirmPassword}</div>
+                          )}
+                        </div>
+                      </div>
                       <div className="form-group text-left">
                       
                       <span className="custom-control custom-checkbox">
@@ -498,14 +525,6 @@ function Register2(props) {
                         </ul>
                       </div>
                     </form>
-                    <div className="text-center bottom">
-                      <Link
-                        to="/employee/login"
-                        className="site-button button-md btn-block text-white"
-                      >
-                        Đăng nhập
-                      </Link>
-                    </div>
                   </div>
                 </div>
                 <div className="bottom-footer clearfix m-t10 m-b20 row text-center">

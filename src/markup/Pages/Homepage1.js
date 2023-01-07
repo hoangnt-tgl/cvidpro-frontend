@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "./../Layout/Header";
 import Footer from "./../Layout/Footer";
@@ -8,6 +8,7 @@ import Jobcategories from "./../Element/Jobcategories";
 import Featureblog from "./../Element/Featureblog";
 import Jobsection from "./../Element/Jobsection";
 import Owltestimonial from "./../Element/Owlblog1";
+import {getCountCompany} from './../../services/CompanyApi';
 import { store } from "./../../store/store";
 
 //Images
@@ -15,11 +16,15 @@ var bnr2 = require("./../../images/background/bg4.jpg");
 var bnr3 = require("./../../images/lines.png");
 
 function Homepage() {
-  // useEffect(() => {
-  //   const state = store.getState();
-  //   const token = state.auth;
-  //   console.log(token);
-  // }, []);
+  const [countCompany, setCountCompany] = useState(0);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    async function fetchData() {
+      let count = (await getCountCompany());
+      setCountCompany(count);
+    }
+    fetchData();
+  }, []);
   return (
     <div className="page-wraper">
       <Header />
@@ -37,7 +42,7 @@ function Homepage() {
 								<h6 className="fw3">CVID</h6>
 							</div>
 							<div className="head-counter-bx">
-								<h2 className="m-b5 counter"><CountUp end={0} duration={5}/></h2>
+								<h2 className="m-b5 counter"><CountUp end={countCompany} duration={5}/></h2>
 								<h6 className="fw3">Doanh nghiệp</h6>
 							</div>
 							<div className="head-counter-bx">
