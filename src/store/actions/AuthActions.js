@@ -67,7 +67,7 @@ export function companyLoginAction(email, password, history) {
         saveTokenInLocalStorage(response.data);
         runLogoutTimer(dispatch, response.data.expiresIn * 1000, history);
         dispatch(loginConfirmedAction(response.data));
-        history.push("/business-dashboard");
+        history.push("/company-profile");
       })
       .catch((error) => {
         const errorMessage = formatError(error.response.data.message || "");

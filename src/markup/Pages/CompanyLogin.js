@@ -113,7 +113,6 @@ function Login(props) {
                         <label>Mã số thuế*</label>
                         <div className="input-group">
                           <input
-                            type="email"
                             className="form-control"
                             placeholder="Nhâp mã số thuế"
                             value={email}

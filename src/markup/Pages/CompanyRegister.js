@@ -20,16 +20,21 @@ function Register2(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [companyType, setCompanyType] = useState("");
-  const [companyName, setCompanyName] = useState("");
-  const [address, setAddress] = useState("");
-  const [taxCode, setTaxCode] = useState("");
   const [field, setField] = useState([]);
   const [mainIndustry, setMainIndustry] = useState("");
   const [businessLicense, setBusinessLicense] = useState("");
+
+  const [companyName, setCompanyName] = useState("");
   const [companyPhone, setCompanyPhone] = useState("");
-  const [original, setOriginal] = useState("");
+  const [managedBy, setManagedBy] = useState("");
   const [engName, setEngName] = useState("");
   const [sortName, setSortName] = useState("");
+  const [address, setAddress] = useState("");
+  const [taxCode, setTaxCode] = useState("");
+  const [representative, setRepresentative] = useState("");
+  const [openDate, setOpenDate] = useState("");
+  const [status, setStatus] = useState("");
+  const [typeOfBusiness, setTypeOfBusiness] = useState("");
   const [isAgree, setIsAgree] = useState(false);
   const [step, setStep] = useState(1);
 
@@ -85,12 +90,16 @@ function Register2(props) {
         if (res) {
           console.log(res);
           setAddress(res.address);
+          setOpenDate(res.openDate);
           setTaxCode(res.taxCode);
-          setCompanyName(res.name);
-          setCompanyPhone(res.phone);
-          setOriginal(res.original);
+          setCompanyName(res.companyName);
+          setCompanyPhone(res.companyPhone);
+          setRepresentative(res.representative);
+          setManagedBy(res.managedBy);
+          setStatus(res.status);
           setEngName(res.engName);
           setSortName(res.sortName);
+          setTypeOfBusiness(res.typeOfBusiness);
         }
         setErrors({ ...errors, taxCode: undefined });
       })
@@ -98,14 +107,17 @@ function Register2(props) {
         setTaxCode("");
         setErrors({ ...errors, taxCode: "Không tìm thấy công ty" });
       });
-    console.log(e);
   }
-  function onSignUp(e) {
+  function onSubmitStep1(e) {
     e.preventDefault();
     let error = false;
     const errorObj = { ...errorsObj };
     if (email === "") {
       errorObj.email = "Vui lòng nhập email";
+      error = true;
+    }
+    if (email !== "" && !email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
+      errorObj.email = "Email không hợp lệ";
       error = true;
     }
     if (password === "") {
@@ -124,11 +136,26 @@ function Register2(props) {
       errorObj.phone = "Vui lòng nhập số điện thoại";
       error = true;
     }
+    if (phone !== "" && !phone.match(/^[0-9]{10,11}$/)) {
+      errorObj.phone = "Số điện thoại không hợp lệ";
+      error = true;
+    }
+    setErrors(errorObj);
+    if (!error) {
+      setStep(2);
+    }
+  }
+
+  function onSignUp(e) {
+    e.preventDefault();
+    let error = false;
+    const errorObj = { ...errorsObj };
     if (companyType === "") {
       errorObj.companyType = "Vui lòng nhập loại hình công ty";
       error = true;
     }
-    if (field === "") {
+    console.log(field);
+    if (field.length === 0) {
       errorObj.field = "Vui lòng nhập lĩnh vực hoạt động";
       error = true;
     }
@@ -159,6 +186,7 @@ function Register2(props) {
       email,
       password,
       name,
+      status,
       position,
       phone,
       companyType,
@@ -168,9 +196,13 @@ function Register2(props) {
       username: taxCode,
       mainIndustry,
       businessLicense,
-      original,
       engName,
       sortName,
+      typeOfBusiness,
+      openDate,
+      companyPhone,
+      representative,
+      managedBy,
     };
     dispatch(companySignupAction(data, props.history));
   }
@@ -265,8 +297,17 @@ function Register2(props) {
                             </div>
                           </div>
                           <div className="form-group text-right">
-                            <button className="site-button dz-xs-flex m-r5" onClick={()=>setStep(2)}>
-                              Tiếp tục <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            <button
+                              type="button"
+                              className="site-button dz-xs-flex m-r5 btn"
+                              disabled={!name || !email || !password || !phone || !position }
+                              onClick={onSubmitStep1}
+                            >
+                              Tiếp tục{" "}
+                              <i
+                                className="fa fa-arrow-right"
+                                aria-hidden="true"
+                              ></i>
                             </button>
                           </div>
                         </>
@@ -374,25 +415,28 @@ function Register2(props) {
                           </div>
                           {/* Next Step Button */}
                           <div className="form-group ">
-                        <button
-                          type="button"
-                          className="site-button dz-xs-flex m-r5 "
-                          onClick={() => setStep(1)}
-                        >
-                          <i class="fa fa-arrow-left" aria-hidden="true"></i> Quay lại
-                        </button>
-                        <button
-                          type="submit"
-                          className="site-button dz-xs-flex m-r5 float-right"
-                          disabled={!isAgree}
-                        >
-                          Đăng ký
-                        </button>
-                      </div>
+                            <button
+                              type="button"
+                              className="site-button dz-xs-flex m-r5 "
+                              onClick={() => setStep(1)}
+                            >
+                              <i
+                                className="fa fa-arrow-left"
+                                aria-hidden="true"
+                              ></i>{" "}
+                              Quay lại
+                            </button>
+                            <button
+                              type="submit"
+                              className="site-button dz-xs-flex m-r5 float-right btn btn-lg"
+                              disabled={!isAgree}
+                            >
+                              Đăng ký
+                            </button>
+                          </div>
                         </>
                       )}
 
-                      
                       <div className="dz-social clearfix d-none">
                         <h5 className="form-title m-t5 pull-left">
                           Đăng ký với
@@ -429,14 +473,14 @@ function Register2(props) {
                         </ul>
                       </div>
                     </form>
-                    <div className="text-center bottom">
+                    {/* <div className="text-center bottom">
                       <Link
                         to="login"
                         className="site-button button-md btn-block text-white"
                       >
                         <i className="fa fa-user"></i> Đăng nhập
                       </Link>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className="bottom-footer clearfix m-t10 m-b20 row text-center">

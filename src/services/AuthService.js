@@ -62,6 +62,11 @@ export function formatError(errorResponse) {
       //return 'Taxcode not found';
       swal("Oops", "Taxcode not found", "error", { button: "Try Again!" });
       break;
+
+    case "USER_NOT_FOUND":
+      //return 'User not found';
+      swal("Oops", "User not found", "error", { button: "Try Again!" });
+      break;
     case "INVALID_PASSWORD":
       //return 'Invalid Password';
       swal("Oops", "Invalid Password", "error", { button: "Try Again!" });

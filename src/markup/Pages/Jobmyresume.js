@@ -19,7 +19,7 @@ import {
 } from "../../services/GetListService";
 var bnr = require("./../../images/banner/bnr1.jpg");
 //var bnr2 = require('./../../images/background/bg3.jpg');
-function Jobmyresume() {
+function Jobmyresume(props) {
   const [userInformation, setUserInformation] = useState({});
   const [levels, setLevels] = useState([]);
   const [majors, setMajors] = useState([]);
@@ -47,9 +47,9 @@ function Jobmyresume() {
   useEffect(() => {
     window.scrollTo(0, 0);
     async function fetchData() {
-      const response = await getMyResume();
-      console.log(response._doc);
-      setUserInformation(response._doc);
+      const response = await getMyResume(props.history);
+      console.log(response);
+      setUserInformation(response);
       let listLevel = await getListLevel();
       setLevels(
         listLevel.data.map((item) => ({

@@ -13,6 +13,8 @@ import Jobcvmanager from './Pages/Jobcvmanager';
 import Changepasswordpage from './Pages/Changepasswordpage';
 
 import Companyprofile from './Pages/Companyprofile';
+import CompanyDepartment from './Pages/CompanyDepartment';
+import CompanyChangePwd from './Pages/CompanyChangePwd';
 import Companyresume from './Pages/Companyresume';
 import Componypostjobs from './Pages/Componypostjobs';
 import Companymanage from './Pages/Companymanage';
@@ -78,7 +80,9 @@ const Markup= () => {
 						
 						
 					<Route path='/company-profile' exact component={Companyprofile} />
+					<Route path='/company-department' exact component={CompanyDepartment} />
 					<Route path='/company-resume' exact component={Companyresume} />
+					<Route path='/company-change-password' exact component={CompanyChangePwd} />
 					<Route path='/company-post-jobs' exact component={Componypostjobs} />
 					<Route path='/company-manage-job' exact component={Companymanage} />
 					<Route path='/company-transactions' exact component={Companytransactions} />
