@@ -93,10 +93,10 @@ function Homepage() {
                         {/* <p>Lorem ipsum dolor sit amet adipiscing elit sed do eiusmod tempors labore et dolore magna siad enim aliqua</p> */}
                         <div className="m-t20">
                           <Link
-                            to={"/employee/register"}
+                            to={"/employee/login"}
                             className="site-button radius-xl"
                           >
-                            <span className="p-lr30">Đăng ký</span>
+                            <span className="p-lr30">Đăng nhập</span>
                           </Link>
                         </div>
                       </div>
@@ -128,10 +128,10 @@ function Homepage() {
                         {/* <p>Lorem ipsum dolor sit amet adipiscing elit sed do eiusmod tempors labore et dolore magna siad enim aliqua</p> */}
                         <div className="m-t20">
                           <Link
-                            to={"/company/register"}
+                            to={"/company/login"}
                             className="site-button radius-xl"
                           >
-                            <span className="p-lr30">Đăng ký</span>
+                            <span className="p-lr30">Đăng nhập</span>
                           </Link>
                         </div>
                       </div>
