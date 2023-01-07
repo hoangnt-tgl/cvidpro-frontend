@@ -19,6 +19,11 @@ import EmployeeRegister from "./markup/Pages/EmployeeRegister";
 import CompanyRegister from "./markup/Pages/CompanyRegister";
 import EmployeeLogin from "./markup/Pages/EmployeeLogin";
 import CompanyLogin from "./markup/Pages/CompanyLogin";
+import CompanyManageJob from "./markup/Pages/CompanyManageJobs";
+import CompanyManageResume from "./markup/Pages/CompanyManageResume";
+import CompanyBrowseCandidates from './markup/Pages/CompanyBrowseCandidates';
+// import ForgotPassword from "./markup/Pages/ForgotPassword";
+
 
 //const SignUp = lazy(() => import('./markup/Pages/Register2'));
 //const ForgotPassword = lazy(() => import('./markup/pages/ForgotPassword'));
@@ -41,6 +46,9 @@ function App(props) {
       <Route path="/company/login" component={CompanyLogin} />
       <Route path="/employee/register" component={EmployeeRegister} />
       <Route path="/company/register" component={CompanyRegister} />
+      <Route path="/company-manage-jobs" component={CompanyManageJob} />
+      <Route path="/company-manage-resume" component={CompanyManageResume} />
+      <Route path="/company-browse-candidates" component={CompanyBrowseCandidates} />
     </Switch>
   );
   if (props.isAuthenticated) {

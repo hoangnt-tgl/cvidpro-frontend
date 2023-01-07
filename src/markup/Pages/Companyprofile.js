@@ -15,7 +15,6 @@ import CompanySidebar from "./../Element/CompanySidebar";
 function Companyprofile(props) {
   const [companyInfo, setCompanyInfo] = useState({});
   useEffect(() => {
-    window.scrollTo(0, 0);
     async function fetchData() {
       let myCompany = await getMyCompany(props.history);
       setCompanyInfo(myCompany);

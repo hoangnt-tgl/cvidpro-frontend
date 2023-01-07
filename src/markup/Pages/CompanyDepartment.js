@@ -17,8 +17,6 @@ function CompanyDepartment(props) {
     managerEmail: "",
   });
 
-  const [] = useState(props.match.params.id);
-
   async function handleAddDepartment() {
     await createDepartment(companyInfo._id, newDepartment);
     setAddDepartment(false);
@@ -111,7 +109,7 @@ function CompanyDepartment(props) {
                                     </div>
                                 </td>
                                 <td className="job-name">
-                                    <Link to={"#"}>{department.departmentName}</Link>
+                                    <Link to={`company-manage-jobs?key=${department.key}`} target="_blank" rel="noopener noreferrer">{department.departmentName}</Link>
                                 </td>
                                 <td className="application text-primary">
                                     {department.managerName}

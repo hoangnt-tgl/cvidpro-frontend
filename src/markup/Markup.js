@@ -20,6 +20,9 @@ import Componypostjobs from './Pages/Componypostjobs';
 import Companymanage from './Pages/Companymanage';
 import Companytransactions from './Pages/Companytransactions';
 import Browsecandidates from './Pages/Browsecandidates';
+import CompanyManageJobs from './Pages/CompanyManageJobs';
+import CompanyManageResume from './Pages/CompanyManageResume';
+import CompanyBrowseCandidates from './Pages/CompanyBrowseCandidates';
 
 
 import Aboutus from './Pages/Aboutus';
@@ -87,6 +90,9 @@ const Markup= () => {
 					<Route path='/company-manage-job' exact component={Companymanage} />
 					<Route path='/company-transactions' exact component={Companytransactions} />
 					<Route path='/browse-candidates' exact component={Browsecandidates} />
+					<Route path='/company-manage-jobs' exact component={CompanyManageJobs} />
+					<Route path='/company-manage-resume' exact component={CompanyManageResume} />
+					<Route path='/company-browse-candidates' exact component={CompanyBrowseCandidates} />
 					
 					
 					<Route path='/about-us' exact component={Aboutus} />

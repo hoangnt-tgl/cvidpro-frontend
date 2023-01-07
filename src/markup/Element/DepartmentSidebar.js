@@ -1,13 +1,11 @@
 import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
+import { getDepartmentByKey } from "../../services/CompanyApi";
 
 function CompanySidebar(props) {
-    const [companyName, setCompanyName] = useState('')
+    
     const url = props.url.pathname;
     useEffect(() => {
-        let name = JSON.parse(localStorage.getItem('userDetails')).companyName;
-        setCompanyName(name);
-        console.log("CompanySidebar", props.url.pathname);
     }, []);
 
   return (
@@ -31,21 +29,27 @@ function CompanySidebar(props) {
             </div>
             <div className="candidate-title">
               <h4 className="m-b5">
-                <Link to={"#"}>{companyName}</Link>
+                <Link to={"#"}>{props.name}</Link>
               </h4>
             </div>
           </div>
           <ul>
             <li>
-              <Link to={"/company-profile"} className={url === "/company-profile" ? 'active' : ''}>
+              <Link to={"/company-manage-jobs"} className={url === "/company-manage-jobs" ? 'active' : ''}>
                 <i className="fa fa-user-o" aria-hidden="true"></i>
-                <span>Thông tin công ty</span>
+                <span>Vị trí tuyển dụng</span>
               </Link>
             </li>
             <li>
-              <Link to={"/company-department"} className={url === "/company-department" ? 'active' : ''}>
+              <Link to={"/company-browse-candidates"} className={url === "/company-browse-candidates" ? 'active' : ''}>
                 <i className="fa fa-user-o" aria-hidden="true"></i>
-                <span>Phòng ban</span>
+                <span>Tìm ứng viên</span>
+              </Link>
+            </li>
+            <li>
+              <Link to={"/company-manage-resume"} className={url === "/company-manage-resume" ? 'active' : ''}>
+                <i className="fa fa-user-o" aria-hidden="true"></i>
+                <span>Ứng viên đã chọn</span>
               </Link>
             </li>
             {/* <li>
@@ -72,18 +76,6 @@ function CompanySidebar(props) {
                 <span>Resume</span>
               </Link>
             </li> */}
-            <li>
-              <Link to={"/company-change-password"} className={url === "/company-change-password" ? 'active' : ''}>
-                <i className="fa fa-key" aria-hidden="true"></i>
-                <span>Change Password</span>
-              </Link>
-            </li>
-            <li>
-              <Link to={"./"}>
-                <i className="fa fa-sign-out" aria-hidden="true"></i>
-                <span>Log Out</span>
-              </Link>
-            </li>
           </ul>
         </div>
       </div>

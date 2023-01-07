@@ -27,3 +27,21 @@ export const getCountCompany = async () => {
     .get(`company/get-count`)
     .then((res) => res.data);
 }
+
+export const getDepartmentByKey = async (key) => {
+  return axiosInstance
+    .get(`company/get-department-by-key/${key}`)
+    .then((res) => res.data);
+}
+
+export const createJobForDepartment = async (id, data) => {
+  return axiosInstance
+    .post(`company/create-job-for-department/${id}`, data)
+    .then((res) => res.data);
+}
+
+export const deleteJobForDepartment = async (key, idJob) => {
+  return axiosInstance
+    .delete(`company/delete-job-for-department/${key}/${idJob}`)
+    .then((res) => res.data);
+}

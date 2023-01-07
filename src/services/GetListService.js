@@ -5,7 +5,7 @@ export const getListSchools = async () => {
 };
 
 export const getListJobTitle = async () => {
-  return axiosInstance.get(`jobtitle/getall`).then((res) => res.data);
+  return axiosInstance.get(`job-title/getall`).then((res) => res.data);
 };
 
 export const getListLevel = async () => {
@@ -46,4 +46,12 @@ export const getListCompanyType = async () => {
 
 export const getListIndustry = async () => {
   return axiosInstance.get(`industry/getall`).then((res) => res.data);
+}
+
+export const getListPosition = async () => {
+  return axiosInstance.get(`position/getall`).then((res) => res.data);
+}
+
+export const getListEnvironment = async () => {
+  return axiosInstance.get(`environment/getall`).then((res) => res.data);
 }
