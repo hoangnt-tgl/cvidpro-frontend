@@ -55,3 +55,7 @@ export const getListPosition = async () => {
 export const getListEnvironment = async () => {
   return axiosInstance.get(`environment/getall`).then((res) => res.data);
 }
+
+export const getListQuestion = async () => {
+  return axiosInstance.get(`question/getall`).then((res) => res.data);
+}

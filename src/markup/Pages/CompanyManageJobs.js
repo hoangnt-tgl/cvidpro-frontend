@@ -352,7 +352,6 @@ function Companymanage(props) {
                             className="modal-body"
                             style={{ maxHeight: "70vh", overflow: "auto" }}
                           >
-                            {JSON.stringify(newJob)}
                             <div className="form-group">
                               <label>Chức danh công việc</label>
                               <Select
