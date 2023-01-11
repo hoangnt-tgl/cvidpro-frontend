@@ -2,8 +2,8 @@ import axios from "axios";
 import swal from "sweetalert";
 import { loginConfirmedAction, logout } from "../store/actions/AuthActions";
 
-const API_URL = "https://cvidpro.herokuapp.com/";
-// const API_URL = "http://localhost:3030/";
+// const API_URL = "https://cvidpro.herokuapp.com/";
+const API_URL = "http://localhost:3030/";
 
 export function employeeSignUp(data) {
   const postData = {

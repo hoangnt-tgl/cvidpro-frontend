@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "./../Layout/Header";
 import Footer from "./../Layout/Footer";
+import swal from "sweetalert";
 import {
   Modal,
   Button,
@@ -9,6 +10,9 @@ import {
   Form,
   Nav,
   Card,
+  InputGroup,
+  FormControl,
+  Col,
 } from "react-bootstrap";
 import Select from "react-select";
 import {
@@ -19,6 +23,8 @@ import {
   confirmPhone,
   addShortTraining,
   deleteShortTraining,
+  addWorkExperience,
+  deleteWorkExperience
 } from "../../services/EmployeeApi";
 import {
   getSortTime,
@@ -31,9 +37,10 @@ import {
   getListSchools,
   getAllListMajor,
   getListQuestion,
+  getListJobTitle,
 } from "../../services/GetListService";
 var bnr2 = require("./../../images/banner/bnr1.jpg");
-var bnr = require('./../../images/background/bg3.jpg');
+var bnr = require("./../../images/background/bg3.jpg");
 function Jobmyresume(props) {
   const objSchool = {
     school: "",
@@ -52,35 +59,53 @@ function Jobmyresume(props) {
   const objWork = {
     company: "",
     address: "",
-    process: [
-      {
-        jobTitle: "",
-        start: "",
-        end: "",
-        position: "",
-        isCurrent: false,
-        major: "",
-        address: "",
-        result: "",
-        workDescription: "",
-      },
-    ],
+    process: [],
     start: "",
     end: "",
     leaving: "",
+  };
+  const objProcess = {
+    jobTitle: "",
+    from: "",
+    to: "",
+    isCurrent: false,
+    major: "",
+    address: "",
+    result: "",
+    workDescription: "",
+  };
+
+  // option lý do nghỉ việc
+  const listLeaving = [
+    { value: "Nghỉ theo mong muốn", label: "Nghỉ theo mong muốn" },
+    { value: "Nghỉ theo yêu cầu", label: "Nghỉ theo yêu cầu" },
+    { value: "Tự nghỉ", label: "Tự nghỉ" },
+  ];
+
+  const resultOption = [
+    { value: "Trên mức đề ra", label: "Trên mức đề ra" },
+    { value: "Đạt mức đề ra", label: "Đạt mức đề ra" },
+    { value: "Dưới mức đề ra", label: "Dưới mức đề ra" },
+  ];
+
+  const getValueSelect = (value) => {
+    return value ? { label: value, value: value } : "";
   };
   const [userInformation, setUserInformation] = useState({});
   const [reload, setReload] = useState(false);
   const [levels, setLevels] = useState([]);
   const [majors, setMajors] = useState([]);
   const [questions, setQuestions] = useState([]);
+  const [jobTitleOption, setJobTitleOption] = useState([]);
   const [listProvince, setListProvince] = useState([]);
   const [listDistrict, setListDistrict] = useState([]);
   const [listWard, setListWard] = useState([]);
   const [newSchool, setNewSchool] = useState(objSchool);
   const [newWork, setNewWork] = useState(objWork);
+  const [newProcess, setNewProcess] = useState(objProcess);
+
   const [newShortTraining, setNewShortTraining] = useState(objShortTraining);
-  const [stepAddWork, setStepAddWork] = useState(1);
+
   const [schools, setSchools] = useState([]);
   const [basicdetails, setBasicDetails] = useState(false);
   const [resume, setResume] = useState(false);
@@ -105,6 +130,14 @@ function Jobmyresume(props) {
       setMajors(listMajor.data.map((item) => ({ value: item, label: item })));
       let listQuestion = await getListQuestion();
       setQuestions(listQuestion.data);
+
+      let listJobTitle = await getListJobTitle();
+      setJobTitleOption(
+        listJobTitle.data.map((item) => ({
+          value: item.name,
+          label: item.name,
+        }))
+      );
     }
     fetchData();
   }, []);
@@ -170,6 +203,33 @@ function Jobmyresume(props) {
   const handleDeleteShortTraining = async (id) => {
     console.log(id);
     await deleteShortTraining(userInformation._id, id);
+    setReload(!reload);
+  };
+
+  const handleAddProcess = async (e) => {
+    let listProcess = newWork.process;
+    if (
+      newWork.process.length > 0 &&
+      newWork.process[newWork.process.length - 1].isCurrent === true
+    ) {
+      swal("Alert!", "Thời gian đã đến hiện tại", "error");
+    }
+    listProcess.push(newProcess);
+    setNewWork({ ...newWork, process: listProcess });
+    setNewProcess({ ...objProcess, from: newProcess.to });
+  };
+
+  const handleDeleteProcess = async (index) => {};
+
+  const handleAddWorkExperience = async () => {
+    await addWorkExperience(userInformation._id, newWork);
+    setNewWork(objWork);
+    setResume(false);
+    setNewProcess(objProcess);
+    setReload(!reload);
+  };
+  const handleDeleteWorkExperience = async (id) => {
+    await deleteWorkExperience(userInformation._id, id);
     setReload(!reload);
   };
   return (
@@ -514,7 +574,7 @@ function Jobmyresume(props) {
                 <div className="col-xl-9 col-lg-8 col-md-8 col-sm-12">
                   <div
                     id="resume_headline_bx"
-                    className=" job-bx bg-white m-b30"
+                    className=" job-bx bg-white table-job-bx m-b30"
                   >
                     <div className="d-flex">
                       <h5 className="m-b15">Kinh nghiệm làm việc</h5>
@@ -527,6 +587,88 @@ function Jobmyresume(props) {
                       </Link>
                     </div>
                     <p className="m-b0">Job board currently living in USA</p>
+                    <div className="row">
+                      <div className="col-lg-12 col-md-12 col-sm-12">
+                        {userInformation.workExperience?.map((item, index) => {
+                          return (
+                            <>
+                              <hr />
+                              <div className="clearfix m-b20">
+                                <div className="badge-time">
+                                  <span className="badge badge-primary">
+                                    <i className="fa fa-suitcase" />
+                                    <span>
+                                      {" " + getMonthYear(item.start)} -{" "}
+                                      {item.process.slice(-1)[0].isCurrent
+                                        ? "Hiện tại"
+                                        : getMonthYear(item.end)}
+                                    </span>
+                                  </span>
+                                </div>
+                                <div className="d-flex">
+                                  <label className="m-b0 font-20">
+                                    {item.company}
+                                  </label>
+                                  <Link
+                                    to={"#"}
+                                    onClick={() => handleDeleteWorkExperience(item._id)}
+                                    className="site-button add-btn button-sm"
+                                    style={{ backgroundColor: "red" }}
+                                  >
+                                    <i className="ti-trash m-r5"></i>
+                                  </Link>
+                                </div>
+                                <p className="m-b0 font-16">
+                                  Địa chỉ: {item.address}
+                                </p>
+                                <label className="m-b0 font-16">
+                                  Quá trình làm việc
+                                </label>
+                                {item.process.map((item, index) => {
+                                  return (
+                                    <div className="pl-4">
+                                      <div className="badge-time">
+                                        <span className="badge badge-primary">
+                                          <i className="fa fa-clock-o" />
+                                          <span>
+                                            {" " + getMonthYear(item.from)} -{" "}
+                                            {item.isCurrent
+                                              ? "Hiện tại"
+                                              : getMonthYear(item.to)}
+                                          </span>
+                                        </span>
+                                      </div>
+                                      <p className="m-b0 font-16">
+                                        Công việc: {item.workDescription}
+                                      </p>
+                                      <p className="m-b0 font-16">
+                                        Chuyên nghành: {item.major}
+                                      </p>
+                                      
+                                      <p className="m-b0 font-16">
+                                        Chức danh: {item.jobTitle}
+                                      </p>
+                                      <p className="m-b0 font-16">
+                                        Địa chỉ: {item.address}
+                                      </p>
+                                      <p className="m-b0 font-16">
+                                        Kết quả: {item.result}
+                                      </p>
+                                     
+                                    </div>
+                                  );
+                                })}
+                                <p className="m-b0 font-16">
+                                  {item.process.slice(-1)[0].isCurrent
+                                    ? ""
+                                    : "Nghỉ việc: " + item.leaving}
+                                </p>
+                              </div>
+                            </>
+                          );
+                        })}
+                      </div>
+                    </div>
                     <Accordion>
                       <Card border="primary">
                         <Card.Header className="d-flex w-100 py-1">
@@ -581,7 +723,7 @@ function Jobmyresume(props) {
                       onHide={setResume}
                       className="modal fade modal-bx-info editor"
                     >
-                      <div className="modal-dialog my-0" role="document">
+                      <div className="modal-dialog m-0" role="document">
                         <div className="modal-content">
                           <div className="modal-header">
                             <h5
@@ -598,185 +740,386 @@ function Jobmyresume(props) {
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
-                          <div className="modal-body">
-                            {stepAddWork === 1 ? (
-                              <form
-                                id="addCompanyInfo"
-                                onSubmit={() => console.log("submit")}
-                                action="javascript:void(0);"
-                              >
-                                <div className="row">
-                                  <div className="col-lg-12 col-md-12"></div>
-                                </div>
-                              </form>
-                            ) : (
-                              <></>
-                            )}
+                          <div
+                            className="modal-body"
+                            style={{ overflow: "auto", maxHeight: "70vh" }}
+                          >
                             <form
-                              id="addWorkExperience"
+                              id="addCompanyInfo"
                               onSubmit={() => console.log("submit")}
                               action="javascript:void(0);"
                             >
                               <div className="row">
-                                <div className="col-lg-12 col-md-12">
-                                  <Form.Group className="mb-2">
-                                    <Form.Label>
-                                      {JSON.stringify(newWork)}
-                                    </Form.Label>
-                                  </Form.Group>
-                                </div>
-                                <div className="col-lg-12 col-md-12">
-                                  <Form.Group className="mb-2">
-                                    <Form.Label className="mb-1">
-                                      Nơi làm việc
-                                    </Form.Label>
-                                    <Form.Control
-                                      placeholder="Nhập nơi làm việc"
-                                      value={newWork.company}
-                                      onChange={(e) => {
-                                        setNewWork({
-                                          ...newWork,
-                                          company: e.target.value,
-                                        });
-                                      }}
-                                      required
-                                    />
-                                  </Form.Group>
-                                </div>
-                                <div className="col-lg-12 col-md-12">
-                                  <Form.Group className="mb-2">
-                                    <Form.Label className="mb-1">
-                                      Địa chỉ
-                                    </Form.Label>
-                                    <Form.Control
-                                      placeholder="Nhập địa chỉ"
-                                      value={newWork.address}
-                                      onChange={(e) => {
-                                        setNewWork({
-                                          ...newWork,
-                                          address: e.target.value,
-                                        });
-                                      }}
-                                      required
-                                    />
-                                  </Form.Group>
-                                </div>
-                                <div className="col-lg-12 col-md-12">
-                                  <label>Quá trình làm việc</label>
-                                  <div className="row border py-2">
-                                    <div className="col-6">
-                                      <Form.Group className="mb-2">
-                                        <Form.Label className="mb-1">
-                                          Từ
-                                        </Form.Label>
-                                        <Form.Control
-                                          placeholder="Nhập địa chỉ"
-                                          value=""
-                                          required
-                                        />
-                                      </Form.Group>
-                                    </div>
-                                    <div className="col-6">
-                                      <Form.Group className="mb-2">
-                                        <Form.Label className="mb-1">
-                                          Đến
-                                        </Form.Label>
-                                        <Form.Control
-                                          placeholder="Nhập địa chỉ"
-                                          value=""
-                                          required
-                                        />
-                                      </Form.Group>
-                                    </div>
-                                    <div className="col-lg-12 col-md-12">
-                                      <Form.Group className="mb-2">
-                                        <Form.Label className="mb-1">
-                                          Công việc
-                                        </Form.Label>
-                                        <Form.Control
-                                          placeholder="Nhập địa chỉ"
-                                          value=""
-                                          required
-                                        />
-                                      </Form.Group>
-                                    </div>
-                                    <div className="col-lg-12 col-md-12">
-                                      <Form.Group className="mb-2">
-                                        <Form.Label className="mb-1">
-                                          Chuyên nghành
-                                        </Form.Label>
-                                        <Form.Control
-                                          placeholder="Nhập địa chỉ"
-                                          value=""
-                                          required
-                                        />
-                                      </Form.Group>
-                                    </div>
-                                    <div className="col-lg-12 col-md-12">
-                                      <Form.Group className="mb-2">
-                                        <Form.Label className="mb-1">
-                                          Chức danh công việc
-                                        </Form.Label>
-                                        <Form.Control
-                                          placeholder="Nhập địa chỉ"
-                                          value=""
-                                          required
-                                        />
-                                      </Form.Group>
-                                    </div>
-                                    <div className="col-lg-12 col-md-12">
-                                      <Form.Group className="mb-2">
-                                        <Form.Label className="mb-1">
+                                <div className="col-lg-12 col-md-12"></div>
+                              </div>
+                            </form>
+
+                            <form
+                              id="addWorkExperience"
+                              action="javascript:void(0);"
+                            >
+                              <div className="row">
+                                <div className="col-lg-12 col-md-12"></div>
+                                <Card className="w-100 mx-3">
+                                  <Card.Header className="">
+                                    <InputGroup size="sm" className="mb-2">
+                                      <InputGroup.Prepend>
+                                        <InputGroup.Text>
+                                          Nơi làm việc
+                                        </InputGroup.Text>
+                                      </InputGroup.Prepend>
+                                      <FormControl
+                                        value={newWork.company}
+                                        onChange={(e) =>
+                                          setNewWork({
+                                            ...newWork,
+                                            company: e.target.value,
+                                          })
+                                        }
+                                      />
+                                    </InputGroup>
+                                    <InputGroup size="sm">
+                                      <InputGroup.Prepend>
+                                        <InputGroup.Text>
                                           Địa chỉ
-                                        </Form.Label>
-                                        <Form.Control
-                                          placeholder="Nhập địa chỉ"
-                                          value=""
-                                          required
-                                        />
-                                      </Form.Group>
-                                    </div>
-                                    <div className="col-lg-12 col-md-12">
-                                      <Form.Group className="mb-2">
-                                        <Form.Label className="mb-1">
-                                          Kết quả hoàn thành
-                                        </Form.Label>
-                                        <Form.Control
-                                          placeholder="Nhập địa chỉ"
-                                          value=""
-                                          required
-                                        />
-                                      </Form.Group>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="col-lg-12 col-md-12">
-                                  <div className="form-group">
-                                    <label className="mb-1">Nghỉ việc</label>
-                                    <select
-                                      className="form-control"
-                                      value={newWork.leaving}
-                                      onChange={(e) => {
-                                        setNewWork({
-                                          ...newWork,
-                                          leaving: e.target.value,
-                                        });
-                                      }}
-                                      required
+                                        </InputGroup.Text>
+                                      </InputGroup.Prepend>
+                                      <FormControl
+                                        value={newWork.address}
+                                        onChange={(e) =>
+                                          setNewWork({
+                                            ...newWork,
+                                            address: e.target.value,
+                                          })
+                                        }
+                                      />
+                                    </InputGroup>
+                                  </Card.Header>
+                                  <Card.Body>
+                                    <Card.Title className="text-center">
+                                      Quá trình làm việc
+                                    </Card.Title>
+                                    {newWork.process.map((item, index) => {
+                                      return (
+                                        <form>
+                                          <Form.Row>
+                                            <Col sm={6}>
+                                              <InputGroup
+                                                size="sm"
+                                                className="mb-2"
+                                              >
+                                                <InputGroup.Prepend>
+                                                  <InputGroup.Text>
+                                                    Từ
+                                                  </InputGroup.Text>
+                                                </InputGroup.Prepend>
+                                                <FormControl
+                                                  required
+                                                  type="date"
+                                                  value={item.from}
+                                                />
+                                              </InputGroup>
+                                            </Col>
+                                            <Col>
+                                              <InputGroup
+                                                size="sm"
+                                                className="mb-2"
+                                              >
+                                                <InputGroup.Prepend>
+                                                  <InputGroup.Text>
+                                                    Đến
+                                                  </InputGroup.Text>
+                                                </InputGroup.Prepend>
+                                                <FormControl
+                                                  required
+                                                  type="date"
+                                                  value={item.to}
+                                                />
+                                              </InputGroup>
+                                            </Col>
+                                          </Form.Row>
+                                          <Form.Group
+                                            className="mb-2"
+                                            controlId="isWorking"
+                                          >
+                                            <Form.Check
+                                              type="checkbox"
+                                              label="Đang làm việc tại đây"
+                                              checked={item.isCurrent}
+                                            />
+                                          </Form.Group>
+
+                                          <InputGroup
+                                            size="sm"
+                                            className="mb-2"
+                                          >
+                                            <InputGroup.Prepend className="w-100">
+                                              <InputGroup.Text className="w-100">
+                                                Công việc
+                                              </InputGroup.Text>
+                                            </InputGroup.Prepend>
+                                            <FormControl
+                                              required
+                                              value={item.workDescription}
+                                            />
+                                          </InputGroup>
+                                          <InputGroup
+                                            size="sm"
+                                            className="mb-2"
+                                          >
+                                            <InputGroup.Prepend className="w-100">
+                                              <InputGroup.Text className="w-100">
+                                                Chuyên nghành
+                                              </InputGroup.Text>
+                                            </InputGroup.Prepend>
+                                            <FormControl value={item.major} />
+                                          </InputGroup>
+                                          <InputGroup
+                                            size="sm"
+                                            className="mb-2"
+                                          >
+                                            <InputGroup.Prepend className="w-100">
+                                              <InputGroup.Text className="w-100">
+                                                Chức danh công việc
+                                              </InputGroup.Text>
+                                            </InputGroup.Prepend>
+                                            <FormControl
+                                              value={item.jobTitle}
+                                            />
+                                          </InputGroup>
+                                          <InputGroup
+                                            size="sm"
+                                            className="mb-2"
+                                          >
+                                            <InputGroup.Prepend className="w-100">
+                                              <InputGroup.Text className="w-100">
+                                                Địa chỉ
+                                              </InputGroup.Text>
+                                            </InputGroup.Prepend>
+                                            <FormControl value={item.address} />
+                                          </InputGroup>
+                                          <InputGroup
+                                            size="sm"
+                                            className="mb-2"
+                                          >
+                                            <InputGroup.Prepend className="w-100">
+                                              <InputGroup.Text className="w-100">
+                                                Kết quả hoàn thành
+                                              </InputGroup.Text>
+                                            </InputGroup.Prepend>
+                                            <FormControl value={item.result} />
+                                          </InputGroup>
+                                        </form>
+                                      );
+                                    })}
+                                    <form
+                                      id="addProcessInCompany"
+                                      onSubmit={handleAddProcess}
+                                      action="javascript:void(0);"
                                     >
-                                      <option value="" disabled>
-                                        Chọn lí do
-                                      </option>
-                                      <option value="Nghỉ theo mong muốn">
-                                        Nghỉ theo mong muốn
-                                      </option>
-                                      <option value="Nghỉ theo yêu cầu">
-                                        Nghỉ theo yêu cầu
-                                      </option>
-                                      <option value="Tự nghỉ">Tự nghỉ</option>
-                                    </select>
-                                  </div>
-                                </div>
+                                      <Form.Row>
+                                        <Col sm={6}>
+                                          <InputGroup
+                                            size="sm"
+                                            className="mb-2"
+                                          >
+                                            <InputGroup.Prepend>
+                                              <InputGroup.Text>
+                                                Từ
+                                              </InputGroup.Text>
+                                            </InputGroup.Prepend>
+                                            <FormControl
+                                              required
+                                              type="date"
+                                              value={newProcess.from}
+                                              onChange={(e) => {
+                                                setNewProcess({
+                                                  ...newProcess,
+                                                  from: e.target.value,
+                                                });
+                                              }}
+                                            />
+                                          </InputGroup>
+                                        </Col>
+                                        <Col>
+                                          <InputGroup
+                                            size="sm"
+                                            className="mb-2"
+                                          >
+                                            <InputGroup.Prepend>
+                                              <InputGroup.Text>
+                                                Đến
+                                              </InputGroup.Text>
+                                            </InputGroup.Prepend>
+                                            <FormControl
+                                              required
+                                              type="date"
+                                              disabled={newProcess.isCurrent}
+                                              value={newProcess.to}
+                                              onChange={(e) => {
+                                                setNewProcess({
+                                                  ...newProcess,
+                                                  to: e.target.value,
+                                                });
+                                              }}
+                                            />
+                                          </InputGroup>
+                                        </Col>
+                                      </Form.Row>
+                                      <Form.Group className="mb-2">
+                                        <Form.Check
+                                          type="checkbox"
+                                          label="Đang làm việc tại đây"
+                                          checked={newProcess.isCurrent}
+                                          onChange={(e) => {
+                                            setNewProcess({
+                                              ...newProcess,
+                                              isCurrent: e.target.checked,
+                                              to: "",
+                                            });
+                                          }}
+                                        />
+                                      </Form.Group>
+
+                                      <InputGroup size="sm" className="mb-2">
+                                        <InputGroup.Prepend className="w-100">
+                                          <InputGroup.Text className="w-100">
+                                            Công việc
+                                          </InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <FormControl
+                                          required
+                                          value={newProcess.workDescription}
+                                          onChange={(e) => {
+                                            setNewProcess({
+                                              ...newProcess,
+                                              workDescription: e.target.value,
+                                            });
+                                          }}
+                                        />
+                                      </InputGroup>
+                                      <InputGroup size="sm" className="mb-2">
+                                        <InputGroup.Prepend className="w-100">
+                                          <InputGroup.Text className="w-100">
+                                            Chuyên nghành
+                                          </InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <FormControl
+                                          required
+                                          as={Select}
+                                          size="sm"
+                                          className="p-0"
+                                          value={getValueSelect(
+                                            newProcess.major
+                                          )}
+                                          placeholder="Chọn chuyên nghành"
+                                          onChange={(e) =>
+                                            setNewProcess((prev) => ({
+                                              ...prev,
+                                              major: e.value,
+                                            }))
+                                          }
+                                          options={majors}
+                                        />
+                                      </InputGroup>
+                                      <InputGroup size="sm" className="mb-2">
+                                        <InputGroup.Prepend className="w-100">
+                                          <InputGroup.Text className="w-100">
+                                            Chức danh công việc
+                                          </InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <FormControl
+                                          required
+                                          as={Select}
+                                          size="sm"
+                                          className="p-0"
+                                          value={getValueSelect(
+                                            newProcess.jobTitle
+                                          )}
+                                          placeholder="Chọn chức danh"
+                                          onChange={(e) =>
+                                            setNewProcess((prev) => ({
+                                              ...prev,
+                                              jobTitle: e.value,
+                                            }))
+                                          }
+                                          options={jobTitleOption}
+                                        />
+                                      </InputGroup>
+                                      <InputGroup size="sm" className="mb-2">
+                                        <InputGroup.Prepend className="w-100">
+                                          <InputGroup.Text className="w-100">
+                                            Địa chỉ
+                                          </InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <FormControl
+                                          required
+                                          value={newProcess.address}
+                                          onChange={(e) => {
+                                            setNewProcess({
+                                              ...newProcess,
+                                              address: e.target.value,
+                                            });
+                                          }}
+                                        />
+                                      </InputGroup>
+                                      <InputGroup size="sm" className="mb-2">
+                                        <InputGroup.Prepend className="w-100">
+                                          <InputGroup.Text className="w-100">
+                                            Kết quả hoàn thành
+                                          </InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <FormControl
+                                          required
+                                          as={Select}
+                                          size="sm"
+                                          className="p-0"
+                                          value={getValueSelect(
+                                            newProcess.result
+                                          )}
+                                          placeholder="Chọn mức hoàn thành"
+                                          onChange={(e) =>
+                                            setNewProcess((prev) => ({
+                                              ...prev,
+                                              result: e.value,
+                                            }))
+                                          }
+                                          options={resultOption}
+                                        />
+                                      </InputGroup>
+                                      <Button
+                                        type="submit"
+                                        form="addProcessInCompany"
+                                        className="float-right"
+                                      >
+                                        Thêm quá trình làm việc
+                                      </Button>
+                                    </form>
+                                  </Card.Body>
+
+                                  <Card.Footer className="">
+                                    <InputGroup size="sm">
+                                      <InputGroup.Prepend>
+                                        <InputGroup.Text>
+                                          Nghỉ việc
+                                        </InputGroup.Text>
+                                      </InputGroup.Prepend>
+                                      <FormControl
+                                        as={Select}
+                                        size="sm"
+                                        className="p-0"
+                                        options={listLeaving}
+                                        value={getValueSelect(newWork.leaving)}
+                                        onChange={(e) => {
+                                          setNewWork({
+                                            ...newWork,
+                                            leaving: e.label,
+                                          });
+                                        }}
+                                      ></FormControl>
+                                    </InputGroup>
+                                  </Card.Footer>
+                                </Card>
                               </div>
                             </form>
                           </div>
@@ -791,7 +1134,7 @@ function Jobmyresume(props) {
                             <button
                               type="submit"
                               className="site-button"
-                              form="addWorkExperience"
+                              onClick={handleAddWorkExperience}
                             >
                               Save
                             </button>
@@ -1059,10 +1402,14 @@ function Jobmyresume(props) {
                                   </span>
                                 </div>
                                 <div className="d-flex">
-                                  <label className="m-b0">{item.certificate}</label>
+                                  <label className="m-b0">
+                                    {item.certificate}
+                                  </label>
                                   <Link
                                     to={"#"}
-                                    onClick={() => handleDeleteShortTraining(item._id)}
+                                    onClick={() =>
+                                      handleDeleteShortTraining(item._id)
+                                    }
                                     className="site-button add-btn button-sm"
                                     style={{ backgroundColor: "red" }}
                                   >
@@ -1072,7 +1419,6 @@ function Jobmyresume(props) {
                                 <p className="m-b0 font-16">
                                   Đơn vị tổ chức: {item.organizer}
                                 </p>
-                              
                               </div>
                               <hr />
                             </>
@@ -1088,7 +1434,9 @@ function Jobmyresume(props) {
                       <div className="modal-dialog my-0" role="document">
                         <div className="modal-content">
                           <div className="modal-header">
-                            <h5 className="modal-title">Khóa đào tạo ngắn hạn</h5>
+                            <h5 className="modal-title">
+                              Khóa đào tạo ngắn hạn
+                            </h5>
                             <button
                               type="button"
                               className="close"
@@ -1185,7 +1533,12 @@ function Jobmyresume(props) {
                               type="submit"
                               className="site-button btn"
                               form="addShortTraining"
-                              disabled={!newShortTraining.certificate || !newShortTraining.organizer || !newShortTraining.start || !newShortTraining.end}
+                              disabled={
+                                !newShortTraining.certificate ||
+                                !newShortTraining.organizer ||
+                                !newShortTraining.start ||
+                                !newShortTraining.end
+                              }
                             >
                               Save
                             </button>

@@ -1,81 +1,128 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import Header2 from './../Layout/Header2';
-import Footer from './../Layout/Footer';
-import SavedJobs from './../Element/SavedJobs';
+import React from "react";
+import { Link } from "react-router-dom";
+import Header2 from "./../Layout/Header2";
+import Footer from "./../Layout/Footer";
+import SavedJobs from "./../Element/SavedJobs";
+import { Form, FormControl } from "react-bootstrap";
+import Select from "react-select";
+import Profilesidebar from "./../Element/Profilesidebar";
 
-function Jobsavedjobs(){	
-	return(
-		<>
-			<Header2 />
-			<div className="page-content bg-white">
-				<div className="content-block">
-					<div className="section-full bg-white p-t50 p-b20">
-						<div className="container">
-							<div className="row">
-								<div className="col-xl-3 col-lg-4 m-b30">
-									<div className="sticky-top">
-										<div className="candidate-info">
-											<div className="candidate-detail text-center">
-												<div className="canditate-des">
-													<Link to={"#"}>
-														<img alt="" src={require("./../../images/team/pic1.jpg")} />
-													</Link>
-													<div className="upload-link" title="update" data-toggle="tooltip" data-placement="right">
-														<input type="file" className="update-flie" />
-														<i className="fa fa-camera"></i>
-													</div>
-												</div>
-												<div className="candidate-title">
-													<div className="">
-														<h4 className="m-b5"><Link to={"#"}>David Matin</Link></h4>
-														<p className="m-b0"><Link to={"#"}>Web developer</Link></p>
-													</div>
-												</div>
-											</div>
-											<ul>
-												<li><Link to={"/jobs-profile"}>
-													<i className="fa fa-user-o" aria-hidden="true"></i> 
-													<span>Profile</span></Link></li>
-												<li><Link to={"/jobs-my-resume"}>
-													<i className="fa fa-file-text-o" aria-hidden="true"></i> 
-													<span>My Resume</span></Link></li>
-												<li><Link to={"/jobs-saved-jobs"}>
-													<i className="fa fa-heart-o" aria-hidden="true"></i> 
-													<span>Saved Jobs</span></Link></li>
-												<li><Link to={"/jobs-applied-job"}>
-													<i className="fa fa-briefcase" aria-hidden="true"></i> 
-													<span>Applied Jobs</span></Link></li>
-												<li><Link to={"/jobs-alerts"} className="active">
-													<i className="fa fa-bell-o" aria-hidden="true"></i> 
-													<span>Job Alerts</span></Link></li>
-												<li><Link to={"/jobs-cv-manager"}>
-													<i className="fa fa-id-card-o" aria-hidden="true"></i> 
-													<span>CV Manager</span></Link></li>
-												<li><Link to={"/jobs-change-password"}>
-													<i className="fa fa-key" aria-hidden="true"></i> 
-													<span>Change Password</span></Link></li>
-												<li><Link to={"./"}>
-													<i className="fa fa-sign-out" aria-hidden="true"></i> 
-													<span>Log Out</span></Link></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div className="col-xl-9 col-lg-8 m-b30">
-									<SavedJobs />
-								</div>
-							</div>
-						</div>
-					</div>
-					
-				</div>
-			</div>	
-			
-			<Footer />
-		</>
-	)
+function Jobsavedjobs(props) {
+  return (
+    <>
+      <Header2 />
+      <div className="page-content bg-white">
+        <div className="content-block">
+          <div className="section-full bg-white p-t50 p-b20">
+            <div className="container">
+              <div className="row">
+                <Profilesidebar url={props.location.pathname} />
+                <div className="col-xl-9 col-lg-8 m-b30">
+                  <div className="section-full">
+                    <div className="find-job-bx">
+                      <form className="dezPlaceAni">
+                        <div className="row">
+                          <div className="col-lg-6 col-md-6">
+                            <div className="form-group">
+                              <FormControl
+                                as={Select}
+                                custom
+                                placeholder="Chuyên nghành mong muốn"
+                              ></FormControl>
+                            </div>
+                          </div>
+                          <div className="col-lg-6 col-md-6">
+                            <div className="form-group">
+                              <FormControl
+                                as={Select}
+                                custom
+                                placeholder="Chức danh mong muốn"
+                              ></FormControl>
+                            </div>
+                          </div>
+                          <div className="col-lg-6 col-md-6">
+                            <div className="form-group">
+                              <FormControl
+                                as={Select}
+                                custom
+                                placeholder="Chức vụ mong muốn"
+                              >
+                                <option>Select Sector</option>
+                                <option>Construction</option>
+                              </FormControl>
+                            </div>
+                          </div>
+                          <div className="col-lg-6 col-md-6">
+                            <div className="form-group">
+                              <FormControl
+                                as={Select}
+                                custom
+                                placeholder="Môi trường làm việc mong muốn"
+                              >
+                                <option>Select Sector</option>
+                                <option>Construction</option>
+                              </FormControl>
+                            </div>
+                          </div>
+                          <div className="col-lg-6 col-md-6">
+                            <div className="form-group">
+                              <FormControl
+                                as={Select}
+                                custom
+                                placeholder="Lĩnh vực mong muốn"
+                              >
+                                <option>Select Sector</option>
+                                <option>Construction</option>
+                              </FormControl>
+                            </div>
+                          </div>
+                          <div className="col-lg-6 col-md-6">
+                            <div className="form-group">
+                              <FormControl
+                                as={Select}
+                                custom
+                                placeholder="Loại hình đơn vị tuyển dụng"
+                              >
+                                <option>Select Sector</option>
+                                <option>Construction</option>
+                              </FormControl>
+                            </div>
+                          </div>
+                          <div className="col-lg-6 col-md-6">
+                            <div className="form-group">
+                              <FormControl
+                                as={Select}
+                                custom
+                                placeholder="Nơi làm việc mong muốn"
+                              >
+                                <option>Select Sector</option>
+                                <option>Construction</option>
+                              </FormControl>
+                            </div>
+                          </div>
+                          <div className="col-lg-6 col-md-6">
+                            <button
+                              type="submit"
+                              className="site-button btn-block"
+                            >
+                              Tìm việc
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <SavedJobs />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <Footer />
+    </>
+  );
 }
 
 export default Jobsavedjobs;

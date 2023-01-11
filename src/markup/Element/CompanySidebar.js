@@ -7,7 +7,6 @@ function CompanySidebar(props) {
     useEffect(() => {
         let name = JSON.parse(localStorage.getItem('userDetails')).companyName;
         setCompanyName(name);
-        console.log("CompanySidebar", props.url.pathname);
     }, []);
 
   return (

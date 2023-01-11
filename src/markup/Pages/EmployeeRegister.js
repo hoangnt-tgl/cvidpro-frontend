@@ -5,7 +5,6 @@ import Select from "react-select";
 import {
   getListSchools,
   getListProvince,
-  getListJobTitle,
   getListMajorByLevel,
   getListLevel,
   getListDistrict,

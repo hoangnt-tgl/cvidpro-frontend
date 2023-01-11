@@ -65,3 +65,21 @@ export const confirmPhone = async (id, otp) => {
       formatError(error.response?.data?.message || "");
     });
 }
+
+export const addWorkExperience = async (id, newExperience) => {
+  return axiosInstance
+    .post(`employee/add-work-experience/${id}`, newExperience)
+    .then((res) => res.data)
+    .catch((error) => {
+      formatError(error.response?.data?.message || "");
+    });
+}
+
+export const deleteWorkExperience = async (id, experienceId) => {
+  return axiosInstance
+    .delete(`employee/delete-work-experience/${id}/${experienceId}`)
+    .then((res) => res.data)
+    .catch((error) => {
+      formatError(error.response?.data?.message || "");
+    });
+}

@@ -15,7 +15,6 @@ export const LOGIN_FAILED_ACTION = "[login action] failed login";
 export const LOADING_TOGGLE_ACTION = "[Loading action] toggle loading";
 export const LOGOUT_ACTION = "[Logout action] logout action";
 
-
 export function employeeSignupAction(data, history) {
   return (dispatch) => {
     employeeSignUp(data)
@@ -37,7 +36,11 @@ export function employeeLoginAction(email, password, history) {
         saveTokenInLocalStorage(response.data);
         runLogoutTimer(dispatch, response.data.expiresIn * 1000, history);
         dispatch(loginConfirmedAction(response.data));
-        history.push("/jobs-my-resume");
+        if (response.data.confirm2.confirmed === 1) {
+          history.push("/jobs-profile");
+        } else {
+          history.push("/jobs-my-resume");
+        }
       })
       .catch((error) => {
         const errorMessage = formatError(error.response.data.message || "");
