@@ -11,6 +11,7 @@ import Jobsalert from './Pages/Jobsalert';
 import Jobsavedjobs from './Pages/Jobsavedjobs';
 import Jobcvmanager from './Pages/Jobcvmanager';
 import Changepasswordpage from './Pages/Changepasswordpage';
+import JobResume from './Pages/JobResume';
 
 import Companyprofile from './Pages/Companyprofile';
 import CompanyDepartment from './Pages/CompanyDepartment';
@@ -33,6 +34,7 @@ import Browsejoblist from './Pages/Browsejoblist';
 import Browsejobgrid from './Pages/Browsejobgrid';
 import Browsejobfilterlist from './Pages/Browsejobfilterlist';
 import Browsejobfiltergrid from './Pages/Browsejobfiltergrid';
+
 
 import Categoryalljob from './Pages/Categoryalljob';
 import Categorycompanyjob from './Pages/Categorycompanyjob';
@@ -80,6 +82,8 @@ const Markup= () => {
 					<Route path='/jobs-saved-jobs' exact component={Jobsavedjobs} />
 					<Route path='/jobs-cv-manager' exact component={Jobcvmanager} />
 					<Route path='/jobs-change-password' exact component={Changepasswordpage} />
+					<Route path='/job-resume/:id' exact component={JobResume} />
+
 						
 						
 					<Route path='/company-profile' exact component={Companyprofile} />

@@ -1,7 +1,5 @@
 import axiosInstance from "../services/AxiosInstance";
-import {
-  formatError,
-} from "../services/AuthService";
+import { formatError } from "../services/AuthService";
 
 export const getMyResume = async (history) => {
   return axiosInstance
@@ -55,7 +53,7 @@ export const sendOTP = async (id, phone) => {
     .catch((error) => {
       formatError(error.response?.data?.message || "");
     });
-}
+};
 
 export const confirmPhone = async (id, otp) => {
   return axiosInstance
@@ -64,7 +62,7 @@ export const confirmPhone = async (id, otp) => {
     .catch((error) => {
       formatError(error.response?.data?.message || "");
     });
-}
+};
 
 export const addWorkExperience = async (id, newExperience) => {
   return axiosInstance
@@ -73,7 +71,7 @@ export const addWorkExperience = async (id, newExperience) => {
     .catch((error) => {
       formatError(error.response?.data?.message || "");
     });
-}
+};
 
 export const deleteWorkExperience = async (id, experienceId) => {
   return axiosInstance
@@ -82,4 +80,21 @@ export const deleteWorkExperience = async (id, experienceId) => {
     .catch((error) => {
       formatError(error.response?.data?.message || "");
     });
-}
+};
+
+export const getResumeById = async (id) => {
+  return axiosInstance
+    .get(`employee/get-by-id/${id}`)
+    .then((res) => res.data)
+    .catch((error) => {
+      formatError(error.response?.data?.message || "");
+    });
+};
+export const findJob = async (id, job) => {
+  return axiosInstance
+    .post(`employee/find-job/${id}`, job)
+    .then((res) => res.data)
+    .catch((error) => {
+      formatError(error.response?.data?.message || "");
+    });
+};
