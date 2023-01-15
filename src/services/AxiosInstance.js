@@ -1,9 +1,9 @@
 import axios from "axios";
 import { store } from "../store/store";
+import { BASE_URL } from "../config";
 
 const axiosInstance = axios.create({
-  baseURL: `https://cvidpro.herokuapp.com/`,
-  // baseURL: `http://localhost:3030/`,
+  baseURL: BASE_URL,
 });
 
 axiosInstance.interceptors.request.use((config) => {

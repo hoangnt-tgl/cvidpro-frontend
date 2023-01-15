@@ -33,7 +33,10 @@ function Jobprofile(props) {
           <div className="section-full bg-white browse-job p-t50 p-b20">
             <div className="container">
               <div className="row">
-                <Profilesidebar userInfo={userInformation} url={props.location.pathname}/>
+                <Profilesidebar
+                  userInfo={userInformation}
+                  url={props.location.pathname}
+                />
                 <div className="col-xl-9 col-lg-8 m-b30">
                   <div className="job-bx job-profile">
                     <div className="job-bx-title clearfix">
@@ -56,7 +59,7 @@ function Jobprofile(props) {
                               type="text"
                               className="form-control"
                               placeholder="Alexander Weir"
-							  value={userInformation.name}
+                              value={userInformation.name}
                             />
                           </div>
                         </div>
@@ -67,7 +70,7 @@ function Jobprofile(props) {
                               type="text"
                               className="form-control"
                               placeholder="Web Designer"
-							  value={userInformation.jobTitle}
+                              value={userInformation.jobTitle}
                             />
                           </div>
                         </div>
@@ -181,7 +184,7 @@ function Jobprofile(props) {
                               type="text"
                               className="form-control"
                               placeholder="New york City"
-							  value={userInformation.address}
+                              value={userInformation.address}
                             />
                           </div>
                         </div>

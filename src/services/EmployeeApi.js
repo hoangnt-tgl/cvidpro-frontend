@@ -98,3 +98,21 @@ export const findJob = async (id, job) => {
       formatError(error.response?.data?.message || "");
     });
 };
+
+export const getCountResume = async () => {
+  return axiosInstance
+    .get(`employee/get-count-employee`)
+    .then((res) => res.data)
+    .catch((error) => {
+      formatError(error.response?.data?.message || "");
+    });
+}
+
+export const updatePoint = async (id, pointList) => {
+  return axiosInstance
+    .put(`employee/update-point/${id}`, { pointList })
+    .then((res) => res.data)
+    .catch((error) => {
+      formatError(error.response?.data?.message || "");
+    });
+}

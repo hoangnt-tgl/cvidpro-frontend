@@ -12,9 +12,7 @@ import "./plugins/slick/slick.min.css";
 import "./plugins/slick/slick-theme.min.css";
 
 // import { ToastContainer } from 'react-toastify';
-import Login from "./markup/Pages/Loginpage2";
 import HomePage from "./markup/Pages/Homepage1";
-import SignUp from "./markup/Pages/Register2";
 import EmployeeRegister from "./markup/Pages/EmployeeRegister";
 import CompanyRegister from "./markup/Pages/CompanyRegister";
 import EmployeeLogin from "./markup/Pages/EmployeeLogin";
@@ -24,15 +22,6 @@ import CompanyManageResume from "./markup/Pages/CompanyManageResume";
 import CompanyBrowseCandidates from './markup/Pages/CompanyBrowseCandidates';
 import JobResume from './markup/Pages/JobResume';
 // import ForgotPassword from "./markup/Pages/ForgotPassword";
-
-
-//const SignUp = lazy(() => import('./markup/Pages/Register2'));
-//const ForgotPassword = lazy(() => import('./markup/pages/ForgotPassword'));
-/*  const Login = lazy(() => {
-    return new Promise(resolve => {
-    setTimeout(() => resolve(import('./markup/Pages/Loginpage2')), 500);
-  });
-});  */
 
 function App(props) {
   const dispatch = useDispatch();

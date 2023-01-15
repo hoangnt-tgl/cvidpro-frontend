@@ -9,6 +9,7 @@ import Featureblog from "./../Element/Featureblog";
 import Jobsection from "./../Element/Jobsection";
 import Owltestimonial from "./../Element/Owlblog1";
 import {getCountCompany} from './../../services/CompanyApi';
+import {getCountResume} from './../../services/EmployeeApi';
 import { store } from "./../../store/store";
 
 //Images
@@ -17,11 +18,15 @@ var bnr3 = require("./../../images/lines.png");
 
 function Homepage() {
   const [countCompany, setCountCompany] = useState(0);
+  const [countJob, setCountJob] = useState(0);
+  const [countResume, setCountResume] = useState(0);
   useEffect(() => {
     window.scrollTo(0, 0);
     async function fetchData() {
       let count = (await getCountCompany());
       setCountCompany(count);
+      let countResume = (await getCountResume());
+      setCountResume(countResume);
     }
     fetchData();
   }, []);
@@ -38,7 +43,7 @@ function Homepage() {
 								<h6 className="fw3">20+ Catetories work wating for you</h6>
 							</div>
 							<div className="head-counter-bx">
-								<h2 className="m-b5 counter"><CountUp end={0} duration={5}/></h2>
+								<h2 className="m-b5 counter"><CountUp end={countResume} duration={5}/></h2>
 								<h6 className="fw3">CVID</h6>
 							</div>
 							<div className="head-counter-bx">

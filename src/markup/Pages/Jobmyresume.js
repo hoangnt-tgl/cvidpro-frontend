@@ -24,12 +24,14 @@ import {
   addShortTraining,
   deleteShortTraining,
   addWorkExperience,
-  deleteWorkExperience
+  deleteWorkExperience,
+  updatePoint,
 } from "../../services/EmployeeApi";
 import {
   getSortTime,
   formatTimeInput,
   getMonthYear,
+  formatMonthInput,
 } from "../../services/TimeService";
 import Listingsidebar from "./../Element/Listingsidebar";
 import {
@@ -91,6 +93,7 @@ function Jobmyresume(props) {
   const getValueSelect = (value) => {
     return value ? { label: value, value: value } : "";
   };
+
   const [userInformation, setUserInformation] = useState({});
   const [reload, setReload] = useState(false);
   const [levels, setLevels] = useState([]);
@@ -146,6 +149,9 @@ function Jobmyresume(props) {
       const response = await getMyResume(props.history);
       console.log(response);
       setUserInformation(response);
+      objProcess.jobTitle = response.jobTitle;
+      objProcess.major = response.major;
+      setNewProcess(objProcess);
     }
     fetchData();
   }, [reload]);
@@ -182,6 +188,15 @@ function Jobmyresume(props) {
       setUserInformation({ ...userInformation, avatar: base64 });
     };
   };
+  const handleUpdatePoint = async (e) => {
+    e.preventDefault();
+    updatePoint(userInformation._id, userInformation.pointList).then((res) => {
+      if (res) {
+        setReload(!reload);
+      }
+    });
+  };
+
   const handleAddSchool = async () => {
     await addSchool(userInformation._id, newSchool);
     setNewSchool(objSchool);
@@ -207,6 +222,17 @@ function Jobmyresume(props) {
   };
 
   const handleAddProcess = async (e) => {
+    if (
+      (!newProcess.to && !newProcess.isCurrent) ||
+      !newProcess.from ||
+      !newProcess.jobTitle ||
+      !newProcess.major ||
+      !newProcess.workDescription ||
+      !newProcess.address
+    ) {
+      swal("Alert!", "Vui lòng nhập đầy đủ thông tin", "error");
+      return;
+    }
     let listProcess = newWork.process;
     if (
       newWork.process.length > 0 &&
@@ -216,22 +242,67 @@ function Jobmyresume(props) {
     }
     listProcess.push(newProcess);
     setNewWork({ ...newWork, process: listProcess });
+    objProcess.jobTitle = userInformation.jobTitle;
+    objProcess.major = userInformation.major;
     setNewProcess({ ...objProcess, from: newProcess.to });
   };
 
   const handleDeleteProcess = async (index) => {};
 
   const handleAddWorkExperience = async () => {
+    if (
+      !newWork.company ||
+      !newWork.address ||
+      newWork.process.length === 0 ||
+      (!newWork.leaving && !newWork.isCurrent)
+    ) {
+      swal("Alert!", "Vui lòng nhập đầy đủ thông tin", "error");
+      return;
+    }
+    setUserInformation({
+      ...userInformation,
+      workExperience: [...userInformation.workExperience, newWork],
+    });
     await addWorkExperience(userInformation._id, newWork);
+    objProcess.jobTitle = userInformation.jobTitle;
+    objProcess.major = userInformation.major;
     setNewWork(objWork);
-    setResume(false);
     setNewProcess(objProcess);
-    setReload(!reload);
+    // setReload(!reload);
   };
   const handleDeleteWorkExperience = async (id) => {
     await deleteWorkExperience(userInformation._id, id);
     setReload(!reload);
   };
+
+  const getExperience = (workExperience) => {
+    let year = 0;
+    let month = 0;
+    if (!workExperience) {
+      return "Chưa có kinh nghiệm";
+    }
+    workExperience.forEach((company) => {
+      company.process.forEach((process) => {
+        if (process.isCurrent === true) {
+          let to = new Date();
+          let from = new Date(process.from);
+          let diff = to.getTime() - from.getTime();
+          month += Math.floor(diff / (1000 * 60 * 60 * 24 * 30));
+        } else {
+          let to = new Date(process.to);
+          let from = new Date(process.from);
+          let diff = to.getTime() - from.getTime();
+          month += Math.floor(diff / (1000 * 60 * 60 * 24 * 30));
+        }
+      });
+    });
+    if (month >= 12) {
+      year += Math.floor(month / 12);
+      month = month % 12;
+    }
+    return `${year} năm ${month} tháng`;
+  };
+
   return (
     <>
       <Header />
@@ -567,1294 +638,1477 @@ function Jobmyresume(props) {
         <div className="content-block">
           <div className="section-full browse-job content-inner-2">
             <div className="container">
-              <div className="row">
-                <div className="col-xl-3 col-lg-4 col-md-4 col-sm-12 m-b30">
-                  <Listingsidebar />
+              <div
+                id="resume_headline_bx"
+                className=" job-bx bg-white table-job-bx m-b30"
+              >
+                <div className="d-flex">
+                  <h5 className="m-b15 bold">Kinh nghiệm làm việc</h5>
                 </div>
-                <div className="col-xl-9 col-lg-8 col-md-8 col-sm-12">
-                  <div
-                    id="resume_headline_bx"
-                    className=" job-bx bg-white table-job-bx m-b30"
-                  >
-                    <div className="d-flex">
-                      <h5 className="m-b15">Kinh nghiệm làm việc</h5>
-                      <Link
-                        to={"#"}
-                        className="site-button add-btn button-sm"
-                        onClick={() => setResume(true)}
-                      >
-                        <i className="fa fa-pencil m-r5"></i> Thêm
-                      </Link>
-                    </div>
-                    <p className="m-b0">Job board currently living in USA</p>
-                    <div className="row">
-                      <div className="col-lg-12 col-md-12 col-sm-12">
-                        {userInformation.workExperience?.map((item, index) => {
-                          return (
-                            <>
-                              <hr />
-                              <div className="clearfix m-b20">
-                                <div className="badge-time">
-                                  <span className="badge badge-primary">
-                                    <i className="fa fa-suitcase" />
-                                    <span>
-                                      {" " + getMonthYear(item.start)} -{" "}
-                                      {item.process.slice(-1)[0].isCurrent
-                                        ? "Hiện tại"
-                                        : getMonthYear(item.end)}
-                                    </span>
-                                  </span>
-                                </div>
-                                <div className="d-flex">
-                                  <label className="m-b0 font-20">
-                                    {item.company}
-                                  </label>
-                                  <Link
-                                    to={"#"}
-                                    onClick={() => handleDeleteWorkExperience(item._id)}
-                                    className="site-button add-btn button-sm"
-                                    style={{ backgroundColor: "red" }}
-                                  >
-                                    <i className="ti-trash m-r5"></i>
-                                  </Link>
-                                </div>
-                                <p className="m-b0 font-16">
-                                  Địa chỉ: {item.address}
-                                </p>
-                                <label className="m-b0 font-16">
-                                  Quá trình làm việc
-                                </label>
-                                {item.process.map((item, index) => {
-                                  return (
-                                    <div className="pl-4">
-                                      <div className="badge-time">
-                                        <span className="badge badge-primary">
-                                          <i className="fa fa-clock-o" />
-                                          <span>
-                                            {" " + getMonthYear(item.from)} -{" "}
-                                            {item.isCurrent
-                                              ? "Hiện tại"
-                                              : getMonthYear(item.to)}
-                                          </span>
-                                        </span>
-                                      </div>
-                                      <p className="m-b0 font-16">
-                                        Công việc: {item.workDescription}
-                                      </p>
-                                      <p className="m-b0 font-16">
-                                        Chuyên nghành: {item.major}
-                                      </p>
-                                      
-                                      <p className="m-b0 font-16">
-                                        Chức danh: {item.jobTitle}
-                                      </p>
-                                      <p className="m-b0 font-16">
-                                        Địa chỉ: {item.address}
-                                      </p>
-                                      <p className="m-b0 font-16">
-                                        Kết quả: {item.result}
-                                      </p>
-                                     
-                                    </div>
-                                  );
-                                })}
-                                <p className="m-b0 font-16">
-                                  {item.process.slice(-1)[0].isCurrent
-                                    ? ""
-                                    : "Nghỉ việc: " + item.leaving}
-                                </p>
-                              </div>
-                            </>
-                          );
-                        })}
-                      </div>
-                    </div>
-                    <Accordion>
-                      <Card border="primary">
-                        <Card.Header className="d-flex w-100 py-1">
-                          <Nav.Item className="mr-auto h4 fw" as={Nav.Item}>
-                            Tiêu chí và kết quả đánh giá
-                          </Nav.Item>
-                          <Nav.Item
-                            className="align-self-center"
-                            style={{ width: "50px" }}
-                          >
-                            Điểm
-                          </Nav.Item>
-                        </Card.Header>
-                      </Card>
-                      {questions.map((question, index) => {
-                        return (
-                          <Card border="primary">
-                            <Card.Header className="d-flex w-100 py-1">
-                              <Accordion.Toggle
-                                as={Nav.Link}
-                                eventKey={index + 1}
-                                className="mr-auto"
+                {userInformation.workExperience?.map((item, index1) => {
+                  return (
+                    <Form className="mb-3">
+                      <Card>
+                        <Card.Header>
+                          <div className="row">
+                            <div className="col-12">
+                              <InputGroup size="sm" className="mb-2">
+                                <InputGroup.Prepend
+                                  style={{ maxHeight: "38px" }}
+                                >
+                                  <InputGroup.Text>
+                                    Nơi làm việc
+                                  </InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                  value={item.company}
+                                  className="m-0"
+                                  style={{ maxHeight: "38px" }}
+                                />
+                              </InputGroup>
+                            </div>
+                            <div className="col-md-4 col-sm-12">
+                              <InputGroup size="sm" className="mb-2">
+                                <InputGroup.Prepend
+                                  style={{ maxHeight: "38px" }}
+                                >
+                                  <InputGroup.Text>Từ</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                  className="m-0"
+                                  value={formatMonthInput(item.start)}
+                                  style={{ maxHeight: "38px" }}
+                                  type="month"
+                                />
+                              </InputGroup>
+                            </div>
+                            <div className="col-md-4 col-sm-12">
+                              <InputGroup size="sm">
+                                <InputGroup.Prepend
+                                  style={{ maxHeight: "38px" }}
+                                >
+                                  <InputGroup.Text>Đến</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                  className="m-0"
+                                  style={{ maxHeight: "38px" }}
+                                  type="month"
+                                  value={formatMonthInput(item.end)}
+                                />
+                              </InputGroup>
+                            </div>
+                            <div className="col-md-4 col-sm-12">
+                              <Form.Group
+                                controlId="formBasicCheckbox"
+                                className="my-2"
                               >
-                                {index + 1 + ". " + question.name}{" "}
-                                <i className="fa fa-question-circle ms-0"></i>
-                              </Accordion.Toggle>
-                              <Form.Control
-                                className="align-self-center mr-0"
-                                style={{ width: "50px" }}
-                                type="number"
-                                min="0"
-                                max="10"
-                              ></Form.Control>
-                            </Card.Header>
-                            <Accordion.Collapse eventKey={index + 1}>
-                              <Card.Body className="border-top">
-                                {question.detail.map((item, index2) => {
-                                  return (
-                                    <>
-                                      <Nav.Item>{item}</Nav.Item>
-                                    </>
-                                  );
-                                })}
-                              </Card.Body>
-                            </Accordion.Collapse>
-                          </Card>
-                        );
-                      })}
-                    </Accordion>
-                    <Modal
-                      show={resume}
-                      onHide={setResume}
-                      className="modal fade modal-bx-info editor"
-                    >
-                      <div className="modal-dialog m-0" role="document">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5
-                              className="modal-title"
-                              id="ResumeheadlineModalLongTitle"
-                            >
-                              Kinh nghiệm làm việc
-                            </h5>
-                            <button
-                              type="button"
-                              className="close"
-                              onClick={() => setResume(false)}
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
+                                <Form.Check
+                                  type="checkbox"
+                                  label="Đang làm việc"
+                                  checked={
+                                    item.process[item.process.length - 1]
+                                      .isCurrent
+                                  }
+                                />
+                              </Form.Group>
+                            </div>
+                            <div className="col-12">
+                              <InputGroup size="sm">
+                                <InputGroup.Prepend
+                                  style={{ maxHeight: "38px" }}
+                                >
+                                  <InputGroup.Text>Địa chỉ</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                  className="m-0"
+                                  style={{ maxHeight: "38px" }}
+                                  value={item.address}
+                                />
+                              </InputGroup>
+                            </div>
                           </div>
-                          <div
-                            className="modal-body"
-                            style={{ overflow: "auto", maxHeight: "70vh" }}
-                          >
-                            <form
-                              id="addCompanyInfo"
-                              onSubmit={() => console.log("submit")}
-                              action="javascript:void(0);"
-                            >
-                              <div className="row">
-                                <div className="col-lg-12 col-md-12"></div>
-                              </div>
-                            </form>
-
-                            <form
-                              id="addWorkExperience"
-                              action="javascript:void(0);"
-                            >
-                              <div className="row">
-                                <div className="col-lg-12 col-md-12"></div>
-                                <Card className="w-100 mx-3">
-                                  <Card.Header className="">
+                        </Card.Header>
+                        <Card.Body>
+                          <Card.Title className="text-center">
+                            Quá trình làm việc
+                          </Card.Title>
+                          {item.process.map((element, index2) => {
+                            return (
+                              <>
+                                <div className="row ">
+                                  <div className="col-md-4 col-sm-12">
                                     <InputGroup size="sm" className="mb-2">
-                                      <InputGroup.Prepend>
-                                        <InputGroup.Text>
-                                          Nơi làm việc
-                                        </InputGroup.Text>
-                                      </InputGroup.Prepend>
-                                      <FormControl
-                                        value={newWork.company}
-                                        onChange={(e) =>
-                                          setNewWork({
-                                            ...newWork,
-                                            company: e.target.value,
-                                          })
-                                        }
-                                      />
-                                    </InputGroup>
-                                    <InputGroup size="sm">
-                                      <InputGroup.Prepend>
-                                        <InputGroup.Text>
-                                          Địa chỉ
-                                        </InputGroup.Text>
-                                      </InputGroup.Prepend>
-                                      <FormControl
-                                        value={newWork.address}
-                                        onChange={(e) =>
-                                          setNewWork({
-                                            ...newWork,
-                                            address: e.target.value,
-                                          })
-                                        }
-                                      />
-                                    </InputGroup>
-                                  </Card.Header>
-                                  <Card.Body>
-                                    <Card.Title className="text-center">
-                                      Quá trình làm việc
-                                    </Card.Title>
-                                    {newWork.process.map((item, index) => {
-                                      return (
-                                        <form>
-                                          <Form.Row>
-                                            <Col sm={6}>
-                                              <InputGroup
-                                                size="sm"
-                                                className="mb-2"
-                                              >
-                                                <InputGroup.Prepend>
-                                                  <InputGroup.Text>
-                                                    Từ
-                                                  </InputGroup.Text>
-                                                </InputGroup.Prepend>
-                                                <FormControl
-                                                  required
-                                                  type="date"
-                                                  value={item.from}
-                                                />
-                                              </InputGroup>
-                                            </Col>
-                                            <Col>
-                                              <InputGroup
-                                                size="sm"
-                                                className="mb-2"
-                                              >
-                                                <InputGroup.Prepend>
-                                                  <InputGroup.Text>
-                                                    Đến
-                                                  </InputGroup.Text>
-                                                </InputGroup.Prepend>
-                                                <FormControl
-                                                  required
-                                                  type="date"
-                                                  value={item.to}
-                                                />
-                                              </InputGroup>
-                                            </Col>
-                                          </Form.Row>
-                                          <Form.Group
-                                            className="mb-2"
-                                            controlId="isWorking"
-                                          >
-                                            <Form.Check
-                                              type="checkbox"
-                                              label="Đang làm việc tại đây"
-                                              checked={item.isCurrent}
-                                            />
-                                          </Form.Group>
-
-                                          <InputGroup
-                                            size="sm"
-                                            className="mb-2"
-                                          >
-                                            <InputGroup.Prepend className="w-100">
-                                              <InputGroup.Text className="w-100">
-                                                Công việc
-                                              </InputGroup.Text>
-                                            </InputGroup.Prepend>
-                                            <FormControl
-                                              required
-                                              value={item.workDescription}
-                                            />
-                                          </InputGroup>
-                                          <InputGroup
-                                            size="sm"
-                                            className="mb-2"
-                                          >
-                                            <InputGroup.Prepend className="w-100">
-                                              <InputGroup.Text className="w-100">
-                                                Chuyên nghành
-                                              </InputGroup.Text>
-                                            </InputGroup.Prepend>
-                                            <FormControl value={item.major} />
-                                          </InputGroup>
-                                          <InputGroup
-                                            size="sm"
-                                            className="mb-2"
-                                          >
-                                            <InputGroup.Prepend className="w-100">
-                                              <InputGroup.Text className="w-100">
-                                                Chức danh công việc
-                                              </InputGroup.Text>
-                                            </InputGroup.Prepend>
-                                            <FormControl
-                                              value={item.jobTitle}
-                                            />
-                                          </InputGroup>
-                                          <InputGroup
-                                            size="sm"
-                                            className="mb-2"
-                                          >
-                                            <InputGroup.Prepend className="w-100">
-                                              <InputGroup.Text className="w-100">
-                                                Địa chỉ
-                                              </InputGroup.Text>
-                                            </InputGroup.Prepend>
-                                            <FormControl value={item.address} />
-                                          </InputGroup>
-                                          <InputGroup
-                                            size="sm"
-                                            className="mb-2"
-                                          >
-                                            <InputGroup.Prepend className="w-100">
-                                              <InputGroup.Text className="w-100">
-                                                Kết quả hoàn thành
-                                              </InputGroup.Text>
-                                            </InputGroup.Prepend>
-                                            <FormControl value={item.result} />
-                                          </InputGroup>
-                                        </form>
-                                      );
-                                    })}
-                                    <form
-                                      id="addProcessInCompany"
-                                      onSubmit={handleAddProcess}
-                                      action="javascript:void(0);"
-                                    >
-                                      <Form.Row>
-                                        <Col sm={6}>
-                                          <InputGroup
-                                            size="sm"
-                                            className="mb-2"
-                                          >
-                                            <InputGroup.Prepend>
-                                              <InputGroup.Text>
-                                                Từ
-                                              </InputGroup.Text>
-                                            </InputGroup.Prepend>
-                                            <FormControl
-                                              required
-                                              type="date"
-                                              value={newProcess.from}
-                                              onChange={(e) => {
-                                                setNewProcess({
-                                                  ...newProcess,
-                                                  from: e.target.value,
-                                                });
-                                              }}
-                                            />
-                                          </InputGroup>
-                                        </Col>
-                                        <Col>
-                                          <InputGroup
-                                            size="sm"
-                                            className="mb-2"
-                                          >
-                                            <InputGroup.Prepend>
-                                              <InputGroup.Text>
-                                                Đến
-                                              </InputGroup.Text>
-                                            </InputGroup.Prepend>
-                                            <FormControl
-                                              required
-                                              type="date"
-                                              disabled={newProcess.isCurrent}
-                                              value={newProcess.to}
-                                              onChange={(e) => {
-                                                setNewProcess({
-                                                  ...newProcess,
-                                                  to: e.target.value,
-                                                });
-                                              }}
-                                            />
-                                          </InputGroup>
-                                        </Col>
-                                      </Form.Row>
-                                      <Form.Group className="mb-2">
-                                        <Form.Check
-                                          type="checkbox"
-                                          label="Đang làm việc tại đây"
-                                          checked={newProcess.isCurrent}
-                                          onChange={(e) => {
-                                            setNewProcess({
-                                              ...newProcess,
-                                              isCurrent: e.target.checked,
-                                              to: "",
-                                            });
-                                          }}
-                                        />
-                                      </Form.Group>
-
-                                      <InputGroup size="sm" className="mb-2">
-                                        <InputGroup.Prepend className="w-100">
-                                          <InputGroup.Text className="w-100">
-                                            Công việc
-                                          </InputGroup.Text>
-                                        </InputGroup.Prepend>
-                                        <FormControl
-                                          required
-                                          value={newProcess.workDescription}
-                                          onChange={(e) => {
-                                            setNewProcess({
-                                              ...newProcess,
-                                              workDescription: e.target.value,
-                                            });
-                                          }}
-                                        />
-                                      </InputGroup>
-                                      <InputGroup size="sm" className="mb-2">
-                                        <InputGroup.Prepend className="w-100">
-                                          <InputGroup.Text className="w-100">
-                                            Chuyên nghành
-                                          </InputGroup.Text>
-                                        </InputGroup.Prepend>
-                                        <FormControl
-                                          required
-                                          as={Select}
-                                          size="sm"
-                                          className="p-0"
-                                          value={getValueSelect(
-                                            newProcess.major
-                                          )}
-                                          placeholder="Chọn chuyên nghành"
-                                          onChange={(e) =>
-                                            setNewProcess((prev) => ({
-                                              ...prev,
-                                              major: e.value,
-                                            }))
-                                          }
-                                          options={majors}
-                                        />
-                                      </InputGroup>
-                                      <InputGroup size="sm" className="mb-2">
-                                        <InputGroup.Prepend className="w-100">
-                                          <InputGroup.Text className="w-100">
-                                            Chức danh công việc
-                                          </InputGroup.Text>
-                                        </InputGroup.Prepend>
-                                        <FormControl
-                                          required
-                                          as={Select}
-                                          size="sm"
-                                          className="p-0"
-                                          value={getValueSelect(
-                                            newProcess.jobTitle
-                                          )}
-                                          placeholder="Chọn chức danh"
-                                          onChange={(e) =>
-                                            setNewProcess((prev) => ({
-                                              ...prev,
-                                              jobTitle: e.value,
-                                            }))
-                                          }
-                                          options={jobTitleOption}
-                                        />
-                                      </InputGroup>
-                                      <InputGroup size="sm" className="mb-2">
-                                        <InputGroup.Prepend className="w-100">
-                                          <InputGroup.Text className="w-100">
-                                            Địa chỉ
-                                          </InputGroup.Text>
-                                        </InputGroup.Prepend>
-                                        <FormControl
-                                          required
-                                          value={newProcess.address}
-                                          onChange={(e) => {
-                                            setNewProcess({
-                                              ...newProcess,
-                                              address: e.target.value,
-                                            });
-                                          }}
-                                        />
-                                      </InputGroup>
-                                      <InputGroup size="sm" className="mb-2">
-                                        <InputGroup.Prepend className="w-100">
-                                          <InputGroup.Text className="w-100">
-                                            Kết quả hoàn thành
-                                          </InputGroup.Text>
-                                        </InputGroup.Prepend>
-                                        <FormControl
-                                          required
-                                          as={Select}
-                                          size="sm"
-                                          className="p-0"
-                                          value={getValueSelect(
-                                            newProcess.result
-                                          )}
-                                          placeholder="Chọn mức hoàn thành"
-                                          onChange={(e) =>
-                                            setNewProcess((prev) => ({
-                                              ...prev,
-                                              result: e.value,
-                                            }))
-                                          }
-                                          options={resultOption}
-                                        />
-                                      </InputGroup>
-                                      <Button
-                                        type="submit"
-                                        form="addProcessInCompany"
-                                        className="float-right"
+                                      <InputGroup.Prepend
+                                        style={{ maxHeight: "38px" }}
                                       >
-                                        Thêm quá trình làm việc
-                                      </Button>
-                                    </form>
-                                  </Card.Body>
-
-                                  <Card.Footer className="">
+                                        <InputGroup.Text>Từ</InputGroup.Text>
+                                      </InputGroup.Prepend>
+                                      <FormControl
+                                        className="m-0"
+                                        style={{ maxHeight: "38px" }}
+                                        type="month"
+                                        value={formatMonthInput(element.from)}
+                                      />
+                                    </InputGroup>
+                                  </div>
+                                  <div className="col-md-4 col-sm-12">
                                     <InputGroup size="sm">
-                                      <InputGroup.Prepend>
+                                      <InputGroup.Prepend
+                                        style={{ maxHeight: "38px" }}
+                                      >
+                                        <InputGroup.Text>Đến</InputGroup.Text>
+                                      </InputGroup.Prepend>
+                                      <FormControl
+                                        className="m-0"
+                                        style={{ maxHeight: "38px" }}
+                                        type="month"
+                                        value={formatMonthInput(element.to)}
+                                      />
+                                    </InputGroup>
+                                  </div>
+                                  <div className="col-md-4 col-sm-12">
+                                    <Form.Group
+                                      controlId="formBasicCheckbox"
+                                      className="my-2"
+                                    >
+                                      <Form.Check
+                                        type="checkbox"
+                                        label="Đang làm việc"
+                                        checked={element.isCurrent}
+                                      />
+                                    </Form.Group>
+                                  </div>
+                                  <div className="col-12">
+                                    <InputGroup size="sm" className="mb-2">
+                                      <InputGroup.Prepend
+                                        style={{ maxHeight: "38px" }}
+                                      >
                                         <InputGroup.Text>
-                                          Nghỉ việc
+                                          Công việc
+                                        </InputGroup.Text>
+                                      </InputGroup.Prepend>
+                                      <FormControl
+                                        className="m-0"
+                                        style={{ maxHeight: "38px" }}
+                                        value={element.workDescription}
+                                      />
+                                    </InputGroup>
+                                  </div>
+                                  <div className="col-12">
+                                    <InputGroup size="sm" className="mb-2">
+                                      <InputGroup.Prepend
+                                        style={{ maxHeight: "38px" }}
+                                      >
+                                        <InputGroup.Text>
+                                          Chuyên nghành
                                         </InputGroup.Text>
                                       </InputGroup.Prepend>
                                       <FormControl
                                         as={Select}
                                         size="sm"
-                                        className="p-0"
-                                        options={listLeaving}
-                                        value={getValueSelect(newWork.leaving)}
-                                        onChange={(e) => {
-                                          setNewWork({
-                                            ...newWork,
-                                            leaving: e.label,
-                                          });
-                                        }}
-                                      ></FormControl>
+                                        className="m-0 p-0"
+                                        options={majors}
+                                        value={getValueSelect(element.major)}
+                                      />
                                     </InputGroup>
-                                  </Card.Footer>
-                                </Card>
-                              </div>
-                            </form>
-                          </div>
-                          <div className="modal-footer">
-                            <button
-                              type="button"
-                              className="site-button"
-                              onClick={() => setResume(false)}
-                            >
-                              Cancel
-                            </button>
-                            <button
-                              type="submit"
-                              className="site-button"
-                              onClick={handleAddWorkExperience}
-                            >
-                              Save
-                            </button>
-                          </div>
+                                  </div>
+                                  <div className="col-12">
+                                    <InputGroup size="sm" className="mb-2">
+                                      <InputGroup.Prepend
+                                        style={{ maxHeight: "38px" }}
+                                      >
+                                        <InputGroup.Text>
+                                          Chức danh công việc
+                                        </InputGroup.Text>
+                                      </InputGroup.Prepend>
+                                      <FormControl
+                                        as={Select}
+                                        size="sm"
+                                        className="m-0 p-0"
+                                        options={jobTitleOption}
+                                        value={getValueSelect(element.jobTitle)}
+                                      />
+                                    </InputGroup>
+                                  </div>
+                                  <div className="col-12">
+                                    <InputGroup size="sm" className="mb-2">
+                                      <InputGroup.Prepend
+                                        style={{ maxHeight: "38px" }}
+                                      >
+                                        <InputGroup.Text>
+                                          Địa chỉ
+                                        </InputGroup.Text>
+                                      </InputGroup.Prepend>
+                                      <FormControl
+                                        className="m-0"
+                                        style={{ maxHeight: "38px" }}
+                                        value={element.address}
+                                      />
+                                    </InputGroup>
+                                  </div>
+                                  <div className="col-12">
+                                    <InputGroup size="sm" className="mb-2">
+                                      <InputGroup.Prepend
+                                        style={{ maxHeight: "38px" }}
+                                      >
+                                        <InputGroup.Text>
+                                          Kết quả
+                                        </InputGroup.Text>
+                                      </InputGroup.Prepend>
+                                      <FormControl
+                                        as={Select}
+                                        size="sm"
+                                        className="m-0 p-0"
+                                        options={resultOption}
+                                        value={getValueSelect(element.result)}
+                                      />
+                                    </InputGroup>
+                                  </div>
+                                </div>
+                              </>
+                            );
+                          })}
+                        </Card.Body>
+                        <Card.Footer>
+                          <InputGroup size="sm">
+                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
+                              <InputGroup.Text>Nghỉ việc</InputGroup.Text>
+                            </InputGroup.Prepend>
+
+                            <FormControl
+                              as={Select}
+                              size="sm"
+                              className="m-0 p-0"
+                              options={listLeaving}
+                              value={getValueSelect(item.leaving)}
+                            ></FormControl>
+                          </InputGroup>
+                        </Card.Footer>
+                      </Card>
+                    </Form>
+                  );
+                })}
+                <h5 className="">
+                  Kinh nghiệm đến hiện tại:{" "}
+                  {getExperience(userInformation.workExperience)}
+                </h5>
+                <h5 className="text-center">Thêm kinh nghiệm làm việc mới</h5>
+
+                <Form className="mb-2" action="javascript:void(0);">
+                  <Card>
+                    <Card.Header>
+                      <div className="row">
+                        <div className="col-12">
+                          <InputGroup size="sm" className="mb-2">
+                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
+                              <InputGroup.Text>Nơi làm việc</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <FormControl
+                              value={newWork.company}
+                              className="m-0"
+                              style={{ maxHeight: "38px" }}
+                              onChange={(e) => {
+                                setNewWork({
+                                  ...newWork,
+                                  company: e.target.value,
+                                });
+                              }}
+                            />
+                          </InputGroup>
                         </div>
-                      </div>
-                    </Modal>
-                  </div>
-                  <div id="education_bx" className="job-bx bg-white m-b30">
-                    <div className="d-flex">
-                      <h5 className="m-b15">Quá trình học tập</h5>
-                      <Link
-                        to={"#"}
-                        onClick={() => setEducation(true)}
-                        className="site-button add-btn button-sm"
-                      >
-                        <i className="fa fa-pencil m-r5"></i> Thêm
-                      </Link>
-                    </div>
-                    <p>
-                      Mention your employment details including your current and
-                      previous company work experience
-                    </p>
-                    <Modal
-                      className="modal fade modal-bx-info editor"
-                      show={education}
-                      onHide={setEducation}
-                    >
-                      <div className="modal-dialog my-0" role="document">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5
-                              className="modal-title"
-                              id="EducationModalLongTitle"
-                            >
-                              Quá trình học tập
-                            </h5>
-                            <button
-                              type="button"
-                              className="close"
-                              onClick={() => setEducation(false)}
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div className="modal-body">
-                            <form>
-                              <div className="row">
-                                <div className="col-lg-6 col-md-6">
-                                  <div className="form-group">
-                                    <label>Từ</label>
-                                    <input
-                                      type="month"
-                                      className="form-control"
-                                      onChange={(e) => {
-                                        setNewSchool({
-                                          ...newSchool,
-                                          start: e.target.value,
-                                        });
-                                      }}
-                                      required
-                                    ></input>
-                                  </div>
-                                </div>
-                                <div className="col-lg-6 col-md-6">
-                                  <div className="form-group">
-                                    <label>Đến</label>
-                                    <input
-                                      type="month"
-                                      className="form-control"
-                                      onChange={(e) => {
-                                        setNewSchool({
-                                          ...newSchool,
-                                          end: e.target.value,
-                                        });
-                                      }}
-                                    ></input>
-                                  </div>
-                                </div>
-                                <div className="col-lg-12 col-md-12">
-                                  <div className="form-group">
-                                    <label>Cấp bậc</label>
-                                    <Select
-                                      placeholder="Chọn cấp bậc"
-                                      onChange={(e) =>
-                                        setNewSchool((prev) => ({
-                                          ...prev,
-                                          level: e.value,
-                                        }))
-                                      }
-                                      options={levels}
-                                    />
-                                  </div>
-                                </div>
-                                <div className="col-lg-12 col-md-12">
-                                  <div className="form-group">
-                                    <label>Trường</label>
-                                    <Select
-                                      placeholder="Chọn trường"
-                                      onChange={(e) =>
-                                        setNewSchool((prev) => ({
-                                          ...prev,
-                                          school: e.label,
-                                        }))
-                                      }
-                                      options={schools}
-                                    />
-                                  </div>
-                                </div>
-                                <div className="col-lg-12 col-md-12">
-                                  <div className="form-group">
-                                    <label>Chuyên nghành</label>
-                                    <Select
-                                      placeholder="Chọn chuyên nghành"
-                                      onChange={(e) =>
-                                        setNewSchool((prev) => ({
-                                          ...prev,
-                                          major: e.value,
-                                        }))
-                                      }
-                                      options={majors}
-                                    />
-                                  </div>
-                                </div>
-                                <div className="col-lg-12 col-md-12">
-                                  <div className="form-group">
-                                    <label>Chức danh chuyên môn</label>
-                                    <input
-                                      className="form-control"
-                                      required
-                                      placeholder="Nhập chức danh chuyên môn"
-                                      onChange={(e) =>
-                                        setNewSchool({
-                                          ...newSchool,
-                                          jobTitle: e.target.value,
-                                        })
-                                      }
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                          <div className="modal-footer">
-                            <button
-                              type="button"
-                              className="site-button"
-                              onClick={() => setEducation(false)}
-                            >
-                              Cancel
-                            </button>
-                            <button
-                              className="site-button btn"
-                              disabled={
-                                !newSchool.school ||
-                                !newSchool.level ||
-                                !newSchool.major ||
-                                !newSchool.jobTitle
+                        <div className="col-md-4 col-sm-12">
+                          <InputGroup size="sm" className="mb-2">
+                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
+                              <InputGroup.Text>Từ</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <FormControl
+                              className="m-0"
+                              value={formatMonthInput(newWork.process[0]?.from)}
+                              style={{ maxHeight: "38px" }}
+                              type="month"
+                              disabled={true}
+                            />
+                          </InputGroup>
+                        </div>
+                        <div className="col-md-4 col-sm-12">
+                          <InputGroup size="sm">
+                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
+                              <InputGroup.Text>Đến</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <FormControl
+                              className="m-0"
+                              style={{ maxHeight: "38px" }}
+                              type="month"
+                              value={formatMonthInput(
+                                newWork.process[newWork.process.length - 1]?.to
+                              )}
+                              disabled={true}
+                            />
+                          </InputGroup>
+                        </div>
+                        <div className="col-md-4 col-sm-12">
+                          <Form.Group
+                            controlId="formBasicCheckbox"
+                            className="my-2"
+                          >
+                            <Form.Check
+                              type="checkbox"
+                              label="Đang làm việc"
+                              checked={
+                                newWork.process.length > 0 &&
+                                newWork.process[newWork.process.length - 1]
+                                  .isCurrent === true
+                                  ? true
+                                  : false
                               }
-                              onClick={handleAddSchool}
-                            >
-                              Save
-                            </button>
-                          </div>
+                              disabled={true}
+                            />
+                          </Form.Group>
+                        </div>
+                        <div className="col-12">
+                          <InputGroup size="sm">
+                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
+                              <InputGroup.Text>Địa chỉ</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <FormControl
+                              className="m-0"
+                              style={{ maxHeight: "38px" }}
+                              value={newWork.address}
+                              onChange={(e) => {
+                                setNewWork({
+                                  ...newWork,
+                                  address: e.target.value,
+                                });
+                              }}
+                            />
+                          </InputGroup>
                         </div>
                       </div>
-                    </Modal>
-                    <div className="row">
-                      <div className="col-lg-12 col-md-12 col-sm-12">
-                        <div className="clearfix m-b20">
-                          {/* badge time */}
-                          <div className="badge-time">
-                            <span className="badge badge-primary">
-                              <i className="fa fa-graduation-cap" />
-                              <span>
-                                {getMonthYear(userInformation.startYear)} -{" "}
-                                {getMonthYear(userInformation.endYear)}
+                    </Card.Header>
+                    <Card.Body>
+                      <Card.Title className="text-center">
+                        Quá trình làm việc
+                      </Card.Title>
+                      {newWork.process.map((element, index2) => {
+                        return (
+                          <>
+                            <div className="row mt-3">
+                              <div className="col-md-4 col-sm-12">
+                                <InputGroup size="sm" className="mb-2">
+                                  <InputGroup.Prepend
+                                    style={{ maxHeight: "38px" }}
+                                  >
+                                    <InputGroup.Text>Từ</InputGroup.Text>
+                                  </InputGroup.Prepend>
+                                  <FormControl
+                                    className="m-0"
+                                    style={{ maxHeight: "38px" }}
+                                    type="month"
+                                    value={formatMonthInput(element.from)}
+                                  />
+                                </InputGroup>
+                              </div>
+                              <div className="col-md-4 col-sm-12">
+                                <InputGroup size="sm">
+                                  <InputGroup.Prepend
+                                    style={{ maxHeight: "38px" }}
+                                  >
+                                    <InputGroup.Text>Đến</InputGroup.Text>
+                                  </InputGroup.Prepend>
+                                  <FormControl
+                                    className="m-0"
+                                    style={{ maxHeight: "38px" }}
+                                    type="month"
+                                    value={formatMonthInput(element.to)}
+                                  />
+                                </InputGroup>
+                              </div>
+                              <div className="col-md-4 col-sm-12">
+                                <Form.Group
+                                  controlId="formBasicCheckbox"
+                                  className="my-2"
+                                >
+                                  <Form.Check
+                                    type="checkbox"
+                                    label="Đang làm việc"
+                                    checked={element.isCurrent}
+                                    onChange={(e) => {
+                                      let temp = newWork.process;
+                                      temp[index2].isCurrent = e.target.checked;
+                                      setNewWork({
+                                        ...newWork,
+                                        process: temp,
+                                      });
+                                    }}
+                                  />
+                                </Form.Group>
+                              </div>
+                              <div className="col-12">
+                                <InputGroup size="sm" className="mb-2">
+                                  <InputGroup.Prepend
+                                    style={{ maxHeight: "38px" }}
+                                  >
+                                    <InputGroup.Text>Công việc</InputGroup.Text>
+                                  </InputGroup.Prepend>
+                                  <FormControl
+                                    className="m-0"
+                                    style={{ maxHeight: "38px" }}
+                                    value={element.workDescription}
+                                  />
+                                </InputGroup>
+                              </div>
+                              <div className="col-12">
+                                <InputGroup size="sm" className="mb-2">
+                                  <InputGroup.Prepend
+                                    style={{ maxHeight: "38px" }}
+                                  >
+                                    <InputGroup.Text>
+                                      Chuyên nghành
+                                    </InputGroup.Text>
+                                  </InputGroup.Prepend>
+                                  <FormControl
+                                    as={Select}
+                                    size="sm"
+                                    className="m-0 p-0"
+                                    options={majors}
+                                    value={getValueSelect(element.major)}
+                                  />
+                                </InputGroup>
+                              </div>
+                              <div className="col-12">
+                                <InputGroup size="sm" className="mb-2">
+                                  <InputGroup.Prepend
+                                    style={{ maxHeight: "38px" }}
+                                  >
+                                    <InputGroup.Text>
+                                      Chức danh công việc
+                                    </InputGroup.Text>
+                                  </InputGroup.Prepend>
+                                  <FormControl
+                                    as={Select}
+                                    size="sm"
+                                    className="m-0 p-0"
+                                    options={jobTitleOption}
+                                    value={getValueSelect(element.jobTitle)}
+                                  />
+                                </InputGroup>
+                              </div>
+                              <div className="col-12">
+                                <InputGroup size="sm" className="mb-2">
+                                  <InputGroup.Prepend
+                                    style={{ maxHeight: "38px" }}
+                                  >
+                                    <InputGroup.Text>Địa chỉ</InputGroup.Text>
+                                  </InputGroup.Prepend>
+                                  <FormControl
+                                    className="m-0"
+                                    style={{ maxHeight: "38px" }}
+                                    value={element.address}
+                                  />
+                                </InputGroup>
+                              </div>
+                              <div className="col-12">
+                                <InputGroup size="sm" className="mb-2">
+                                  <InputGroup.Prepend
+                                    style={{ maxHeight: "38px" }}
+                                  >
+                                    <InputGroup.Text>Kết quả</InputGroup.Text>
+                                  </InputGroup.Prepend>
+                                  <FormControl
+                                    as={Select}
+                                    size="sm"
+                                    className="m-0 p-0"
+                                    options={resultOption}
+                                    value={getValueSelect(element.result)}
+                                  />
+                                </InputGroup>
+                              </div>
+                            </div>
+                            <hr style={{ border: "1px solid blue" }} />
+                          </>
+                        );
+                      })}
+                      <div className="row ">
+                        <div className="col-md-4 col-sm-12">
+                          <InputGroup size="sm" className="mb-2">
+                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
+                              <InputGroup.Text>Từ</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <FormControl
+                              className="m-0"
+                              style={{ maxHeight: "38px" }}
+                              type="month"
+                              value={formatMonthInput(newProcess.from)}
+                              disabled={
+                                newWork.process.length > 0 ? true : false
+                              }
+                              onChange={(e) => {
+                                setNewProcess({
+                                  ...newProcess,
+                                  from: e.target.value,
+                                });
+                              }}
+                            />
+                          </InputGroup>
+                        </div>
+                        <div className="col-md-4 col-sm-12">
+                          <InputGroup size="sm">
+                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
+                              <InputGroup.Text>Đến</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <FormControl
+                              className="m-0"
+                              style={{ maxHeight: "38px" }}
+                              type="month"
+                              value={formatMonthInput(newProcess.to)}
+                              disabled={
+                                newProcess.from === "" || newProcess.isCurrent
+                                  ? true
+                                  : false
+                              }
+                              min={newProcess.from}
+                              max={formatMonthInput(new Date())}
+                              onChange={(e) => {
+                                setNewProcess({
+                                  ...newProcess,
+                                  to: e.target.value,
+                                });
+                              }}
+                            />
+                          </InputGroup>
+                        </div>
+                        <div className="col-md-4 col-sm-12">
+                          <Form.Group
+                            controlId="formBasicCheckbox"
+                            className="my-2"
+                          >
+                            <Form.Check
+                              type="checkbox"
+                              label="Đang làm việc"
+                              checked={newProcess.isCurrent}
+                              onChange={(e) => {
+                                setNewProcess({
+                                  ...newProcess,
+                                  isCurrent: e.target.checked,
+                                  to: e.target.checked ? "" : newProcess.to,
+                                });
+                              }}
+                            />
+                          </Form.Group>
+                        </div>
+                        <div className="col-12">
+                          <InputGroup size="sm" className="mb-2">
+                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
+                              <InputGroup.Text>Công việc</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <FormControl
+                              className="m-0"
+                              style={{ maxHeight: "38px" }}
+                              value={newProcess.workDescription}
+                              onChange={(e) => {
+                                setNewProcess({
+                                  ...newProcess,
+                                  workDescription: e.target.value,
+                                });
+                              }}
+                            />
+                          </InputGroup>
+                        </div>
+                        <div className="col-12">
+                          <InputGroup size="sm" className="mb-2">
+                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
+                              <InputGroup.Text>Chuyên nghành</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <FormControl
+                              as={Select}
+                              size="sm"
+                              className="m-0 p-0"
+                              options={majors}
+                              value={getValueSelect(newProcess.major)}
+                              onChange={(e) => {
+                                setNewProcess({
+                                  ...newProcess,
+                                  major: e.value,
+                                });
+                              }}
+                            />
+                          </InputGroup>
+                        </div>
+                        <div className="col-12">
+                          <InputGroup size="sm" className="mb-2">
+                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
+                              <InputGroup.Text>
+                                Chức danh công việc
+                              </InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <FormControl
+                              as={Select}
+                              size="sm"
+                              className="m-0 p-0"
+                              options={jobTitleOption}
+                              value={getValueSelect(newProcess.jobTitle)}
+                              onChange={(e) => {
+                                setNewProcess({
+                                  ...newProcess,
+                                  jobTitle: e.value,
+                                });
+                              }}
+                            />
+                          </InputGroup>
+                        </div>
+                        <div className="col-12">
+                          <InputGroup size="sm" className="mb-2">
+                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
+                              <InputGroup.Text>Địa chỉ</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <FormControl
+                              className="m-0"
+                              style={{ maxHeight: "38px" }}
+                              value={newProcess.address}
+                              onChange={(e) => {
+                                setNewProcess({
+                                  ...newProcess,
+                                  address: e.target.value,
+                                });
+                              }}
+                            />
+                          </InputGroup>
+                        </div>
+                        <div className="col-12">
+                          <InputGroup size="sm" className="mb-2">
+                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
+                              <InputGroup.Text>Kết quả</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <FormControl
+                              as={Select}
+                              size="sm"
+                              className="m-0 p-0"
+                              options={resultOption}
+                              value={getValueSelect(newProcess.result)}
+                              onChange={(e) => {
+                                setNewProcess({
+                                  ...newProcess,
+                                  result: e.value,
+                                });
+                              }}
+                            />
+                          </InputGroup>
+                        </div>
+                      </div>
+                      <div className="d-flex justify-content-center mt-2">
+                        <button
+                          className="btn btn-primary"
+                          onClick={handleAddProcess}
+                        >
+                          Thêm quá trình làm việc
+                        </button>
+                      </div>
+                    </Card.Body>
+                    <Card.Footer>
+                      <InputGroup size="sm">
+                        <InputGroup.Prepend style={{ maxHeight: "38px" }}>
+                          <InputGroup.Text>Nghỉ việc</InputGroup.Text>
+                        </InputGroup.Prepend>
+
+                        <FormControl
+                          as={Select}
+                          size="sm"
+                          className="m-0 p-0"
+                          options={listLeaving}
+                          value={getValueSelect(newWork.leaving)}
+                          onChange={(e) => {
+                            setNewWork({
+                              ...newWork,
+                              leaving: e.value,
+                            });
+                          }}
+                        ></FormControl>
+                      </InputGroup>
+                    </Card.Footer>
+                  </Card>
+                  {/* button primary dài 80% ở giữa */}
+                  <div className="d-flex justify-content-center mt-2">
+                    <button
+                      className="btn btn-primary"
+                      style={{ width: "80%" }}
+                      onClick={handleAddWorkExperience}
+                    >
+                      Thêm công việc
+                    </button>
+                  </div>
+                </Form>
+
+                <Accordion>
+                  <Card border="primary">
+                    <Card.Header className="d-flex w-100 py-1">
+                      <Nav.Item className="mr-auto h4 fw" as={Nav.Item}>
+                        Tiêu chí và kết quả đánh giá
+                      </Nav.Item>
+                      <Nav.Item
+                        className="align-self-center"
+                        style={{ width: "50px" }}
+                      >
+                        Điểm
+                      </Nav.Item>
+                    </Card.Header>
+                  </Card>
+                  {questions.map((question, index) => {
+                    return (
+                      <Card border="primary">
+                        <Card.Header className="d-flex w-100 py-1">
+                          <Accordion.Toggle
+                            as={Nav.Link}
+                            eventKey={index + 1}
+                            className="mr-auto"
+                          >
+                            {index + 1 + ". " + question.name}{" "}
+                            <i className="fa fa-question-circle ms-0"></i>
+                          </Accordion.Toggle>
+                          <Form.Control
+                            className="align-self-center mr-0"
+                            value={userInformation.pointList[index]}
+                            style={{ width: "50px" }}
+                            onChange={(e) => {
+                              if (isNaN(e.target.value)) e.target.value = 0;
+                              if (e.target.value > 10) e.target.value = 10;
+                              let pointList = userInformation.pointList;
+                              pointList[index] = e.target.value;
+                              setUserInformation({
+                                ...userInformation,
+                                pointList: pointList,
+                              });
+                            }}
+                            type="number"
+                            min="0"
+                            max="10"
+                          ></Form.Control>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey={index + 1}>
+                          <Card.Body className="border-top">
+                            {question.detail.map((item, index2) => {
+                              return (
+                                <>
+                                  <Nav.Item>{item}</Nav.Item>
+                                </>
+                              );
+                            })}
+                          </Card.Body>
+                        </Accordion.Collapse>
+                      </Card>
+                    );
+                  })}
+                </Accordion>
+                {/* button bên phải */}
+                <div className="d-flex justify-content-end mt-2">
+                  <button className="btn btn-primary" onClick={handleUpdatePoint}>
+                    Lưu
+                  </button>
+                </div>
+              </div>
+              <div id="education_bx" className="job-bx bg-white m-b30">
+                <div className="d-flex">
+                  <h5 className="m-b15">Quá trình học tập</h5>
+                  <Link
+                    to={"#"}
+                    onClick={() => setEducation(true)}
+                    className="site-button add-btn button-sm"
+                  >
+                    <i className="fa fa-pencil m-r5"></i> Thêm
+                  </Link>
+                </div>
+
+                <Modal
+                  className="modal fade modal-bx-info editor"
+                  show={education}
+                  onHide={setEducation}
+                >
+                  <div className="modal-dialog my-0" role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5
+                          className="modal-title"
+                          id="EducationModalLongTitle"
+                        >
+                          Quá trình học tập
+                        </h5>
+                        <button
+                          type="button"
+                          className="close"
+                          onClick={() => setEducation(false)}
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div className="modal-body">
+                        <form>
+                          <div className="row">
+                            <div className="col-lg-6 col-md-6">
+                              <div className="form-group">
+                                <label>Từ</label>
+                                <input
+                                  type="month"
+                                  className="form-control"
+                                  onChange={(e) => {
+                                    setNewSchool({
+                                      ...newSchool,
+                                      start: e.target.value,
+                                    });
+                                  }}
+                                  required
+                                ></input>
+                              </div>
+                            </div>
+                            <div className="col-lg-6 col-md-6">
+                              <div className="form-group">
+                                <label>Đến</label>
+                                <input
+                                  type="month"
+                                  className="form-control"
+                                  onChange={(e) => {
+                                    setNewSchool({
+                                      ...newSchool,
+                                      end: e.target.value,
+                                    });
+                                  }}
+                                ></input>
+                              </div>
+                            </div>
+                            <div className="col-lg-12 col-md-12">
+                              <div className="form-group">
+                                <label>Cấp bậc</label>
+                                <Select
+                                  placeholder="Chọn cấp bậc"
+                                  onChange={(e) =>
+                                    setNewSchool((prev) => ({
+                                      ...prev,
+                                      level: e.value,
+                                    }))
+                                  }
+                                  options={levels}
+                                />
+                              </div>
+                            </div>
+                            <div className="col-lg-12 col-md-12">
+                              <div className="form-group">
+                                <label>Trường</label>
+                                <Select
+                                  placeholder="Chọn trường"
+                                  onChange={(e) =>
+                                    setNewSchool((prev) => ({
+                                      ...prev,
+                                      school: e.label,
+                                    }))
+                                  }
+                                  options={schools}
+                                />
+                              </div>
+                            </div>
+                            <div className="col-lg-12 col-md-12">
+                              <div className="form-group">
+                                <label>Chuyên nghành</label>
+                                <Select
+                                  placeholder="Chọn chuyên nghành"
+                                  onChange={(e) =>
+                                    setNewSchool((prev) => ({
+                                      ...prev,
+                                      major: e.value,
+                                    }))
+                                  }
+                                  options={majors}
+                                />
+                              </div>
+                            </div>
+                            <div className="col-lg-12 col-md-12">
+                              <div className="form-group">
+                                <label>Chức danh chuyên môn</label>
+                                <input
+                                  className="form-control"
+                                  required
+                                  placeholder="Nhập chức danh chuyên môn"
+                                  onChange={(e) =>
+                                    setNewSchool({
+                                      ...newSchool,
+                                      jobTitle: e.target.value,
+                                    })
+                                  }
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div className="modal-footer">
+                        <button
+                          type="button"
+                          className="site-button"
+                          onClick={() => setEducation(false)}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          className="site-button btn"
+                          disabled={
+                            !newSchool.school ||
+                            !newSchool.level ||
+                            !newSchool.major ||
+                            !newSchool.jobTitle
+                          }
+                          onClick={handleAddSchool}
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </Modal>
+                <div className="row">
+                  <div className="col-lg-12 col-md-12 col-sm-12">
+                    <div className="clearfix m-b20">
+                      {/* badge time */}
+                      <div className="badge-time">
+                        <span className="badge badge-primary">
+                          <i className="fa fa-graduation-cap" />
+                          <span>
+                            {getMonthYear(userInformation.startYear)} -{" "}
+                            {getMonthYear(userInformation.endYear)}
+                          </span>
+                        </span>
+                      </div>
+                      <div className="d-flex">
+                        <label className="m-b0">{userInformation.school}</label>
+                      </div>
+                      <p className="m-b0 font-16">
+                        Cấp bậc: {userInformation.level}
+                      </p>
+                      <p className="m-b0 font-16">
+                        Chuyên nghành: {userInformation.major}
+                      </p>
+                    </div>
+                    {userInformation.skillEducation?.map((item, index) => {
+                      return (
+                        <>
+                          <hr />
+                          <div className="clearfix m-b20">
+                            <div className="badge-time">
+                              <span className="badge badge-primary">
+                                <i className="fa fa-graduation-cap" />
+                                <span>
+                                  {getMonthYear(item.start)} -{" "}
+                                  {getMonthYear(item.end)}
+                                </span>
                               </span>
-                            </span>
+                            </div>
+                            <div className="d-flex">
+                              <label className="m-b0">{item.school}</label>
+                              <Link
+                                to={"#"}
+                                onClick={() => handleDeleteSchool(item._id)}
+                                className="site-button add-btn button-sm"
+                                style={{ backgroundColor: "red" }}
+                              >
+                                <i className="ti-trash m-r5"></i>
+                              </Link>
+                            </div>
+                            <p className="m-b0 font-16">
+                              Cấp bậc: {item.level}
+                            </p>
+                            <p className="m-b0 font-16">
+                              Chuyên nghành: {item.major}
+                            </p>
+                            <p className="m-b0 font-16">
+                              Chức danh: {item.jobTitle}
+                            </p>
                           </div>
-                          <div className="d-flex">
-                            <label className="m-b0">
-                              {userInformation.school}
-                            </label>
-                          </div>
-                          <p className="m-b0 font-16">
-                            Cấp bậc: {userInformation.level}
-                          </p>
-                          <p className="m-b0 font-16">
-                            Chuyên nghành: {userInformation.major}
-                          </p>
-                        </div>
-                        {userInformation.skillEducation?.map((item, index) => {
-                          return (
-                            <>
-                              <hr />
-                              <div className="clearfix m-b20">
-                                <div className="badge-time">
-                                  <span className="badge badge-primary">
-                                    <i className="fa fa-graduation-cap" />
-                                    <span>
-                                      {getMonthYear(item.start)} -{" "}
-                                      {getMonthYear(item.end)}
-                                    </span>
-                                  </span>
-                                </div>
-                                <div className="d-flex">
-                                  <label className="m-b0">{item.school}</label>
-                                  <Link
-                                    to={"#"}
-                                    onClick={() => handleDeleteSchool(item._id)}
-                                    className="site-button add-btn button-sm"
-                                    style={{ backgroundColor: "red" }}
-                                  >
-                                    <i className="ti-trash m-r5"></i>
-                                  </Link>
-                                </div>
-                                <p className="m-b0 font-16">
-                                  Cấp bậc: {item.level}
-                                </p>
-                                <p className="m-b0 font-16">
-                                  Chuyên nghành: {item.major}
-                                </p>
-                                <p className="m-b0 font-16">
-                                  Chức danh: {item.jobTitle}
-                                </p>
-                              </div>
-                            </>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    id="it_skills_bx"
-                    className="job-bx table-job-bx bg-white m-b30"
-                  >
-                    <div className="d-flex">
-                      <h5 className="m-b15">Khóa đào tạo ngắn hạn</h5>
-                      <Link
-                        to={"#"}
-                        onClick={() => setShowShortTraining(true)}
-                        className="site-button add-btn button-sm"
-                      >
-                        <i className="fa fa-pencil m-r5"></i> Thêm
-                      </Link>
-                    </div>
-                    <p>
-                      Mention your employment details including your current and
-                      previous company work experience
-                    </p>
-                    <div className="row">
-                      <div className="col-lg-12 col-md-12 col-sm-12">
-                        {userInformation.shortTraining?.map((item, index) => {
-                          return (
-                            <>
-                              <div className="clearfix m-b20">
-                                <div className="badge-time">
-                                  <span className="badge badge-primary">
-                                    <i className="fa fa-graduation-cap" />
-                                    <span>
-                                      {getMonthYear(item.start)} -{" "}
-                                      {getMonthYear(item.end)}
-                                    </span>
-                                  </span>
-                                </div>
-                                <div className="d-flex">
-                                  <label className="m-b0">
-                                    {item.certificate}
-                                  </label>
-                                  <Link
-                                    to={"#"}
-                                    onClick={() =>
-                                      handleDeleteShortTraining(item._id)
-                                    }
-                                    className="site-button add-btn button-sm"
-                                    style={{ backgroundColor: "red" }}
-                                  >
-                                    <i className="ti-trash m-r5"></i>
-                                  </Link>
-                                </div>
-                                <p className="m-b0 font-16">
-                                  Đơn vị tổ chức: {item.organizer}
-                                </p>
-                              </div>
-                              <hr />
-                            </>
-                          );
-                        })}
-                      </div>
-                    </div>
-                    <Modal
-                      className="modal fade modal-bx-info editor"
-                      show={showShortTraining}
-                      onHide={setShowShortTraining}
-                    >
-                      <div className="modal-dialog my-0" role="document">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5 className="modal-title">
-                              Khóa đào tạo ngắn hạn
-                            </h5>
-                            <button
-                              type="button"
-                              className="close"
-                              onClick={() => setItSkills(false)}
-                            >
-                              <span>&times;</span>
-                            </button>
-                          </div>
-                          <div className="modal-body">
-                            <form
-                              id="addShortTraining"
-                              onSubmit={handleAddShortTraining}
-                              action="javascript:void(0);"
-                            >
-                              <div className="row">
-                                <div className="col-lg-6 col-md-6">
-                                  <div className="form-group">
-                                    <label>Từ</label>
-                                    <input
-                                      type="date"
-                                      className="form-control"
-                                      value={newShortTraining.start}
-                                      onChange={(e) => {
-                                        setNewShortTraining({
-                                          ...newShortTraining,
-                                          start: e.target.value,
-                                        });
-                                      }}
-                                      required
-                                    />
-                                  </div>
-                                </div>
-                                <div className="col-lg-6 col-md-6">
-                                  <div className="form-group">
-                                    <label>Đến</label>
-                                    <Form.Control
-                                      type="date"
-                                      value={newShortTraining.end}
-                                      onChange={(e) => {
-                                        setNewShortTraining({
-                                          ...newShortTraining,
-                                          end: e.target.value,
-                                        });
-                                      }}
-                                      required
-                                    ></Form.Control>
-                                  </div>
-                                </div>
-                                <div className="col-lg-12 col-md-6">
-                                  <div className="form-group">
-                                    <label>Tên chứng chỉ</label>
-                                    <Form.Control
-                                      placeholder="Nhập tên chứng chỉ"
-                                      value={newShortTraining.certificate}
-                                      onChange={(e) => {
-                                        setNewShortTraining({
-                                          ...newShortTraining,
-                                          certificate: e.target.value,
-                                        });
-                                      }}
-                                      required
-                                    ></Form.Control>
-                                  </div>
-                                </div>
-                                <div className="col-lg-12 col-md-12">
-                                  <div className="form-group">
-                                    <label>Đơn vị tổ chức</label>
-                                    <input
-                                      className="form-control"
-                                      placeholder="Nhập đơn vị tổ chức"
-                                      value={newShortTraining.organizer}
-                                      onChange={(e) => {
-                                        setNewShortTraining({
-                                          ...newShortTraining,
-                                          organizer: e.target.value,
-                                        });
-                                      }}
-                                      required
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                          <div className="modal-footer">
-                            <button
-                              type="button"
-                              className="site-button"
-                              onClick={() => setShowShortTraining(false)}
-                            >
-                              Cancel
-                            </button>
-                            <button
-                              type="submit"
-                              className="site-button btn"
-                              form="addShortTraining"
-                              disabled={
-                                !newShortTraining.certificate ||
-                                !newShortTraining.organizer ||
-                                !newShortTraining.start ||
-                                !newShortTraining.end
-                              }
-                            >
-                              Save
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </Modal>
-                  </div>
-                  <div
-                    id="accomplishments_bx"
-                    className="job-bx table-job-bx bg-white m-b30"
-                  >
-                    <div className="d-flex">
-                      <h5 className="m-b15">IT Skills</h5>
-                      <Link
-                        to={"#"}
-                        onClick={() => setItSkills(true)}
-                        className="site-button add-btn button-sm"
-                      >
-                        <i className="fa fa-pencil m-r5"></i> Thêm
-                      </Link>
-                    </div>
-                    <p>
-                      Mention your employment details including your current and
-                      previous company work experience
-                    </p>
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Skills</th>
-                          <th>Version</th>
-                          <th>Last Used</th>
-                          <th>Experience</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Bootstrap</td>
-                          <td>3</td>
-                          <td>2018</td>
-                          <td>1 Year 5 Months</td>
-                          <td>
-                            <Link
-                              to={"#"}
-                              className="m-l15 font-14"
-                              data-toggle="modal"
-                              data-target="#itskills"
-                            >
-                              <i className="fa fa-pencil"></i>
-                            </Link>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Bootstrap</td>
-                          <td>4</td>
-                          <td>2013</td>
-                          <td>5 Year 5 Months</td>
-                          <td>
-                            <Link
-                              to={"#"}
-                              className="m-l15 font-14"
-                              data-toggle="modal"
-                              data-target="#itskills"
-                            >
-                              <i className="fa fa-pencil"></i>
-                            </Link>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>html</td>
-                          <td>5</td>
-                          <td>2016</td>
-                          <td>2 Year 7 Months</td>
-                          <td>
-                            <Link
-                              to={"#"}
-                              className="m-l15 font-14"
-                              data-toggle="modal"
-                              data-target="#itskills"
-                            >
-                              <i className="fa fa-pencil"></i>
-                            </Link>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>css</td>
-                          <td>3</td>
-                          <td>2018</td>
-                          <td>0 Year 5 Months</td>
-                          <td>
-                            <Link
-                              to={"#"}
-                              className="m-l15 font-14"
-                              data-toggle="modal"
-                              data-target="#itskills"
-                            >
-                              <i className="fa fa-pencil"></i>
-                            </Link>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>photoshop</td>
-                          <td>64bit</td>
-                          <td>2017</td>
-                          <td>1 Year 0 Months</td>
-                          <td>
-                            <Link
-                              to={"#"}
-                              className="m-l15 font-14"
-                              data-toggle="modal"
-                              data-target="#itskills"
-                            >
-                              <i className="fa fa-pencil"></i>
-                            </Link>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <Modal
-                      className="modal fade modal-bx-info editor"
-                      show={itskills}
-                      onHide={setItSkills}
-                    >
-                      <div className="modal-dialog my-0" role="document">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5 className="modal-title">IT Skills</h5>
-                            <button
-                              type="button"
-                              className="close"
-                              onClick={() => setItSkills(false)}
-                            >
-                              <span>&times;</span>
-                            </button>
-                          </div>
-                          <div className="modal-body">
-                            <form>
-                              <div className="row">
-                                <div className="col-lg-12 col-md-12">
-                                  <div className="form-group">
-                                    <label>IT Skills</label>
-                                    <input
-                                      type="email"
-                                      className="form-control"
-                                      placeholder="Enter IT Skills"
-                                    />
-                                  </div>
-                                </div>
-                                <div className="col-lg-6 col-md-6">
-                                  <div className="form-group">
-                                    <label>Version</label>
-                                    <input
-                                      type="email"
-                                      className="form-control"
-                                      placeholder="Enter Version"
-                                    />
-                                  </div>
-                                </div>
-                                <div className="col-lg-6 col-md-6">
-                                  <div className="form-group">
-                                    <label>Last Used</label>
-                                    <Form.Control as="select"></Form.Control>
-                                  </div>
-                                </div>
-                                <div className="col-lg-12 col-md-6">
-                                  <div className="form-group">
-                                    <label>Experience</label>
-                                    <div className="row">
-                                      <div className="col-lg-6 col-md-6 col-sm-6 col-6">
-                                        <Form.Control as="select"></Form.Control>
-                                      </div>
-                                      <div className="col-lg-6 col-md-6 col-sm-6 col-6">
-                                        <Form.Control as="select"></Form.Control>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                          <div className="modal-footer">
-                            <button
-                              type="button"
-                              className="site-button"
-                              onClick={() => setItSkills(false)}
-                            >
-                              Cancel
-                            </button>
-                            <button type="button" className="site-button">
-                              Save
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </Modal>
-                  </div>
-                  <div
-                    id="desired_career_profile_bx"
-                    className="job-bx table-job-bx bg-white m-b30"
-                  >
-                    <div className="d-flex">
-                      <h5 className="m-b15">IT Skills</h5>
-                      <Link
-                        to={"#"}
-                        onClick={() => setOtherSkill(true)}
-                        className="site-button add-btn button-sm"
-                      >
-                        <i className="fa fa-pencil m-r5"></i> Thêm
-                      </Link>
-                    </div>
-                    <p>
-                      Mention your employment details including your current and
-                      previous company work experience
-                    </p>
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Tên kĩ năng</th>
-                          <th>Xếp loại</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>css</td>
-                          <td>3</td>
-                          <td>2018</td>
-                          <td>0 Year 5 Months</td>
-                          <td>
-                            <Link to={"#"} className="m-l15 font-14">
-                              <i className="fa fa-pencil"></i>
-                            </Link>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <Modal
-                      className="modal fade modal-bx-info editor"
-                      show={otherSkill}
-                      onHide={setOtherSkill}
-                    >
-                      <div className="modal-dialog my-0" role="document">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5 className="modal-title">IT Skills</h5>
-                            <button
-                              type="button"
-                              className="close"
-                              onClick={() => setOtherSkill(false)}
-                            >
-                              <span>&times;</span>
-                            </button>
-                          </div>
-                          <div className="modal-body">
-                            <form>
-                              <div className="row">
-                                <div className="col-lg-12 col-md-12">
-                                  <div className="form-group">
-                                    <label>IT Skills</label>
-                                    <input
-                                      type="email"
-                                      className="form-control"
-                                      placeholder="Enter IT Skills"
-                                    />
-                                  </div>
-                                </div>
-                                <div className="col-lg-6 col-md-6">
-                                  <div className="form-group">
-                                    <label>Version</label>
-                                    <input
-                                      type="email"
-                                      className="form-control"
-                                      placeholder="Enter Version"
-                                    />
-                                  </div>
-                                </div>
-                                <div className="col-lg-6 col-md-6">
-                                  <div className="form-group">
-                                    <label>Last Used</label>
-                                    <Form.Control as="select"></Form.Control>
-                                  </div>
-                                </div>
-                                <div className="col-lg-12 col-md-6">
-                                  <div className="form-group">
-                                    <label>Experience</label>
-                                    <div className="row">
-                                      <div className="col-lg-6 col-md-6 col-sm-6 col-6">
-                                        <Form.Control as="select"></Form.Control>
-                                      </div>
-                                      <div className="col-lg-6 col-md-6 col-sm-6 col-6">
-                                        <Form.Control as="select"></Form.Control>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                          <div className="modal-footer">
-                            <button
-                              type="button"
-                              className="site-button"
-                              onClick={() => setOtherSkill(false)}
-                            >
-                              Cancel
-                            </button>
-                            <button type="button" className="site-button">
-                              Save
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </Modal>
+                        </>
+                      );
+                    })}
                   </div>
                 </div>
+              </div>
+              <div
+                id="it_skills_bx"
+                className="job-bx table-job-bx bg-white m-b30"
+              >
+                <div className="d-flex">
+                  <h5 className="m-b15">Khóa đào tạo ngắn hạn</h5>
+                  <Link
+                    to={"#"}
+                    onClick={() => setShowShortTraining(true)}
+                    className="site-button add-btn button-sm"
+                  >
+                    <i className="fa fa-pencil m-r5"></i> Thêm
+                  </Link>
+                </div>
+                <p>
+                  Mention your employment details including your current and
+                  previous company work experience
+                </p>
+                <div className="row">
+                  <div className="col-lg-12 col-md-12 col-sm-12">
+                    {userInformation.shortTraining?.map((item, index) => {
+                      return (
+                        <>
+                          <div className="clearfix m-b20">
+                            <div className="badge-time">
+                              <span className="badge badge-primary">
+                                <i className="fa fa-graduation-cap" />
+                                <span>
+                                  {getMonthYear(item.start)} -{" "}
+                                  {getMonthYear(item.end)}
+                                </span>
+                              </span>
+                            </div>
+                            <div className="d-flex">
+                              <label className="m-b0">{item.certificate}</label>
+                              <Link
+                                to={"#"}
+                                onClick={() =>
+                                  handleDeleteShortTraining(item._id)
+                                }
+                                className="site-button add-btn button-sm"
+                                style={{ backgroundColor: "red" }}
+                              >
+                                <i className="ti-trash m-r5"></i>
+                              </Link>
+                            </div>
+                            <p className="m-b0 font-16">
+                              Đơn vị tổ chức: {item.organizer}
+                            </p>
+                          </div>
+                          <hr />
+                        </>
+                      );
+                    })}
+                  </div>
+                </div>
+                <Modal
+                  className="modal fade modal-bx-info editor"
+                  show={showShortTraining}
+                  onHide={setShowShortTraining}
+                >
+                  <div className="modal-dialog my-0" role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title">Khóa đào tạo ngắn hạn</h5>
+                        <button
+                          type="button"
+                          className="close"
+                          onClick={() => setItSkills(false)}
+                        >
+                          <span>&times;</span>
+                        </button>
+                      </div>
+                      <div className="modal-body">
+                        <form
+                          id="addShortTraining"
+                          onSubmit={handleAddShortTraining}
+                          action="javascript:void(0);"
+                        >
+                          <div className="row">
+                            <div className="col-lg-6 col-md-6">
+                              <div className="form-group">
+                                <label>Từ</label>
+                                <input
+                                  type="date"
+                                  className="form-control"
+                                  value={newShortTraining.start}
+                                  onChange={(e) => {
+                                    setNewShortTraining({
+                                      ...newShortTraining,
+                                      start: e.target.value,
+                                    });
+                                  }}
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-lg-6 col-md-6">
+                              <div className="form-group">
+                                <label>Đến</label>
+                                <Form.Control
+                                  type="date"
+                                  value={newShortTraining.end}
+                                  onChange={(e) => {
+                                    setNewShortTraining({
+                                      ...newShortTraining,
+                                      end: e.target.value,
+                                    });
+                                  }}
+                                  required
+                                ></Form.Control>
+                              </div>
+                            </div>
+                            <div className="col-lg-12 col-md-6">
+                              <div className="form-group">
+                                <label>Tên chứng chỉ</label>
+                                <Form.Control
+                                  placeholder="Nhập tên chứng chỉ"
+                                  value={newShortTraining.certificate}
+                                  onChange={(e) => {
+                                    setNewShortTraining({
+                                      ...newShortTraining,
+                                      certificate: e.target.value,
+                                    });
+                                  }}
+                                  required
+                                ></Form.Control>
+                              </div>
+                            </div>
+                            <div className="col-lg-12 col-md-12">
+                              <div className="form-group">
+                                <label>Đơn vị tổ chức</label>
+                                <input
+                                  className="form-control"
+                                  placeholder="Nhập đơn vị tổ chức"
+                                  value={newShortTraining.organizer}
+                                  onChange={(e) => {
+                                    setNewShortTraining({
+                                      ...newShortTraining,
+                                      organizer: e.target.value,
+                                    });
+                                  }}
+                                  required
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div className="modal-footer">
+                        <button
+                          type="button"
+                          className="site-button"
+                          onClick={() => setShowShortTraining(false)}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          className="site-button btn"
+                          form="addShortTraining"
+                          disabled={
+                            !newShortTraining.certificate ||
+                            !newShortTraining.organizer ||
+                            !newShortTraining.start ||
+                            !newShortTraining.end
+                          }
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </Modal>
+              </div>
+              <div
+                id="accomplishments_bx"
+                className="job-bx table-job-bx bg-white m-b30"
+                style={{ display: "none" }}
+              >
+                <div className="d-flex">
+                  <h5 className="m-b15">IT Skills</h5>
+                  <Link
+                    to={"#"}
+                    onClick={() => setItSkills(true)}
+                    className="site-button add-btn button-sm"
+                  >
+                    <i className="fa fa-pencil m-r5"></i> Thêm
+                  </Link>
+                </div>
+                <p>
+                  Mention your employment details including your current and
+                  previous company work experience
+                </p>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Skills</th>
+                      <th>Version</th>
+                      <th>Last Used</th>
+                      <th>Experience</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Bootstrap</td>
+                      <td>3</td>
+                      <td>2018</td>
+                      <td>1 Year 5 Months</td>
+                      <td>
+                        <Link
+                          to={"#"}
+                          className="m-l15 font-14"
+                          data-toggle="modal"
+                          data-target="#itskills"
+                        >
+                          <i className="fa fa-pencil"></i>
+                        </Link>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Bootstrap</td>
+                      <td>4</td>
+                      <td>2013</td>
+                      <td>5 Year 5 Months</td>
+                      <td>
+                        <Link
+                          to={"#"}
+                          className="m-l15 font-14"
+                          data-toggle="modal"
+                          data-target="#itskills"
+                        >
+                          <i className="fa fa-pencil"></i>
+                        </Link>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>html</td>
+                      <td>5</td>
+                      <td>2016</td>
+                      <td>2 Year 7 Months</td>
+                      <td>
+                        <Link
+                          to={"#"}
+                          className="m-l15 font-14"
+                          data-toggle="modal"
+                          data-target="#itskills"
+                        >
+                          <i className="fa fa-pencil"></i>
+                        </Link>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>css</td>
+                      <td>3</td>
+                      <td>2018</td>
+                      <td>0 Year 5 Months</td>
+                      <td>
+                        <Link
+                          to={"#"}
+                          className="m-l15 font-14"
+                          data-toggle="modal"
+                          data-target="#itskills"
+                        >
+                          <i className="fa fa-pencil"></i>
+                        </Link>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>photoshop</td>
+                      <td>64bit</td>
+                      <td>2017</td>
+                      <td>1 Year 0 Months</td>
+                      <td>
+                        <Link
+                          to={"#"}
+                          className="m-l15 font-14"
+                          data-toggle="modal"
+                          data-target="#itskills"
+                        >
+                          <i className="fa fa-pencil"></i>
+                        </Link>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <Modal
+                  className="modal fade modal-bx-info editor"
+                  show={itskills}
+                  onHide={setItSkills}
+                  
+                >
+                  <div className="modal-dialog my-0" role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title">IT Skills</h5>
+                        <button
+                          type="button"
+                          className="close"
+                          onClick={() => setItSkills(false)}
+                        >
+                          <span>&times;</span>
+                        </button>
+                      </div>
+                      <div className="modal-body">
+                        <form>
+                          <div className="row">
+                            <div className="col-lg-12 col-md-12">
+                              <div className="form-group">
+                                <label>IT Skills</label>
+                                <input
+                                  type="email"
+                                  className="form-control"
+                                  placeholder="Enter IT Skills"
+                                />
+                              </div>
+                            </div>
+                            <div className="col-lg-6 col-md-6">
+                              <div className="form-group">
+                                <label>Version</label>
+                                <input
+                                  type="email"
+                                  className="form-control"
+                                  placeholder="Enter Version"
+                                />
+                              </div>
+                            </div>
+                            <div className="col-lg-6 col-md-6">
+                              <div className="form-group">
+                                <label>Last Used</label>
+                                <Form.Control as="select"></Form.Control>
+                              </div>
+                            </div>
+                            <div className="col-lg-12 col-md-6">
+                              <div className="form-group">
+                                <label>Experience</label>
+                                <div className="row">
+                                  <div className="col-lg-6 col-md-6 col-sm-6 col-6">
+                                    <Form.Control as="select"></Form.Control>
+                                  </div>
+                                  <div className="col-lg-6 col-md-6 col-sm-6 col-6">
+                                    <Form.Control as="select"></Form.Control>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div className="modal-footer">
+                        <button
+                          type="button"
+                          className="site-button"
+                          onClick={() => setItSkills(false)}
+                        >
+                          Cancel
+                        </button>
+                        <button type="button" className="site-button">
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </Modal>
+              </div>
+              <div
+                id="desired_career_profile_bx"
+                className="job-bx table-job-bx bg-white m-b30"
+                style={{ display: "none" }}
+              >
+                <div className="d-flex">
+                  <h5 className="m-b15">IT Skills</h5>
+                  <Link
+                    to={"#"}
+                    onClick={() => setOtherSkill(true)}
+                    className="site-button add-btn button-sm"
+                  >
+                    <i className="fa fa-pencil m-r5"></i> Thêm
+                  </Link>
+                </div>
+                <p>
+                  Mention your employment details including your current and
+                  previous company work experience
+                </p>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Tên kĩ năng</th>
+                      <th>Xếp loại</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>css</td>
+                      <td>3</td>
+                      <td>2018</td>
+                      <td>0 Year 5 Months</td>
+                      <td>
+                        <Link to={"#"} className="m-l15 font-14">
+                          <i className="fa fa-pencil"></i>
+                        </Link>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <Modal
+                  className="modal fade modal-bx-info editor"
+                  show={otherSkill}
+                  onHide={setOtherSkill}
+                >
+                  <div className="modal-dialog my-0" role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title">IT Skills</h5>
+                        <button
+                          type="button"
+                          className="close"
+                          onClick={() => setOtherSkill(false)}
+                        >
+                          <span>&times;</span>
+                        </button>
+                      </div>
+                      <div className="modal-body">
+                        <form>
+                          <div className="row">
+                            <div className="col-lg-12 col-md-12">
+                              <div className="form-group">
+                                <label>IT Skills</label>
+                                <input
+                                  type="email"
+                                  className="form-control"
+                                  placeholder="Enter IT Skills"
+                                />
+                              </div>
+                            </div>
+                            <div className="col-lg-6 col-md-6">
+                              <div className="form-group">
+                                <label>Version</label>
+                                <input
+                                  type="email"
+                                  className="form-control"
+                                  placeholder="Enter Version"
+                                />
+                              </div>
+                            </div>
+                            <div className="col-lg-6 col-md-6">
+                              <div className="form-group">
+                                <label>Last Used</label>
+                                <Form.Control as="select"></Form.Control>
+                              </div>
+                            </div>
+                            <div className="col-lg-12 col-md-6">
+                              <div className="form-group">
+                                <label>Experience</label>
+                                <div className="row">
+                                  <div className="col-lg-6 col-md-6 col-sm-6 col-6">
+                                    <Form.Control as="select"></Form.Control>
+                                  </div>
+                                  <div className="col-lg-6 col-md-6 col-sm-6 col-6">
+                                    <Form.Control as="select"></Form.Control>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div className="modal-footer">
+                        <button
+                          type="button"
+                          className="site-button"
+                          onClick={() => setOtherSkill(false)}
+                        >
+                          Cancel
+                        </button>
+                        <button type="button" className="site-button">
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </Modal>
               </div>
             </div>
           </div>
