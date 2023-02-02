@@ -54,22 +54,23 @@ class Header extends Component{
 							<div className="container clearfix">
 								
 								<div className="logo-header mostion">
-									<Link to={"/"}><img src={logo2} className="logo" alt="img" /></Link>
+									{/* <Link to={"/"}><img src={logo2} className="logo" alt="img" /></Link> */}
+									<Link to={"/"}><h2 className="m-2 text-blue">CVIDPRO</h2></Link>
 								</div>
 								
 								 <button className="navbar-toggler collapsed navicon  justify-content-end" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-									<span></span>
+									<span></span> 
 									<span></span>
 									<span></span>
 								</button> 
-								<div className="extra-nav">
+								{/* <div className="extra-nav">
 									<div className="extra-cell">
 										<Link to={"/register-2"} className="site-button"><i className="fa fa-user"></i> Sign Up</Link>
-											{/* <Link to ={'#'} title="READ MORE" onClick={this.handleShow}  className="site-button"><i className="fa fa-lock"></i> login </Link> */}
+											<Link to ={'#'} title="READ MORE" onClick={this.handleShow}  className="site-button"><i className="fa fa-lock"></i> login </Link>
 										
 										<Logout />
 									</div>
-								</div>
+								</div> */}
 								 
 								<div className="header-nav navbar-collapse collapse myNavbar justify-content-start" id="navbarNavDropdown"> 
 									<div className="logo-header mostion d-md-block d-lg-none">
@@ -77,14 +78,13 @@ class Header extends Component{
 									</div>
 									<ul className="nav navbar-nav">
 										<li className=""> 
-										
-											<Link to={'#'} >Home <i className="fa fa-chevron-down"></i></Link>
-											<ul className="sub-menu">
+											<Link to={'#'} >Trang chủ</Link>
+											{/* <ul className="sub-menu">
 												<li><Link to={"./"} className="dez-page">Home 1</Link></li>
 												<li><Link to={"/index-2"} className="dez-page">Home 2</Link></li>
-											</ul>
+											</ul> */}
 										</li>
-										<li >
+										{/* <li >
 											<Link to={'#'} >For Candidates <i className="fa fa-chevron-down"></i></Link>
 											<ul className="sub-menu">
 												<li><Link to={"/jobs-profile"} className="dez-page">My Profile<span className="new-page">New</span></Link></li>
@@ -138,13 +138,13 @@ class Header extends Component{
 														
 													</ul>
 												</li>
-												{/* <li><Link to={'#'} className="dez-page">Login <i className="fa fa-angle-right"></i></Link>
+												<li><Link to={'#'} className="dez-page">Login <i className="fa fa-angle-right"></i></Link>
 													<ul className="sub-menu">
 														<li><Link to={"/login"} className="dez-page">login 1</Link></li>
 														<li><Link to={"/login-2"} className="dez-page">login 2 <span className="new-page">New</span></Link></li>
 														<li><Link to={"/login-3"} className="dez-page">login 3 <span className="new-page">New</span></Link></li>
 													</ul>
-												</li> */}
+												</li>
 												<li><Link to={'#'} className="dez-page">register <i className="fa fa-angle-right"></i></Link>
 													<ul className="sub-menu">
 														<li><Link to={"/register"} className="dez-page">register 1</Link></li>
@@ -166,7 +166,7 @@ class Header extends Component{
 												<li><Link to={"/blog-left-img"} className="dez-page">Left Image Sidebar</Link></li>
 												<li><Link to={"/blog-details"} className="dez-page">Blog Details</Link></li>
 											</ul>
-										</li>
+										</li> */}
 									</ul>			
 								</div>
 							</div>

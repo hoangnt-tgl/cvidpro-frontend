@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Header2 from "./../Layout/Header2";
+import Header2 from "./../Layout/HeaderEmployee";
 import Footer from "./../Layout/Footer";
 import Profilesidebar from "./../Element/Profilesidebar";
 import {
@@ -32,16 +32,13 @@ function Jobprofile(props) {
         <div className="content-block">
           <div className="section-full bg-white browse-job p-t50 p-b20">
             <div className="container">
-              <div className="row">
-                <Profilesidebar
-                  userInfo={userInformation}
-                  url={props.location.pathname}
-                />
-                <div className="col-xl-9 col-lg-8 m-b30">
+             
+               
+                <div className="m-b30">
                   <div className="job-bx job-profile">
                     <div className="job-bx-title clearfix">
                       <h5 className="font-weight-700 pull-left text-uppercase">
-                        Basic Information
+                        Thông tin cá nhân
                       </h5>
                       <Link
                         to={"./"}
@@ -54,7 +51,7 @@ function Jobprofile(props) {
                       <div className="row m-b30">
                         <div className="col-lg-6 col-md-6">
                           <div className="form-group">
-                            <label>Your Name:</label>
+                            <label>Họ và tên:</label>
                             <input
                               type="text"
                               className="form-control"
@@ -123,7 +120,7 @@ function Jobprofile(props) {
                       </div>
                       <div className="job-bx-title clearfix">
                         <h5 className="font-weight-700 pull-left text-uppercase">
-                          Contact Information
+                          Thông tin liên hệ
                         </h5>
                       </div>
                       <div className="row">
@@ -195,7 +192,7 @@ function Jobprofile(props) {
                     </form>
                   </div>
                 </div>
-              </div>
+            
             </div>
           </div>
         </div>

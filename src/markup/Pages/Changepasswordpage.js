@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import Header2 from './../Layout/Header2'; 
+import Header2 from './../Layout/HeaderEmployee'; 
 import Footer from './../Layout/Footer'; 
 import Profilesidebar from "./../Element/Profilesidebar";
 
@@ -12,9 +12,8 @@ function Changepasswordpage(props){
 				<div className="content-block">
 					<div className="section-full bg-white browse-job p-t50 p-b20">
 						<div className="container">
-							<div className="row">
-								<Profilesidebar url={props.location.pathname}/>
-								<div className="col-xl-9 col-lg-8 m-b30">
+						
+								<div className="m-b30">
 									<div className="job-bx job-profile">
 										<div className="job-bx-title clearfix">
 											<h5 className="font-weight-700 pull-left text-uppercase">Change Password</h5>
@@ -47,7 +46,7 @@ function Changepasswordpage(props){
 										</form>
 									</div>
 								</div>
-							</div>
+							
 						</div>
 					</div>
 				</div>

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Modal} from 'react-bootstrap';
-import Header2 from './../Layout/Header2';
+import Header2 from './../Layout/HeaderEmployee';
 import Footer from './../Layout/Footer';
 import Profilesidebar from "./../Element/Profilesidebar";
 
@@ -35,13 +35,13 @@ function Jobsalert(props){
 				<div className="content-block">
 					<div className="section-full bg-white p-t50 p-b20">
 						<div className="container">
-							<div className="row">
-								<Profilesidebar url={props.location.pathname}/>
-								<div className="col-xl-9 col-lg-8 m-b30">
+						
+								
+								<div className="m-b30">
 									<div className="job-bx table-job-bx browse-job clearfix">
 										<div className="job-bx-title clearfix">
-											<h5 className="font-weight-700 pull-left text-uppercase">Job Alerts</h5>
-											<div className="float-right">
+											<h5 className="font-weight-700 pull-left text-uppercase">Lời mời</h5>
+											{/* <div className="float-right">
 												<span className="select-title">Sort by freshness</span>
 												<select className="custom-btn">
 													<option>Last 2 Months</option>
@@ -49,7 +49,7 @@ function Jobsalert(props){
 													<option>Last Weeks</option>
 													<option>Last 3 Days</option>
 												</select>
-											</div>
+											</div> */}
 										</div>
 										<table>
 											<thead>
@@ -118,7 +118,7 @@ function Jobsalert(props){
 									</Modal>
 									
 								</div>
-							</div>
+							
 						</div>
 					</div>
 					

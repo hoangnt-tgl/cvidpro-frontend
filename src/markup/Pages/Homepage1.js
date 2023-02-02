@@ -35,13 +35,13 @@ function Homepage() {
       <Header />
       <div className="page-content">
         {/* <IndexBanner /> */}
-				<div className="section-full job-categories content-inner-2 bg-white">
+				<div className="section-full job-categories content-inner-2 bg-white" style={{display: 'none'}}>
 					<div className="container">
 						<div className="section-head d-flex head-counter clearfix">
-							<div className="mr-auto">
+							{/* <div className="mr-auto">
 								<h2 className="m-b5">Popular Categories</h2>
 								<h6 className="fw3">20+ Catetories work wating for you</h6>
-							</div>
+							</div> */}
 							<div className="head-counter-bx">
 								<h2 className="m-b5 counter"><CountUp end={countResume} duration={5}/></h2>
 								<h6 className="fw3">CVID</h6>
@@ -83,7 +83,7 @@ function Homepage() {
 							<h2 className="m-b0">Membership Plans</h2>
 							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.</p>
 						</div> */}
-            <div className="section-content box-sort-in button-example m-t80">
+            <div className="section-content box-sort-in button-example">
               <div className="pricingtable-row">
                 <div className="row max-w1000 m-auto">
                   <div className="col-sm-12 col-md-6 col-lg-6 p-lr0">
