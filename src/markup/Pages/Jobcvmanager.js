@@ -45,6 +45,7 @@ function Jobcvmanager(props){
 												</select>
 											</div>
 										</div>
+										<div className="row">
 										<ul className="cv-manager">
 											{contacts.map((contact,index)=>(
 												<li key={index}>
@@ -73,6 +74,7 @@ function Jobcvmanager(props){
 											))}	
 											
 										</ul>
+										</div>
 										<div className="pagination-bx float-right">
 											<ul className="pagination">
 												<li className="previous"><Link to={"#"}><i className="ti-arrow-left"></i> Prev</Link></li>

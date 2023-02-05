@@ -96,31 +96,25 @@ class HeaderEmployee extends Component {
                       <Link to={"#"}>Trang chủ</Link>
                     </li>
 
-                    <li>
+                    <li className="">
                       <Link to={"#"}>
-                        Việc làm <i className="fa fa-chevron-down"></i>
+                        Quản lý<i className="fa fa-chevron-down"></i>
                       </Link>
                       <ul className="sub-menu">
                         <li>
-                          <Link to={"/jobs-saved-jobs"} className="dez-page">
-                            Tìm việc
+                          <Link to={"/company-department"} className="dez-page">
+                            Phòng ban
                           </Link>
                         </li>
                         <li>
-                          <Link to={"/jobs-applied-job"} className="dez-page">
-                            Việc đã chọn
+                          <Link
+                            to={"#"}
+                            className="dez-page"
+                          >
+                            Ứng viên
                           </Link>
                         </li>
-                        <li>
-                          <Link to={"/jobs-alerts"} className="dez-page">
-                            Lời mời
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to={"#"} className="dez-page">
-                            Lịch phỏng vấn
-                          </Link>
-                        </li>
+                    
                       </ul>
                     </li>
                     <li>
@@ -129,22 +123,13 @@ class HeaderEmployee extends Component {
                       </Link>
                       <ul className="sub-menu">
                         <li>
-                          <Link to={"/jobs-profile"} className="dez-page">
-                            Thông tin cá nhân
+                          <Link to={"/company-profile"} className="dez-page">
+                            Thông tin công ty
                           </Link>
                         </li>
                         <li>
                           <Link
-                            to={"/jobs-my-resume"}
-                            target="blank"
-                            className="dez-page"
-                          >
-                            Lý lịch ứng viên
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            to={"/jobs-change-password"}
+                            to={"/company-change-password"}
                             className="dez-page"
                           >
                             Thay đổi mật khẩu

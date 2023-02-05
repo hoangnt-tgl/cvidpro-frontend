@@ -153,28 +153,13 @@ function Companymanage(props) {
                           onClick={() => setShowAddJob(true)}
                         ></i>
                       </h5>
-                     
                     </div>
 
                     <table className="table-job-bx cv-manager company-manage-job">
                       <thead>
                         <tr>
-                          <th className="feature">
-                            <div className="custom-control custom-checkbox">
-                              <input
-                                type="checkbox"
-                                id="check12"
-                                className="custom-control-input selectAllCheckBox"
-                                name="example1"
-                              />
-                              <label
-                                className="custom-control-label"
-                                htmlFor="check12"
-                              ></label>
-                            </div>
-                          </th>
                           <th>Chức danh</th>
-                          <th>Chưa có tên</th>
+                          {/* <th>Chưa có tên</th> */}
                           <th>Trạng thái</th>
                           <th>Thao tác</th>
                         </tr>
@@ -182,20 +167,6 @@ function Companymanage(props) {
                       <tbody>
                         {department.jobs?.map((item) => (
                           <tr>
-                            <td className="feature">
-                              <div className="custom-control custom-checkbox">
-                                <input
-                                  type="checkbox"
-                                  className="custom-control-input"
-                                  id="check1"
-                                  name="example1"
-                                />
-                                <label
-                                  className="custom-control-label"
-                                  htmlFor="check1"
-                                ></label>
-                              </div>
-                            </td>
                             <td className="job-name">
                               <Link to={"#"}>{item.title}</Link>
                               <ul className="job-post-info">
@@ -212,9 +183,9 @@ function Companymanage(props) {
                                 </li> */}
                               </ul>
                             </td>
-                            <td className="application text-primary">
+                            {/* <td className="application text-primary">
                               (5) Applications
-                            </td>
+                            </td> */}
                             <td className="expired pending">
                               {getStatusJob(item)}{" "}
                             </td>
@@ -222,7 +193,10 @@ function Companymanage(props) {
                               <Link to={"#"} onClick={() => setCompany(true)}>
                                 <i className="fa fa-eye"></i>
                               </Link>
-                              <Link to={"#"} onClick={()=>handleDeleteJob(item._id)}>
+                              <Link
+                                to={"#"}
+                                onClick={() => handleDeleteJob(item._id)}
+                              >
                                 <i className="ti-trash"></i>
                               </Link>
                             </td>

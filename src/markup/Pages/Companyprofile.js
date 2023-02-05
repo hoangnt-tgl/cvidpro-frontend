@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Header2 from "./../Layout/Header2";
+import Header2 from "./../Layout/HeaderCompany";
 import Footer from "./../Layout/Footer";
 import { Form } from "react-bootstrap";
 import GoogleMaps from "simple-react-google-maps";
@@ -29,20 +29,12 @@ function Companyprofile(props) {
         <div className="content-block">
           <div className="section-full bg-white p-t50 p-b20">
             <div className="container">
-              <div className="row">
-			  <CompanySidebar url={props.history.location}/>
-                <div className="col-xl-9 col-lg-8 m-b30">
+                <div className="m-b30">
                   <div className="job-bx submit-resume">
                     <div className="job-bx-title clearfix">
                       <h5 className="font-weight-700 pull-left text-uppercase">
                         Thông tin công ty
                       </h5>
-                      <Link
-                        to={"/company-profile"}
-                        className="site-button right-arrow button-sm float-right"
-                      >
-                        Back
-                      </Link>
                     </div>
                     <form>
                       <div className="row m-b30">
@@ -149,7 +141,7 @@ function Companyprofile(props) {
                       </button>
                     </form>
                   </div>
-                </div>
+              
               </div>
             </div>
           </div>

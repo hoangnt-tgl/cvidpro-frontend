@@ -46,7 +46,24 @@ function Jobsappliedjob(props) {
                   </div>
                 </div>
                 <ul className="post-job-bx browse-job">
+                  {jobList?.length === 0 && (
+                    <>
+                      <div className="text-center">
+                        <h3 className="text-danger">
+                          Bạn chưa ứng tuyển công việc nào
+                        </h3>
+                        <Link
+                          to="/jobs-saved-jobs"
+                          className="site-button button-sm"
+                        >
+                          Tìm việc ngay
+                        </Link>
+                      </div>
+                    </>
+                  )}
+                  <div className="row">
                   {jobList?.map((item, index) => (
+                    <div className="col-lg-6 mb-2">
                     <li key={index}>
                       <div className="post-bx">
                         <div className="job-post-info m-a0">
@@ -80,48 +97,30 @@ function Jobsappliedjob(props) {
                               {displayTime(item.interview?.date)}
                             </p>
                             {/* disable link */}
-
-                            <Link
-                              to={"#"}
-                              className="site-button button-sm float-right"
-                            >
-                              Xác nhận
-                            </Link>
-                            <Link
-                              to={"#"}
-                              className="btn-info button-sm float-right mx-2"
-                            >
-                              Từ chối
-                            </Link>
+                            {item.interview?.date && (
+                              <div className="float-right">
+                                <Link
+                                  to={"#"}
+                                  className="btn-info button-sm mx-2"
+                                >
+                                  Từ chối
+                                </Link>
+                                <Link
+                                  to={"#"}
+                                  className="site-button button-sm "
+                                >
+                                  Xác nhận
+                                </Link>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
                     </li>
+                    </div>
                   ))}
+                  </div>
                 </ul>
-                <div className="pagination-bx m-t30">
-                  <ul className="pagination">
-                    <li className="previous">
-                      <Link to={"#"}>
-                        <i className="ti-arrow-left"></i> Prev
-                      </Link>
-                    </li>
-                    <li className="active">
-                      <Link to={"#"}>1</Link>
-                    </li>
-                    <li>
-                      <Link to={"#"}>2</Link>
-                    </li>
-                    <li>
-                      <Link to={"#"}>3</Link>
-                    </li>
-                    <li className="next">
-                      <Link to={"#"}>
-                        Next <i className="ti-arrow-right"></i>
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
               </div>
             </div>
           </div>

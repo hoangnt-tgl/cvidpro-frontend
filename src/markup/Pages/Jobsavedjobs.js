@@ -8,6 +8,7 @@ import Select from "react-select";
 import Profilesidebar from "./../Element/Profilesidebar";
 import { getMyResume, findJob } from "../../services/EmployeeApi";
 import ModalSelectJob from "./../Element/ModalSelectJob";
+import { displaySalary } from "../../services/DisplayService";
 import {
   getListLevel,
   getListSchools,
@@ -73,17 +74,6 @@ function Jobsavedjobs(props) {
 
     fetchData();
   }, [reload]);
-
-  const displaySalary = (from, to) => {
-    if (from && to) {
-      return from + " - " + to + " triệu";
-    } else if (from) {
-      return "Từ " + from + " triệu";
-    } else if (to) {
-      return "Đến " + to + " triệu";
-    }
-    return "Thương lượng";
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -342,7 +332,7 @@ function Jobsavedjobs(props) {
                                   {item.location}
                                 </li>
                                 <li>
-                                  <i className="fa fa-money"></i> $
+                                  <i className="fa fa-money"></i>
                                   {displaySalary(
                                     item.minSalary,
                                     item.maxSalary
