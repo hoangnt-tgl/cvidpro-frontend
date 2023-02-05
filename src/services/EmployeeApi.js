@@ -106,7 +106,7 @@ export const getCountResume = async () => {
     .catch((error) => {
       formatError(error.response?.data?.message || "");
     });
-}
+};
 
 export const updatePoint = async (id, pointList) => {
   return axiosInstance
@@ -115,4 +115,15 @@ export const updatePoint = async (id, pointList) => {
     .catch((error) => {
       formatError(error.response?.data?.message || "");
     });
-}
+};
+
+export const gẹtApplyJobForEmployee = async (id) => {
+  return axiosInstance
+    .post(`order/get-order-by-employee-id/employeeId/${id}`, {
+      sender: "employee",
+    })
+    .then((res) => res.data)
+    .catch((error) => {
+      formatError(error.response?.data?.message || "");
+    });
+};

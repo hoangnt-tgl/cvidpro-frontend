@@ -305,7 +305,7 @@ function Jobmyresume(props) {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="page-content">
         <div
           className="overlay-black-dark profile-edit p-t50 p-b20"

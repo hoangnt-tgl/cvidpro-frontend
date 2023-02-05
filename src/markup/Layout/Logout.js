@@ -16,7 +16,7 @@ function LogoutPage(props){
         <>
             			
 			<Link to ={'#'} title="READ MORE"   className="site-button" onClick={onLogout}>
-				<i className="fa fa-lock"></i> Logout 
+				<i className="fa fa-lock"></i> Đăng xuất 
 			</Link>
         </>
     )

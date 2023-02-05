@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header2 from "./../Layout/HeaderEmployee";
 import Footer from "./../Layout/Footer";
 import Profilesidebar from "./../Element/Profilesidebar";
-
+import { displayTime } from "../../services/TimeService";
+import { gẹtApplyJobForEmployee } from "../../services/EmployeeApi";
 const postBlog = [
   { title: "PHP Web Developer" },
   { title: "Software Developer" },
@@ -11,6 +12,15 @@ const postBlog = [
 ];
 
 function Jobsappliedjob(props) {
+  const employeeInfo = JSON.parse(localStorage.getItem("userDetails"));
+  const [jobList, setJobList] = useState([]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    async function fetchData() {
+      setJobList((await gẹtApplyJobForEmployee(employeeInfo._id)).data);
+    }
+    fetchData();
+  }, []);
   return (
     <>
       <Header2 />
@@ -36,49 +46,52 @@ function Jobsappliedjob(props) {
                   </div>
                 </div>
                 <ul className="post-job-bx browse-job">
-                  {postBlog.map((item, index) => (
+                  {jobList?.map((item, index) => (
                     <li key={index}>
                       <div className="post-bx">
                         <div className="job-post-info m-a0">
                           <h4>
-                            <Link to={"/job-detail"}>{item.title}</Link>
+                            <Link to={"#"}>{item.jobInfo.title}</Link>
                           </h4>
                           <ul>
                             <li>
-                              <Link to={"/company-profile"}>@company-name</Link>
+                              <Link to={"#"}>{item.jobInfo.position}</Link>
                             </li>
                             <li>
-                              <i className="fa fa-map-marker"></i> Sacramento,
-                              California
+                              <i className="fa fa-map-marker"></i>{" "}
+                              {item.jobInfo.location}
                             </li>
                             <li>
                               <i className="fa fa-money"></i> 25,000
                             </li>
                           </ul>
                           <div className="job-time m-t15 m-b10">
-                            <Link to={""} className="mr-1">
-                              <span>PHP</span>
-                            </Link>
-                            <Link to={""} className="mr-1">
-                              <span>Angular</span>
-                            </Link>
-                            <Link to={""} className="mr-1">
-                              <span>Bootstrap</span>
-                            </Link>
-                            <Link to={""} className="mr-1">
-                              <span>Wordpress</span>
-                            </Link>
+                            {item.jobInfo.major.map((ele, index) => (
+                              <Link to={"#"} className="mr-1">
+                                <span>{ele}</span>
+                              </Link>
+                            ))}
                           </div>
                           <div className="posted-info clearfix">
                             <p className="m-tb0 text-primary float-left">
-                              <span className="text-black m-r10">Posted:</span>{" "}
-                              2 day ago
+                              <span className="text-black m-r10">
+                                Lịch phỏng vấn:
+                              </span>{" "}
+                              {displayTime(item.interview?.date)}
                             </p>
+                            {/* disable link */}
+
                             <Link
-                              to={"/jobs-my-resume"}
+                              to={"#"}
                               className="site-button button-sm float-right"
                             >
-                              Apply Job
+                              Xác nhận
+                            </Link>
+                            <Link
+                              to={"#"}
+                              className="btn-info button-sm float-right mx-2"
+                            >
+                              Từ chối
                             </Link>
                           </div>
                         </div>

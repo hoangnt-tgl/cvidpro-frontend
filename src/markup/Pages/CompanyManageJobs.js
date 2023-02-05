@@ -153,17 +153,7 @@ function Companymanage(props) {
                           onClick={() => setShowAddJob(true)}
                         ></i>
                       </h5>
-                      <div className="float-right">
-                        <span className="select-title">Lọc theo</span>
-                        <select className="custom-btn">
-                          <option>All</option>
-                          <option>Đang tuyển</option>
-                          <option>Dừng tuyển</option>
-                          <option>Đã được duyệt</option>
-                          <option>Đang chờ duyệt</option>
-                          <option>Không được duyệt</option>
-                        </select>
-                      </div>
+                     
                     </div>
 
                     <table className="table-job-bx cv-manager company-manage-job">
