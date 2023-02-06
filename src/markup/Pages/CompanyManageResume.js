@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Header2 from "../Layout/Header2";
+import Header2 from "../Layout/HeaderDepartment";
 import Footer from "../Layout/Footer";
 import { Modal } from "react-bootstrap";
 import CompanySidebar from "../Element/DepartmentSidebar";
@@ -22,9 +22,8 @@ function Companymanage(props) {
         <div className="content-block">
           <div className="section-full bg-white p-t50 p-b20">
             <div className="container">
-              <div className="row">
-                <CompanySidebar url={props.history.location} />
-                <div className="col-xl-9 col-lg-8 m-b30">
+            
+                <div className="m-b30">
                   <div className="job-bx browse-job clearfix">
                     <div className="job-bx-title  clearfix">
                       <h5 className="font-weight-700 pull-left text-uppercase">
@@ -150,7 +149,7 @@ function Companymanage(props) {
                     </Modal>
                   </div>
                 </div>
-              </div>
+             
             </div>
           </div>
         </div>

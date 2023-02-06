@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Select from "react-select";
-import Header2 from "../Layout/Header2";
+import Header2 from "../Layout/HeaderDepartment";
 import Footer from "../Layout/Footer";
 import { Modal } from "react-bootstrap";
 import CompanySidebar from "../Element/DepartmentSidebar";
@@ -138,358 +138,327 @@ function Companymanage(props) {
         <div className="content-block">
           <div className="section-full bg-white p-t50 p-b20">
             <div className="container">
-              <div className="row">
-                <CompanySidebar
-                  url={props.location}
-                  name={department.departmentName}
-                />
-                <div className="col-xl-9 col-lg-8 m-b30">
-                  <div className="job-bx browse-job clearfix">
-                    <div className="job-bx-title clearfix">
-                      <h5 className="font-weight-700 pull-left text-uppercase my-2">
-                        Vị trí tuyển dụng{" "}
-                        <i
-                          className="fa fa-plus text-primary"
-                          onClick={() => setShowAddJob(true)}
-                        ></i>
-                      </h5>
-                    </div>
+              <div className="m-b30">
+                <div className="job-bx browse-job clearfix">
+                  <div className="job-bx-title clearfix">
+                    <h5 className="font-weight-700 pull-left text-uppercase my-2">
+                      Vị trí tuyển dụng{" "}
+                      <i
+                        className="fa fa-plus text-primary"
+                        onClick={() => setShowAddJob(true)}
+                      ></i>
+                    </h5>
+                  </div>
 
-                    <table className="table-job-bx cv-manager company-manage-job">
-                      <thead>
+                  <table className="table-job-bx cv-manager company-manage-job">
+                    <thead>
+                      <tr>
+                        <th>Chức danh</th>
+                        {/* <th>Chưa có tên</th> */}
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {department.jobs?.map((item) => (
                         <tr>
-                          <th>Chức danh</th>
-                          {/* <th>Chưa có tên</th> */}
-                          <th>Trạng thái</th>
-                          <th>Thao tác</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {department.jobs?.map((item) => (
-                          <tr>
-                            <td className="job-name">
-                              <Link to={"#"}>{item.title}</Link>
-                              <ul className="job-post-info">
-                                {/* <li>
+                          <td className="job-name">
+                            <Link to={"#"}>{item.title}</Link>
+                            <ul className="job-post-info">
+                              {/* <li>
                                   <i className="fa fa-map-marker"></i>{" "}
                                   Sacramento, California
                                 </li> */}
-                                <li>
-                                  <i className="fa fa-bookmark-o"></i>{" "}
-                                  {item.position}
-                                </li>
-                                {/* <li>
+                              <li>
+                                <i className="fa fa-bookmark-o"></i>{" "}
+                                {item.position}
+                              </li>
+                              {/* <li>
                                   <i className="fa fa-filter"></i> Web Designer
                                 </li> */}
-                              </ul>
-                            </td>
-                            {/* <td className="application text-primary">
+                            </ul>
+                          </td>
+                          {/* <td className="application text-primary">
                               (5) Applications
                             </td> */}
-                            <td className="expired pending">
-                              {getStatusJob(item)}{" "}
-                            </td>
-                            <td className="job-links">
-                              <Link to={"#"} onClick={() => setCompany(true)}>
-                                <i className="fa fa-eye"></i>
-                              </Link>
-                              <Link
-                                to={"#"}
-                                onClick={() => handleDeleteJob(item._id)}
-                              >
-                                <i className="ti-trash"></i>
-                              </Link>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                    <div className="pagination-bx m-t30 float-right">
-                      <ul className="pagination">
-                        <li className="previous">
-                          <Link to={"#"}>
-                            <i className="ti-arrow-left"></i> Prev
-                          </Link>
-                        </li>
-                        <li className="active">
-                          <Link to={"#"}>1</Link>
-                        </li>
-                        <li>
-                          <Link to={"#"}>2</Link>
-                        </li>
-                        <li>
-                          <Link to={"#"}>3</Link>
-                        </li>
-                        <li className="next">
-                          <Link to={"#"}>
-                            Next <i className="ti-arrow-right"></i>
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
+                          <td className="expired pending">
+                            {getStatusJob(item)}{" "}
+                          </td>
+                          <td className="job-links">
+                            <Link to={"#"} onClick={() => setCompany(true)}>
+                              <i className="fa fa-eye"></i>
+                            </Link>
+                            <Link
+                              to={"#"}
+                              onClick={() => handleDeleteJob(item._id)}
+                            >
+                              <i className="ti-trash"></i>
+                            </Link>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
 
-                    <Modal
-                      show={company}
-                      onHide={setCompany}
-                      className="modal fade modal-bx-info"
-                    >
-                      <div className="modal-dialog my-0" role="document">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <div className="logo-img">
-                              <img
-                                alt=""
-                                src={require("./../../images/logo/icon2.png")}
-                              />
-                            </div>
-                            <h5 className="modal-title">Company Name</h5>
-                            <button
-                              type="button"
-                              className="close"
-                              onClick={() => setCompany(false)}
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
+                  <Modal
+                    show={company}
+                    onHide={setCompany}
+                    className="modal fade modal-bx-info"
+                  >
+                    <div className="modal-dialog my-0" role="document">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <div className="logo-img">
+                            <img
+                              alt=""
+                              src={require("./../../images/logo/icon2.png")}
+                            />
                           </div>
-                          <div className="modal-body">
-                            <ul>
-                              <li>
-                                <strong>Job Title :</strong>
-                                <p> Web Developer – PHP, HTML, CSS </p>
-                              </li>
-                              <li>
-                                <strong>Experience :</strong>
-                                <p>5 Year 3 Months</p>
-                              </li>
-                              <li>
-                                <strong>Deseription :</strong>
-                                <p>
-                                  Lorem Ipsum is simply dummy text of the
-                                  printing and typesetting industry has been the
-                                  industry's standard dummy text ever since.
-                                </p>
-                              </li>
-                            </ul>
-                          </div>
-                          <div className="modal-footer">
-                            <button
-                              type="button"
-                              className="btn btn-secondary"
-                              onClick={() => setCompany(false)}
-                            >
-                              Close
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </Modal>
-
-                    {/* Modal tạo vị trí tuyển dụng */}
-                    <Modal
-                      show={showAddJob}
-                      onHide={setShowAddJob}
-                      className="modal fade modal-bx-info"
-                    >
-                      <div className="modal-dialog my-0 w-100" role="document">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <div className="logo-img">
-                              <img
-                                alt=""
-                                src={require("./../../images/logo/icon2.png")}
-                              />
-                            </div>
-                            <h5 className="modal-title">
-                              Tạo vị trí tuyển dụng
-                            </h5>
-                            <button
-                              type="button"
-                              className="close"
-                              onClick={() => setShowAddJob(false)}
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div
-                            className="modal-body"
-                            style={{ maxHeight: "70vh", overflow: "auto" }}
+                          <h5 className="modal-title">Company Name</h5>
+                          <button
+                            type="button"
+                            className="close"
+                            onClick={() => setCompany(false)}
                           >
-                            <div className="form-group">
-                              <label>Chức danh công việc</label>
-                              <Select
-                                placeholder="Chọn chức danh công việc"
-                                onChange={(e) =>
-                                  setNewJob({ ...newJob, title: e.label })
-                                }
-                                options={jobTitleOption}
-                              />
-                            </div>
-                            <div className="form-group">
-                              <label>Chức vụ</label>
-                              <Select
-                                placeholder="Chọn chức vụ"
-                                onChange={(e) =>
-                                  setNewJob({ ...newJob, position: e.label })
-                                }
-                                options={positionOptions}
-                              />
-                            </div>
-                            <div className="form-group">
-                              <label>Cấp bậc</label>
-                              <Select
-                                isMulti
-                                closeMenuOnSelect={false}
-                                placeholder="Chọn cấp bậc"
-                                onChange={(e) =>
-                                  setNewJob({
-                                    ...newJob,
-                                    level: e.map((item) => item.label),
-                                  })
-                                }
-                                options={levelOptions}
-                              />
-                            </div>
-                            <div className="form-group">
-                              <label for="">Chuyên nghành ứng viên</label>
-                              <Select
-                                isMulti
-                                closeMenuOnSelect={false}
-                                placeholder="Chọn chuyên ngành ứng viên"
-                                onChange={(e) =>
-                                  setNewJob({
-                                    ...newJob,
-                                    major: e.map((item) => item.label),
-                                  })
-                                }
-                                options={majorOptions}
-                              />
-                            </div>
-                            <div className="form-group">
-                              <label for="">Lĩnh vực kinh doanh</label>
-                              <Select
-                                placeholder="Chọn lĩnh vực kinh doanh"
-                                onChange={(e) =>
-                                  setNewJob({ ...newJob, industry: e.label })
-                                }
-                                options={industryOptions}
-                              />
-                            </div>
-                            <div className="form-group">
-                              <label for="">Nơi làm việc</label>
-                              <Select
-                                placeholder="Chọn nơi làm việc"
-                                onChange={(e) => {
-                                  setNewJob({ ...newJob, location: e.label });
-                                }}
-                                options={provinceOptions}
-                              />
-                            </div>
-                            <div className="form-group">
-                              <label for="">Môi trường làm việc</label>
-                              <Select
-                                placeholder="Chọn môi trường làm việc"
-                                onChange={(e) => {
-                                  setNewJob({
-                                    ...newJob,
-                                    workingEnvironment: e.label,
-                                  });
-                                }}
-                                options={environmentOption}
-                              />
-                            </div>
-                            <div className="form-group">
-                              <label for="">Yêu cầu kinh nghiệm</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Nhập yêu cầu kinh nghiệm"
-                                value={newJob.experience}
-                                onChange={(e) => {
-                                  setNewJob({
-                                    ...newJob,
-                                    experience: e.target.value,
-                                  });
-                                }}
-                              />
-                            </div>
-                            <div className="form-group">
-                              <label for="">Số lượng</label>
-                              <input
-                                type="number"
-                                className="form-control"
-                                placeholder="Nhập số lượng"
-                                value={newJob.quantity}
-                                min="1"
-                                onChange={(e) => {
-                                  setNewJob({
-                                    ...newJob,
-                                    quantity: e.target.value,
-                                  });
-                                }}
-                              />
-                            </div>
-
-                            <div className="form-group">
-                              <label for="">Mức lương tối thiểu</label>
-                              <input
-                                type="number"
-                                className="form-control"
-                                placeholder="Nhập mức lương tối thiểu"
-                                value={newJob.salaryMin}
-                                onChange={(e) => {
-                                  setNewJob({
-                                    ...newJob,
-                                    salaryMin: e.target.value,
-                                  });
-                                }}
-                              />
-                            </div>
-                            <div className="form-group">
-                              <label for="">Mức lương tối đa</label>
-                              <input
-                                type="number"
-                                className="form-control"
-                                placeholder="Nhập mức lương tối đa"
-                                value={newJob.salaryMax}
-                                onChange={(e) => {
-                                  setNewJob({
-                                    ...newJob,
-                                    salaryMax: e.target.value,
-                                  });
-                                }}
-                              />
-                            </div>
-                            <div className="form-group">
-                              <label for="">Mô tả công việc</label>
-                              <ReactQuill
-                                theme="snow"
-                                value={newJob.description}
-                                onChange={(e) =>
-                                  setNewJob({ ...newJob, description: e })
-                                }
-                              />
-                            </div>
-                          </div>
-                          <div className="modal-footer">
-                            <button
-                              type="submit"
-                              className="btn btn-primary"
-                              onClick={handleAddJob}
-                            >
-                              Lưu
-                            </button>
-                            <button
-                              type="button"
-                              className="btn btn-secondary"
-                              onClick={() => setShowAddJob(false)}
-                            >
-                              Hủy
-                            </button>
-                          </div>
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div className="modal-body">
+                          <ul>
+                            <li>
+                              <strong>Job Title :</strong>
+                              <p> Web Developer – PHP, HTML, CSS </p>
+                            </li>
+                            <li>
+                              <strong>Experience :</strong>
+                              <p>5 Year 3 Months</p>
+                            </li>
+                            <li>
+                              <strong>Deseription :</strong>
+                              <p>
+                                Lorem Ipsum is simply dummy text of the printing
+                                and typesetting industry has been the industry's
+                                standard dummy text ever since.
+                              </p>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="modal-footer">
+                          <button
+                            type="button"
+                            className="btn btn-secondary"
+                            onClick={() => setCompany(false)}
+                          >
+                            Close
+                          </button>
                         </div>
                       </div>
-                    </Modal>
-                  </div>
+                    </div>
+                  </Modal>
+
+                  {/* Modal tạo vị trí tuyển dụng */}
+                  <Modal
+                    show={showAddJob}
+                    onHide={setShowAddJob}
+                    className="modal fade modal-bx-info"
+                  >
+                    <div className="modal-dialog my-0 w-100" role="document">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <div className="logo-img">
+                            <img
+                              alt=""
+                              src={require("./../../images/logo/icon2.png")}
+                            />
+                          </div>
+                          <h5 className="modal-title">Tạo vị trí tuyển dụng</h5>
+                          <button
+                            type="button"
+                            className="close"
+                            onClick={() => setShowAddJob(false)}
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div
+                          className="modal-body"
+                          style={{ maxHeight: "70vh", overflow: "auto" }}
+                        >
+                          <div className="form-group">
+                            <label>Chức danh công việc</label>
+                            <Select
+                              placeholder="Chọn chức danh công việc"
+                              onChange={(e) =>
+                                setNewJob({ ...newJob, title: e.label })
+                              }
+                              options={jobTitleOption}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>Chức vụ</label>
+                            <Select
+                              placeholder="Chọn chức vụ"
+                              onChange={(e) =>
+                                setNewJob({ ...newJob, position: e.label })
+                              }
+                              options={positionOptions}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>Cấp bậc</label>
+                            <Select
+                              isMulti
+                              closeMenuOnSelect={false}
+                              placeholder="Chọn cấp bậc"
+                              onChange={(e) =>
+                                setNewJob({
+                                  ...newJob,
+                                  level: e.map((item) => item.label),
+                                })
+                              }
+                              options={levelOptions}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label for="">Chuyên nghành ứng viên</label>
+                            <Select
+                              isMulti
+                              closeMenuOnSelect={false}
+                              placeholder="Chọn chuyên ngành ứng viên"
+                              onChange={(e) =>
+                                setNewJob({
+                                  ...newJob,
+                                  major: e.map((item) => item.label),
+                                })
+                              }
+                              options={majorOptions}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label for="">Lĩnh vực kinh doanh</label>
+                            <Select
+                              placeholder="Chọn lĩnh vực kinh doanh"
+                              onChange={(e) =>
+                                setNewJob({ ...newJob, industry: e.label })
+                              }
+                              options={industryOptions}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label for="">Nơi làm việc</label>
+                            <Select
+                              placeholder="Chọn nơi làm việc"
+                              onChange={(e) => {
+                                setNewJob({ ...newJob, location: e.label });
+                              }}
+                              options={provinceOptions}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label for="">Môi trường làm việc</label>
+                            <Select
+                              placeholder="Chọn môi trường làm việc"
+                              onChange={(e) => {
+                                setNewJob({
+                                  ...newJob,
+                                  workingEnvironment: e.label,
+                                });
+                              }}
+                              options={environmentOption}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label for="">Yêu cầu kinh nghiệm</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Nhập yêu cầu kinh nghiệm"
+                              value={newJob.experience}
+                              onChange={(e) => {
+                                setNewJob({
+                                  ...newJob,
+                                  experience: e.target.value,
+                                });
+                              }}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label for="">Số lượng</label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              placeholder="Nhập số lượng"
+                              value={newJob.quantity}
+                              min="1"
+                              onChange={(e) => {
+                                setNewJob({
+                                  ...newJob,
+                                  quantity: e.target.value,
+                                });
+                              }}
+                            />
+                          </div>
+
+                          <div className="form-group">
+                            <label for="">Mức lương tối thiểu</label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              placeholder="Nhập mức lương tối thiểu"
+                              value={newJob.salaryMin}
+                              onChange={(e) => {
+                                setNewJob({
+                                  ...newJob,
+                                  salaryMin: e.target.value,
+                                });
+                              }}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label for="">Mức lương tối đa</label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              placeholder="Nhập mức lương tối đa"
+                              value={newJob.salaryMax}
+                              onChange={(e) => {
+                                setNewJob({
+                                  ...newJob,
+                                  salaryMax: e.target.value,
+                                });
+                              }}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label for="">Mô tả công việc</label>
+                            <ReactQuill
+                              theme="snow"
+                              value={newJob.description}
+                              onChange={(e) =>
+                                setNewJob({ ...newJob, description: e })
+                              }
+                            />
+                          </div>
+                        </div>
+                        <div className="modal-footer">
+                          <button
+                            type="submit"
+                            className="btn btn-primary"
+                            onClick={handleAddJob}
+                          >
+                            Lưu
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-secondary"
+                            onClick={() => setShowAddJob(false)}
+                          >
+                            Hủy
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </Modal>
                 </div>
               </div>
             </div>
