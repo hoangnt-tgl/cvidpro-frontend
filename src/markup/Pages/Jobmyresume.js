@@ -13,6 +13,8 @@ import {
   InputGroup,
   FormControl,
   Col,
+  Tabs,
+  Tab,
 } from "react-bootstrap";
 import Select from "react-select";
 import {
@@ -65,6 +67,8 @@ function Jobmyresume(props) {
     start: "",
     end: "",
     leaving: "",
+    isWorking: true,
+    isCurrent: false,
   };
   const objProcess = {
     jobTitle: "",
@@ -75,6 +79,13 @@ function Jobmyresume(props) {
     address: "",
     result: "",
     workDescription: "",
+  };
+  const objNotWork = {
+    start: "",
+    end: "",
+    process: [],
+    isWorking: false,
+    isCurrent: false,
   };
 
   // option lý do nghỉ việc
@@ -105,7 +116,9 @@ function Jobmyresume(props) {
   const [listWard, setListWard] = useState([]);
   const [newSchool, setNewSchool] = useState(objSchool);
   const [newWork, setNewWork] = useState(objWork);
+  const [newNotWork, setNewNotWork] = useState(objNotWork);
   const [newProcess, setNewProcess] = useState(objProcess);
+  const [tabKey, setTabKey] = useState("working");
 
   const [newShortTraining, setNewShortTraining] = useState(objShortTraining);
 
@@ -151,6 +164,12 @@ function Jobmyresume(props) {
       setUserInformation(response);
       objProcess.jobTitle = response.jobTitle;
       objProcess.major = response.major;
+      if (response.workExperience.length > 0) {
+        let lastWork =
+          response.workExperience[response.workExperience.length - 1];
+        objProcess.from = lastWork.end;
+        setNewNotWork({ ...objNotWork, start: lastWork.end });
+      }
       setNewProcess(objProcess);
     }
     fetchData();
@@ -228,7 +247,8 @@ function Jobmyresume(props) {
       !newProcess.jobTitle ||
       !newProcess.major ||
       !newProcess.workDescription ||
-      !newProcess.address
+      !newProcess.address ||
+      (!newProcess.isCurrent && !newProcess.result)
     ) {
       swal("Alert!", "Vui lòng nhập đầy đủ thông tin", "error");
       return;
@@ -250,6 +270,16 @@ function Jobmyresume(props) {
   const handleDeleteProcess = async (index) => {};
 
   const handleAddWorkExperience = async () => {
+    if (userInformation.workExperience.length > 0) {
+      let lastWork =
+        userInformation.workExperience[
+          userInformation.workExperience.length - 1
+        ];
+      if (lastWork.isCurrent === true) {
+        swal("Alert!", "Thời gian nhập đã đến thời điểm hiện tại", "error");
+        return;
+      }
+    }
     if (
       !newWork.company ||
       !newWork.address ||
@@ -259,6 +289,14 @@ function Jobmyresume(props) {
       swal("Alert!", "Vui lòng nhập đầy đủ thông tin", "error");
       return;
     }
+    console.log(newWork);
+    setNewWork({
+      ...newWork,
+      start: newWork.process[0].from,
+      end: newWork.process[newWork.process.length - 1].to,
+      isCurrent: newWork.process[newWork.process.length - 1].isCurrent,
+    });
+    setNewNotWork({ ...newNotWork, start: newWork.process[0].from });
     setUserInformation({
       ...userInformation,
       workExperience: [...userInformation.workExperience, newWork],
@@ -267,7 +305,30 @@ function Jobmyresume(props) {
     objProcess.jobTitle = userInformation.jobTitle;
     objProcess.major = userInformation.major;
     setNewWork(objWork);
-    setNewProcess(objProcess);
+    setNewProcess({ objProcess });
+    setReload(!reload);
+  };
+  const handleAddNotWork = async () => {
+    if (userInformation.workExperience.length > 0) {
+      let lastWork =
+        userInformation.workExperience[
+          userInformation.workExperience.length - 1
+        ];
+      if (lastWork.isCurrent === true) {
+        swal("Alert!", "Thời gian nhập đã đến thời điểm hiện tại", "error");
+        return;
+      }
+    }
+    if (!newNotWork.start || (!newNotWork.end && !newNotWork.isCurrent)) {
+      swal("Alert!", "Vui lòng nhập đầy đủ thông tin", "error");
+      return;
+    }
+    setUserInformation({
+      ...userInformation,
+      workExperience: [...userInformation.workExperience, newNotWork],
+    });
+    await addWorkExperience(userInformation._id, newNotWork);
+    setNewNotWork(objNotWork);
     // setReload(!reload);
   };
   const handleDeleteWorkExperience = async (id) => {
@@ -647,7 +708,345 @@ function Jobmyresume(props) {
                 </div>
                 {userInformation.workExperience?.map((item, index1) => {
                   return (
-                    <Form className="mb-3">
+                    <>
+                      {item?.isWorking ? (
+                        <Form className="mb-3">
+                          <Card>
+                            <Card.Header>
+                              <Card.Title className="text-center">
+                                Thời gian làm việc
+                              </Card.Title>
+                              <div className="row">
+                                <div className="col-12">
+                                  <InputGroup size="sm" className="mb-2">
+                                    <InputGroup.Prepend
+                                      style={{ maxHeight: "38px" }}
+                                    >
+                                      <InputGroup.Text>
+                                        Nơi làm việc
+                                      </InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                      value={item.company}
+                                      className="m-0"
+                                      style={{ maxHeight: "38px" }}
+                                    />
+                                  </InputGroup>
+                                </div>
+                                <div className="col-md-4 col-sm-12">
+                                  <InputGroup size="sm" className="mb-2">
+                                    <InputGroup.Prepend
+                                      style={{ maxHeight: "38px" }}
+                                    >
+                                      <InputGroup.Text>Từ</InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                      className="m-0"
+                                      value={formatMonthInput(item.start)}
+                                      style={{ maxHeight: "38px" }}
+                                      type="month"
+                                    />
+                                  </InputGroup>
+                                </div>
+                                <div className="col-md-4 col-sm-12">
+                                  <InputGroup size="sm">
+                                    <InputGroup.Prepend
+                                      style={{ maxHeight: "38px" }}
+                                    >
+                                      <InputGroup.Text>Đến</InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                      className="m-0"
+                                      style={{ maxHeight: "38px" }}
+                                      type="month"
+                                      value={formatMonthInput(item.end)}
+                                    />
+                                  </InputGroup>
+                                </div>
+                                <div className="col-md-4 col-sm-12">
+                                  <Form.Group
+                                    controlId="formBasicCheckbox"
+                                    className="my-2"
+                                  >
+                                    <Form.Check
+                                      type="checkbox"
+                                      label="Hiện tại"
+                                      checked={item.isCurrent}
+                                    />
+                                  </Form.Group>
+                                </div>
+                                <div className="col-12">
+                                  <InputGroup size="sm">
+                                    <InputGroup.Prepend
+                                      style={{ maxHeight: "38px" }}
+                                    >
+                                      <InputGroup.Text>Địa chỉ</InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                      className="m-0"
+                                      style={{ maxHeight: "38px" }}
+                                      value={item.address}
+                                    />
+                                  </InputGroup>
+                                </div>
+                              </div>
+                            </Card.Header>
+                            <Card.Body>
+                              <Card.Title className="text-center">
+                                Quá trình làm việc
+                              </Card.Title>
+                              {item.process.map((element, index2) => {
+                                return (
+                                  <>
+                                    <div className="row ">
+                                      <div className="col-md-4 col-sm-12">
+                                        <InputGroup size="sm" className="mb-2">
+                                          <InputGroup.Prepend
+                                            style={{ maxHeight: "38px" }}
+                                          >
+                                            <InputGroup.Text>
+                                              Từ
+                                            </InputGroup.Text>
+                                          </InputGroup.Prepend>
+                                          <FormControl
+                                            className="m-0"
+                                            style={{ maxHeight: "38px" }}
+                                            type="month"
+                                            value={formatMonthInput(
+                                              element.from
+                                            )}
+                                          />
+                                        </InputGroup>
+                                      </div>
+                                      <div className="col-md-4 col-sm-12">
+                                        <InputGroup size="sm">
+                                          <InputGroup.Prepend
+                                            style={{ maxHeight: "38px" }}
+                                          >
+                                            <InputGroup.Text>
+                                              Đến
+                                            </InputGroup.Text>
+                                          </InputGroup.Prepend>
+                                          <FormControl
+                                            className="m-0"
+                                            style={{ maxHeight: "38px" }}
+                                            type="month"
+                                            value={formatMonthInput(element.to)}
+                                          />
+                                        </InputGroup>
+                                      </div>
+                                      <div className="col-md-4 col-sm-12">
+                                        <Form.Group
+                                          controlId="formBasicCheckbox"
+                                          className="my-2"
+                                        >
+                                          <Form.Check
+                                            type="checkbox"
+                                            label="Hiện tại"
+                                            checked={element.isCurrent}
+                                          />
+                                        </Form.Group>
+                                      </div>
+                                      <div className="col-12">
+                                        <InputGroup size="sm" className="mb-2">
+                                          <InputGroup.Prepend
+                                            style={{ maxHeight: "38px" }}
+                                          >
+                                            <InputGroup.Text>
+                                              Công việc
+                                            </InputGroup.Text>
+                                          </InputGroup.Prepend>
+                                          <FormControl
+                                            className="m-0"
+                                            style={{ maxHeight: "38px" }}
+                                            value={element.workDescription}
+                                          />
+                                        </InputGroup>
+                                      </div>
+                                      <div className="col-12">
+                                        <InputGroup size="sm" className="mb-2">
+                                          <InputGroup.Prepend
+                                            style={{ maxHeight: "38px" }}
+                                          >
+                                            <InputGroup.Text>
+                                              Chuyên nghành
+                                            </InputGroup.Text>
+                                          </InputGroup.Prepend>
+                                          <FormControl
+                                            as={Select}
+                                            size="sm"
+                                            className="m-0 p-0"
+                                            options={majors}
+                                            value={getValueSelect(
+                                              element.major
+                                            )}
+                                          />
+                                        </InputGroup>
+                                      </div>
+                                      <div className="col-12">
+                                        <InputGroup size="sm" className="mb-2">
+                                          <InputGroup.Prepend
+                                            style={{ maxHeight: "38px" }}
+                                          >
+                                            <InputGroup.Text>
+                                              Chức danh công việc
+                                            </InputGroup.Text>
+                                          </InputGroup.Prepend>
+                                          <FormControl
+                                            as={Select}
+                                            size="sm"
+                                            className="m-0 p-0"
+                                            options={jobTitleOption}
+                                            value={getValueSelect(
+                                              element.jobTitle
+                                            )}
+                                          />
+                                        </InputGroup>
+                                      </div>
+                                      <div className="col-12">
+                                        <InputGroup size="sm" className="mb-2">
+                                          <InputGroup.Prepend
+                                            style={{ maxHeight: "38px" }}
+                                          >
+                                            <InputGroup.Text>
+                                              Địa chỉ
+                                            </InputGroup.Text>
+                                          </InputGroup.Prepend>
+                                          <FormControl
+                                            className="m-0"
+                                            style={{ maxHeight: "38px" }}
+                                            value={element.address}
+                                          />
+                                        </InputGroup>
+                                      </div>
+                                      <div className="col-12">
+                                        <InputGroup size="sm" className="mb-2">
+                                          <InputGroup.Prepend
+                                            style={{ maxHeight: "38px" }}
+                                          >
+                                            <InputGroup.Text>
+                                              Kết quả
+                                            </InputGroup.Text>
+                                          </InputGroup.Prepend>
+                                          <FormControl
+                                            as={Select}
+                                            size="sm"
+                                            className="m-0 p-0"
+                                            options={resultOption}
+                                            value={getValueSelect(
+                                              element.result
+                                            )}
+                                          />
+                                        </InputGroup>
+                                      </div>
+                                    </div>
+                                  </>
+                                );
+                              })}
+                            </Card.Body>
+                            <Card.Footer>
+                              <InputGroup size="sm">
+                                <InputGroup.Prepend
+                                  style={{ maxHeight: "38px" }}
+                                >
+                                  <InputGroup.Text>Nghỉ việc</InputGroup.Text>
+                                </InputGroup.Prepend>
+
+                                <FormControl
+                                  as={Select}
+                                  size="sm"
+                                  className="m-0 p-0"
+                                  options={listLeaving}
+                                  value={getValueSelect(item.leaving)}
+                                ></FormControl>
+                              </InputGroup>
+                            </Card.Footer>
+                          </Card>
+                        </Form>
+                      ) : (
+                        <Form className="mb-3">
+                          <Card>
+                            <Card.Header>
+                              <Card.Title className="text-center">
+                                Thời gian không làm việc
+                              </Card.Title>
+                              <div className="row">
+                                <div className="col-md-4 col-sm-12">
+                                  <InputGroup size="sm" className="mb-2">
+                                    <InputGroup.Prepend
+                                      style={{ maxHeight: "38px" }}
+                                    >
+                                      <InputGroup.Text>Từ</InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                      className="m-0"
+                                      value={formatMonthInput(item.start)}
+                                      style={{ maxHeight: "38px" }}
+                                      type="month"
+                                    />
+                                  </InputGroup>
+                                </div>
+                                <div className="col-md-4 col-sm-12">
+                                  <InputGroup size="sm">
+                                    <InputGroup.Prepend
+                                      style={{ maxHeight: "38px" }}
+                                    >
+                                      <InputGroup.Text>Đến</InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                      className="m-0"
+                                      style={{ maxHeight: "38px" }}
+                                      type="month"
+                                      value={formatMonthInput(item.end)}
+                                    />
+                                  </InputGroup>
+                                </div>
+                                <div className="col-md-4 col-sm-12">
+                                  <Form.Group
+                                    controlId="formBasicCheckbox"
+                                    className="my-2"
+                                  >
+                                    <Form.Check
+                                      type="checkbox"
+                                      label="Hiện tại"
+                                      checked={item.isCurrent}
+                                    />
+                                  </Form.Group>
+                                </div>
+                                {/* <div className="col-12">
+                                  <InputGroup size="sm">
+                                    <InputGroup.Prepend
+                                      style={{ maxHeight: "38px" }}
+                                    >
+                                      <InputGroup.Text>Địa chỉ</InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                      className="m-0"
+                                      style={{ maxHeight: "38px" }}
+                                      value={item.address}
+                                    />
+                                  </InputGroup>
+                                </div> */}
+                              </div>
+                            </Card.Header>
+                          </Card>
+                        </Form>
+                      )}
+                    </>
+                  );
+                })}
+                <h5 className="">
+                  Kinh nghiệm đến hiện tại:{" "}
+                  {getExperience(userInformation.workExperience)}
+                </h5>
+                <h5 className="text-center">Thêm kinh nghiệm làm việc mới</h5>
+                <Tabs
+                  id="controlled-tab-example"
+                  activeKey={tabKey}
+                  onSelect={(k) => setTabKey(k)}
+                >
+                  <Tab eventKey="working" title="Thêm nơi làm việc">
+                    <Form className="mb-2" action="javascript:void(0);">
                       <Card>
                         <Card.Header>
                           <div className="row">
@@ -661,9 +1060,15 @@ function Jobmyresume(props) {
                                   </InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                  value={item.company}
+                                  value={newWork.company}
                                   className="m-0"
                                   style={{ maxHeight: "38px" }}
+                                  onChange={(e) => {
+                                    setNewWork({
+                                      ...newWork,
+                                      company: e.target.value,
+                                    });
+                                  }}
                                 />
                               </InputGroup>
                             </div>
@@ -676,9 +1081,12 @@ function Jobmyresume(props) {
                                 </InputGroup.Prepend>
                                 <FormControl
                                   className="m-0"
-                                  value={formatMonthInput(item.start)}
+                                  value={formatMonthInput(
+                                    newWork.process[0]?.from
+                                  )}
                                   style={{ maxHeight: "38px" }}
                                   type="month"
+                                  disabled={true}
                                 />
                               </InputGroup>
                             </div>
@@ -693,7 +1101,11 @@ function Jobmyresume(props) {
                                   className="m-0"
                                   style={{ maxHeight: "38px" }}
                                   type="month"
-                                  value={formatMonthInput(item.end)}
+                                  value={formatMonthInput(
+                                    newWork.process[newWork.process.length - 1]
+                                      ?.to
+                                  )}
+                                  disabled={true}
                                 />
                               </InputGroup>
                             </div>
@@ -704,11 +1116,15 @@ function Jobmyresume(props) {
                               >
                                 <Form.Check
                                   type="checkbox"
-                                  label="Đang làm việc"
+                                  label="Hiện tại"
                                   checked={
-                                    item.process[item.process.length - 1]
-                                      .isCurrent
+                                    newWork.process.length > 0 &&
+                                    newWork.process[newWork.process.length - 1]
+                                      .isCurrent === true
+                                      ? true
+                                      : false
                                   }
+                                  disabled={true}
                                 />
                               </Form.Group>
                             </div>
@@ -722,7 +1138,13 @@ function Jobmyresume(props) {
                                 <FormControl
                                   className="m-0"
                                   style={{ maxHeight: "38px" }}
-                                  value={item.address}
+                                  value={newWork.address}
+                                  onChange={(e) => {
+                                    setNewWork({
+                                      ...newWork,
+                                      address: e.target.value,
+                                    });
+                                  }}
                                 />
                               </InputGroup>
                             </div>
@@ -732,10 +1154,10 @@ function Jobmyresume(props) {
                           <Card.Title className="text-center">
                             Quá trình làm việc
                           </Card.Title>
-                          {item.process.map((element, index2) => {
+                          {newWork.process.map((element, index2) => {
                             return (
                               <>
-                                <div className="row ">
+                                <div className="row mt-3">
                                   <div className="col-md-4 col-sm-12">
                                     <InputGroup size="sm" className="mb-2">
                                       <InputGroup.Prepend
@@ -773,8 +1195,17 @@ function Jobmyresume(props) {
                                     >
                                       <Form.Check
                                         type="checkbox"
-                                        label="Đang làm việc"
+                                        label="Hiện tại"
                                         checked={element.isCurrent}
+                                        onChange={(e) => {
+                                          let temp = newWork.process;
+                                          temp[index2].isCurrent =
+                                            e.target.checked;
+                                          setNewWork({
+                                            ...newWork,
+                                            process: temp,
+                                          });
+                                        }}
                                       />
                                     </Form.Group>
                                   </div>
@@ -865,9 +1296,205 @@ function Jobmyresume(props) {
                                     </InputGroup>
                                   </div>
                                 </div>
+                                <hr style={{ border: "1px solid blue" }} />
                               </>
                             );
                           })}
+                          <div className="row ">
+                            <div className="col-md-4 col-sm-12">
+                              <InputGroup size="sm" className="mb-2">
+                                <InputGroup.Prepend
+                                  style={{ maxHeight: "38px" }}
+                                >
+                                  <InputGroup.Text>Từ</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                  className="m-0"
+                                  style={{ maxHeight: "38px" }}
+                                  type="month"
+                                  value={formatMonthInput(newProcess.from)}
+                                  disabled={
+                                    newWork.process.length > 0 ||
+                                    userInformation.workExperience?.length > 0
+                                      ? true
+                                      : false
+                                  }
+                                  onChange={(e) => {
+                                    setNewProcess({
+                                      ...newProcess,
+                                      from: e.target.value,
+                                    });
+                                  }}
+                                />
+                              </InputGroup>
+                            </div>
+                            <div className="col-md-4 col-sm-12">
+                              <InputGroup size="sm">
+                                <InputGroup.Prepend
+                                  style={{ maxHeight: "38px" }}
+                                >
+                                  <InputGroup.Text>Đến</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                  className="m-0"
+                                  style={{ maxHeight: "38px" }}
+                                  type="month"
+                                  value={formatMonthInput(newProcess.to)}
+                                  disabled={
+                                    newProcess.from === "" ||
+                                    newProcess.isCurrent
+                                      ? true
+                                      : false
+                                  }
+                                  min={newProcess.from}
+                                  max={formatMonthInput(new Date())}
+                                  onChange={(e) => {
+                                    setNewProcess({
+                                      ...newProcess,
+                                      to: e.target.value,
+                                    });
+                                  }}
+                                />
+                              </InputGroup>
+                            </div>
+                            <div className="col-md-4 col-sm-12">
+                              <Form.Group
+                                controlId="formBasicCheckbox"
+                                className="my-2"
+                              >
+                                <Form.Check
+                                  type="checkbox"
+                                  label="Hiện tại"
+                                  checked={newProcess.isCurrent}
+                                  onChange={(e) => {
+                                    setNewProcess({
+                                      ...newProcess,
+                                      isCurrent: e.target.checked,
+                                      to: e.target.checked ? "" : newProcess.to,
+                                    });
+                                  }}
+                                />
+                              </Form.Group>
+                            </div>
+                            <div className="col-12">
+                              <InputGroup size="sm" className="mb-2">
+                                <InputGroup.Prepend
+                                  style={{ maxHeight: "38px" }}
+                                >
+                                  <InputGroup.Text>Công việc</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                  className="m-0"
+                                  style={{ maxHeight: "38px" }}
+                                  value={newProcess.workDescription}
+                                  onChange={(e) => {
+                                    setNewProcess({
+                                      ...newProcess,
+                                      workDescription: e.target.value,
+                                    });
+                                  }}
+                                />
+                              </InputGroup>
+                            </div>
+                            <div className="col-12">
+                              <InputGroup size="sm" className="mb-2">
+                                <InputGroup.Prepend
+                                  style={{ maxHeight: "38px" }}
+                                >
+                                  <InputGroup.Text>
+                                    Chuyên nghành
+                                  </InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                  as={Select}
+                                  size="sm"
+                                  className="m-0 p-0"
+                                  options={majors}
+                                  value={getValueSelect(newProcess.major)}
+                                  onChange={(e) => {
+                                    setNewProcess({
+                                      ...newProcess,
+                                      major: e.value,
+                                    });
+                                  }}
+                                />
+                              </InputGroup>
+                            </div>
+                            <div className="col-12">
+                              <InputGroup size="sm" className="mb-2">
+                                <InputGroup.Prepend
+                                  style={{ maxHeight: "38px" }}
+                                >
+                                  <InputGroup.Text>
+                                    Chức danh công việc
+                                  </InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                  as={Select}
+                                  size="sm"
+                                  className="m-0 p-0"
+                                  options={jobTitleOption}
+                                  value={getValueSelect(newProcess.jobTitle)}
+                                  onChange={(e) => {
+                                    setNewProcess({
+                                      ...newProcess,
+                                      jobTitle: e.value,
+                                    });
+                                  }}
+                                />
+                              </InputGroup>
+                            </div>
+                            <div className="col-12">
+                              <InputGroup size="sm" className="mb-2">
+                                <InputGroup.Prepend
+                                  style={{ maxHeight: "38px" }}
+                                >
+                                  <InputGroup.Text>Địa chỉ</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                  className="m-0"
+                                  style={{ maxHeight: "38px" }}
+                                  value={newProcess.address}
+                                  onChange={(e) => {
+                                    setNewProcess({
+                                      ...newProcess,
+                                      address: e.target.value,
+                                    });
+                                  }}
+                                />
+                              </InputGroup>
+                            </div>
+                            <div className="col-12">
+                              <InputGroup size="sm" className="mb-2">
+                                <InputGroup.Prepend
+                                  style={{ maxHeight: "38px" }}
+                                >
+                                  <InputGroup.Text>Kết quả</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                  as={Select}
+                                  size="sm"
+                                  className="m-0 p-0"
+                                  options={resultOption}
+                                  value={getValueSelect(newProcess.result)}
+                                  onChange={(e) => {
+                                    setNewProcess({
+                                      ...newProcess,
+                                      result: e.value,
+                                    });
+                                  }}
+                                />
+                              </InputGroup>
+                            </div>
+                          </div>
+                          <div className="d-flex justify-content-center mt-2">
+                            <button
+                              className="btn btn-primary"
+                              onClick={handleAddProcess}
+                            >
+                              Thêm quá trình làm việc
+                            </button>
+                          </div>
                         </Card.Body>
                         <Card.Footer>
                           <InputGroup size="sm">
@@ -880,463 +1507,122 @@ function Jobmyresume(props) {
                               size="sm"
                               className="m-0 p-0"
                               options={listLeaving}
-                              value={getValueSelect(item.leaving)}
+                              value={getValueSelect(newWork.leaving)}
+                              onChange={(e) => {
+                                setNewWork({
+                                  ...newWork,
+                                  leaving: e.value,
+                                });
+                              }}
                             ></FormControl>
                           </InputGroup>
                         </Card.Footer>
                       </Card>
-                    </Form>
-                  );
-                })}
-                <h5 className="">
-                  Kinh nghiệm đến hiện tại:{" "}
-                  {getExperience(userInformation.workExperience)}
-                </h5>
-                <h5 className="text-center">Thêm kinh nghiệm làm việc mới</h5>
-
-                <Form className="mb-2" action="javascript:void(0);">
-                  <Card>
-                    <Card.Header>
-                      <div className="row">
-                        <div className="col-12">
-                          <InputGroup size="sm" className="mb-2">
-                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
-                              <InputGroup.Text>Nơi làm việc</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <FormControl
-                              value={newWork.company}
-                              className="m-0"
-                              style={{ maxHeight: "38px" }}
-                              onChange={(e) => {
-                                setNewWork({
-                                  ...newWork,
-                                  company: e.target.value,
-                                });
-                              }}
-                            />
-                          </InputGroup>
-                        </div>
-                        <div className="col-md-4 col-sm-12">
-                          <InputGroup size="sm" className="mb-2">
-                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
-                              <InputGroup.Text>Từ</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <FormControl
-                              className="m-0"
-                              value={formatMonthInput(newWork.process[0]?.from)}
-                              style={{ maxHeight: "38px" }}
-                              type="month"
-                              disabled={true}
-                            />
-                          </InputGroup>
-                        </div>
-                        <div className="col-md-4 col-sm-12">
-                          <InputGroup size="sm">
-                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
-                              <InputGroup.Text>Đến</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <FormControl
-                              className="m-0"
-                              style={{ maxHeight: "38px" }}
-                              type="month"
-                              value={formatMonthInput(
-                                newWork.process[newWork.process.length - 1]?.to
-                              )}
-                              disabled={true}
-                            />
-                          </InputGroup>
-                        </div>
-                        <div className="col-md-4 col-sm-12">
-                          <Form.Group
-                            controlId="formBasicCheckbox"
-                            className="my-2"
-                          >
-                            <Form.Check
-                              type="checkbox"
-                              label="Đang làm việc"
-                              checked={
-                                newWork.process.length > 0 &&
-                                newWork.process[newWork.process.length - 1]
-                                  .isCurrent === true
-                                  ? true
-                                  : false
-                              }
-                              disabled={true}
-                            />
-                          </Form.Group>
-                        </div>
-                        <div className="col-12">
-                          <InputGroup size="sm">
-                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
-                              <InputGroup.Text>Địa chỉ</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <FormControl
-                              className="m-0"
-                              style={{ maxHeight: "38px" }}
-                              value={newWork.address}
-                              onChange={(e) => {
-                                setNewWork({
-                                  ...newWork,
-                                  address: e.target.value,
-                                });
-                              }}
-                            />
-                          </InputGroup>
-                        </div>
-                      </div>
-                    </Card.Header>
-                    <Card.Body>
-                      <Card.Title className="text-center">
-                        Quá trình làm việc
-                      </Card.Title>
-                      {newWork.process.map((element, index2) => {
-                        return (
-                          <>
-                            <div className="row mt-3">
-                              <div className="col-md-4 col-sm-12">
-                                <InputGroup size="sm" className="mb-2">
-                                  <InputGroup.Prepend
-                                    style={{ maxHeight: "38px" }}
-                                  >
-                                    <InputGroup.Text>Từ</InputGroup.Text>
-                                  </InputGroup.Prepend>
-                                  <FormControl
-                                    className="m-0"
-                                    style={{ maxHeight: "38px" }}
-                                    type="month"
-                                    value={formatMonthInput(element.from)}
-                                  />
-                                </InputGroup>
-                              </div>
-                              <div className="col-md-4 col-sm-12">
-                                <InputGroup size="sm">
-                                  <InputGroup.Prepend
-                                    style={{ maxHeight: "38px" }}
-                                  >
-                                    <InputGroup.Text>Đến</InputGroup.Text>
-                                  </InputGroup.Prepend>
-                                  <FormControl
-                                    className="m-0"
-                                    style={{ maxHeight: "38px" }}
-                                    type="month"
-                                    value={formatMonthInput(element.to)}
-                                  />
-                                </InputGroup>
-                              </div>
-                              <div className="col-md-4 col-sm-12">
-                                <Form.Group
-                                  controlId="formBasicCheckbox"
-                                  className="my-2"
-                                >
-                                  <Form.Check
-                                    type="checkbox"
-                                    label="Đang làm việc"
-                                    checked={element.isCurrent}
-                                    onChange={(e) => {
-                                      let temp = newWork.process;
-                                      temp[index2].isCurrent = e.target.checked;
-                                      setNewWork({
-                                        ...newWork,
-                                        process: temp,
-                                      });
-                                    }}
-                                  />
-                                </Form.Group>
-                              </div>
-                              <div className="col-12">
-                                <InputGroup size="sm" className="mb-2">
-                                  <InputGroup.Prepend
-                                    style={{ maxHeight: "38px" }}
-                                  >
-                                    <InputGroup.Text>Công việc</InputGroup.Text>
-                                  </InputGroup.Prepend>
-                                  <FormControl
-                                    className="m-0"
-                                    style={{ maxHeight: "38px" }}
-                                    value={element.workDescription}
-                                  />
-                                </InputGroup>
-                              </div>
-                              <div className="col-12">
-                                <InputGroup size="sm" className="mb-2">
-                                  <InputGroup.Prepend
-                                    style={{ maxHeight: "38px" }}
-                                  >
-                                    <InputGroup.Text>
-                                      Chuyên nghành
-                                    </InputGroup.Text>
-                                  </InputGroup.Prepend>
-                                  <FormControl
-                                    as={Select}
-                                    size="sm"
-                                    className="m-0 p-0"
-                                    options={majors}
-                                    value={getValueSelect(element.major)}
-                                  />
-                                </InputGroup>
-                              </div>
-                              <div className="col-12">
-                                <InputGroup size="sm" className="mb-2">
-                                  <InputGroup.Prepend
-                                    style={{ maxHeight: "38px" }}
-                                  >
-                                    <InputGroup.Text>
-                                      Chức danh công việc
-                                    </InputGroup.Text>
-                                  </InputGroup.Prepend>
-                                  <FormControl
-                                    as={Select}
-                                    size="sm"
-                                    className="m-0 p-0"
-                                    options={jobTitleOption}
-                                    value={getValueSelect(element.jobTitle)}
-                                  />
-                                </InputGroup>
-                              </div>
-                              <div className="col-12">
-                                <InputGroup size="sm" className="mb-2">
-                                  <InputGroup.Prepend
-                                    style={{ maxHeight: "38px" }}
-                                  >
-                                    <InputGroup.Text>Địa chỉ</InputGroup.Text>
-                                  </InputGroup.Prepend>
-                                  <FormControl
-                                    className="m-0"
-                                    style={{ maxHeight: "38px" }}
-                                    value={element.address}
-                                  />
-                                </InputGroup>
-                              </div>
-                              <div className="col-12">
-                                <InputGroup size="sm" className="mb-2">
-                                  <InputGroup.Prepend
-                                    style={{ maxHeight: "38px" }}
-                                  >
-                                    <InputGroup.Text>Kết quả</InputGroup.Text>
-                                  </InputGroup.Prepend>
-                                  <FormControl
-                                    as={Select}
-                                    size="sm"
-                                    className="m-0 p-0"
-                                    options={resultOption}
-                                    value={getValueSelect(element.result)}
-                                  />
-                                </InputGroup>
-                              </div>
-                            </div>
-                            <hr style={{ border: "1px solid blue" }} />
-                          </>
-                        );
-                      })}
-                      <div className="row ">
-                        <div className="col-md-4 col-sm-12">
-                          <InputGroup size="sm" className="mb-2">
-                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
-                              <InputGroup.Text>Từ</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <FormControl
-                              className="m-0"
-                              style={{ maxHeight: "38px" }}
-                              type="month"
-                              value={formatMonthInput(newProcess.from)}
-                              disabled={
-                                newWork.process.length > 0 ? true : false
-                              }
-                              onChange={(e) => {
-                                setNewProcess({
-                                  ...newProcess,
-                                  from: e.target.value,
-                                });
-                              }}
-                            />
-                          </InputGroup>
-                        </div>
-                        <div className="col-md-4 col-sm-12">
-                          <InputGroup size="sm">
-                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
-                              <InputGroup.Text>Đến</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <FormControl
-                              className="m-0"
-                              style={{ maxHeight: "38px" }}
-                              type="month"
-                              value={formatMonthInput(newProcess.to)}
-                              disabled={
-                                newProcess.from === "" || newProcess.isCurrent
-                                  ? true
-                                  : false
-                              }
-                              min={newProcess.from}
-                              max={formatMonthInput(new Date())}
-                              onChange={(e) => {
-                                setNewProcess({
-                                  ...newProcess,
-                                  to: e.target.value,
-                                });
-                              }}
-                            />
-                          </InputGroup>
-                        </div>
-                        <div className="col-md-4 col-sm-12">
-                          <Form.Group
-                            controlId="formBasicCheckbox"
-                            className="my-2"
-                          >
-                            <Form.Check
-                              type="checkbox"
-                              label="Đang làm việc"
-                              checked={newProcess.isCurrent}
-                              onChange={(e) => {
-                                setNewProcess({
-                                  ...newProcess,
-                                  isCurrent: e.target.checked,
-                                  to: e.target.checked ? "" : newProcess.to,
-                                });
-                              }}
-                            />
-                          </Form.Group>
-                        </div>
-                        <div className="col-12">
-                          <InputGroup size="sm" className="mb-2">
-                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
-                              <InputGroup.Text>Công việc</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <FormControl
-                              className="m-0"
-                              style={{ maxHeight: "38px" }}
-                              value={newProcess.workDescription}
-                              onChange={(e) => {
-                                setNewProcess({
-                                  ...newProcess,
-                                  workDescription: e.target.value,
-                                });
-                              }}
-                            />
-                          </InputGroup>
-                        </div>
-                        <div className="col-12">
-                          <InputGroup size="sm" className="mb-2">
-                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
-                              <InputGroup.Text>Chuyên nghành</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <FormControl
-                              as={Select}
-                              size="sm"
-                              className="m-0 p-0"
-                              options={majors}
-                              value={getValueSelect(newProcess.major)}
-                              onChange={(e) => {
-                                setNewProcess({
-                                  ...newProcess,
-                                  major: e.value,
-                                });
-                              }}
-                            />
-                          </InputGroup>
-                        </div>
-                        <div className="col-12">
-                          <InputGroup size="sm" className="mb-2">
-                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
-                              <InputGroup.Text>
-                                Chức danh công việc
-                              </InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <FormControl
-                              as={Select}
-                              size="sm"
-                              className="m-0 p-0"
-                              options={jobTitleOption}
-                              value={getValueSelect(newProcess.jobTitle)}
-                              onChange={(e) => {
-                                setNewProcess({
-                                  ...newProcess,
-                                  jobTitle: e.value,
-                                });
-                              }}
-                            />
-                          </InputGroup>
-                        </div>
-                        <div className="col-12">
-                          <InputGroup size="sm" className="mb-2">
-                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
-                              <InputGroup.Text>Địa chỉ</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <FormControl
-                              className="m-0"
-                              style={{ maxHeight: "38px" }}
-                              value={newProcess.address}
-                              onChange={(e) => {
-                                setNewProcess({
-                                  ...newProcess,
-                                  address: e.target.value,
-                                });
-                              }}
-                            />
-                          </InputGroup>
-                        </div>
-                        <div className="col-12">
-                          <InputGroup size="sm" className="mb-2">
-                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
-                              <InputGroup.Text>Kết quả</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <FormControl
-                              as={Select}
-                              size="sm"
-                              className="m-0 p-0"
-                              options={resultOption}
-                              value={getValueSelect(newProcess.result)}
-                              onChange={(e) => {
-                                setNewProcess({
-                                  ...newProcess,
-                                  result: e.value,
-                                });
-                              }}
-                            />
-                          </InputGroup>
-                        </div>
-                      </div>
+                      {/* button primary dài 80% ở giữa */}
                       <div className="d-flex justify-content-center mt-2">
                         <button
                           className="btn btn-primary"
-                          onClick={handleAddProcess}
+                          style={{ width: "80%" }}
+                          onClick={handleAddWorkExperience}
                         >
-                          Thêm quá trình làm việc
+                          Thêm công việc
                         </button>
                       </div>
-                    </Card.Body>
-                    <Card.Footer>
-                      <InputGroup size="sm">
-                        <InputGroup.Prepend style={{ maxHeight: "38px" }}>
-                          <InputGroup.Text>Nghỉ việc</InputGroup.Text>
-                        </InputGroup.Prepend>
-
-                        <FormControl
-                          as={Select}
-                          size="sm"
-                          className="m-0 p-0"
-                          options={listLeaving}
-                          value={getValueSelect(newWork.leaving)}
-                          onChange={(e) => {
-                            setNewWork({
-                              ...newWork,
-                              leaving: e.value,
-                            });
-                          }}
-                        ></FormControl>
-                      </InputGroup>
-                    </Card.Footer>
-                  </Card>
-                  {/* button primary dài 80% ở giữa */}
-                  <div className="d-flex justify-content-center mt-2">
-                    <button
-                      className="btn btn-primary"
-                      style={{ width: "80%" }}
-                      onClick={handleAddWorkExperience}
-                    >
-                      Thêm công việc
-                    </button>
-                  </div>
-                </Form>
+                    </Form>
+                  </Tab>
+                  <Tab eventKey="notwork" title="Thêm thời gian không làm việc">
+                    <Form className="mt-2" action="javascript:void(0);">
+                      <Card border="primary">
+                        <Card.Body>
+                          <div className="row">
+                            <div className="col-md-4 col-sm-12">
+                              <InputGroup size="sm" className="mb-2">
+                                <InputGroup.Prepend
+                                  style={{ maxHeight: "38px" }}
+                                >
+                                  <InputGroup.Text>Từ</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                  type="month"
+                                  className="m-0"
+                                  style={{ maxHeight: "38px" }}
+                                  value={formatMonthInput(newNotWork.start)}
+                                  onChange={(e) => {
+                                    setNewNotWork({
+                                      ...newNotWork,
+                                      start: e.target.value,
+                                    });
+                                  }}
+                                  disabled={
+                                    userInformation.workExperience?.length > 0
+                                      ? true
+                                      : false
+                                  }
+                                />
+                              </InputGroup>
+                            </div>
+                            <div className="col-md-4 col-sm-12">
+                              <InputGroup size="sm" className="mb-2">
+                                <InputGroup.Prepend
+                                  style={{ maxHeight: "38px" }}
+                                >
+                                  <InputGroup.Text>Đến</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                  type="month"
+                                  className="m-0"
+                                  style={{ maxHeight: "38px" }}
+                                  value={formatMonthInput(newNotWork.end)}
+                                  onChange={(e) => {
+                                    setNewNotWork({
+                                      ...newNotWork,
+                                      end: e.target.value,
+                                    });
+                                  }}
+                                  disabled={
+                                    newNotWork.isCurrent ||
+                                    newNotWork.start === ""
+                                  }
+                                />
+                              </InputGroup>
+                            </div>
+                            <div className="col-md-4 col-sm-12">
+                              <Form.Group
+                                controlId="formBasicCheckbox"
+                                className="my-2"
+                              >
+                                <Form.Check
+                                  type="checkbox"
+                                  label="Hiện tại"
+                                  checked={newNotWork.isCurrent}
+                                  onChange={(e) => {
+                                    setNewNotWork({
+                                      ...newNotWork,
+                                      isCurrent: e.target.checked,
+                                      end: e.target.checked
+                                        ? ""
+                                        : newNotWork.end,
+                                    });
+                                  }}
+                                  disabled={newNotWork.start === ""}
+                                  min={newNotWork.start}
+                                />
+                              </Form.Group>
+                            </div>
+                          </div>
+                          <div className="d-flex justify-content-center mt-2">
+                            <button
+                              className="btn btn-primary"
+                              onClick={handleAddNotWork}
+                            >
+                              Thêm thời gian không làm việc
+                            </button>
+                          </div>
+                        </Card.Body>
+                      </Card>
+                    </Form>
+                  </Tab>
+                </Tabs>
 
                 <Accordion>
                   <Card border="primary">
@@ -1400,7 +1686,10 @@ function Jobmyresume(props) {
                 </Accordion>
                 {/* button bên phải */}
                 <div className="d-flex justify-content-end mt-2">
-                  <button className="btn btn-primary" onClick={handleUpdatePoint}>
+                  <button
+                    className="btn btn-primary"
+                    onClick={handleUpdatePoint}
+                  >
                     Lưu
                   </button>
                 </div>
@@ -1916,7 +2205,6 @@ function Jobmyresume(props) {
                   className="modal fade modal-bx-info editor"
                   show={itskills}
                   onHide={setItSkills}
-                  
                 >
                   <div className="modal-dialog my-0" role="document">
                     <div className="modal-content">
@@ -2110,6 +2398,16 @@ function Jobmyresume(props) {
                   </div>
                 </Modal>
               </div>
+            </div>
+          </div>
+        </div>
+        {/* button center */}
+        <div className="row">
+          <div className="col-lg-12 col-md-12">
+            <div className="form-group text-center">
+              <button type="button" className="site-button" onClick={handleSendOTP}>
+                Yêu cầu duyệt hồ sơ
+              </button>
             </div>
           </div>
         </div>
