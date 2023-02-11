@@ -5,7 +5,7 @@ import "react-quill/dist/quill.snow.css";
 import Select from "react-select";
 import Header2 from "../Layout/HeaderDepartment";
 import Footer from "../Layout/Footer";
-import { Modal } from "react-bootstrap";
+import { Modal, Card, Accordion, Form, Nav } from "react-bootstrap";
 import CompanySidebar from "../Element/DepartmentSidebar";
 import {
   getDepartmentByKey,
@@ -21,6 +21,7 @@ import {
   getListPosition,
   getListEnvironment,
   getAllListMajor,
+  getListQuestion,
 } from "../../services/GetListService";
 
 function Companymanage(props) {
@@ -44,6 +45,12 @@ function Companymanage(props) {
     salaryMin: 0,
     salaryMax: 0,
     description: "",
+    question: [],
+  };
+  const initQuestion = {
+    name: "",
+    detail: [],
+    point: 0,
   };
   const [reload, setReload] = useState(false);
   const [newJob, setNewJob] = useState(objJob);
@@ -56,7 +63,12 @@ function Companymanage(props) {
   const [industryOptions, setIndustryOptions] = useState([]);
   const [positionOptions, setPositionOptions] = useState([]);
   const [majorOptions, setMajorOptions] = useState([]);
+  const [questionOptions, setQuestionOptions] = useState([]);
+  const [newQuestion, setNewQuestion] = useState(initQuestion);
+  const [childQuestion, setChildQuestion] = useState("");
   const [environmentOption, setEnvironmentOption] = useState([]);
+
+  const [isShowModal, setIsShowModal] = useState(false);
 
   //   let key = localStorage.getItem("key");
   useEffect(() => {
@@ -69,50 +81,94 @@ function Companymanage(props) {
   }, [reload, key]);
 
   useEffect(() => {
-    async function fetchData() {
-      let listLevel = await getListLevel();
-      setLevelOptions(
-        listLevel.data.map((item) => ({ value: item, label: item }))
-      );
-      let listProvince = await getListProvince();
-      setProvinceOption(
-        listProvince.data.map((item) => ({ value: item, label: item }))
-      );
-      let listJobTitle = await getListJobTitle();
-      setJobTitleOption(
-        listJobTitle.data.map((item) => ({
-          value: item.name,
-          label: item.name,
-        }))
-      );
-      let listPosition = await getListPosition();
-      setPositionOptions(
-        listPosition.data.map((item) => ({
-          value: item.name,
-          label: item.name,
-        }))
-      );
-      let listIndustry = await getListIndustry();
-      setIndustryOptions(
-        listIndustry.data.map((item) => ({
-          value: item.name,
-          label: item.name,
-        }))
-      );
-      let listMajor = await getAllListMajor();
-      setMajorOptions(
-        listMajor.data.map((item) => ({ value: item, label: item }))
-      );
-      let listEnvironment = await getListEnvironment();
-      setEnvironmentOption(
-        listEnvironment.data.map((item) => ({
-          value: item.name,
-          label: item.name,
-        }))
-      );
-    }
-    fetchData();
+    getListLevel()
+      .then((res) => res.data)
+      .then((res) => {
+        setLevelOptions(res.map((item) => ({ value: item, label: item })));
+      });
+
+    getListProvince()
+      .then((res) => res.data)
+      .then((res) => {
+        console.log(res);
+        setProvinceOption(
+          res.map((item) => ({
+            value: item,
+            label: item,
+          }))
+        );
+      });
+
+    getListJobTitle()
+      .then((res) => res.data)
+      .then((res) => {
+        setJobTitleOption(
+          res.map((item) => ({
+            value: item.name,
+            label: item.name,
+          }))
+        );
+      });
+    getListPosition()
+      .then((res) => res.data)
+      .then((res) => {
+        setPositionOptions(
+          res.map((item) => ({
+            value: item.name,
+            label: item.name,
+          }))
+        );
+      });
+
+    getListIndustry()
+      .then((res) => res.data)
+      .then((res) => {
+        setIndustryOptions(
+          res.map((item) => ({
+            value: item.name,
+            label: item.name,
+          }))
+        );
+      });
+
+    getAllListMajor()
+      .then((res) => res.data)
+      .then((res) => {
+        setMajorOptions(
+          res.map((item) => ({
+            value: item,
+            label: item,
+          }))
+        );
+      });
+
+    getListEnvironment()
+      .then((res) => res.data)
+      .then((res) => {
+        setEnvironmentOption(
+          res.map((item) => ({
+            value: item.name,
+            label: item.name,
+          }))
+        );
+      });
+
+    getListQuestion()
+      .then((res) => res.data)
+      .then((res) => {
+        setQuestionOptions(res);
+        setNewJob({ ...newJob, question: res });
+      });
   }, []);
+
+  const handleAddQuestion = async () => {
+    let question = newQuestion;
+    question.detail.push(childQuestion);
+    setNewJob({ ...newJob, question: [...questionOptions, newQuestion] });
+    setQuestionOptions([...questionOptions, newQuestion]);
+    setChildQuestion("");
+    setNewQuestion(initQuestion);
+  };
 
   const handleAddJob = async () => {
     await createJobForDepartment(key, newJob);
@@ -439,6 +495,128 @@ function Companymanage(props) {
                               }
                             />
                           </div>
+                          <div className="form-group">
+                            <Accordion>
+                              <label>Tiêu chí đánh giá</label>
+                              <Card border="primary">
+                                <Card.Header className="d-flex w-100 p-1">
+                                  <Nav.Item
+                                    className="mr-auto h5 pl-3 pt-2"
+                                    as={Nav.Item}
+                                  >
+                                    Tiêu chí đánh giá đề xuất
+                                  </Nav.Item>
+                                  <Nav.Item
+                                    className="align-self-center"
+                                    style={{ width: "50px" }}
+                                  >
+                                    Điểm
+                                  </Nav.Item>
+                                </Card.Header>
+                              </Card>
+                              {questionOptions?.map((question, index) => (
+                                <Card border="primary">
+                                  <Card.Header className="d-flex w-100 p-1">
+                                    <Accordion.Toggle
+                                      as={Nav.Link}
+                                      eventKey={index + 1}
+                                      className="mr-auto"
+                                    >
+                                      {index + 1 + ". " + question.name}{" "}
+                                      <i className="fa fa-question-circle ms-0"></i>
+                                      {/* trash */}
+                                      {index >= 15 && (
+                                        <i
+                                          className="fa fa-trash ml-2 text-red"
+                                          onClick={() => {
+                                            let newQuestionOptions =
+                                              questionOptions;
+                                            newQuestionOptions.splice(index, 1);
+                                            setQuestionOptions(
+                                              newQuestionOptions
+                                            );
+                                          }}
+                                        ></i>
+                                      )}
+                                    </Accordion.Toggle>
+                                    <Form.Control
+                                      className="align-self-center mr-0"
+                                      // value={userInformation.pointList[index]}
+                                      style={{ width: "50px" }}
+                                      // onChange={(e) => {
+                                      //   if (isNaN(e.target.value)) e.target.value = 0;
+                                      //   if (e.target.value > 10) e.target.value = 10;
+                                      //   let pointList = userInformation.pointList;
+                                      //   pointList[index] = e.target.value;
+                                      //   setUserInformation({
+                                      //     ...userInformation,
+                                      //     pointList: pointList,
+                                      //   });
+                                      // }}
+                                      type="number"
+                                      min="0"
+                                      max="10"
+                                    ></Form.Control>
+                                  </Card.Header>
+                                  <Accordion.Collapse eventKey={index + 1}>
+                                    <Card.Body className="border-top">
+                                      {question.detail.map((item, index2) => {
+                                        return (
+                                          <>
+                                            <Nav.Item>{item}</Nav.Item>
+                                          </>
+                                        );
+                                      })}
+                                    </Card.Body>
+                                  </Accordion.Collapse>
+                                </Card>
+
+                                // <li className="list-group-item">
+                                //   <div className="row">
+                                //     <div className="col-10">
+
+                                //     </div>
+                                //     <div className="col-2">
+                                //       <button
+                                //         className="btn btn-danger btn-sm"
+                                //         onClick={() => {
+                                //           let newCriteria = [
+                                //             ...newJob.criteria,
+                                //           ];
+                                //           newCriteria.splice(index, 1);
+                                //           setNewJob({
+                                //             ...newJob,
+                                //             criteria: newCriteria,
+                                //           });
+                                //         }}
+                                //       >
+                                //         Xóa
+                                //       </button>
+                                //     </div>
+                                //   </div>
+                                // </li>
+                              ))}
+                            </Accordion>
+                            <button
+                              className="btn btn-primary mt-2"
+                              onClick={() => setIsShowModal(true)}
+                            >
+                              Thêm tiêu chí
+                            </button>
+                          </div>
+
+                          {/* <input
+                              type="number"
+                              className="form-control"
+                              placeholder="Nhập mức lương tối đa"
+                              value={newJob.salaryMax}
+                              onChange={(e) => {
+                                setNewJob({
+                                  ...newJob,
+                                  salaryMax: e.target.value,
+                                });
+                              }}
+                            /> */}
                         </div>
                         <div className="modal-footer">
                           <button
@@ -466,6 +644,77 @@ function Companymanage(props) {
         </div>
       </div>
       <Footer />
+      <Modal
+        show={isShowModal}
+        onHide={() => setIsShowModal(false)}
+        className="modal fade modal-bx-info"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Thêm tiêu chí đánh giá</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="form-group">
+            <label for="">Tên tiêu chí</label>
+            <input
+              type="text"
+              className="form-control" //form-control-sm
+              value={newQuestion.name}
+              onChange={(e) => {
+                setNewQuestion({ ...newQuestion, name: e.target.value });
+              }}
+            />
+          </div>
+          <div className="form-group">
+            <label for="">Tiêu chí con</label>
+            {newQuestion.detail.map((item, index) => {
+              return (
+                <>
+                  <input
+                    type="text"
+                    className="form-control mb-2"
+                    value={item}
+                  />
+                </>
+              );
+            })}
+            <input
+              type="text"
+              className="form-control"
+              value={childQuestion}
+              onChange={(e) => setChildQuestion(e.target.value)}
+            />
+            <button
+              className="btn btn-primary mt-2"
+              onClick={() => {
+                if (childQuestion === "") return;
+                setNewQuestion({
+                  ...newQuestion,
+                  detail: [...newQuestion.detail, childQuestion],
+                });
+                setChildQuestion("");
+              }}
+            >
+              Thêm tiêu chí con
+            </button>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={handleAddQuestion}
+          >
+            Lưu
+          </button>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={() => setIsShowModal(false)}
+          >
+            Hủy
+          </button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }

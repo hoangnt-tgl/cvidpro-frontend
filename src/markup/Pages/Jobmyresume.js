@@ -160,7 +160,7 @@ function Jobmyresume(props) {
   useEffect(() => {
     async function fetchData() {
       const response = await getMyResume(props.history);
-      console.log(response);
+      console.log('CV',response);
       setUserInformation(response);
       objProcess.jobTitle = response.jobTitle;
       objProcess.major = response.major;
@@ -196,6 +196,8 @@ function Jobmyresume(props) {
         setShowModalConfirmPhone(false);
         setReload(!reload);
       }
+      // on to top
+      window.scrollTo(0, 0);
     });
   }
   const uploadAvatar = async (e) => {
@@ -2402,15 +2404,21 @@ function Jobmyresume(props) {
           </div>
         </div>
         {/* button center */}
-        <div className="row">
-          <div className="col-lg-12 col-md-12">
-            <div className="form-group text-center">
-              <button type="button" className="site-button" onClick={handleSendOTP}>
-                Yêu cầu duyệt hồ sơ
-              </button>
+        {userInformation?.confirm2?.confirmed !== 1 && (
+          <div className="row">
+            <div className="col-lg-12 col-md-12">
+              <div className="form-group text-center">
+                <button
+                  type="button"
+                  className="site-button"
+                  onClick={handleSendOTP}
+                >
+                  Yêu cầu duyệt hồ sơ
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
       <Footer />
     </>

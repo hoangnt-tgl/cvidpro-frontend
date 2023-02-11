@@ -621,7 +621,7 @@
   top: 10px;
   left: 0;
   margin: 0;
-  font-family: arial;
+  font-family: montserrat;
   font-weight: 400;
   transition: all 0.5s;
   -o-transition: all 0.5s;
@@ -651,7 +651,7 @@
   border-radius: 0;
   height: 50px;
   padding: 0;
-  font-family: arial;
+  font-family: montserrat;
   color: #000;
   font-size: 15px;
 }
@@ -719,7 +719,7 @@
 }
 .salary-bx span {
   color: #000;
-  font-family: arial;
+  font-family: montserrat;
   font-size: 22px;
 }
 .job-time span,
@@ -775,7 +775,7 @@
 }
 .testimonial-name,
 .testimonial-position {
-  font-family: arial;
+  font-family: montserrat;
   font-size: 14px;
   text-transform: capitalize;
 }

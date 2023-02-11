@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Header2 from "./../Layout/HeaderEmployee";
 import Footer from "./../Layout/Footer";
 import SavedJobs from "./../Element/SavedJobs";
-import { Form, FormControl } from "react-bootstrap";
+import { Form, FormControl, Modal, Button } from "react-bootstrap";
 import Select from "react-select";
 import Profilesidebar from "./../Element/Profilesidebar";
 import { getMyResume, findJob } from "../../services/EmployeeApi";
@@ -21,6 +21,7 @@ import {
   getListIndustry,
 } from "../../services/GetListService";
 function Jobsavedjobs(props) {
+  const [modalFindJob, setModalFindJob] = useState(false);
   const [resume, setResume] = useState("");
   const [reload, setReload] = useState(false);
   const [modalSelectJob, setModalSelectJob] = useState(false);
@@ -69,7 +70,32 @@ function Jobsavedjobs(props) {
       setMajor(formatValue(data.jobCriteria.major));
       setCompanyType(formatValue(data.jobCriteria.companyType));
       setProvince(formatValue(data.jobCriteria.province));
-      console.log(data);
+      let listMajorOfResume = [data.major];
+      let listJobTitleOfResume = [data.jobTitle];
+      data.workExperience.forEach((company) => {
+        company.process.forEach((process) => {
+          if (process.major && !listMajorOfResume.includes(process.major))
+            listMajorOfResume.push(process.major);
+          if (
+            process.jobTitle &&
+            !listJobTitleOfResume.includes(process.jobTitle)
+          )
+            listJobTitleOfResume.push(process.jobTitle);
+        });
+      });
+      // let listMajor = await getAllListMajor();
+      setMajorOption(
+        listMajorOfResume.map((item) => ({
+          value: item,
+          label: item,
+        }))
+      );
+      setJobTitleOption(
+        listJobTitleOfResume.map((item) => ({
+          value: item,
+          label: item,
+        }))
+      );
     };
 
     fetchData();
@@ -77,27 +103,6 @@ function Jobsavedjobs(props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      // let listLevel = await getListLevel();
-      // setLevelOption(
-      //   listLevel.data.map((item) => ({ value: item, label: item }))
-      // );
-      // let listSchool = await getListSchools();
-      // setSchoolOption(
-      //   listSchool.data.map((item) => ({ value: item.name, label: item.name }))
-      // );
-      let listMajor = await getAllListMajor();
-      setMajorOption(
-        listMajor.data.map((item) => ({ value: item, label: item }))
-      );
-      // let listQuestion = await getListQuestion();
-      // setQuestions(listQuestion.data);
-      let listJobTitle = await getListJobTitle();
-      setJobTitleOption(
-        listJobTitle.data.map((item) => ({
-          value: item.name,
-          label: item.name,
-        }))
-      );
       let listPosition = await getListPosition();
       setPositionOption(
         listPosition.data.map((item) => ({
@@ -139,7 +144,12 @@ function Jobsavedjobs(props) {
 
   const handleFindJob = async (e) => {
     e.preventDefault();
-    resume.jobCriteria.status = !resume.jobCriteria.status;
+    let status = resume.jobCriteria.status;
+    setResume({
+      ...resume,
+      jobCriteria: { ...resume.jobCriteria, status: !status },
+    });
+    console.log("status", status);
     let data = {
       position: position ? position.map((item) => item.value) : undefined,
       jobTitle: jobTitle ? jobTitle.value : undefined,
@@ -150,11 +160,9 @@ function Jobsavedjobs(props) {
         : undefined,
       industry: industry ? industry.value : undefined,
       major: major ? major.value : undefined,
-      status: resume.jobCriteria.status,
+      status: !status,
     };
-    console.log(data);
     let jobs = await findJob(resume._id, data);
-    console.log(jobs.data);
     setListJob(jobs.data);
   };
   return (
@@ -270,8 +278,8 @@ function Jobsavedjobs(props) {
                             onClick={handleFindJob}
                           >
                             {resume.jobCriteria?.status
-                              ? "Tìm kiếm"
-                              : "Dừng tìm"}
+                              ? "Dừng tìm"
+                              : "Tìm kiếm"}
                           </button>
                         </div>
                       </div>
@@ -281,7 +289,7 @@ function Jobsavedjobs(props) {
                 <div className="job-bx clearfix">
                   <div className="job-bx-title clearfix d-flex align-items-center">
                     <h5 className="font-weight-700 pull-left text-uppercase mr-auto my-0">
-                      {listJob.length} Ứng viên
+                      {listJob.length} việc làm phù hợp
                     </h5>
                     {/* <div className="float-right">
                         <span className="select-title">Sắp xếp: </span>
@@ -295,7 +303,7 @@ function Jobsavedjobs(props) {
                     {/* <Link to={"/company-manage-job"} className="site-button right-arrow button-sm float-right">Back</Link> */}
                   </div>
                   <ul className="post-job-bx browse-job-grid post-resume row">
-                    {listJob.length === 0 && !resume.jobCriteria?.status && (
+                    {listJob.length === 0 && resume.jobCriteria?.status && (
                       <>
                         <div className="col-lg-12 col-md-12">
                           <div className="post-bx">
@@ -303,7 +311,7 @@ function Jobsavedjobs(props) {
                               <div className="job-post-info">
                                 <h5 className="m-b0">
                                   <Link to={"/jobs-profile"}>
-                                    Không có ứng viên nào
+                                    Không có việc làm phù hợp
                                   </Link>
                                 </h5>
                               </div>
@@ -418,7 +426,6 @@ function Jobsavedjobs(props) {
           </div>
         </div>
       </div>
-
       <Footer />
     </>
   );
