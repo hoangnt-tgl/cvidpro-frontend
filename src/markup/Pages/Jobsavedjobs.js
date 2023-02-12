@@ -71,27 +71,14 @@ function Jobsavedjobs(props) {
       setCompanyType(formatValue(data.jobCriteria.companyType));
       setProvince(formatValue(data.jobCriteria.province));
       let listMajorOfResume = [data.major];
-      let listJobTitleOfResume = [data.jobTitle];
       data.workExperience.forEach((company) => {
         company.process.forEach((process) => {
           if (process.major && !listMajorOfResume.includes(process.major))
             listMajorOfResume.push(process.major);
-          if (
-            process.jobTitle &&
-            !listJobTitleOfResume.includes(process.jobTitle)
-          )
-            listJobTitleOfResume.push(process.jobTitle);
         });
       });
-      // let listMajor = await getAllListMajor();
       setMajorOption(
         listMajorOfResume.map((item) => ({
-          value: item,
-          label: item,
-        }))
-      );
-      setJobTitleOption(
-        listJobTitleOfResume.map((item) => ({
           value: item,
           label: item,
         }))
@@ -103,41 +90,56 @@ function Jobsavedjobs(props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      let listPosition = await getListPosition();
-      setPositionOption(
-        listPosition.data.map((item) => ({
-          value: item.name,
-          label: item.name,
-        }))
-      );
-      let listCompanyType = await getListCompanyType();
-      setTypeBusinessOption(
-        listCompanyType.data.map((item) => ({
-          value: item.name,
-          label: item.name,
-        }))
-      );
-      let listProvince = await getListProvince();
-      setProvinceOption(
-        listProvince.data.map((item) => ({
-          value: item,
-          label: item,
-        }))
-      );
-      let listEnvironment = await getListEnvironment();
-      setEnvrionmentOption(
-        listEnvironment.data.map((item) => ({
-          value: item.name,
-          label: item.name,
-        }))
-      );
-      let listIndustry = await getListIndustry();
-      setIndustryOption(
-        listIndustry.data.map((item) => ({
-          value: item.name,
-          label: item.name,
-        }))
-      );
+      getListPosition().then((res) => {
+        setPositionOption(
+          res.data.map((item) => ({
+            value: item.name,
+            label: item.name,
+          }))
+        );
+      });
+      getListCompanyType().then((res) => {
+        setTypeBusinessOption(
+          res.data.map((item) => ({
+            value: item.name,
+            label: item.name,
+          }))
+        );
+      });
+      getListProvince().then((res) => {
+        setProvinceOption(
+          res.data.map((item) => ({
+            value: item,
+            label: item,
+          }))
+        );
+      });
+
+      getListEnvironment().then((res) => {
+        setEnvrionmentOption(
+          res.data.map((item) => ({
+            value: item.name,
+            label: item.name,
+          }))
+        );
+      });
+
+      getListIndustry().then((res) => {
+        setIndustryOption(
+          res.data.map((item) => ({
+            value: item.name,
+            label: item.name,
+          }))
+        );
+      });
+      getListJobTitle().then((res) => {
+        setJobTitleOption(
+          res.data.map((item) => ({
+            value: item.name,
+            label: item.name,
+          }))
+        );
+      });
     };
     fetchData();
   }, []);
@@ -158,7 +160,7 @@ function Jobsavedjobs(props) {
       environment: environment
         ? environment.map((item) => item.value)
         : undefined,
-      industry: industry ? industry.value : undefined,
+      industry: industry ? industry.map((item) => item.value) : undefined,
       major: major ? major.value : undefined,
       status: !status,
     };
@@ -186,6 +188,7 @@ function Jobsavedjobs(props) {
                               value={major}
                               options={majorOption}
                               onChange={(e) => setMajor(e)}
+                              isDisabled={resume.jobCriteria?.status}
                             ></FormControl>
                           </div>
                         </div>
@@ -198,6 +201,7 @@ function Jobsavedjobs(props) {
                               options={jobTitleOption}
                               value={jobTitle}
                               onChange={(e) => setJobTitle(e)}
+                              isDisabled={resume.jobCriteria?.status}
                             ></FormControl>
                           </div>
                         </div>
@@ -213,6 +217,7 @@ function Jobsavedjobs(props) {
                               isClearable={true}
                               isMulti={true}
                               closeMenuOnSelect={false}
+                              isDisabled={resume.jobCriteria?.status}
                             ></FormControl>
                           </div>
                         </div>
@@ -228,6 +233,7 @@ function Jobsavedjobs(props) {
                               isClearable={true}
                               isMulti={true}
                               closeMenuOnSelect={false}
+                              isDisabled={resume.jobCriteria?.status}
                             ></FormControl>
                           </div>
                         </div>
@@ -241,6 +247,9 @@ function Jobsavedjobs(props) {
                               options={industryOption}
                               onChange={(e) => setIndustry(e)}
                               isClearable={true}
+                              isMulti={true}
+                              closeMenuOnSelect={false}
+                              isDisabled={resume.jobCriteria?.status}
                             ></FormControl>
                           </div>
                         </div>
@@ -254,6 +263,7 @@ function Jobsavedjobs(props) {
                               value={companyType}
                               onChange={(e) => setCompanyType(e)}
                               isClearable={true}
+                              isDisabled={resume.jobCriteria?.status}
                             ></FormControl>
                           </div>
                         </div>
@@ -267,6 +277,7 @@ function Jobsavedjobs(props) {
                               options={provinceOption}
                               onChange={(e) => setProvince(e)}
                               isClearable={true}
+                              isDisabled={resume.jobCriteria?.status}
                             ></FormControl>
                           </div>
                         </div>
