@@ -83,6 +83,7 @@ function Companymanage(props) {
   useEffect(() => {
     if (!department._id) return;
     async function fetchData() {
+<<<<<<< HEAD
       try {
         let data = await getJobForDepartment(department._id);
         console.log(data);
@@ -90,6 +91,10 @@ function Companymanage(props) {
       } catch (error) {
         console.log(error);
       }
+=======
+      let data = await getJobForDepartment(department._id, key);
+      setListJob(data.data);
+>>>>>>> hoang
     }
     fetchData();
   }, [reload, department]);
