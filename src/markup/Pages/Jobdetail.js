@@ -4,13 +4,20 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import Footer from "../Layout/Footer";
 import PageTitle from "../Layout/PageTitle";
 import { gẹtJobDetail } from "../../services/CompanyApi";
-import { getRole } from "../../services/AdminApi";
-
+import {
+  getRole,
+  confirmJob,
+  rejectJob,
+  cancelConfirmJob,
+} from "../../services/AdminApi";
+import swal from "sweetalert";
 function Jobdetail() {
   const { id } = useParams();
   const [job, setJob] = useState({});
   const [token, setToken] = useState("");
   const [role, setRole] = useState("");
+  const [note, setNote] = useState("");
+  const [reload, setReload] = useState(false);
   function useQuery() {
     const { search } = useLocation();
     return React.useMemo(() => new URLSearchParams(search), [search]);
@@ -21,10 +28,8 @@ function Jobdetail() {
     window.scrollTo(0, 0);
     const fetchJobDetail = async () => {
       const { data } = await gẹtJobDetail(id);
-      console.log(data);
       setJob(data);
       let token = query.get("token");
-      console.log("token", token);
       if (token) {
         token = decodeURIComponent(token);
         setToken(token);
@@ -34,10 +39,63 @@ function Jobdetail() {
     };
     fetchJobDetail();
   }, []);
-  const NotConfirm = (count) => {};
+  const NotConfirm = (count) => {
+    swal({
+      title: "Bạn có chắc chắn muốn từ chối ứng viên này?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then(async (willDelete) => {
+      if (willDelete) {
+        await rejectJob(id, count, token, note);
+        swal("Từ chối thành công!", {
+          icon: "success",
+        });
+        window.close();
+      } else {
+        swal("Từ chối không thành công!");
+      }
+      
+    });
+  };
 
-  const Confirm = (count) => {};
-  const CancelConfirm = (count) => {};
+  const Confirm = (count) => {
+    swal({
+      title: "Bạn có chắc chắn muốn duyệt ứng viên này?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then(async (willDelete) => {
+      if (willDelete) {
+        await confirmJob(id, count, token, note);
+        swal("Xác nhận thành công!", {
+          icon: "success",
+        });
+        window.close();
+      } else {
+        swal("Xác nhận không thành công!");
+      }
+
+    });
+  };
+  const CancelConfirm = (count) => {
+    swal({
+      title: "Bạn có chắc chắn muốn hủy duyệt ứng viên này?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then(async (willDelete) => {
+      if (willDelete) {
+        await cancelConfirmJob(id, count, token, note);
+        swal("Hủy xác nhận thành công!", {
+          icon: "success",
+        });
+        window.close();
+      } else {
+        swal("Hủy xác nhận không thành công!");
+      }
+    });
+  };
   return (
     <>
       {/* <Header />	 */}
@@ -205,10 +263,7 @@ function Jobdetail() {
                   </div>
                 ))} */}
               </div>
-            </div>
-          </div>
-        </div>
-        {job?.confirm2?.confirmed !== 1 && role.includes("nldC1") ? (
+              {job?.confirm2?.confirmed !== 1 && role.includes("nldC1") ? (
           <>
             {/* tạo 3 button đều nhau trên 1 hàng*/}
             <div class="d-flex justify-content-center my-1">
@@ -262,6 +317,10 @@ function Jobdetail() {
         ) : (
           <></>
         )}
+            </div>
+          </div>
+        </div>
+        
       </div>
       <Footer />
     </>
