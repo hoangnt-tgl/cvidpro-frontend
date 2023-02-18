@@ -67,6 +67,7 @@ export function companyLoginAction(email, password, history) {
   return (dispatch) => {
     companyLogin(email, password)
       .then((response) => {
+        console.log(response.data);
         saveTokenInLocalStorage(response.data);
         runLogoutTimer(dispatch, response.data.expiresIn * 1000, history);
         dispatch(loginConfirmedAction(response.data));

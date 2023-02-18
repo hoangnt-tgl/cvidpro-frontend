@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../Layout/HeaderDepartment";
+import Header from "../Layout/Header";
 import { Link, useLocation, useParams } from "react-router-dom";
 import Footer from "../Layout/Footer";
 import PageTitle from "../Layout/PageTitle";
@@ -25,20 +25,19 @@ const blogGrid = [
 function Jobdetail() {
   const { id } = useParams();
   const [job, setJob] = useState({});
-  
 
   useEffect(() => {
     window.scrollTo(0, 0);
     const fetchJobDetail = async () => {
       const data = await gẹtJobDetail(id);
+      console.log(data);
       setJob(data);
-	  
     };
     fetchJobDetail();
   }, []);
   return (
     <>
-      <Header />	
+      {/* <Header />	 */}
       <div className="page-content bg-white">
         <div className="content-block">
           <div className="section-full content-inner-1">

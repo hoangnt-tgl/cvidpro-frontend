@@ -19,9 +19,9 @@ export const getMyCompany = async (history) => {
     });
 };
 
-export const createDepartment = async (id, data) => {
+export const createDepartment = async (data) => {
   return axiosInstance
-    .post(`company/create-department/${id}`, data)
+    .post(`department/create`, data)
     .then((res) => res.data).catch((error) => {
       console.log(error);
       formatError(error.response?.data?.message || "");
@@ -46,18 +46,19 @@ export const getDepartmentByKey = async (key) => {
     });
 }
 
-export const createJobForDepartment = async (id, data) => {
+
+export const deleteJobForDepartment = async (key, idJob) => {
   return axiosInstance
-    .post(`company/create-job-for-department/${id}`, data)
+    .delete(`company/delete-job-for-department/${key}/${idJob}`)
     .then((res) => res.data).catch((error) => {
       console.log(error);
       formatError(error.response?.data?.message || "");
     });
 }
 
-export const deleteJobForDepartment = async (key, idJob) => {
+export const gẹtJobDetail = async (idJob) => {
   return axiosInstance
-    .delete(`company/delete-job-for-department/${key}/${idJob}`)
+    .get(`company/get-job-detail/${idJob}`)
     .then((res) => res.data).catch((error) => {
       console.log(error);
       formatError(error.response?.data?.message || "");

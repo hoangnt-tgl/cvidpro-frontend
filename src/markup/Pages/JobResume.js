@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import { Link, useLocation } from "react-router-dom";
 import Header from "./../Layout/Header";
 import Footer from "./../Layout/Footer";
@@ -38,7 +37,6 @@ import {
   cancelConfirmResume,
   rejectResume,
 } from "../../services/AdminApi.js";
-var bnr2 = require("./../../images/banner/bnr1.jpg");
 var bnr = require("./../../images/background/bg3.jpg");
 function JobResume(props) {
   // option lý do nghỉ việc
@@ -52,7 +50,6 @@ function JobResume(props) {
   const [jobTitleOption, setJobTitleOption] = useState([]);
   function useQuery() {
     const { search } = useLocation();
-
     return React.useMemo(() => new URLSearchParams(search), [search]);
   }
   let query = useQuery();

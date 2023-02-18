@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import Header2 from "./../Layout/HeaderCompany";
 import Footer from "./../Layout/Footer";
 import { Modal } from "react-bootstrap";
-import CompanySidebar from "./../Element/CompanySidebar";
 import { createDepartment, getMyCompany } from "../../services/CompanyApi";
+import { getListDepartment } from "../../services/DepartmentApi";
 
 function CompanyDepartment(props) {
   const [companyInfo, setCompanyInfo] = useState({});
@@ -12,6 +12,7 @@ function CompanyDepartment(props) {
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   const [company, setCompany] = useState(false);
   const [addDepartment, setAddDepartment] = useState(false);
+  const [listDepartment, setListDepartment] = useState([]);
   const [newDepartment, setNewDepartment] = useState({
     departmentName: "",
     managerName: "",
@@ -25,21 +26,29 @@ function CompanyDepartment(props) {
   }
 
   async function handleAddDepartment() {
-    await createDepartment(companyInfo._id, newDepartment);
+    await createDepartment({ ...newDepartment, companyId: companyInfo._id });
     setAddDepartment(false);
     setReload(true);
   }
   useEffect(() => {
     async function fetchData() {
       let myCompany = await getMyCompany(props.history);
-      console.log(myCompany);
       setCompanyInfo(myCompany);
-      console.log(myCompany);
+    }
+    fetchData();
+    window.addEventListener("resize", () => setInnerWidth(window.innerWidth));
+    setReload(false);
+  }, []);
+  useEffect(() => {
+    async function fetchData() {
+      let data = await getListDepartment(companyInfo._id);
+      setListDepartment(data.data);
     }
     fetchData();
     window.addEventListener("resize", () => setInnerWidth(window.innerWidth));
     setReload(false);
   }, [reload]);
+
   return (
     <>
       <Header2 />
@@ -75,7 +84,7 @@ function CompanyDepartment(props) {
                       </tr>
                     </thead>
                     <tbody>
-                      {companyInfo.departments?.length === 0 && (
+                      {listDepartment?.length === 0 && (
                         <>
                           <tr className="text-center">
                             <td colSpan="4">Chưa có phòng ban nào</td>
@@ -89,8 +98,8 @@ function CompanyDepartment(props) {
                           </tr>
                         </>
                       )}
-                      {companyInfo.departments &&
-                        companyInfo.departments.map((department, index) => {
+                      {
+                        listDepartment.map((department, index) => {
                           return (
                             <tr key={index}>
                               <td className="job-name">

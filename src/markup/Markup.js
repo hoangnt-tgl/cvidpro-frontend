@@ -27,7 +27,9 @@ import CompanyBrowseCandidates from './Pages/CompanyBrowseCandidates';
 
 
 import Aboutus from './Pages/Aboutus';
-import Jobdetail from './Pages/Jobdetail';
+import JobDetail from './Pages/JobDetail';
+import JobDetailEmployee from './Pages/JobDetailEmployee';
+import JobDetailAdmin from './Pages/JobDetailAdmin';
 import Companies from './Pages/Companies';
 import Freejobalerts from './Pages/Freejobalerts';
 import Browsejoblist from './Pages/Browsejoblist';
@@ -100,7 +102,10 @@ const Markup= () => {
 					
 					
 					<Route path='/about-us' exact component={Aboutus} />
-					<Route path='/job-detail' exact component={Jobdetail} />
+					<Route path='/search-job/job-detail/:id' exact component={JobDetailEmployee} />
+					<Route path='/job-detail/:id' exact component={JobDetail} />
+					<Route path='/confirm/job-detail/:id' exact component={JobDetailAdmin} />
+
 					<Route path='/companies' exact component={Companies} />
 					<Route path='/free-job-alerts' exact component={Freejobalerts} />
 					<Route path='/browse-job-list' exact component={Browsejoblist} />

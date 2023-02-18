@@ -7,11 +7,9 @@ import Header2 from "../Layout/HeaderDepartment";
 import Footer from "../Layout/Footer";
 import { Modal, Card, Accordion, Form, Nav } from "react-bootstrap";
 import CompanySidebar from "../Element/DepartmentSidebar";
-import {
-  getDepartmentByKey,
-  createJobForDepartment,
-  deleteJobForDepartment,
-} from "../../services/CompanyApi";
+import { deleteJobForDepartment } from "../../services/CompanyApi";
+
+import { getDepartmentByKey } from "../../services/DepartmentApi";
 import {
   getListSchools,
   getListProvince,
@@ -23,6 +21,7 @@ import {
   getAllListMajor,
   getListQuestion,
 } from "../../services/GetListService";
+import { createJob, getJobForDepartment } from "../../services/JobApi";
 
 function Companymanage(props) {
   let search = props.location.search;
@@ -54,6 +53,7 @@ function Companymanage(props) {
   };
   const [reload, setReload] = useState(false);
   const [newJob, setNewJob] = useState(objJob);
+  const [listJob, setListJob] = useState([]);
   const [company, setCompany] = useState(false);
   const [showAddJob, setShowAddJob] = useState(false);
   const [department, setDepartment] = useState({});
@@ -74,11 +74,21 @@ function Companymanage(props) {
   useEffect(() => {
     async function fetchData() {
       let departmentInfo = await getDepartmentByKey(key);
-      setDepartment(departmentInfo);
-      console.log(departmentInfo);
+      setDepartment(departmentInfo.data);
+      console.log(departmentInfo.data);
     }
     fetchData();
-  }, [reload, key]);
+  }, [key]);
+
+  useEffect(() => {
+   
+    if (!department._id) return;
+    async function fetchData() {
+      let data = await getJobForDepartment(department._id);
+      setListJob(data.data);
+    }
+    fetchData();
+  }, [reload, department]);
 
   useEffect(() => {
     getListLevel()
@@ -171,7 +181,11 @@ function Companymanage(props) {
   };
 
   const handleAddJob = async () => {
-    await createJobForDepartment(key, newJob);
+    await createJob({
+      ...newJob,
+      departmentId: department._id,
+      companyId: department.companyId,
+    });
     setShowAddJob(false);
     setNewJob(objJob);
     setReload(!reload);
@@ -216,10 +230,12 @@ function Companymanage(props) {
                       </tr>
                     </thead>
                     <tbody>
-                      {department.jobs?.map((item) => (
+                      {listJob?.map((item) => (
                         <tr>
                           <td className="job-name">
-                            <Link to={"#"}>{item.title}</Link>
+                            <Link to={`job-detail/${item._id}`} target="_blank">
+                              {item.title}
+                            </Link>
                             <ul className="job-post-info">
                               {/* <li>
                                   <i className="fa fa-map-marker"></i>{" "}

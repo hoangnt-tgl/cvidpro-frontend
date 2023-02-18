@@ -1,44 +1,46 @@
 import React, { useEffect, useState } from "react";
-import Header from "../Layout/HeaderDepartment";
+import Header from "../Layout/Header";
 import { Link, useLocation, useParams } from "react-router-dom";
 import Footer from "../Layout/Footer";
 import PageTitle from "../Layout/PageTitle";
 import { gẹtJobDetail } from "../../services/CompanyApi";
-
-var bnr = require("./../../images/banner/bnr1.jpg");
-
-const blogGrid = [
-  {
-    image: require("./../../images/blog/grid/pic1.jpg"),
-  },
-  {
-    image: require("./../../images/blog/grid/pic2.jpg"),
-  },
-  {
-    image: require("./../../images/blog/grid/pic3.jpg"),
-  },
-  {
-    image: require("./../../images/blog/grid/pic4.jpg"),
-  },
-];
+import { getRole } from "../../services/AdminApi";
 
 function Jobdetail() {
   const { id } = useParams();
   const [job, setJob] = useState({});
-  
+  const [token, setToken] = useState("");
+  const [role, setRole] = useState("");
+  function useQuery() {
+    const { search } = useLocation();
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+  }
+  let query = useQuery();
 
   useEffect(() => {
     window.scrollTo(0, 0);
     const fetchJobDetail = async () => {
       const data = await gẹtJobDetail(id);
+      console.log(data);
       setJob(data);
-	  
+      let token = query.get("token");
+      console.log("token", token);
+      if (token) {
+        token = decodeURIComponent(token);
+        setToken(token);
+        let temp = (await getRole(token)).roles;
+        setRole(temp);
+      }
     };
     fetchJobDetail();
   }, []);
+  const NotConfirm = (count) => {};
+
+  const Confirm = (count) => {};
+  const CancelConfirm = (count) => {};
   return (
     <>
-      <Header />	
+      {/* <Header />	 */}
       <div className="page-content bg-white">
         <div className="content-block">
           <div className="section-full content-inner-1">
@@ -209,6 +211,60 @@ function Jobdetail() {
             </div>
           </div>
         </div>
+        {job?.confirm2?.confirmed !== 1 && role.includes("nldC1") ? (
+          <>
+            {/* tạo 3 button đều nhau trên 1 hàng*/}
+            <div class="d-flex justify-content-center my-1">
+              <button
+                className="btn btn-light mx-1"
+                onClick={() => NotConfirm(1)}
+              >
+                Không duyệt 1
+              </button>
+              <button
+                className="btn btn-secondary mx-1"
+                onClick={() => CancelConfirm(1)}
+              >
+                Hủy duyệt 1
+              </button>
+              <button
+                className="btn btn-primary mx-1"
+                onClick={() => Confirm(1)}
+              >
+                Duyệt 1
+              </button>
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
+        {job?.confirm1?.confirmed === 1 && role.includes("nldC2") ? (
+          <>
+            {/* tạo 3 button đều nhau trên 1 hàng*/}
+            <div class="d-flex justify-content-center my-1">
+              <button
+                className="btn btn-light mx-1"
+                onClick={() => NotConfirm(2)}
+              >
+                Không duyệt 2
+              </button>
+              <button
+                className="btn btn-secondary mx-1"
+                onClick={() => CancelConfirm(2)}
+              >
+                Hủy duyệt 2
+              </button>
+              <button
+                className="btn btn-primary mx-1"
+                onClick={() => Confirm(2)}
+              >
+                Duyệt 2
+              </button>
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
       </div>
       <Footer />
     </>

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Header2 from "../Layout/HeaderDepartment";
 import Footer from "../Layout/Footer";
 import { Modal } from "react-bootstrap";
-import CompanySidebar from "../Element/DepartmentSidebar";
 const managerBlog = [
 	{ id:1, image: require('./../../images/testimonials/pic1.jpg'), title:'Alexander Weir', },
 	{ id:2, image: require('./../../images/testimonials/pic2.jpg'), title:'Jennifer Wood', },
