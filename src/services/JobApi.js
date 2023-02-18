@@ -10,9 +10,9 @@ export const createJob = async (data) => {
     });
 };
 
-export const getJobForDepartment = async (key) => {
+export const getJobForDepartment = async (id, key) => {
   return axiosInstance
-    .get(`job/get-job-for-department/${key}`)
+    .get(`job/get-job-for-department/${id}/${key}`)
     .then((res) => res.data)
     .catch((error) => {
       formatError(error.response?.data?.message || "");
