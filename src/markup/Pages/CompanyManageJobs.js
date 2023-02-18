@@ -84,7 +84,7 @@ function Companymanage(props) {
    
     if (!department._id) return;
     async function fetchData() {
-      let data = await getJobForDepartment(department._id);
+      let data = await getJobForDepartment(department._id, key);
       setListJob(data.data);
     }
     fetchData();
