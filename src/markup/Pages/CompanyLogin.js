@@ -3,7 +3,7 @@ import { connect, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   loadingToggleAction,
-  companyLoginAction
+  companyLoginAction,
 } from "../../store/actions/AuthActions";
 
 // image
@@ -36,85 +36,85 @@ function Login(props) {
       return;
     }
     dispatch(loadingToggleAction(true));
-    dispatch(companyLoginAction(email, password, props.history));
+    dispatch(companyLoginAction(email.trim(), password.trim(), props.history));
   }
 
   return (
-    <div className="page-wraper">
+    <div className='page-wraper'>
       <div
-        className="page-content bg-white login-style2"
+        className='page-content bg-white login-style2'
         style={{
           backgroundImage: "url(" + loginbg + ")",
           backgroundSize: "cover",
         }}
       >
-        <div className="section-full">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-6 col-md-6 d-flex">
-                <div className="text-white max-w400 align-self-center">
-                  <div className="logo">
+        <div className='section-full'>
+          <div className='container'>
+            <div className='row'>
+              <div className='col-lg-6 col-md-6 d-flex'>
+                <div className='text-white max-w400 align-self-center'>
+                  <div className='logo'>
                     <Link to={"/"}>
-                      <img src={logo2} alt="" />
+                      <img src={logo2} alt='' />
                     </Link>
                   </div>
-                  <h2 className="m-b10">Đăng nhập</h2>
-                  <p className="m-b30">
+                  <h2 className='m-b10'>Đăng nhập</h2>
+                  <p className='m-b30'>
                     Lorem Ipsum is simply dummy text of the printing and
                     typesetting industry has been the industry.
                   </p>
-                  <ul className="list-inline m-a0">
+                  <ul className='list-inline m-a0'>
                     <li>
-                      <Link to={""} className="m-r10 text-white ">
-                        <i className="fa fa-facebook"></i>
+                      <Link to={""} className='m-r10 text-white '>
+                        <i className='fa fa-facebook'></i>
                       </Link>
                     </li>
                     <li>
-                      <Link to={""} className="m-r10 text-white ">
-                        <i className="fa fa-google-plus"></i>
+                      <Link to={""} className='m-r10 text-white '>
+                        <i className='fa fa-google-plus'></i>
                       </Link>
                     </li>
                     <li>
-                      <Link to={""} className="m-r10 text-white ">
-                        <i className="fa fa-linkedin"></i>
+                      <Link to={""} className='m-r10 text-white '>
+                        <i className='fa fa-linkedin'></i>
                       </Link>
                     </li>
                     <li>
-                      <Link to={""} className="m-r10 text-white ">
-                        <i className="fa fa-instagram"></i>
+                      <Link to={""} className='m-r10 text-white '>
+                        <i className='fa fa-instagram'></i>
                       </Link>
                     </li>
                     <li>
-                      <Link to={""} className="m-r10 text-white">
-                        <i className="fa fa-twitter"></i>
+                      <Link to={""} className='m-r10 text-white'>
+                        <i className='fa fa-twitter'></i>
                       </Link>
                     </li>
                   </ul>
                 </div>
               </div>
-              <div className="col-lg-6 col-md-6">
-                <div className="login-2 submit-resume p-a30 seth">
-                  <div className="nav">
-                    <form onSubmit={onLogin} className="col-12 p-a0 ">
-                      <p className="font-weight-600">
+              <div className='col-lg-6 col-md-6'>
+                <div className='login-2 submit-resume p-a30 seth'>
+                  <div className='nav'>
+                    <form onSubmit={onLogin} className='col-12 p-a0 '>
+                      <p className='font-weight-600'>
                         Đăng nhập để tìm ứng viên
                       </p>
                       {props.errorMessage && (
-                        <div className="bg-red-300 text-red-900 border border-red-900 p-1 my-2">
+                        <div className='bg-red-300 text-red-900 border border-red-900 p-1 my-2'>
                           {props.errorMessage}
                         </div>
                       )}
                       {props.successMessage && (
-                        <div className="bg-green-300 text-green-900 border border-green-900 p-1 my-2">
+                        <div className='bg-green-300 text-green-900 border border-green-900 p-1 my-2'>
                           {props.successMessage}
                         </div>
                       )}
-                      <div className="form-group ">
+                      <div className='form-group '>
                         <label>Mã số thuế*</label>
-                        <div className="input-group">
+                        <div className='input-group'>
                           <input
-                            className="form-control"
-                            placeholder="Nhâp mã số thuế"
+                            className='form-control'
+                            placeholder='Nhâp mã số thuế'
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                           />
@@ -123,44 +123,44 @@ function Login(props) {
 													</div> */}
                         </div>
                         {errors.email && (
-                          <div className="text-danger fs-12">
+                          <div className='text-danger fs-12'>
                             {errors.email}
                           </div>
                         )}
                       </div>
-                      <div className="form-group mb-5">
+                      <div className='form-group mb-5'>
                         <label>Mật khẩu *</label>
-                        <div className="input-group">
+                        <div className='input-group'>
                           <input
-                            type="password"
-                            className="form-control"
+                            type='password'
+                            className='form-control'
                             value={password}
-                            placeholder="Nhập mật khẩu"
+                            placeholder='Nhập mật khẩu'
                             onChange={(e) => setPassword(e.target.value)}
                           />
                         </div>
                         {errors.password && (
-                          <div className="text-danger fs-12">
+                          <div className='text-danger fs-12'>
                             {errors.password}
                           </div>
                         )}
                         <Link
-                          data-toggle="tab"
-                          to="#forgot-password"
-                          className="forget-pass mt-1 float-right"
+                          data-toggle='tab'
+                          to='#forgot-password'
+                          className='forget-pass mt-1 float-right'
                         >
-                          <i className="fa fa-unlock-alt"></i> Quên mật khẩu
-                      </Link>
+                          <i className='fa fa-unlock-alt'></i> Quên mật khẩu
+                        </Link>
                       </div>
-                      <div className="text-center">
-                        <button className="site-button float-left">
+                      <div className='text-center'>
+                        <button className='site-button float-left'>
                           Đăng nhập
                         </button>
                         <Link
-                          to="register"
-                          className="site-button-link forget-pass m-t15 float-right"
+                          to='register'
+                          className='site-button-link forget-pass m-t15 float-right'
                         >
-                          <i className="fa fa-pencil-square-o"></i> Đăng ký
+                          <i className='fa fa-pencil-square-o'></i> Đăng ký
                         </Link>
                       </div>
                     </form>
@@ -170,16 +170,16 @@ function Login(props) {
             </div>
           </div>
         </div>
-        <footer className="login-footer">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-12 text-center">
-                <span className="float-left">
+        <footer className='login-footer'>
+          <div className='container'>
+            <div className='row'>
+              <div className='col-lg-12 text-center'>
+                <span className='float-left'>
                   © Copyright by{" "}
-                  <i className="fa fa-heart m-lr5 text-red heart"></i>
+                  <i className='fa fa-heart m-lr5 text-red heart'></i>
                   <Link to={"#"}>CVIDPRO </Link>{" "}
                 </span>
-                <span className="float-right">All rights reserved.</span>
+                <span className='float-right'>All rights reserved.</span>
               </div>
             </div>
           </div>

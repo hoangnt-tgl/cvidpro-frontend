@@ -21,6 +21,7 @@ import CompanyManageJob from "./markup/Pages/CompanyManageJobs";
 import CompanyManageResume from "./markup/Pages/CompanyManageResume";
 import CompanyBrowseCandidates from './markup/Pages/CompanyBrowseCandidates';
 import JobResume from './markup/Pages/JobResume';
+import Companyprofile from "./markup/Pages/Companyprofile";
 // import ForgotPassword from "./markup/Pages/ForgotPassword";
 
 function App(props) {
@@ -40,6 +41,7 @@ function App(props) {
       <Route path="/company-manage-resume" component={CompanyManageResume} />
       <Route path="/company-browse-candidates" component={CompanyBrowseCandidates} />
       <Route path="/job-resume/:id" component={JobResume} />
+      <Route path='/company-profile' exact component={Companyprofile} />
     </Switch>
   );
   if (props.isAuthenticated) {

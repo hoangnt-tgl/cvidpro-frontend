@@ -81,11 +81,15 @@ function Companymanage(props) {
   }, [key]);
 
   useEffect(() => {
-   
     if (!department._id) return;
     async function fetchData() {
-      let data = await getJobForDepartment(department._id);
-      setListJob(data.data);
+      try {
+        let data = await getJobForDepartment(department._id);
+        console.log(data);
+        setListJob(data.data);
+      } catch (error) {
+        console.log(error);
+      }
     }
     fetchData();
   }, [reload, department]);
@@ -204,23 +208,23 @@ function Companymanage(props) {
   return (
     <>
       <Header2 />
-      <div className="page-content bg-white">
-        <div className="content-block">
-          <div className="section-full bg-white p-t50 p-b20">
-            <div className="container">
-              <div className="m-b30">
-                <div className="job-bx browse-job clearfix">
-                  <div className="job-bx-title clearfix">
-                    <h5 className="font-weight-700 pull-left text-uppercase my-2">
+      <div className='page-content bg-white'>
+        <div className='content-block'>
+          <div className='section-full bg-white p-t50 p-b20'>
+            <div className='container'>
+              <div className='m-b30'>
+                <div className='job-bx browse-job clearfix'>
+                  <div className='job-bx-title clearfix'>
+                    <h5 className='font-weight-700 pull-left text-uppercase my-2'>
                       Vị trí tuyển dụng{" "}
                       <i
-                        className="fa fa-plus text-primary"
+                        className='fa fa-plus text-primary'
                         onClick={() => setShowAddJob(true)}
                       ></i>
                     </h5>
                   </div>
 
-                  <table className="table-job-bx cv-manager company-manage-job">
+                  <table className='table-job-bx cv-manager company-manage-job'>
                     <thead>
                       <tr>
                         <th>Chức danh</th>
@@ -232,17 +236,17 @@ function Companymanage(props) {
                     <tbody>
                       {listJob?.map((item) => (
                         <tr>
-                          <td className="job-name">
-                            <Link to={`job-detail/${item._id}`} target="_blank">
+                          <td className='job-name'>
+                            <Link to={`job-detail/${item._id}`} target='_blank'>
                               {item.title}
                             </Link>
-                            <ul className="job-post-info">
+                            <ul className='job-post-info'>
                               {/* <li>
                                   <i className="fa fa-map-marker"></i>{" "}
                                   Sacramento, California
                                 </li> */}
                               <li>
-                                <i className="fa fa-bookmark-o"></i>{" "}
+                                <i className='fa fa-bookmark-o'></i>{" "}
                                 {item.position}
                               </li>
                               {/* <li>
@@ -253,18 +257,18 @@ function Companymanage(props) {
                           {/* <td className="application text-primary">
                               (5) Applications
                             </td> */}
-                          <td className="expired pending">
+                          <td className='expired pending'>
                             {getStatusJob(item)}{" "}
                           </td>
-                          <td className="job-links">
+                          <td className='job-links'>
                             <Link to={"#"} onClick={() => setCompany(true)}>
-                              <i className="fa fa-eye"></i>
+                              <i className='fa fa-eye'></i>
                             </Link>
                             <Link
                               to={"#"}
                               onClick={() => handleDeleteJob(item._id)}
                             >
-                              <i className="ti-trash"></i>
+                              <i className='ti-trash'></i>
                             </Link>
                           </td>
                         </tr>
@@ -275,27 +279,27 @@ function Companymanage(props) {
                   <Modal
                     show={company}
                     onHide={setCompany}
-                    className="modal fade modal-bx-info"
+                    className='modal fade modal-bx-info'
                   >
-                    <div className="modal-dialog my-0" role="document">
-                      <div className="modal-content">
-                        <div className="modal-header">
-                          <div className="logo-img">
+                    <div className='modal-dialog my-0' role='document'>
+                      <div className='modal-content'>
+                        <div className='modal-header'>
+                          <div className='logo-img'>
                             <img
-                              alt=""
+                              alt=''
                               src={require("./../../images/logo/icon2.png")}
                             />
                           </div>
-                          <h5 className="modal-title">Company Name</h5>
+                          <h5 className='modal-title'>Company Name</h5>
                           <button
-                            type="button"
-                            className="close"
+                            type='button'
+                            className='close'
                             onClick={() => setCompany(false)}
                           >
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hidden='true'>&times;</span>
                           </button>
                         </div>
-                        <div className="modal-body">
+                        <div className='modal-body'>
                           <ul>
                             <li>
                               <strong>Job Title :</strong>
@@ -315,10 +319,10 @@ function Companymanage(props) {
                             </li>
                           </ul>
                         </div>
-                        <div className="modal-footer">
+                        <div className='modal-footer'>
                           <button
-                            type="button"
-                            className="btn btn-secondary"
+                            type='button'
+                            className='btn btn-secondary'
                             onClick={() => setCompany(false)}
                           >
                             Close
@@ -332,56 +336,56 @@ function Companymanage(props) {
                   <Modal
                     show={showAddJob}
                     onHide={setShowAddJob}
-                    className="modal fade modal-bx-info"
+                    className='modal fade modal-bx-info'
                   >
-                    <div className="modal-dialog my-0 w-100" role="document">
-                      <div className="modal-content">
-                        <div className="modal-header">
-                          <div className="logo-img">
+                    <div className='modal-dialog my-0 w-100' role='document'>
+                      <div className='modal-content'>
+                        <div className='modal-header'>
+                          <div className='logo-img'>
                             <img
-                              alt=""
+                              alt=''
                               src={require("./../../images/logo/icon2.png")}
                             />
                           </div>
-                          <h5 className="modal-title">Tạo vị trí tuyển dụng</h5>
+                          <h5 className='modal-title'>Tạo vị trí tuyển dụng</h5>
                           <button
-                            type="button"
-                            className="close"
+                            type='button'
+                            className='close'
                             onClick={() => setShowAddJob(false)}
                           >
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hidden='true'>&times;</span>
                           </button>
                         </div>
                         <div
-                          className="modal-body"
+                          className='modal-body'
                           style={{ maxHeight: "70vh", overflow: "auto" }}
                         >
-                          <div className="form-group">
+                          <div className='form-group'>
                             <label>Chức danh công việc</label>
                             <Select
-                              placeholder="Chọn chức danh công việc"
+                              placeholder='Chọn chức danh công việc'
                               onChange={(e) =>
                                 setNewJob({ ...newJob, title: e.label })
                               }
                               options={jobTitleOption}
                             />
                           </div>
-                          <div className="form-group">
+                          <div className='form-group'>
                             <label>Chức vụ</label>
                             <Select
-                              placeholder="Chọn chức vụ"
+                              placeholder='Chọn chức vụ'
                               onChange={(e) =>
                                 setNewJob({ ...newJob, position: e.label })
                               }
                               options={positionOptions}
                             />
                           </div>
-                          <div className="form-group">
+                          <div className='form-group'>
                             <label>Cấp bậc</label>
                             <Select
                               isMulti
                               closeMenuOnSelect={false}
-                              placeholder="Chọn cấp bậc"
+                              placeholder='Chọn cấp bậc'
                               onChange={(e) =>
                                 setNewJob({
                                   ...newJob,
@@ -391,12 +395,12 @@ function Companymanage(props) {
                               options={levelOptions}
                             />
                           </div>
-                          <div className="form-group">
-                            <label for="">Chuyên nghành ứng viên</label>
+                          <div className='form-group'>
+                            <label for=''>Chuyên nghành ứng viên</label>
                             <Select
                               isMulti
                               closeMenuOnSelect={false}
-                              placeholder="Chọn chuyên ngành ứng viên"
+                              placeholder='Chọn chuyên ngành ứng viên'
                               onChange={(e) =>
                                 setNewJob({
                                   ...newJob,
@@ -406,30 +410,30 @@ function Companymanage(props) {
                               options={majorOptions}
                             />
                           </div>
-                          <div className="form-group">
-                            <label for="">Lĩnh vực kinh doanh</label>
+                          <div className='form-group'>
+                            <label for=''>Lĩnh vực kinh doanh</label>
                             <Select
-                              placeholder="Chọn lĩnh vực kinh doanh"
+                              placeholder='Chọn lĩnh vực kinh doanh'
                               onChange={(e) =>
                                 setNewJob({ ...newJob, industry: e.label })
                               }
                               options={industryOptions}
                             />
                           </div>
-                          <div className="form-group">
-                            <label for="">Nơi làm việc</label>
+                          <div className='form-group'>
+                            <label for=''>Nơi làm việc</label>
                             <Select
-                              placeholder="Chọn nơi làm việc"
+                              placeholder='Chọn nơi làm việc'
                               onChange={(e) => {
                                 setNewJob({ ...newJob, location: e.label });
                               }}
                               options={provinceOptions}
                             />
                           </div>
-                          <div className="form-group">
-                            <label for="">Môi trường làm việc</label>
+                          <div className='form-group'>
+                            <label for=''>Môi trường làm việc</label>
                             <Select
-                              placeholder="Chọn môi trường làm việc"
+                              placeholder='Chọn môi trường làm việc'
                               onChange={(e) => {
                                 setNewJob({
                                   ...newJob,
@@ -439,12 +443,12 @@ function Companymanage(props) {
                               options={environmentOption}
                             />
                           </div>
-                          <div className="form-group">
-                            <label for="">Yêu cầu kinh nghiệm</label>
+                          <div className='form-group'>
+                            <label for=''>Yêu cầu kinh nghiệm</label>
                             <input
-                              type="text"
-                              className="form-control"
-                              placeholder="Nhập yêu cầu kinh nghiệm"
+                              type='text'
+                              className='form-control'
+                              placeholder='Nhập yêu cầu kinh nghiệm'
                               value={newJob.experience}
                               onChange={(e) => {
                                 setNewJob({
@@ -454,14 +458,14 @@ function Companymanage(props) {
                               }}
                             />
                           </div>
-                          <div className="form-group">
-                            <label for="">Số lượng</label>
+                          <div className='form-group'>
+                            <label for=''>Số lượng</label>
                             <input
-                              type="number"
-                              className="form-control"
-                              placeholder="Nhập số lượng"
+                              type='number'
+                              className='form-control'
+                              placeholder='Nhập số lượng'
                               value={newJob.quantity}
-                              min="1"
+                              min='1'
                               onChange={(e) => {
                                 setNewJob({
                                   ...newJob,
@@ -471,12 +475,12 @@ function Companymanage(props) {
                             />
                           </div>
 
-                          <div className="form-group">
-                            <label for="">Mức lương tối thiểu</label>
+                          <div className='form-group'>
+                            <label for=''>Mức lương tối thiểu</label>
                             <input
-                              type="number"
-                              className="form-control"
-                              placeholder="Nhập mức lương tối thiểu"
+                              type='number'
+                              className='form-control'
+                              placeholder='Nhập mức lương tối thiểu'
                               value={newJob.salaryMin}
                               onChange={(e) => {
                                 setNewJob({
@@ -486,12 +490,12 @@ function Companymanage(props) {
                               }}
                             />
                           </div>
-                          <div className="form-group">
-                            <label for="">Mức lương tối đa</label>
+                          <div className='form-group'>
+                            <label for=''>Mức lương tối đa</label>
                             <input
-                              type="number"
-                              className="form-control"
-                              placeholder="Nhập mức lương tối đa"
+                              type='number'
+                              className='form-control'
+                              placeholder='Nhập mức lương tối đa'
                               value={newJob.salaryMax}
                               onChange={(e) => {
                                 setNewJob({
@@ -501,29 +505,29 @@ function Companymanage(props) {
                               }}
                             />
                           </div>
-                          <div className="form-group">
-                            <label for="">Mô tả công việc</label>
+                          <div className='form-group'>
+                            <label for=''>Mô tả công việc</label>
                             <ReactQuill
-                              theme="snow"
+                              theme='snow'
                               value={newJob.description}
                               onChange={(e) =>
                                 setNewJob({ ...newJob, description: e })
                               }
                             />
                           </div>
-                          <div className="form-group">
+                          <div className='form-group'>
                             <Accordion>
                               <label>Tiêu chí đánh giá</label>
-                              <Card border="primary">
-                                <Card.Header className="d-flex w-100 p-1">
+                              <Card border='primary'>
+                                <Card.Header className='d-flex w-100 p-1'>
                                   <Nav.Item
-                                    className="mr-auto h5 pl-3 pt-2"
+                                    className='mr-auto h5 pl-3 pt-2'
                                     as={Nav.Item}
                                   >
                                     Tiêu chí đánh giá đề xuất
                                   </Nav.Item>
                                   <Nav.Item
-                                    className="align-self-center"
+                                    className='align-self-center'
                                     style={{ width: "50px" }}
                                   >
                                     Điểm
@@ -531,19 +535,19 @@ function Companymanage(props) {
                                 </Card.Header>
                               </Card>
                               {questionOptions?.map((question, index) => (
-                                <Card border="primary">
-                                  <Card.Header className="d-flex w-100 p-1">
+                                <Card border='primary'>
+                                  <Card.Header className='d-flex w-100 p-1'>
                                     <Accordion.Toggle
                                       as={Nav.Link}
                                       eventKey={index + 1}
-                                      className="mr-auto"
+                                      className='mr-auto'
                                     >
                                       {index + 1 + ". " + question.name}{" "}
-                                      <i className="fa fa-question-circle ms-0"></i>
+                                      <i className='fa fa-question-circle ms-0'></i>
                                       {/* trash */}
                                       {index >= 15 && (
                                         <i
-                                          className="fa fa-trash ml-2 text-red"
+                                          className='fa fa-trash ml-2 text-red'
                                           onClick={() => {
                                             let newQuestionOptions =
                                               questionOptions;
@@ -556,7 +560,7 @@ function Companymanage(props) {
                                       )}
                                     </Accordion.Toggle>
                                     <Form.Control
-                                      className="align-self-center mr-0"
+                                      className='align-self-center mr-0'
                                       // value={userInformation.pointList[index]}
                                       style={{ width: "50px" }}
                                       // onChange={(e) => {
@@ -569,13 +573,13 @@ function Companymanage(props) {
                                       //     pointList: pointList,
                                       //   });
                                       // }}
-                                      type="number"
-                                      min="0"
-                                      max="10"
+                                      type='number'
+                                      min='0'
+                                      max='10'
                                     ></Form.Control>
                                   </Card.Header>
                                   <Accordion.Collapse eventKey={index + 1}>
-                                    <Card.Body className="border-top">
+                                    <Card.Body className='border-top'>
                                       {question.detail.map((item, index2) => {
                                         return (
                                           <>
@@ -614,7 +618,7 @@ function Companymanage(props) {
                               ))}
                             </Accordion>
                             <button
-                              className="btn btn-primary mt-2"
+                              className='btn btn-primary mt-2'
                               onClick={() => setIsShowModal(true)}
                             >
                               Thêm tiêu chí
@@ -634,17 +638,17 @@ function Companymanage(props) {
                               }}
                             /> */}
                         </div>
-                        <div className="modal-footer">
+                        <div className='modal-footer'>
                           <button
-                            type="submit"
-                            className="btn btn-primary"
+                            type='submit'
+                            className='btn btn-primary'
                             onClick={handleAddJob}
                           >
                             Lưu
                           </button>
                           <button
-                            type="button"
-                            className="btn btn-secondary"
+                            type='button'
+                            className='btn btn-secondary'
                             onClick={() => setShowAddJob(false)}
                           >
                             Hủy
@@ -663,44 +667,44 @@ function Companymanage(props) {
       <Modal
         show={isShowModal}
         onHide={() => setIsShowModal(false)}
-        className="modal fade modal-bx-info"
+        className='modal fade modal-bx-info'
       >
         <Modal.Header closeButton>
           <Modal.Title>Thêm tiêu chí đánh giá</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="form-group">
-            <label for="">Tên tiêu chí</label>
+          <div className='form-group'>
+            <label for=''>Tên tiêu chí</label>
             <input
-              type="text"
-              className="form-control" //form-control-sm
+              type='text'
+              className='form-control' //form-control-sm
               value={newQuestion.name}
               onChange={(e) => {
                 setNewQuestion({ ...newQuestion, name: e.target.value });
               }}
             />
           </div>
-          <div className="form-group">
-            <label for="">Tiêu chí con</label>
+          <div className='form-group'>
+            <label for=''>Tiêu chí con</label>
             {newQuestion.detail.map((item, index) => {
               return (
                 <>
                   <input
-                    type="text"
-                    className="form-control mb-2"
+                    type='text'
+                    className='form-control mb-2'
                     value={item}
                   />
                 </>
               );
             })}
             <input
-              type="text"
-              className="form-control"
+              type='text'
+              className='form-control'
               value={childQuestion}
               onChange={(e) => setChildQuestion(e.target.value)}
             />
             <button
-              className="btn btn-primary mt-2"
+              className='btn btn-primary mt-2'
               onClick={() => {
                 if (childQuestion === "") return;
                 setNewQuestion({
@@ -716,15 +720,15 @@ function Companymanage(props) {
         </Modal.Body>
         <Modal.Footer>
           <button
-            type="button"
-            className="btn btn-primary"
+            type='button'
+            className='btn btn-primary'
             onClick={handleAddQuestion}
           >
             Lưu
           </button>
           <button
-            type="button"
-            className="btn btn-secondary"
+            type='button'
+            className='btn btn-secondary'
             onClick={() => setIsShowModal(false)}
           >
             Hủy
