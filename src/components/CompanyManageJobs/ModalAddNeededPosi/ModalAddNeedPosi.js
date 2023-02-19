@@ -3,6 +3,8 @@ import { Modal, Card, Accordion, Form, Nav } from "react-bootstrap";
 import Select from "react-select";
 import ReactQuill from "react-quill";
 import icon from "../../../images/logo/icon2.png";
+import ModalMoreOption from "../ModalMoreOption/ModalMoreOption";
+import { useState } from "react";
 const ModalAddNeedPosi = ({
   showAddJob,
   setShowAddJob,
@@ -17,9 +19,15 @@ const ModalAddNeedPosi = ({
   environmentOption,
   questionOptions,
   setQuestionOptions,
-  setIsShowModal,
   handleAddJob,
+  newQuestion,
+  setNewQuestion,
+  childQuestion,
+  setChildQuestion,
+  handleAddQuestion,
+  deleteAddOnQuestion,
 }) => {
+  const [isShowModal, setIsShowModal] = useState(false);
   return (
     <>
       {" "}
@@ -211,7 +219,7 @@ const ModalAddNeedPosi = ({
                     </Card.Header>
                   </Card>
                   {questionOptions?.map((question, index) => (
-                    <Card border='primary'>
+                    <Card border='primary' key={index}>
                       <Card.Header className='d-flex w-100 p-1'>
                         <Accordion.Toggle
                           as={Nav.Link}
@@ -224,11 +232,7 @@ const ModalAddNeedPosi = ({
                           {index >= 15 && (
                             <i
                               className='fa fa-trash ml-2 text-red'
-                              onClick={() => {
-                                let newQuestionOptions = questionOptions;
-                                newQuestionOptions.splice(index, 1);
-                                setQuestionOptions(newQuestionOptions);
-                              }}
+                              onClick={deleteAddOnQuestion}
                             ></i>
                           )}
                         </Accordion.Toggle>
@@ -330,6 +334,16 @@ const ModalAddNeedPosi = ({
           </div>
         </div>
       </Modal>
+      <ModalMoreOption
+        isShowModal={isShowModal}
+        setIsShowModal={setIsShowModal}
+        setShowAddJob={setShowAddJob}
+        newQuestion={newQuestion}
+        setNewQuestion={setNewQuestion}
+        childQuestion={childQuestion}
+        setChildQuestion={setChildQuestion}
+        handleAddQuestion={handleAddQuestion}
+      />
     </>
   );
 };

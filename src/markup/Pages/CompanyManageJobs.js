@@ -1,30 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import ReactQuill from "react-quill";
+import React, { useState } from "react";
 import "react-quill/dist/quill.snow.css";
-import Select from "react-select";
 import Header2 from "../Layout/HeaderDepartment";
 import Footer from "../Layout/Footer";
-import { Modal, Card, Accordion, Form, Nav } from "react-bootstrap";
-import CompanySidebar from "../Element/DepartmentSidebar";
-import { deleteJobForDepartment } from "../../services/CompanyApi";
-
-import { getDepartmentByKey } from "../../services/DepartmentApi";
-import {
-  getListSchools,
-  getListProvince,
-  getListJobTitle,
-  getListIndustry,
-  getListLevel,
-  getListPosition,
-  getListEnvironment,
-  getAllListMajor,
-  getListQuestion,
-} from "../../services/GetListService";
-import { createJob, getJobForDepartment } from "../../services/JobApi";
+import { createJob } from "../../services/JobApi";
 import useNeedRecuited from "../../hooks/useNeedRecuited";
 import TabListJobs from "../../components/CompanyManageJobs/TabListJobs";
-import ModalInfoNeededPosi from "../../components/CompanyManageJobs/ModalInfoNeededPosi/ModalInfoNeededPosi";
 import ModalAddNeedPosi from "../../components/CompanyManageJobs/ModalAddNeededPosi/ModalAddNeedPosi";
 
 function Companymanage(props) {
@@ -74,15 +54,29 @@ function Companymanage(props) {
     newJob,
     setNewJob,
     setQuestionOptions,
-  ] = useNeedRecuited();
-  const [reload, setReload] = useState(false);
-  const [isShowModalInfo, setIsShowModalInfo] = useState(false);
+    setNewQuestion,
+    setChildQuestion,
+    setReload,
+    deleteAddOnQuestion,
+  ] = useNeedRecuited(search);
+
+  const [isShowModalInfo, setIsShowModalInfo] = useState(true);
   const [isShowModalAddJob, setIsShowModalAddJob] = useState(false);
 
-  function handleOpenModalCompany() {
-    setIsShowModalInfo(true);
+  function handleToggleModalCompany() {
+    setIsShowModalInfo(!isShowModalInfo);
+    console.log("123");
   }
-  function handleAddJob() {}
+  const handleAddJob = async () => {
+    await createJob({
+      ...newJob,
+      departmentId: department._id,
+      companyId: department.companyId,
+    });
+    setIsShowModalAddJob(false);
+    setNewJob(objJob);
+    setReload((prev) => !prev);
+  };
   return (
     <>
       <Header2 />
@@ -94,15 +88,10 @@ function Companymanage(props) {
                 <div className='job-bx browse-job clearfix'>
                   <TabListJobs
                     listJob={listJob}
-                    handleOpenModalCompany={handleOpenModalCompany}
-                    key={key}
+                    handleOpenModalCompany={handleToggleModalCompany}
+                    search={search}
                     setShowAddJob={setIsShowModalAddJob}
                   />
-                  <ModalInfoNeededPosi
-                    company={isShowModalInfo}
-                    setCompany={setIsShowModalInfo}
-                  />
-
                   {/* Modal tạo vị trí tuyển dụng */}
                   <ModalAddNeedPosi
                     showAddJob={isShowModalAddJob}
@@ -121,6 +110,10 @@ function Companymanage(props) {
                     setNewJob={setNewJob}
                     newJob={newJob}
                     handleAddJob={handleAddJob}
+                    setNewQuestion={setNewQuestion}
+                    childQuestion={childQuestion}
+                    setChildQuestion={setChildQuestion}
+                    deleteAddOnQuestion={deleteAddOnQuestion}
                   />
                 </div>
               </div>
@@ -129,77 +122,6 @@ function Companymanage(props) {
         </div>
       </div>
       <Footer />
-      {/* <Modal
-        show={isShowModal}
-        onHide={() => setIsShowModal(false)}
-        className='modal fade modal-bx-info'
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Thêm tiêu chí đánh giá</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className='form-group'>
-            <label for=''>Tên tiêu chí</label>
-            <input
-              type='text'
-              className='form-control' //form-control-sm
-              value={newQuestion.name}
-              onChange={(e) => {
-                setNewQuestion({ ...newQuestion, name: e.target.value });
-              }}
-            />
-          </div>
-          <div className='form-group'>
-            <label for=''>Tiêu chí con</label>
-            {newQuestion.detail.map((item, index) => {
-              return (
-                <>
-                  <input
-                    type='text'
-                    className='form-control mb-2'
-                    value={item}
-                  />
-                </>
-              );
-            })}
-            <input
-              type='text'
-              className='form-control'
-              value={childQuestion}
-              onChange={(e) => setChildQuestion(e.target.value)}
-            />
-            <button
-              className='btn btn-primary mt-2'
-              onClick={() => {
-                if (childQuestion === "") return;
-                setNewQuestion({
-                  ...newQuestion,
-                  detail: [...newQuestion.detail, childQuestion],
-                });
-                setChildQuestion("");
-              }}
-            >
-              Thêm tiêu chí con
-            </button>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <button
-            type='button'
-            className='btn btn-primary'
-            onClick={handleAddQuestion}
-          >
-            Lưu
-          </button>
-          <button
-            type='button'
-            className='btn btn-secondary'
-            onClick={() => setIsShowModal(false)}
-          >
-            Hủy
-          </button>
-        </Modal.Footer>
-      </Modal> */}
     </>
   );
 }

@@ -5,7 +5,6 @@ import Header2 from "../Layout/HeaderDepartment";
 import Footer from "../Layout/Footer";
 import { Form, FormControl } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
-
 import CompanySidebar from "../Element/DepartmentSidebar";
 const managerBlog = [
   {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import icon from "../../../images/logo/icon2.png";
-const ModalInfoNeededPosi = (company, setCompany) => {
+const ModalInfoNeededPosi = ({ company, setCompany, info }) => {
   return (
     <>
       {" "}
@@ -10,18 +10,14 @@ const ModalInfoNeededPosi = (company, setCompany) => {
         onHide={setCompany}
         className='modal fade modal-bx-info'
       >
-        <div className='modal-dialog my-0' role='document'>
+        <div className='modal-dialog my-0 w-100' role='document'>
           <div className='modal-content'>
             <div className='modal-header'>
               <div className='logo-img'>
                 <img alt='' src={icon} />
               </div>
               <h5 className='modal-title'>Company Name</h5>
-              <button
-                type='button'
-                className='close'
-                onClick={() => setCompany(false)}
-              >
+              <button type='button' className='close' onClick={setCompany}>
                 <span aria-hidden='true'>&times;</span>
               </button>
             </div>
@@ -29,19 +25,16 @@ const ModalInfoNeededPosi = (company, setCompany) => {
               <ul>
                 <li>
                   <strong>Job Title :</strong>
-                  <p> Web Developer – PHP, HTML, CSS </p>
+                  <p> {info.position} </p>
                 </li>
                 <li>
                   <strong>Experience :</strong>
-                  <p>5 Year 3 Months</p>
+                  <p>{info.experience}</p>
                 </li>
                 <li>
                   <strong>Deseription :</strong>
-                  <p>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry has been the industry's standard dummy
-                    text ever since.
-                  </p>
+                  <p>{info.description}</p>
+                  {/* <p>asdkjasd asdnjksand asdnajksdasj dasd naksjda</p> */}
                 </li>
               </ul>
             </div>
@@ -49,7 +42,7 @@ const ModalInfoNeededPosi = (company, setCompany) => {
               <button
                 type='button'
                 className='btn btn-secondary'
-                onClick={() => setCompany(false)}
+                onClick={setCompany}
               >
                 Close
               </button>

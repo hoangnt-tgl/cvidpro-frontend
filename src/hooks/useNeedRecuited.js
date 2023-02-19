@@ -13,7 +13,13 @@ import {
   getListQuestion,
 } from "../services/GetListService";
 
-const useNeedRecuited = (key) => {
+const useNeedRecuited = ({ search }) => {
+  let params = new URLSearchParams(search);
+  let key = params.get("key");
+  if (key) {
+    localStorage.setItem("key", key);
+  }
+  key = localStorage.getItem("key");
   const objJob = {
     title: "",
     position: "",
@@ -49,18 +55,28 @@ const useNeedRecuited = (key) => {
   const [environmentOption, setEnvironmentOption] = useState([]);
   const [newJob, setNewJob] = useState(objJob);
   useEffect(() => {
+    console.log(key);
     async function fetchData() {
       if (!key) return;
-      setDepartment(await getDepartmentByKey(key).data);
+      setDepartment(
+        await getDepartmentByKey(key).then((res) => {
+          console.log(res);
+          return res.data;
+        })
+      );
     }
     fetchData();
   }, [key]);
 
   useEffect(() => {
-    if (!department._id) return;
+    if (!department?._id) return;
     async function fetchData() {
       try {
-        setListJob(await getJobForDepartment(department._id));
+        setListJob(
+          await getJobForDepartment(department._id).then((res) => {
+            return res.data;
+          })
+        );
       } catch (error) {
         console.log(error);
       }
@@ -77,7 +93,6 @@ const useNeedRecuited = (key) => {
     getListProvince()
       .then((res) => res.data)
       .then((res) => {
-        console.log(res);
         setProvinceOption(
           res.map((item) => ({
             value: item,
@@ -155,7 +170,12 @@ const useNeedRecuited = (key) => {
     setChildQuestion("");
     setNewQuestion(initQuestion);
   };
-
+  const deleteAddOnQuestion = (index) => {
+    let question = questionOptions;
+    question.splice(index, 1);
+    console.log(question);
+    setQuestionOptions(question);
+  };
   return [
     listJob,
     department,
@@ -173,6 +193,10 @@ const useNeedRecuited = (key) => {
     newJob,
     setNewJob,
     setQuestionOptions,
+    setNewQuestion,
+    setChildQuestion,
+    setReload,
+    deleteAddOnQuestion,
   ];
 };
 

@@ -6,7 +6,7 @@ import ItemListNeededPostion from "./ItemListNeededPostion/ItemListNeededPostion
 const TabListJobs = ({
   listJob,
   handleOpenModalCompany,
-  key,
+  keyDepart,
   setShowAddJob,
 }) => {
   return (
@@ -30,11 +30,12 @@ const TabListJobs = ({
           </tr>
         </thead>
         <tbody>
-          {listJob?.map((item) => (
+          {listJob?.filter((item)=> item).map((item, idx) => (
             <ItemListNeededPostion
+              key={idx}
               item={item}
               handleOpenModalCompany={handleOpenModalCompany}
-              key={key}
+              keyDepart={keyDepart}
             />
           ))}
         </tbody>

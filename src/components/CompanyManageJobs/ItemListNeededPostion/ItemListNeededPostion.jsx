@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { deleteJobForDepartment } from "../../../services/CompanyApi";
+import ModalInfoNeededPosi from "../ModalInfoNeededPosi/ModalInfoNeededPosi";
 
-const ItemListNeededPostion = ({ item, handleOpenModalCompany, key }) => {
+const ItemListNeededPostion = ({ item, keyDepart }) => {
+  const [isShowModalInfo, setIsShowModalInfo] = useState(false);
   function getStatusJob(job) {
     if (job.confirm1.confirmed === -1) return "Không được duyệt";
     if (job.confirm2.confirmed !== 1) return "Đang chờ duyệt";
@@ -10,9 +12,12 @@ const ItemListNeededPostion = ({ item, handleOpenModalCompany, key }) => {
     if (job.status === 1) return "Đang tuyển";
   }
   const handleDeleteJob = async (idJob) => {
-    await deleteJobForDepartment(key, idJob);
+    await deleteJobForDepartment(keyDepart, idJob);
     // setReload(!reload);
   };
+  function handleToggleModalCompany() {
+    setIsShowModalInfo(!isShowModalInfo);
+  }
   return (
     <>
       <tr>
@@ -38,7 +43,7 @@ const ItemListNeededPostion = ({ item, handleOpenModalCompany, key }) => {
             </td> */}
         <td className='expired pending'>{getStatusJob(item)} </td>
         <td className='job-links'>
-          <Link to={"#"} onClick={() => handleOpenModalCompany()}>
+          <Link to={"#"} onClick={() => handleToggleModalCompany()}>
             <i className='fa fa-eye'></i>
           </Link>
           <Link to={"#"} onClick={() => handleDeleteJob(item._id)}>
@@ -46,6 +51,11 @@ const ItemListNeededPostion = ({ item, handleOpenModalCompany, key }) => {
           </Link>
         </td>
       </tr>
+      <ModalInfoNeededPosi
+        setCompany={handleToggleModalCompany}
+        company={isShowModalInfo}
+        info={item}
+      />
     </>
   );
 };
