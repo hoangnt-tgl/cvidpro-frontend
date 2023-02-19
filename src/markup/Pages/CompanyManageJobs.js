@@ -15,8 +15,8 @@ function Companymanage(props) {
   if (key) {
     localStorage.setItem("key", key);
   }
-  // key = localStorage.getItem("key"); ?? sao phai gan lai vao localstorage
-  // ??
+  key = localStorage.getItem("key");
+
   const objJob = {
     title: "",
     position: "",
@@ -92,6 +92,7 @@ function Companymanage(props) {
                     search={search}
                     setShowAddJob={setIsShowModalAddJob}
                     setReload={setReload}
+                    keyDepart={key}
                   />
                   {/* Modal tạo vị trí tuyển dụng */}
                   <ModalAddNeedPosi
