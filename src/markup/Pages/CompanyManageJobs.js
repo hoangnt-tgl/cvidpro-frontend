@@ -233,7 +233,7 @@ function Companymanage(props) {
                       {listJob?.map((item) => (
                         <tr>
                           <td className="job-name">
-                            <Link to={`job-detail/${item._id}`} target="_blank">
+                            <Link to={`company/job-detail/${item._id}`} target="_blank">
                               {item.title}
                             </Link>
                             <ul className="job-post-info">
