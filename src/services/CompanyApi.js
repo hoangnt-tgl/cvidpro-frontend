@@ -56,7 +56,7 @@ export const deleteJobForDepartment = async (key, idJob) => {
     });
 }
 
-export const getJobDetail = async (idJob) => {
+export const gẹtJobDetail = async (idJob) => {
   return axiosInstance
     .get(`job/get-job-detail/${idJob}`)
     .then((res) => res.data).catch((error) => {

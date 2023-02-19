@@ -17,13 +17,12 @@ import EmployeeRegister from "./markup/Pages/EmployeeRegister";
 import CompanyRegister from "./markup/Pages/CompanyRegister";
 import EmployeeLogin from "./markup/Pages/EmployeeLogin";
 import CompanyLogin from "./markup/Pages/CompanyLogin";
-import JobDetail from "./markup/Pages/Jobdetail";
+import JobDetailAdmin from "./markup/Pages/JobDetailAdmin";
 
 import CompanyManageJob from "./markup/Pages/CompanyManageJobs";
 import CompanyManageResume from "./markup/Pages/CompanyManageResume";
 import CompanyBrowseCandidates from "./markup/Pages/CompanyBrowseCandidates";
-import JobResume from "./markup/Pages/JobResume";
-import Companyprofile from "./markup/Pages/Companyprofile";
+import JobResumeAdmin from "./markup/Pages/JobResumeAdmin";
 // import ForgotPassword from "./markup/Pages/ForgotPassword";
 
 function App(props) {
@@ -34,13 +33,13 @@ function App(props) {
 
   let routes = (
     <Switch>
-      <Route path='/' exact component={HomePage} />
-      <Route path='/employee/login' exact component={EmployeeLogin} />
-      <Route path='/company/login' exact component={CompanyLogin} />
-      <Route path='/employee/register' exact component={EmployeeRegister} />
-      <Route path='/company/register' exact component={CompanyRegister} />
-      <Route path='/job-detail/:id' exact component={JobDetail} />
-      <Route path='/confirm/cvid/:id ' exact component={JobResume} />
+      <Route path="/" exact component={HomePage} />
+      <Route path="/employee/login" exact component={EmployeeLogin} />
+      <Route path="/company/login" exact component={CompanyLogin} />
+      <Route path="/employee/register" exact component={EmployeeRegister} />
+      <Route path="/company/register" exact component={CompanyRegister} />
+      <Route path="/confirm/job-detail/:id" exact component={JobDetailAdmin} />
+      <Route path="/confirm/job-resume/:id" exact component={JobResumeAdmin} />
     </Switch>
   );
   if (props.isAuthenticated) {

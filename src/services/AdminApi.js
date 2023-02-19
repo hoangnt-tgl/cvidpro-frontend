@@ -64,3 +64,58 @@ export const cancelConfirmResume = async (id, times, token, note) => {
       formatError(error.response?.data?.message || "");
     });
 };
+
+export const confirmJob = async (id, times, token, note) => {
+  return axios
+    .post(
+      `${BASE_URL}admin/confirm-job/${id}/${times}`,
+      { note },
+      {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .catch((error) => {
+      formatError(error.response?.data?.message || "");
+    }
+    );
+};
+
+export const rejectJob = async (id, times, token, note) => {
+  return axios
+    .post(
+      `${BASE_URL}admin/not-confirm-job/${id}/${times}`,
+      { note },
+      {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .catch((error) => {
+      formatError(error.response?.data?.message || "");
+    }
+    );
+};
+
+export const cancelConfirmJob = async (id, times, token, note) => {
+  return axios
+    .post(
+      `${BASE_URL}admin/cancel-confirm-job/${id}/${times}`,
+      { note },
+      {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .catch((error) => {
+      formatError(error.response?.data?.message || "");
+    }
+    );
+}
+
