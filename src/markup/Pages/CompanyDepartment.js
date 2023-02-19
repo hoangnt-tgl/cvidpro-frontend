@@ -41,13 +41,15 @@ function CompanyDepartment(props) {
   }, []);
   useEffect(() => {
     async function fetchData() {
-      let data = await getListDepartment(companyInfo._id);
-      setListDepartment(data.data);
+      if (companyInfo._id) {
+        let { data } = await getListDepartment(companyInfo._id);
+        setListDepartment(data);
+      }
     }
     fetchData();
     window.addEventListener("resize", () => setInnerWidth(window.innerWidth));
     setReload(false);
-  }, [reload]);
+  }, [reload, companyInfo]);
 
   return (
     <>
@@ -98,46 +100,45 @@ function CompanyDepartment(props) {
                           </tr>
                         </>
                       )}
-                      {
-                        listDepartment.map((department, index) => {
-                          return (
-                            <tr key={index}>
-                              <td className="job-name">
-                                <Link
-                                  to={`company-manage-jobs?key=${department.key}`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  style={{ color: "blue" }}
-                                >
-                                  {department.departmentName}
-                                </Link>
+                      {listDepartment.map((department, index) => {
+                        return (
+                          <tr key={index}>
+                            <td className="job-name">
+                              <Link
+                                to={`company-manage-jobs?key=${department.key}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: "blue" }}
+                              >
+                                {department.departmentName}
+                              </Link>
+                            </td>
+                            {innerWidth > 768 && (
+                              <td className="application text-primary">
+                                {department.managerName}
                               </td>
-                              {innerWidth > 768 && (
-                                <td className="application text-primary">
-                                  {department.managerName}
-                                </td>
-                              )}
-                              {innerWidth > 768 && (
-                                <td className="expired pending">
-                                  {department.managerEmail}
-                                </td>
-                              )}
-                              <td className="job-links">
-                                <Link
-                                  to={"#"}
-                                  onClick={() =>
-                                    handleSelectDepartment(department)
-                                  }
-                                >
-                                  <i className="fa fa-eye"></i>
-                                </Link>
-                                <Link to={"#"}>
-                                  <i className="ti-trash"></i>
-                                </Link>
+                            )}
+                            {innerWidth > 768 && (
+                              <td className="expired pending">
+                                {department.managerEmail}
                               </td>
-                            </tr>
-                          );
-                        })}
+                            )}
+                            <td className="job-links">
+                              <Link
+                                to={"#"}
+                                onClick={() =>
+                                  handleSelectDepartment(department)
+                                }
+                              >
+                                <i className="fa fa-eye"></i>
+                              </Link>
+                              <Link to={"#"}>
+                                <i className="ti-trash"></i>
+                              </Link>
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
 

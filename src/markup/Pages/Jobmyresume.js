@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Header from "./../Layout/Header";
-import Footer from "./../Layout/Footer";
+import Header from "../Layout/Header";
+import Footer from "../Layout/Footer";
 import swal from "sweetalert";
 import {
   Modal,
@@ -35,7 +35,7 @@ import {
   getMonthYear,
   formatMonthInput,
 } from "../../services/TimeService";
-import Listingsidebar from "./../Element/Listingsidebar";
+import Listingsidebar from "../Element/Listingsidebar";
 import {
   getListLevel,
   getListSchools,
@@ -134,7 +134,6 @@ function Jobmyresume(props) {
   const [countDown, setCountDown] = useState(60);
   const [otp, setOtp] = useState("");
   useEffect(() => {
-    window.scrollTo(0, 0);
     async function fetchData() {
       let listLevel = await getListLevel();
       setLevels(listLevel.data.map((item) => ({ value: item, label: item })));
@@ -160,7 +159,6 @@ function Jobmyresume(props) {
   useEffect(() => {
     async function fetchData() {
       const response = await getMyResume(props.history);
-      console.log('CV',response);
       setUserInformation(response);
       objProcess.jobTitle = response.jobTitle;
       objProcess.major = response.major;
@@ -196,8 +194,10 @@ function Jobmyresume(props) {
         setShowModalConfirmPhone(false);
         setReload(!reload);
       }
-      // on to top
-      window.scrollTo(0, 0);
+      // on to top page after confirm phone number success
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 100);
     });
   }
   const uploadAvatar = async (e) => {

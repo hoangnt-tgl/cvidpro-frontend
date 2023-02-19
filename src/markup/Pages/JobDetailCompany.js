@@ -145,9 +145,6 @@ function Jobdetail() {
                         <li>{item}</li>
                       ))}
                     </ul>
-                    <Link to={"/jobs-applied-job"} className="site-button">
-                      Ứng tuyển
-                    </Link>
                   </div>
                 </div>
               </div>
