@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { deleteJobForDepartment } from "../../../services/CompanyApi";
 import ModalInfoNeededPosi from "../ModalInfoNeededPosi/ModalInfoNeededPosi";
 
-const ItemListNeededPostion = ({ item, keyDepart }) => {
+const ItemListNeededPostion = ({ item, keyDepart, setReload }) => {
   const [isShowModalInfo, setIsShowModalInfo] = useState(false);
   function getStatusJob(job) {
     if (job.confirm1.confirmed === -1) return "Không được duyệt";
@@ -13,7 +13,7 @@ const ItemListNeededPostion = ({ item, keyDepart }) => {
   }
   const handleDeleteJob = async (idJob) => {
     await deleteJobForDepartment(keyDepart, idJob);
-    // setReload(!reload);
+    setReload((prev) => !prev);
   };
   function handleToggleModalCompany() {
     setIsShowModalInfo(!isShowModalInfo);

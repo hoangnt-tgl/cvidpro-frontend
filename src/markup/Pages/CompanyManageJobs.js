@@ -91,6 +91,7 @@ function Companymanage(props) {
                     handleOpenModalCompany={handleToggleModalCompany}
                     search={search}
                     setShowAddJob={setIsShowModalAddJob}
+                    setReload={setReload}
                   />
                   {/* Modal tạo vị trí tuyển dụng */}
                   <ModalAddNeedPosi

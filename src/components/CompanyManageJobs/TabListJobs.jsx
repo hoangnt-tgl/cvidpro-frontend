@@ -8,6 +8,7 @@ const TabListJobs = ({
   handleOpenModalCompany,
   keyDepart,
   setShowAddJob,
+  setReload,
 }) => {
   return (
     <>
@@ -30,14 +31,17 @@ const TabListJobs = ({
           </tr>
         </thead>
         <tbody>
-          {listJob?.filter((item)=> item).map((item, idx) => (
-            <ItemListNeededPostion
-              key={idx}
-              item={item}
-              handleOpenModalCompany={handleOpenModalCompany}
-              keyDepart={keyDepart}
-            />
-          ))}
+          {listJob
+            ?.filter((item) => item)
+            .map((item, idx) => (
+              <ItemListNeededPostion
+                key={idx}
+                item={item}
+                handleOpenModalCompany={handleOpenModalCompany}
+                keyDepart={keyDepart}
+                setReload={setReload}
+              />
+            ))}
         </tbody>
       </table>
     </>
