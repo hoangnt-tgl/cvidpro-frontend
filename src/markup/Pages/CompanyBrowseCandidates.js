@@ -6,6 +6,8 @@ import Footer from "../Layout/Footer";
 import { Form, FormControl } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
 import CompanySidebar from "../Element/DepartmentSidebar";
+import useLookingCandidates from "../../hooks/useLookingCandidates";
+import FormSearch from "../../components/CompanyBrowseCandidates/FormSearch/FormSearch";
 const managerBlog = [
   {
     id: 1,
@@ -24,55 +26,48 @@ const managerBlog = [
   },
 ];
 function Companymanage(props) {
+  let search = props.location.search;
+  let params = new URLSearchParams(search);
+  let key = params.get("key");
+  if (key) {
+    localStorage.setItem("key", key);
+  }
+  key = localStorage.getItem("key");
+  const {
+    listJob,
+    listSchool,
+    setSelectedParam,
+    searchCandidates,
+    listCandidate,
+  } = useLookingCandidates(search);
+
   const [company, setCompany] = useState(false);
   const [contacts, setContacts] = useState(managerBlog);
+  function handleSubmit(e) {
+    e.preventDefault();
+    searchCandidates();
+  }
   return (
     <>
       <Header2 />
-      <div className="page-content bg-white">
-        <div className="content-block">
-          <div className="section-full bg-white p-t50 p-b20">
-            <div className="container">
-              <div className="m-b30">
-                <div className="section-full">
-                  <div className="find-job-bx">
-                    <form className="dezPlaceAni">
-                      <div className="row">
-                        <div className="col-lg-6 col-md-6">
-                          <div className="form-group">
-                            <FormControl
-                              as={Select}
-                              custom
-                              placeholder="Chức danh công việc"
-                            ></FormControl>
-                          </div>
-                        </div>
-                        <div className="col-lg-6 col-md-6">
-                          <div className="form-group">
-                            <FormControl
-                              as={Select}
-                              custom
-                              placeholder="Chọn trường học"
-                            ></FormControl>
-                          </div>
-                        </div>
-                        <div className="col-lg-6 col-md-6 mx-auto">
-                          <button
-                            type="submit"
-                            className="site-button btn-block py-0"
-                            style={{ zIndex: "auto" }}
-                            
-                          >
-                            Tìm ứng viên
-                          </button>
-                        </div>
-                      </div>
-                    </form>
+      <div className='page-content bg-white'>
+        <div className='content-block'>
+          <div className='section-full bg-white p-t50 p-b20'>
+            <div className='container'>
+              <div className='m-b30'>
+                <div className='section-full'>
+                  <div className='find-job-bx'>
+                    <FormSearch
+                      setSelectedParam={setSelectedParam}
+                      handleSubmit={handleSubmit}
+                      listJob={listJob}
+                      listSchool={listSchool}
+                    />
                   </div>
                 </div>
-                <div className="job-bx browse-job clearfix">
-                  <div className="job-bx-title  clearfix">
-                    <h5 className="font-weight-700 pull-left">
+                <div className='job-bx browse-job clearfix'>
+                  <div className='job-bx-title  clearfix'>
+                    <h5 className='font-weight-700 pull-left'>
                       Tìm thấy 3 ứng viên
                     </h5>
                     {/* <div className="float-right input-group w-auto">
@@ -86,49 +81,49 @@ function Companymanage(props) {
                       </div> */}
                   </div>
 
-                  <ul className="post-job-bx browse-job-grid post-resume row">
+                  <ul className='post-job-bx browse-job-grid post-resume row'>
                     {contacts.map((item, index) => (
-                      <li className="col-lg-6 col-md-6" key={index}>
-                        <div className="post-bx">
-                          <div className="d-flex m-b20">
-                            <div className="job-post-info">
-                              <h5 className="m-b0">
+                      <li className='col-lg-6 col-md-6' key={index}>
+                        <div className='post-bx'>
+                          <div className='d-flex m-b20'>
+                            <div className='job-post-info'>
+                              <h5 className='m-b0'>
                                 <Link to={"/jobs-profile"}>{item.title}</Link>
                               </h5>
-                              <p className="m-b5 font-13">
-                                <Link to={"#"} className="text-primary">
+                              <p className='m-b5 font-13'>
+                                <Link to={"#"} className='text-primary'>
                                   UX / UI Designer{" "}
                                 </Link>
                                 at Atract Solutions
                               </p>
                               <ul>
                                 <li>
-                                  <i className="fa fa-map-marker"></i>
+                                  <i className='fa fa-map-marker'></i>
                                   Sacramento, California
                                 </li>
                                 <li>
-                                  <i className="fa fa-money"></i> $ 2500
+                                  <i className='fa fa-money'></i> $ 2500
                                 </li>
                               </ul>
                             </div>
                           </div>
-                          <div className="job-time m-t15 m-b10">
-                            <Link to={"#"} className="mr-1">
+                          <div className='job-time m-t15 m-b10'>
+                            <Link to={"#"} className='mr-1'>
                               <span>PHP</span>
                             </Link>
-                            <Link to={"#"} className="mr-1">
+                            <Link to={"#"} className='mr-1'>
                               <span>Angular</span>
                             </Link>
-                            <Link to={"#"} className="mr-1">
+                            <Link to={"#"} className='mr-1'>
                               <span>Bootstrap</span>
                             </Link>
                           </div>
                           <Link
                             to={"/files/pdf-sample.pdf"}
-                            target="blank"
-                            className="job-links"
+                            target='blank'
+                            className='job-links'
                           >
-                            <i className="fa fa-download"></i>
+                            <i className='fa fa-download'></i>
                           </Link>
                         </div>
                       </li>
@@ -138,27 +133,27 @@ function Companymanage(props) {
                   <Modal
                     show={company}
                     onHide={setCompany}
-                    className="modal fade modal-bx-info"
+                    className='modal fade modal-bx-info'
                   >
-                    <div className="modal-dialog my-0" role="document">
-                      <div className="modal-content">
-                        <div className="modal-header">
-                          <div className="logo-img">
+                    <div className='modal-dialog my-0' role='document'>
+                      <div className='modal-content'>
+                        <div className='modal-header'>
+                          <div className='logo-img'>
                             <img
-                              alt=""
+                              alt=''
                               src={require("./../../images/logo/icon2.png")}
                             />
                           </div>
-                          <h5 className="modal-title">Company Name</h5>
+                          <h5 className='modal-title'>Company Name</h5>
                           <button
-                            type="button"
-                            className="close"
+                            type='button'
+                            className='close'
                             onClick={() => setCompany(false)}
                           >
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hidden='true'>&times;</span>
                           </button>
                         </div>
-                        <div className="modal-body">
+                        <div className='modal-body'>
                           <ul>
                             <li>
                               <strong>Job Title :</strong>
@@ -178,10 +173,10 @@ function Companymanage(props) {
                             </li>
                           </ul>
                         </div>
-                        <div className="modal-footer">
+                        <div className='modal-footer'>
                           <button
-                            type="button"
-                            className="btn btn-secondary"
+                            type='button'
+                            className='btn btn-secondary'
                             onClick={() => setCompany(false)}
                           >
                             Close
