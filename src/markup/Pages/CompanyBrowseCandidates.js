@@ -8,6 +8,7 @@ import { Modal } from "react-bootstrap";
 import CompanySidebar from "../Element/DepartmentSidebar";
 import useLookingCandidates from "../../hooks/useLookingCandidates";
 import FormSearch from "../../components/CompanyBrowseCandidates/FormSearch/FormSearch";
+import CardCandidates from "../../components/CompanyBrowseCandidates/CardCandidates/CardCandidates";
 const managerBlog = [
   {
     id: 1,
@@ -36,6 +37,7 @@ function Companymanage(props) {
   const {
     listJob,
     listSchool,
+    selectedParam,
     setSelectedParam,
     searchCandidates,
     listCandidate,
@@ -82,51 +84,12 @@ function Companymanage(props) {
                   </div>
 
                   <ul className='post-job-bx browse-job-grid post-resume row'>
-                    {contacts.map((item, index) => (
-                      <li className='col-lg-6 col-md-6' key={index}>
-                        <div className='post-bx'>
-                          <div className='d-flex m-b20'>
-                            <div className='job-post-info'>
-                              <h5 className='m-b0'>
-                                <Link to={"/jobs-profile"}>{item.title}</Link>
-                              </h5>
-                              <p className='m-b5 font-13'>
-                                <Link to={"#"} className='text-primary'>
-                                  UX / UI Designer{" "}
-                                </Link>
-                                at Atract Solutions
-                              </p>
-                              <ul>
-                                <li>
-                                  <i className='fa fa-map-marker'></i>
-                                  Sacramento, California
-                                </li>
-                                <li>
-                                  <i className='fa fa-money'></i> $ 2500
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                          <div className='job-time m-t15 m-b10'>
-                            <Link to={"#"} className='mr-1'>
-                              <span>PHP</span>
-                            </Link>
-                            <Link to={"#"} className='mr-1'>
-                              <span>Angular</span>
-                            </Link>
-                            <Link to={"#"} className='mr-1'>
-                              <span>Bootstrap</span>
-                            </Link>
-                          </div>
-                          <Link
-                            to={"/files/pdf-sample.pdf"}
-                            target='blank'
-                            className='job-links'
-                          >
-                            <i className='fa fa-download'></i>
-                          </Link>
-                        </div>
-                      </li>
+                    {listCandidate.map((item, index) => (
+                      <CardCandidates
+                        item={item}
+                        key={index}
+                        selectedParam={selectedParam}
+                      />
                     ))}
                   </ul>
 
