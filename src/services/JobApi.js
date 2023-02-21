@@ -1,6 +1,7 @@
 import axiosInstance from "../services/AxiosInstance";
 import { formatError } from "../services/AuthService";
 
+
 export const createJob = async (data) => {
   return axiosInstance
     .post(`job/create`, data)
