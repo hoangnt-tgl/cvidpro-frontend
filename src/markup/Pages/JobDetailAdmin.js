@@ -97,47 +97,47 @@ function Jobdetail() {
   return (
     <>
       {/* <Header />	 */}
-      <div className="page-content bg-white">
-        <div className="content-block">
-          <div className="section-full content-inner-1">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-4">
-                  <div className="sticky-top">
-                    <div className="row">
-                      <div className="col-lg-12 col-md-6">
-                        <div className="m-b30">
+      <div className='page-content bg-white'>
+        <div className='content-block'>
+          <div className='section-full content-inner-1'>
+            <div className='container'>
+              <div className='row'>
+                <div className='col-lg-4'>
+                  <div className='sticky-top'>
+                    <div className='row'>
+                      <div className='col-lg-12 col-md-6'>
+                        <div className='m-b30'>
                           <img
                             src={require("./../../images/blog/grid/pic1.jpg")}
-                            alt=""
+                            alt=''
                           />
                         </div>
                       </div>
-                      <div className="col-lg-12 col-md-6">
-                        <div className="widget bg-white p-lr20 p-t20  widget_getintuch radius-sm">
-                          <h4 className="text-black font-weight-700 p-t10 m-b15">
+                      <div className='col-lg-12 col-md-6'>
+                        <div className='widget bg-white p-lr20 p-t20  widget_getintuch radius-sm'>
+                          <h4 className='text-black font-weight-700 p-t10 m-b15'>
                             Mô tả công việc
                           </h4>
                           <ul>
                             <li>
-                              <i className="ti-location-pin"></i>
-                              <strong className="font-weight-700 text-black">
+                              <i className='ti-location-pin'></i>
+                              <strong className='font-weight-700 text-black'>
                                 Địa chỉ
                               </strong>
-                              <span className="text-black-light">
+                              <span className='text-black-light'>
                                 {job?.location}
                               </span>
                             </li>
                             <li>
-                              <i className="ti-money"></i>
-                              <strong className="font-weight-700 text-black">
+                              <i className='ti-money'></i>
+                              <strong className='font-weight-700 text-black'>
                                 Mức lương
                               </strong>{" "}
                               Lương thỏa thuận
                             </li>
                             <li>
-                              <i className="ti-shield"></i>
-                              <strong className="font-weight-700 text-black">
+                              <i className='ti-shield'></i>
+                              <strong className='font-weight-700 text-black'>
                                 Kinh nghiệm
                               </strong>
                               {job?.experience}
@@ -148,14 +148,14 @@ function Jobdetail() {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-8">
-                  <div className="job-info-box">
-                    <h3 className="m-t0 m-b10 font-weight-700 title-head">
-                      <Link to={"#"} className="text-secondry m-r30">
+                <div className='col-lg-8'>
+                  <div className='job-info-box'>
+                    <h3 className='m-t0 m-b10 font-weight-700 title-head'>
+                      <Link to={"#"} className='text-secondry m-r30'>
                         {job?.title}
                       </Link>
                     </h3>
-                    <ul className="job-info">
+                    <ul className='job-info'>
                       <li>
                         <strong>Chức vụ:</strong> {job?.position}
                       </li>
@@ -163,11 +163,11 @@ function Jobdetail() {
                         <strong>Số lượng:</strong> {job?.quantity}
                       </li>
                       <li>
-                        <i className="ti-location-pin text-black m-r5"></i>{" "}
+                        <i className='ti-location-pin text-black m-r5'></i>{" "}
                         {job?.location}
                       </li>
                     </ul>
-                    <p className="p-t20">
+                    <p className='p-t20'>
                       {/* Lorem Ipsum is simply dummy text of the printing and
                       typesetting industry. Lorem Ipsum has been the industry's
                       standard dummy text ever since the 1500s, when an unknown
@@ -180,8 +180,8 @@ function Jobdetail() {
                       software like Aldus PageMaker including versions of Lorem
                       Ipsum. */}
                     </p>
-                    <h5 className="font-weight-600">Mô tả công việc</h5>
-                    <div className="dez-divider divider-2px bg-gray-dark mb-4 mt-0"></div>
+                    <h5 className='font-weight-600'>Mô tả công việc</h5>
+                    <div className='dez-divider divider-2px bg-gray-dark mb-4 mt-0'></div>
                     <p
                       dangerouslySetInnerHTML={{ __html: job?.description }}
                     ></p>
@@ -198,9 +198,9 @@ function Jobdetail() {
                       1960s with the release of Letraset sheets containing Lorem
                       Ipsum passages.
                     </p> */}
-                    <h5 className="font-weight-600">Chuyên nghành</h5>
-                    <div className="dez-divider divider-2px bg-gray-dark mb-4 mt-0"></div>
-                    <ul className="list-num-count no-round">
+                    <h5 className='font-weight-600'>Chuyên nghành</h5>
+                    <div className='dez-divider divider-2px bg-gray-dark mb-4 mt-0'></div>
+                    <ul className='list-num-count no-round'>
                       {job?.major?.map((item, index) => (
                         <li>{item}</li>
                       ))}
@@ -210,9 +210,9 @@ function Jobdetail() {
               </div>
             </div>
           </div>
-          <div className="section-full content-inner">
-            <div className="container">
-              <div className="row">
+          <div className='section-full content-inner'>
+            <div className='container'>
+              <div className='row'>
                 {/* {blogGrid.map((item, index) => (
                   <div className="col-xl-3 col-lg-6 col-md-6" key={index}>
                     <div className="m-b30 blog-grid">
@@ -264,21 +264,35 @@ function Jobdetail() {
               {job?.confirm2?.confirmed !== 1 && role.includes("nldC1") ? (
                 <>
                   {/* tạo 3 button đều nhau trên 1 hàng*/}
+<<<<<<< HEAD
                   <div class="d-flex justify-content-center my-1">
                     <button
                       className="btn btn-light mx-1"
+=======
+                  <div class='d-flex justify-content-center my-1'>
+                    <button
+                      className='btn btn-light mx-1'
+>>>>>>> hoang
                       onClick={() => NotConfirm(1)}
                     >
                       Không duyệt 1
                     </button>
                     <button
+<<<<<<< HEAD
                       className="btn btn-secondary mx-1"
+=======
+                      className='btn btn-secondary mx-1'
+>>>>>>> hoang
                       onClick={() => CancelConfirm(1)}
                     >
                       Hủy duyệt 1
                     </button>
                     <button
+<<<<<<< HEAD
                       className="btn btn-primary mx-1"
+=======
+                      className='btn btn-primary mx-1'
+>>>>>>> hoang
                       onClick={() => Confirm(1)}
                     >
                       Duyệt 1
@@ -291,21 +305,35 @@ function Jobdetail() {
               {job?.confirm1?.confirmed === 1 && role.includes("nldC2") ? (
                 <>
                   {/* tạo 3 button đều nhau trên 1 hàng*/}
+<<<<<<< HEAD
                   <div class="d-flex justify-content-center my-1">
                     <button
                       className="btn btn-light mx-1"
+=======
+                  <div class='d-flex justify-content-center my-1'>
+                    <button
+                      className='btn btn-light mx-1'
+>>>>>>> hoang
                       onClick={() => NotConfirm(2)}
                     >
                       Không duyệt 2
                     </button>
                     <button
+<<<<<<< HEAD
                       className="btn btn-secondary mx-1"
+=======
+                      className='btn btn-secondary mx-1'
+>>>>>>> hoang
                       onClick={() => CancelConfirm(2)}
                     >
                       Hủy duyệt 2
                     </button>
                     <button
+<<<<<<< HEAD
                       className="btn btn-primary mx-1"
+=======
+                      className='btn btn-primary mx-1'
+>>>>>>> hoang
                       onClick={() => Confirm(2)}
                     >
                       Duyệt 2

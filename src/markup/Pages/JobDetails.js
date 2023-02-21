@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import Header from "../Layout/HeaderDepartment";
 import { Link, useLocation, useParams } from "react-router-dom";
 import Footer from "../Layout/Footer";
-import PageTitle from "../Layout/PageTitle";
-import { gẹtJobDetail } from "../../services/CompanyApi";
+
+import { getJobDetail } from "../../services/CompanyApi";
 
 var bnr = require("./../../images/banner/bnr1.jpg");
 
@@ -29,7 +29,7 @@ function Jobdetail() {
   useEffect(() => {
     window.scrollTo(0, 0);
     const fetchJobDetail = async () => {
-      const { data } = await gẹtJobDetail(id);
+      const { data } = await getJobDetail(id);
       setJob(data);
     };
     fetchJobDetail();
@@ -145,6 +145,9 @@ function Jobdetail() {
                         <li>{item}</li>
                       ))}
                     </ul>
+                    <Link to={"/jobs-applied-job"} className="site-button">
+                      Ứng tuyển
+                    </Link>
                   </div>
                 </div>
               </div>
