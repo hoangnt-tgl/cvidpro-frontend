@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Header2 from "./../Layout/HeaderEmployee";
+import Header2 from "./../Layout/Header2";
 import Footer from "./../Layout/Footer";
 import SavedJobs from "./../Element/SavedJobs";
 import { Form, FormControl, Modal, Button } from "react-bootstrap";
@@ -20,6 +20,7 @@ import {
   getListEnvironment,
   getListIndustry,
 } from "../../services/GetListService";
+import { createOrder } from "../../services/OrderApi";
 function Jobsavedjobs(props) {
   const [modalFindJob, setModalFindJob] = useState(false);
   const [resume, setResume] = useState("");
@@ -87,6 +88,15 @@ function Jobsavedjobs(props) {
 
     fetchData();
   }, [reload]);
+
+  const handleSelectJob = (id) => {
+    createOrder({
+      jobId: id,
+      employeeId: resume._id,
+      sender: "employee",
+    })
+    // setModalSelectJob(true);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -389,8 +399,7 @@ function Jobsavedjobs(props) {
                             className="job-links"
                             style={{ top: "80%", right: "8px" }}
                             onClick={() => {
-                              setModalSelectJob(true);
-                              setJobId(item._id);
+                              handleSelectJob(item._id);
                             }}
                           >
                             <i className="fa fa-plus"></i>
