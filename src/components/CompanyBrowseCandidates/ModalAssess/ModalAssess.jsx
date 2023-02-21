@@ -18,7 +18,8 @@ const ModalAssess = ({ openModal, setOpenModal, jobId, employeeId }) => {
     try {
       await createOrder(data);
       let key = localStorage.getItem("key");
-      history.push(`/order/get-order-for-department/${key}`);
+      history.push(`/`);
+      // history.push(`/order/get-order-for-department/${key}`);
     } catch (error) {
       console.log(error);
     }
