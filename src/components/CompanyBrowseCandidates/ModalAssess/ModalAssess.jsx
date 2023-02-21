@@ -12,6 +12,7 @@ const ModalAssess = ({ openModal, setOpenModal, jobId, employeeId }) => {
     e.preventDefault();
     if (!input && !check) return;
     let data = { jobId, employeeId, input, check };
+    console.log(data);
     try {
       createOrder(data);
     } catch (error) {
