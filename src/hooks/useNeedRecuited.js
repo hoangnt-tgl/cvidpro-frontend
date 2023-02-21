@@ -173,8 +173,8 @@ const useNeedRecuited = ({ search }) => {
   const deleteAddOnQuestion = (index) => {
     let question = questionOptions;
     question.splice(index, 1);
-    console.log(question);
-    setQuestionOptions(question);
+    let newQuestion = new Array(...question);
+    setQuestionOptions(newQuestion);
   };
   return [
     listJob,

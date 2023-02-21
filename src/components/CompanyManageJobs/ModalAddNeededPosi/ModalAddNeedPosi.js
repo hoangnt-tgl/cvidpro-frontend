@@ -18,7 +18,6 @@ const ModalAddNeedPosi = ({
   provinceOptions,
   environmentOption,
   questionOptions,
-  setQuestionOptions,
   handleAddJob,
   newQuestion,
   setNewQuestion,
@@ -232,7 +231,7 @@ const ModalAddNeedPosi = ({
                           {index >= 15 && (
                             <i
                               className='fa fa-trash ml-2 text-red'
-                              onClick={deleteAddOnQuestion}
+                              onClick={() => deleteAddOnQuestion(index)}
                             ></i>
                           )}
                         </Accordion.Toggle>
