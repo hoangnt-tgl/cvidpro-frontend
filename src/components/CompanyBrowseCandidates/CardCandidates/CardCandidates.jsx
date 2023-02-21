@@ -9,7 +9,7 @@ import CheckBox from "../../../customComponents/CheckBox/CheckBox";
 import ModalAssess from "../ModalAssess/ModalAssess";
 
 const CardCandidates = ({ item, selectedParam }) => {
-  const [openModal, setOpenModal] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
   const [openDropDown, setOpenDropDown] = useState(false);
   function getYearsOld(string) {
     return new Date().getFullYear() - new Date(string).getFullYear();

@@ -264,35 +264,21 @@ function Jobdetail() {
               {job?.confirm2?.confirmed !== 1 && role.includes("nldC1") ? (
                 <>
                   {/* tạo 3 button đều nhau trên 1 hàng*/}
-<<<<<<< HEAD
-                  <div class="d-flex justify-content-center my-1">
-                    <button
-                      className="btn btn-light mx-1"
-=======
                   <div class='d-flex justify-content-center my-1'>
                     <button
                       className='btn btn-light mx-1'
->>>>>>> hoang
                       onClick={() => NotConfirm(1)}
                     >
                       Không duyệt 1
                     </button>
                     <button
-<<<<<<< HEAD
-                      className="btn btn-secondary mx-1"
-=======
                       className='btn btn-secondary mx-1'
->>>>>>> hoang
                       onClick={() => CancelConfirm(1)}
                     >
                       Hủy duyệt 1
                     </button>
                     <button
-<<<<<<< HEAD
-                      className="btn btn-primary mx-1"
-=======
                       className='btn btn-primary mx-1'
->>>>>>> hoang
                       onClick={() => Confirm(1)}
                     >
                       Duyệt 1
@@ -305,35 +291,21 @@ function Jobdetail() {
               {job?.confirm1?.confirmed === 1 && role.includes("nldC2") ? (
                 <>
                   {/* tạo 3 button đều nhau trên 1 hàng*/}
-<<<<<<< HEAD
-                  <div class="d-flex justify-content-center my-1">
-                    <button
-                      className="btn btn-light mx-1"
-=======
                   <div class='d-flex justify-content-center my-1'>
                     <button
                       className='btn btn-light mx-1'
->>>>>>> hoang
                       onClick={() => NotConfirm(2)}
                     >
                       Không duyệt 2
                     </button>
                     <button
-<<<<<<< HEAD
-                      className="btn btn-secondary mx-1"
-=======
                       className='btn btn-secondary mx-1'
->>>>>>> hoang
                       onClick={() => CancelConfirm(2)}
                     >
                       Hủy duyệt 2
                     </button>
                     <button
-<<<<<<< HEAD
-                      className="btn btn-primary mx-1"
-=======
                       className='btn btn-primary mx-1'
->>>>>>> hoang
                       onClick={() => Confirm(2)}
                     >
                       Duyệt 2
