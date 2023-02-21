@@ -3,10 +3,6 @@ import { useEffect } from "react";
 import { listOptions } from "../../constants/common";
 import "./styles.css";
 const CheckBox = ({ check, setCheck }) => {
-  const [checked, setChecked] = React.useState();
-  useEffect(() => {
-    console.log(check);
-  }, [check]);
   return (
     <>
       {listOptions.map((item, idx) => {
