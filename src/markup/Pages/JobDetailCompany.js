@@ -53,9 +53,14 @@ function Jobdetail() {
                           />
                         </div>
                       </div>
-
-                      <h5 className="font-weight-3400">Mô tả công việc</h5>
+                      <div>
+                      <h5 className="font-weight-3400">Mô tả  việc</h5>
                       <div className="dez-divider divider-2px bg-gray-dark mb-4 mt-0"></div>
+                      </div>
+                       <div>
+                       <h5 className="font-weight-3400">Mô tả </h5>
+                        <div className="dez-divider divider-2px bg-gray-dark mb-4 mt-0"></div>
+                       </div>
 
                     </div>
                   </div>
