@@ -74,6 +74,7 @@ const useNeedRecuited = ({ search }) => {
       try {
         setListJob(
           await getJobForDepartment(department._id).then((res) => {
+            console.log(res.data);
             return res.data;
           })
         );
