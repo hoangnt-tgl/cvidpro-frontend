@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Header2 from "./../Layout/Header2";
+import Header2 from "./../Layout/HeaderEmployee";
 import Footer from "./../Layout/Footer";
 import SavedJobs from "./../Element/SavedJobs";
 import { Form, FormControl, Modal, Button } from "react-bootstrap";
@@ -94,7 +94,7 @@ function Jobsavedjobs(props) {
       jobId: id,
       employeeId: resume._id,
       sender: "employee",
-    })
+    });
     // setModalSelectJob(true);
   };
 
@@ -348,7 +348,7 @@ function Jobsavedjobs(props) {
                           <div className="d-flex">
                             <div className="job-post-info">
                               <h5 className="m-b0">
-                                <Link to={"/jobs-profile"}>{item.title}</Link>
+                                <Link to={"/employee/job-detail/:09"}>{item.title}</Link>
                               </h5>
                               <p className="m-b5 font-13">
                                 <Link to={"#"} className="text-primary">
@@ -394,16 +394,14 @@ function Jobsavedjobs(props) {
                           >
                             <i className="fa fa-download"></i>
                           </Link>
-                          <Link
-                            to={"#"}
-                            className="job-links"
+                          <Button
                             style={{ top: "80%", right: "8px" }}
                             onClick={() => {
                               handleSelectJob(item._id);
                             }}
                           >
-                            <i className="fa fa-plus"></i>
-                          </Link>
+                            Ứng tuyển
+                          </Button>
                         </div>
                         {item._id === jobId && (
                           <ModalSelectJob

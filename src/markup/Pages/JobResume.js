@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Header from "./../Layout/Header";
+import Header from "./../Layout/HeaderCompany";
 import Footer from "./../Layout/Footer";
 import swal from "sweetalert";
 import {
@@ -176,7 +176,7 @@ function JobResume(props) {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="page-content">
         <div
           className="overlay-black-dark profile-edit p-t50 p-b20"
