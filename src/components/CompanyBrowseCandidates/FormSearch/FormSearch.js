@@ -17,7 +17,6 @@ const FormSearch = ({
                 options={listJob}
                 placeholder='Chức danh công việc'
                 onChange={(e) => {
-                  console.log(e);
                   setSelectedParam((prev) => ({
                     ...prev,
                     jobTitle: e.value,
