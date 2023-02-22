@@ -53,38 +53,10 @@ function Jobdetail() {
                           />
                         </div>
                       </div>
-                      <div className="col-lg-12 col-md-6">
-                        <div className="widget bg-white p-lr20 p-t20  widget_getintuch radius-sm">
-                          <h4 className="text-black font-weight-700 p-t10 m-b15">
-                            Mô tả công việc
-                          </h4>
-                          <ul>
-                            <li>
-                              <i className="ti-location-pin"></i>
-                              <strong className="font-weight-700 text-black">
-                                Địa chỉ
-                              </strong>
-                              <span className="text-black-light">
-                                {job?.location}
-                              </span>
-                            </li>
-                            <li>
-                              <i className="ti-money"></i>
-                              <strong className="font-weight-700 text-black">
-                                Mức lương
-                              </strong>{" "}
-                              Lương thỏa thuận
-                            </li>
-                            <li>
-                              <i className="ti-shield"></i>
-                              <strong className="font-weight-700 text-black">
-                                Kinh nghiệm
-                              </strong>
-                              {job?.experience}
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
+
+                      <h5 className="font-weight-400">Mô tả công việc</h5>
+                      <div className="dez-divider divider-2px bg-gray-dark mb-4 mt-0"></div>
+
                     </div>
                   </div>
                 </div>
@@ -98,7 +70,7 @@ function Jobdetail() {
                     <ul className="job-info">
                       <li>
                         <strong>Chức vụ:</strong> {job?.position}
-                      </li>
+                      </li>w
                       <li>
                         <strong>Số lượng:</strong> {job?.quantity}
                       </li>
@@ -120,8 +92,8 @@ function Jobdetail() {
                       software like Aldus PageMaker including versions of Lorem
                       Ipsum. */}
                     </p>
-                    <h5 className="font-weight-600">Mô tả công việc</h5>
-                    <div className="dez-divider divider-2px bg-gray-dark mb-4 mt-0"></div>
+                    
+
                     <p
                       dangerouslySetInnerHTML={{ __html: job?.description }}
                     ></p>
