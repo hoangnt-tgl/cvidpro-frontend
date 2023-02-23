@@ -1,16 +1,25 @@
-export function compareItemArr(arr) {
-  if (arr[0] === arr[1]) {
-    return "Đạt";
+const pass = "Đạt";
+const notPass = "Không đạt";
+
+export function isItemIncludes(arr, item) {
+  if (arr.includes(item)) {
+    return pass;
   } else {
-    return "Không đạt";
+    return notPass;
   }
 }
-
-export function compareItemArrNum(arr) {
-  if (arr[0] >= arr[1]) {
-    return "Đạt";
+export function isItemMatch(required, item) {
+  if (required === item) {
+    return pass;
   } else {
-    return "Không đạt";
+    return notPass;
+  }
+}
+export function compareItemArrNum(exnNeed, exnHave) {
+  if (Number(exnNeed) >= Number(exnHave)) {
+    return pass;
+  } else {
+    return notPass;
   }
 }
 
@@ -28,132 +37,72 @@ export function createTable(currentJobLookingFor, item) {
   ];
   tableData = tableData.map((row, idx) => {
     if (idx === 0) {
-      if (Array.isArray(currentJobLookingFor.level)) {
-        let level = currentJobLookingFor.level.join();
-        row.push(level);
-      } else {
-        row.push(currentJobLookingFor.level);
-      }
-      if (Array.isArray(item.level)) {
-        let level = item.level.join();
-        row.push(level);
-      } else {
-        row.push(item.level);
-      }
-      row.push(compareItemArr(row.slice(-2)));
+      let level = currentJobLookingFor.level.join(", ");
+      row.push(level);
+      row.push(item.level);
+      row.push(isItemIncludes(currentJobLookingFor.level, item.level));
     }
     if (idx === 1) {
-      if (Array.isArray(currentJobLookingFor.major)) {
-        let major = currentJobLookingFor.major.join();
-        row.push(major);
-      } else {
-        row.push(currentJobLookingFor.major);
-      }
-      if (Array.isArray(item.jobCriteria.major)) {
-        let major = item.jobCriteria.major.join();
-        row.push(major);
-      } else {
-        row.push(item.jobCriteria.major);
-      }
-      row.push(compareItemArr(row.slice(-2)));
+      let major = currentJobLookingFor.major.join(", ");
+      row.push(major);
+      row.push(item.jobCriteria.major);
+      row.push(
+        isItemIncludes(currentJobLookingFor.major, item.jobCriteria.major)
+      );
     }
     if (idx === 2) {
-      if (Array.isArray(currentJobLookingFor.title)) {
-        let title = currentJobLookingFor.title.join();
-        row.push(title);
-      } else {
-        row.push(currentJobLookingFor.title);
-      }
-      if (Array.isArray(item.jobCriteria.jobTitle)) {
-        let title = item.jobCriteria.jobTitle.join();
-        row.push(title);
-      } else {
-        row.push(item.jobCriteria.jobTitle);
-      }
-      row.push(compareItemArr(row.slice(-2)));
+      row.push(currentJobLookingFor.title);
+      row.push(item.jobCriteria.jobTitle);
+      row.push(
+        isItemMatch(currentJobLookingFor.title, item.jobCriteria.jobTitle)
+      );
     }
     if (idx === 3) {
-      if (Array.isArray(currentJobLookingFor.position)) {
-        let position = currentJobLookingFor.position.join();
-        row.push(position);
-      } else {
-        row.push(currentJobLookingFor.position);
-      }
-      if (Array.isArray(item.jobCriteria.position)) {
-        let position = item.jobCriteria.position.join();
-        row.push(position);
-      } else {
-        row.push(item.jobCriteria.position);
-      }
-      row.push(compareItemArr(row.slice(-2)));
+      row.push(currentJobLookingFor.position);
+      let position = item.jobCriteria.position.join(", ");
+      row.push(position);
+      row.push(
+        isItemIncludes(item.jobCriteria.position, currentJobLookingFor.position)
+      );
     }
     if (idx === 4) {
-      if (Array.isArray(currentJobLookingFor.industry)) {
-        let industry = currentJobLookingFor.industry.join();
-        row.push(industry);
-      } else {
-        row.push(currentJobLookingFor.industry);
-      }
-      if (Array.isArray(item.jobCriteria.industry)) {
-        let industry = item.jobCriteria.industry.join();
-        row.push(industry);
-      } else {
-        row.push(item.jobCriteria.industry);
-      }
-      row.push(compareItemArr(row.slice(-2)));
+      row.push(currentJobLookingFor.industry);
+      let industry = item.jobCriteria.industry.join(", ");
+      row.push(industry);
+      row.push(
+        isItemIncludes(item.jobCriteria.industry, currentJobLookingFor.industry)
+      );
     }
     if (idx === 5) {
-      if (Array.isArray(currentJobLookingFor.companyInfo.companyType)) {
-        let companyType = currentJobLookingFor.companyInfo.companyType.join();
-        row.push(companyType);
-      } else {
-        row.push(currentJobLookingFor.companyInfo.companyType);
-      }
-      if (Array.isArray(item.jobCriteria.companyType)) {
-        let companyType = item.jobCriteria.companyType.join();
-        row.push(companyType);
-      } else {
-        row.push(item.jobCriteria.companyType);
-      }
-      row.push(compareItemArr(row.slice(-2)));
+      row.push(currentJobLookingFor.companyInfo.companyType);
+      row.push(item.jobCriteria.companyType);
+      row.push(
+        isItemMatch(
+          currentJobLookingFor.companyInfo.companyType,
+          item.jobCriteria.companyType
+        )
+      );
     }
     if (idx === 6) {
-      if (Array.isArray(currentJobLookingFor.workingEnvironment)) {
-        let companyType = currentJobLookingFor.workingEnvironment.join();
-        row.push(companyType);
-      } else {
-        row.push(currentJobLookingFor.workingEnvironment);
-      }
-      if (Array.isArray(item.jobCriteria.environment)) {
-        let companyType = item.jobCriteria.environment.join();
-        row.push(companyType);
-      } else {
-        row.push(item.jobCriteria.environment);
-      }
-      row.push(compareItemArr(row.slice(-2)));
+      row.push(currentJobLookingFor.workingEnvironment);
+      let companyType = item.jobCriteria.environment.join(", ");
+      row.push(companyType);
+      row.push(
+        isItemIncludes(
+          item.jobCriteria.environment,
+          currentJobLookingFor.workingEnvironment
+        )
+      );
     }
     if (idx === 7) {
-      if (Array.isArray(currentJobLookingFor.location)) {
-        let companyType = currentJobLookingFor.location.join();
-        row.push(companyType);
-      } else {
-        row.push(currentJobLookingFor.location);
-      }
-      if (Array.isArray(item.jobCriteria.province)) {
-        let companyType = item.jobCriteria.province.join();
-        row.push(companyType);
-      } else {
-        row.push(item.jobCriteria.province);
-      }
-      row.push(compareItemArr(row.slice(-2)));
+      row.push(currentJobLookingFor.location);
+      row.push(item.jobCriteria.province);
+      row.push(
+        isItemMatch(currentJobLookingFor.location, item.jobCriteria.province)
+      );
     }
     if (idx === 8) {
-      if (Array.isArray(currentJobLookingFor.experience)) {
-        let companyType = currentJobLookingFor.experience.join();
-        row.push(companyType);
-      } else {
-        row.push(currentJobLookingFor.experience);
-      }
+      row.push(currentJobLookingFor.experience);
       let candidatesEx = 0;
       item.workExperience.forEach((item) => {
         let time =
@@ -161,10 +110,12 @@ export function createTable(currentJobLookingFor, item) {
         candidatesEx = candidatesEx + time;
       });
       row.push(candidatesEx);
-      row.push(compareItemArrNum(row.slice(-2)));
+      row.push(
+        compareItemArrNum(currentJobLookingFor.experience, candidatesEx)
+      );
     }
     return row;
   });
-  console.log(tableData);
+  // console.log(tableData);
   return tableData;
 }
