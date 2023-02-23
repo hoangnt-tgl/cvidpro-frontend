@@ -41,6 +41,7 @@ function Companymanage(props) {
     setSelectedParam,
     searchCandidates,
     listCandidate,
+    currentJobLookingFor,
   } = useLookingCandidates(search);
 
   const [company, setCompany] = useState(false);
@@ -72,15 +73,6 @@ function Companymanage(props) {
                     <h5 className='font-weight-700 pull-left'>
                       Tìm thấy {listCandidate.length} ứng viên
                     </h5>
-                    {/* <div className="float-right input-group w-auto">
-                        <span className="select-title">Lọc theo</span>
-                        <select className="form-control">
-                          <option>All</option>
-                          <option>Chức danh 1</option>
-                          <option>Chức danh 2</option>
-                          <option>Chức danh 3</option>
-                        </select>
-                      </div> */}
                   </div>
 
                   <ul className='post-job-bx browse-job-grid post-resume row'>
@@ -89,11 +81,10 @@ function Companymanage(props) {
                         item={item}
                         key={index}
                         selectedParam={selectedParam}
+                        currentJobLookingFor={currentJobLookingFor}
                       />
                     ))}
                   </ul>
-
-                  
                 </div>
               </div>
             </div>

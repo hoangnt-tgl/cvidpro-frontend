@@ -9,7 +9,7 @@ import CheckBox from "../../../customComponents/CheckBox/CheckBox";
 import ModalAssess from "../ModalAssess/ModalAssess";
 import ModalTableAssess from "../ModalTableAssess/ModalTableAssess";
 
-const CardCandidates = ({ item, selectedParam }) => {
+const CardCandidates = ({ item, selectedParam, currentJobLookingFor }) => {
   const [openModal, setOpenModal] = useState(false);
   const [openTable, setOpenTable] = useState(false);
   const [openDropDown, setOpenDropDown] = useState(false);
@@ -103,7 +103,12 @@ const CardCandidates = ({ item, selectedParam }) => {
         employeeId={item._id}
         jobId={selectedParam.jobTitle}
       />
-      <ModalTableAssess openTable={openTable} setOpenTable={setOpenTable} />
+      <ModalTableAssess
+        openTable={openTable}
+        setOpenTable={setOpenTable}
+        item={item}
+        currentJobLookingFor={currentJobLookingFor}
+      />
     </>
   );
 };

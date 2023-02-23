@@ -19,10 +19,6 @@ const TableAssess = ({ tableLayout, title }) => {
                         {tableLayout.tableTilte.map((item, index) => (
                           <th scope='col'>{item}</th>
                         ))}
-                        {/* <th scope='col'>Country</th>
-                        <th scope='col'>Browser</th>
-                        <th scope='col'>Platform(s)</th>
-                        <th scope='col'>Engine version</th> */}
                       </tr>
                     </thead>
                     <tbody class='customtable'>
@@ -35,18 +31,6 @@ const TableAssess = ({ tableLayout, title }) => {
                           </tr>
                         );
                       })}
-                      {/* <tr>
-                        <td>India</td>
-                        <td>Chrome OS</td>
-                        <td>MAC OS</td>
-                        <td>76</td>
-                      </tr>
-                      <tr>
-                        <td>USA</td>
-                        <td>Internet Explorer</td>
-                        <td>Win 2010</td>
-                        <td>10</td>
-                      </tr> */}
                     </tbody>
                   </table>
                 </div>

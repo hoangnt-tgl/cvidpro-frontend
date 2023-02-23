@@ -10,8 +10,10 @@ const useLookingCandidates = ({ search }) => {
     localStorage.setItem("key", key);
   }
   key = localStorage.getItem("key");
+  const [currentJobLookingFor, setCurrentJobLookingFor] = useState();
   const [listSchool, setListSchool] = useState([]);
   const [listJob, setListJob] = useState([]);
+  const [HoldListJob, setHoldListJob] = useState([]);
   const [department, setDepartment] = useState({});
   const [listCandidate, setListCandidate] = useState([
     // {
@@ -95,13 +97,20 @@ const useLookingCandidates = ({ search }) => {
     schoolName: "",
     jobTitle: "",
   });
-
+  useEffect(() => {
+    console.log(currentJobLookingFor);
+  }, [currentJobLookingFor]);
   //function
+  function getCurrentJobLookingFor() {
+    let job = HoldListJob.find((job) => job._id === selectedParam.jobTitle);
+    setCurrentJobLookingFor(job);
+  }
   async function searchCandidates() {
     try {
       let params = { schoolName: selectedParam.schoolName };
       const res = await getEmployeeForJob(selectedParam.jobTitle, params).then(
         (res) => {
+          getCurrentJobLookingFor();
           return res.data;
         }
       );
@@ -128,13 +137,18 @@ const useLookingCandidates = ({ search }) => {
     if (!department?._id) return;
     async function fetchData() {
       try {
-        setListJob(
-          await getJobForDepartment(department._id).then((res) => {
-            return res.data
-              .filter((job) => job.confirm2.confirmed === 1)
-              .map((job) => ({ value: job._id, label: job.title }));
-          })
-        );
+        let data = await getJobForDepartment(department._id).then((res) => {
+          return res.data.filter((job) => job.confirm2.confirmed === 1);
+        });
+        setHoldListJob(data);
+        setListJob(data.map((job) => ({ value: job._id, label: job.title })));
+        // setListJob(
+        //   await getJobForDepartment(department._id).then((res) => {
+        //     return res.data
+        //       .filter((job) => job.confirm2.confirmed === 1)
+        //       .map((job) => ({ value: job._id, label: job.title }));
+        //   })
+        // );
       } catch (error) {
         console.log(error);
       }
@@ -158,6 +172,7 @@ const useLookingCandidates = ({ search }) => {
     setSelectedParam,
     searchCandidates,
     listCandidate,
+    currentJobLookingFor,
   };
 };
 

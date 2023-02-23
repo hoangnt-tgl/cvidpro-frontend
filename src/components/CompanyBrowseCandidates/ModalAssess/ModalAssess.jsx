@@ -65,13 +65,13 @@ const ModalAssess = ({ openModal, setOpenModal, jobId, employeeId }) => {
             </div>
 
             <div className='modal-footer'>
-              <button
+              {/* <button
                 type='button'
                 className='btn btn-secondary'
                 onClick={() => setOpenModal(false)}
               >
                 Close
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
