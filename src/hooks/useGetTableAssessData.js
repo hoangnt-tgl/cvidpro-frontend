@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
+import FormBookInterView from "../components/CompanyMangeResume/FormBookInterview/FormBookInterView";
 import { getCandidateForDepartment } from "../services/DepartmentApi";
 
 const useGetTableAssessData = () => {
@@ -25,10 +26,11 @@ const useGetTableAssessData = () => {
         item.comment,
         item.status,
         item.interview.status,
-        <div className='d-flex'>
-          <button className='btn btn-primary mx-1'>Đặt lịch pv</button>
-          <button className='btn btn-danger mx-1'>Xóa</button>
-        </div>,
+        // <div className='d-flex'>
+        //   <button className='btn btn-primary mx-1'>Đặt lịch pv</button>
+        //   <button className='btn btn-danger mx-1'>Xóa</button>
+        // </div>,
+        <FormBookInterView item={item} localkey={key} />,
         <input type='checkbox' className='checkbox-primary' />,
       ];
     });
