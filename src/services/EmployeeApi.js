@@ -117,11 +117,22 @@ export const updatePoint = async (id, pointList) => {
     });
 };
 
-export const gẹtApplyJobForEmployee = async (id) => {
+export const gẹtApplyJobForEmployee = async (sender) => {
   return axiosInstance
-    .get(`order/get-order-for-employee`)
+    .post(`order/get-order-for-employee`, {
+      sender: sender,
+    })
     .then((res) => res.data)
     .catch((error) => {
       formatError(error.response?.data?.message || "");
     });
 };
+
+export const confirmJob = async (jobId) => {
+  return axiosInstance
+    .post(`employee/confirm-job/${jobId}`)
+    .then((res) => res.data)
+    .catch((error) => {
+      formatError(error.response?.data?.message || "");
+    });
+}
