@@ -119,9 +119,7 @@ export const updatePoint = async (id, pointList) => {
 
 export const gẹtApplyJobForEmployee = async (id) => {
   return axiosInstance
-    .post(`order/get-order-by-employee-id/employeeId/${id}`, {
-      sender: "employee",
-    })
+    .get(`order/get-order-for-employee`)
     .then((res) => res.data)
     .catch((error) => {
       formatError(error.response?.data?.message || "");

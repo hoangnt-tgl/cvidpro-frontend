@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Header2 from "./../Layout/Header2";
+import Header2 from "./../Layout/HeaderEmployee";
 import Footer from "./../Layout/Footer";
 import SavedJobs from "./../Element/SavedJobs";
 import { Form, FormControl, Modal, Button } from "react-bootstrap";
 import Select from "react-select";
 import Profilesidebar from "./../Element/Profilesidebar";
 import { getMyResume, findJob } from "../../services/EmployeeApi";
-import ModalSelectJob from "./../Element/ModalSelectJob";
 import { displaySalary } from "../../services/DisplayService";
 import {
   getListLevel,
@@ -21,7 +20,9 @@ import {
   getListIndustry,
 } from "../../services/GetListService";
 import { createOrder } from "../../services/OrderApi";
+import swal from "sweetalert";
 function Jobsavedjobs(props) {
+  
   const [modalFindJob, setModalFindJob] = useState(false);
   const [resume, setResume] = useState("");
   const [reload, setReload] = useState(false);
@@ -58,6 +59,12 @@ function Jobsavedjobs(props) {
     const fetchData = async () => {
       let data = await getMyResume();
       setResume(data);
+      if (data.jobCriteria.status) {
+        findJob(data._id, data.jobCriteria).then((res) => {
+          setListJob(res.data);
+        });
+      }
+
       setPosition(
         data.jobCriteria.position.map((item) => ({ label: item, value: item }))
       );
@@ -90,12 +97,25 @@ function Jobsavedjobs(props) {
   }, [reload]);
 
   const handleSelectJob = (id) => {
-    createOrder({
-      jobId: id,
-      employeeId: resume._id,
-      sender: "employee",
-    })
-    // setModalSelectJob(true);
+    swal({
+      title: "Xác nhận ứng tuyển",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then(async (willDelete) => {
+      if (willDelete) {
+        await createOrder({
+          jobId: id,
+          employeeId: resume._id,
+        });
+        swal("Xác nhận thành công!", {
+          icon: "success",
+        });
+        props.history.push('/jobs-applied-job')
+      } else {
+        swal("Xác nhận không thành công!");
+      }
+    });
   };
 
   useEffect(() => {
@@ -161,7 +181,6 @@ function Jobsavedjobs(props) {
       ...resume,
       jobCriteria: { ...resume.jobCriteria, status: !status },
     });
-    console.log("status", status);
     let data = {
       position: position ? position.map((item) => item.value) : undefined,
       jobTitle: jobTitle ? jobTitle.value : undefined,
@@ -348,7 +367,9 @@ function Jobsavedjobs(props) {
                           <div className="d-flex">
                             <div className="job-post-info">
                               <h5 className="m-b0">
-                                <Link to={"/jobs-profile"}>{item.title}</Link>
+                                <Link to={"/employee/job-detail/:09"}>
+                                  {item.title}
+                                </Link>
                               </h5>
                               <p className="m-b5 font-13">
                                 <Link to={"#"} className="text-primary">
@@ -394,26 +415,15 @@ function Jobsavedjobs(props) {
                           >
                             <i className="fa fa-download"></i>
                           </Link>
-                          <Link
-                            to={"#"}
-                            className="job-links"
+                          <Button
                             style={{ top: "80%", right: "8px" }}
                             onClick={() => {
                               handleSelectJob(item._id);
                             }}
                           >
-                            <i className="fa fa-plus"></i>
-                          </Link>
+                            Ứng tuyển
+                          </Button>
                         </div>
-                        {item._id === jobId && (
-                          <ModalSelectJob
-                            show={modalSelectJob}
-                            setShow={setModalSelectJob}
-                            sender={"employee"}
-                            employeeId={resume._id}
-                            jobId={item._id}
-                          />
-                        )}
                       </li>
                     ))}
                   </ul>
@@ -445,6 +455,14 @@ function Jobsavedjobs(props) {
             </div>
           </div>
         </div>
+
+        {/* <ModalSelectJob
+          show={modalSelectJob}
+          setShow={setModalSelectJob}
+          sender={"employee"}
+          employeeId={resume._id}
+          jobId={item._id}
+        /> */}
       </div>
       <Footer />
     </>

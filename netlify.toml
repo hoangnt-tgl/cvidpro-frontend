@@ -1,4 +1,10 @@
 [[redirects]]
+<<<<<<< HEAD
     from ="/*"
     to="/"
     status =200
+=======
+  from = "/*"
+  to = "/"
+  status = 200
+>>>>>>> main

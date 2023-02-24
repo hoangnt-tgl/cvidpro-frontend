@@ -18,3 +18,12 @@ export const getDepartmentByKey = async (key) => {
       formatError(error.response?.data?.message || "");
     });
 };
+
+export const getCandidateForDepartment = async (id, data) => {
+  return axiosInstance
+    .post(`order/get-order-for-department/${id}`)
+    .then((res) => res.data)
+    .catch((error) => {
+      formatError(error.response?.data?.message || "");
+    });
+};

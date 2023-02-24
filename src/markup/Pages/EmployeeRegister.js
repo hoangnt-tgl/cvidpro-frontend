@@ -9,6 +9,7 @@ import {
   getListLevel,
   getListDistrict,
   getListWard,
+  getListJobTitle,
 } from "../../services/GetListService";
 import {
   loadingToggleAction,
@@ -70,17 +71,22 @@ function Register2(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     async function fetchData() {
-      let listLevel = await getListLevel();
-      setLevels(listLevel.data.map((item) => ({ value: item, label: item })));
-
-      let listSchool = await getListSchools();
-      setSchools(
-        listSchool.data.map((item) => ({ value: item._id, label: item.name }))
-      );
-      let listProvince = await getListProvince();
-      setProvinces(
-        listProvince.data.map((item) => ({ value: item, label: item }))
-      );
+      getListLevel().then((res) => {
+        setLevels(res.data.map((item) => ({ value: item, label: item })));
+      });
+      getListSchools().then((res) => {
+        setSchools(
+          res.data.map((item) => ({ value: item._id, label: item.name }))
+        );
+      });
+      getListProvince().then((res) => {
+        setProvinces(res.data.map((item) => ({ value: item, label: item })));
+      });
+      getListJobTitle().then((res) => {
+        setJobTitles(
+          res.data.map((item) => ({ value: item.name, label: item.name }))
+        );
+      });
     }
     fetchData();
   }, []);
@@ -198,8 +204,7 @@ function Register2(props) {
       error = true;
     }
     if (password !== "" && password.length > 20) {
-      errorObj.password
-        = "Mật khẩu không được quá 20 ký tự";
+      errorObj.password = "Mật khẩu không được quá 20 ký tự";
       error = true;
     }
     if (confirmPassword === "") {
@@ -388,11 +393,10 @@ function Register2(props) {
                         </div>
                       </div>
                       <div className="form-group">
-                        <input
-                          value={jobTitle}
-                          onChange={(e) => setJobTitle(e.target.value)}
-                          className="form-control"
-                          placeholder="Nhập chức danh"
+                        <Select
+                          placeholder="Chọn chức danh"
+                          onChange={(e) => setJobTitle(e.label)}
+                          options={jobTitles}
                         />
                         <div className="text-danger">
                           {errors.jobTitle && <div>{errors.jobTitle}</div>}
@@ -459,8 +463,7 @@ function Register2(props) {
                         </div>
                       </div>
                       <div className="form-group text-left">
-                      
-                      <span className="custom-control custom-checkbox">
+                        <span className="custom-control custom-checkbox">
                           <input
                             type="checkbox"
                             className="custom-control-input"
@@ -477,7 +480,6 @@ function Register2(props) {
                         </span>
                       </div>
                       <div className="form-group text-left">
-                      
                         <button
                           type="submit"
                           className="site-button dz-xs-flex m-r5"
@@ -485,8 +487,6 @@ function Register2(props) {
                         >
                           Đăng ký
                         </button>
-                  
-                      
                       </div>
                       <div className="dz-social clearfix d-none">
                         <h5 className="form-title m-t5 pull-left">

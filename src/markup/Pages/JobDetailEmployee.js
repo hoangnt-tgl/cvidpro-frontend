@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../Layout/Header";
+import Header from "../Layout/HeaderEmployee";
 import { Link, useLocation, useParams } from "react-router-dom";
 import Footer from "../Layout/Footer";
 import PageTitle from "../Layout/PageTitle";
@@ -37,7 +37,7 @@ function Jobdetail() {
   }, []);
   return (
     <>
-      {/* <Header />	 */}
+      <Header />	
       <div className="page-content bg-white">
         <div className="content-block">
           <div className="section-full content-inner-1">

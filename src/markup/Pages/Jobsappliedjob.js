@@ -2,22 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header2 from "./../Layout/HeaderEmployee";
 import Footer from "./../Layout/Footer";
+import { Table } from "react-bootstrap";
 import Profilesidebar from "./../Element/Profilesidebar";
 import { displayTime } from "../../services/TimeService";
 import { gẹtApplyJobForEmployee } from "../../services/EmployeeApi";
-const postBlog = [
-  { title: "PHP Web Developer" },
-  { title: "Software Developer" },
-  { title: "Branch Credit Manager" },
-];
 
 function Jobsappliedjob(props) {
-  const employeeInfo = JSON.parse(localStorage.getItem("userDetails"));
   const [jobList, setJobList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     window.scrollTo(0, 0);
     async function fetchData() {
-      setJobList((await gẹtApplyJobForEmployee(employeeInfo._id)).data);
+      setJobList((await gẹtApplyJobForEmployee()).data);
+      setIsLoading(false);
     }
     fetchData();
   }, []);
@@ -46,7 +43,7 @@ function Jobsappliedjob(props) {
                   </div>
                 </div>
                 <ul className="post-job-bx browse-job">
-                  {jobList?.length === 0 && (
+                  {!isLoading && jobList?.length === 0 && (
                     <>
                       <div className="text-center">
                         <h3 className="text-danger">
@@ -62,63 +59,70 @@ function Jobsappliedjob(props) {
                     </>
                   )}
                   <div className="row">
-                  {jobList?.map((item, index) => (
-                    <div className="col-lg-6 mb-2">
-                    <li key={index}>
-                      <div className="post-bx">
-                        <div className="job-post-info m-a0">
-                          <h4>
-                            <Link to={"#"}>{item.jobInfo.title}</Link>
-                          </h4>
-                          <ul>
-                            <li>
-                              <Link to={"#"}>{item.jobInfo.position}</Link>
-                            </li>
-                            <li>
-                              <i className="fa fa-map-marker"></i>{" "}
-                              {item.jobInfo.location}
-                            </li>
-                            <li>
-                              <i className="fa fa-money"></i> 25,000
-                            </li>
-                          </ul>
-                          <div className="job-time m-t15 m-b10">
-                            {item.jobInfo.major.map((ele, index) => (
-                              <Link to={"#"} className="mr-1">
-                                <span>{ele}</span>
-                              </Link>
-                            ))}
-                          </div>
-                          <div className="posted-info clearfix">
-                            <p className="m-tb0 text-primary float-left">
-                              <span className="text-black m-r10">
-                                Lịch phỏng vấn:
-                              </span>{" "}
-                              {displayTime(item.interview?.date)}
-                            </p>
-                            {/* disable link */}
-                            {item.interview?.date && (
-                              <div className="float-right">
+                  <Table responsive="sm">
+                    </Table>
+                    {jobList?.map((item, index) => (
+                      <div className="col-lg-6 mb-2">
+                        <li key={index}>
+                          <div className="post-bx">
+                            <div className="job-post-info m-a0">
+                              <h4>
                                 <Link
-                                  to={"#"}
-                                  className="btn-info button-sm mx-2"
+                                  to={`/search-job/job-detail/${item._id}`}
+                                  target="_blank"
                                 >
-                                  Từ chối
+                                  {item.jobInfo.title}
                                 </Link>
-                                <Link
-                                  to={"#"}
-                                  className="site-button button-sm "
-                                >
-                                  Xác nhận
-                                </Link>
+                              </h4>
+                              <ul>
+                                <li>
+                                  <Link to={"#"}>{item.jobInfo.position}</Link>
+                                </li>
+                                <li>
+                                  <i className="fa fa-map-marker"></i>{" "}
+                                  {item.jobInfo.location}
+                                </li>
+                                {/* <li>
+                                  <i className="fa fa-money"></i> 25,000
+                                </li> */}
+                              </ul>
+                              <div className="job-time m-t15 m-b10">
+                                {item.jobInfo.major.map((ele, index) => (
+                                  <Link to={"#"} className="mr-1">
+                                    <span>{ele}</span>
+                                  </Link>
+                                ))}
                               </div>
-                            )}
+                              <div className="posted-info clearfix">
+                                <p className="m-tb0 text-primary float-left">
+                                  <span className="text-black m-r10">
+                                    Lịch phỏng vấn:
+                                  </span>{" "}
+                                  {displayTime(item.interview?.date)}
+                                </p>
+                                {/* disable link */}
+                                {item.interview?.date && (
+                                  <div className="float-right">
+                                    <Link
+                                      to={"#"}
+                                      className="btn-info button-sm mx-2"
+                                    >
+                                      Từ chối
+                                    </Link>
+                                    <Link
+                                      to={"#"}
+                                      className="site-button button-sm "
+                                    >
+                                      Xác nhận
+                                    </Link>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
                           </div>
-                        </div>
+                        </li>
                       </div>
-                    </li>
-                    </div>
-                  ))}
+                    ))}
                   </div>
                 </ul>
               </div>
