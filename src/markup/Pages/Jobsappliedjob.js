@@ -2,17 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header2 from "./../Layout/HeaderEmployee";
 import Footer from "./../Layout/Footer";
+import { Table } from "react-bootstrap";
 import Profilesidebar from "./../Element/Profilesidebar";
 import { displayTime } from "../../services/TimeService";
 import { gẹtApplyJobForEmployee } from "../../services/EmployeeApi";
 
 function Jobsappliedjob(props) {
-  const employeeInfo = JSON.parse(localStorage.getItem("userDetails"));
   const [jobList, setJobList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     window.scrollTo(0, 0);
     async function fetchData() {
       setJobList((await gẹtApplyJobForEmployee()).data);
+      setIsLoading(false);
     }
     fetchData();
   }, []);
@@ -41,7 +43,7 @@ function Jobsappliedjob(props) {
                   </div>
                 </div>
                 <ul className="post-job-bx browse-job">
-                  {jobList?.length === 0 && (
+                  {!isLoading && jobList?.length === 0 && (
                     <>
                       <div className="text-center">
                         <h3 className="text-danger">
@@ -57,13 +59,20 @@ function Jobsappliedjob(props) {
                     </>
                   )}
                   <div className="row">
+                  <Table responsive="sm">
+                    </Table>
                     {jobList?.map((item, index) => (
                       <div className="col-lg-6 mb-2">
                         <li key={index}>
                           <div className="post-bx">
                             <div className="job-post-info m-a0">
                               <h4>
-                                <Link to={"#"}>{item.jobInfo.title}</Link>
+                                <Link
+                                  to={`/search-job/job-detail/${item._id}`}
+                                  target="_blank"
+                                >
+                                  {item.jobInfo.title}
+                                </Link>
                               </h4>
                               <ul>
                                 <li>
@@ -73,9 +82,9 @@ function Jobsappliedjob(props) {
                                   <i className="fa fa-map-marker"></i>{" "}
                                   {item.jobInfo.location}
                                 </li>
-                                <li>
+                                {/* <li>
                                   <i className="fa fa-money"></i> 25,000
-                                </li>
+                                </li> */}
                               </ul>
                               <div className="job-time m-t15 m-b10">
                                 {item.jobInfo.major.map((ele, index) => (
