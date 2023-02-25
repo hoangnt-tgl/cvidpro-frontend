@@ -46,11 +46,11 @@ const FormBookInterView = ({ item, localkey }) => {
       interviewer: data.interviewer,
       interviewerEmail: data.email,
       interviewerPhone: data.phoneNumber,
-      interviewerNote: data.note,
+      note: data.note,
     };
     console.log(item);
     try {
-      await bookInterView(localkey, item.jobId, dataSubmit);
+      await bookInterView(localkey, item._id, dataSubmit);
       setOpenTable(false);
     } catch (error) {
       console.log(error);

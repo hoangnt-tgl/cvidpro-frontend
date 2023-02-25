@@ -30,7 +30,7 @@ export const getCandidateForDepartment = async (id, data) => {
 
 export const bookInterView = async (key, id, data) => {
   return axiosInstance
-    .put(` /order/update-interview/${key}/${id}`, data)
+    .put(`/order/update-interview/${key}/${id}`, data)
     .then((res) => res.data)
     .catch((error) => {
       formatError(error.response?.data?.message || "");
