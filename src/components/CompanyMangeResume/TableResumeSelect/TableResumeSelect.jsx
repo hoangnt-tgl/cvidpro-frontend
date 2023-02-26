@@ -1,15 +1,17 @@
 import React from "react";
 import TableAssess from "../../../customComponents/TableAssess/TableAssess";
-import useGetTableAssessData from "../../../hooks/useGetTableAssessData";
 
-const TableResume = ({ tableData }) => {
+const TableResumeSelect = ({ tableData }) => {
   return (
     <div className='table-resume'>
       {tableData.tableData?.length > 0 && (
-        <TableAssess tableLayout={tableData} title='Danh sách ứng viên' />
+        <TableAssess
+          tableLayout={tableData}
+          title='Danh sách ứng viên được chọn'
+        />
       )}
     </div>
   );
 };
 
-export default TableResume;
+export default TableResumeSelect;

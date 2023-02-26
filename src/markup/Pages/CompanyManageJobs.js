@@ -31,6 +31,7 @@ function Companymanage(props) {
     salaryMax: 0,
     description: "",
     question: [],
+    addOnQuestion: [],
   };
   const initQuestion = {
     name: "",
@@ -58,6 +59,8 @@ function Companymanage(props) {
     setChildQuestion,
     setReload,
     deleteAddOnQuestion,
+    addOnQuestionOptions,
+    setAddOnQuestionOptions,
   ] = useNeedRecuited(search);
 
   const [isShowModalInfo, setIsShowModalInfo] = useState(true);
@@ -70,9 +73,17 @@ function Companymanage(props) {
   const handleAddJob = async () => {
     await createJob({
       ...newJob,
+    addOnQuestionOptions,
       departmentId: department._id,
       companyId: department.companyId,
     });
+
+    // console.log({
+    //   ...newJob,
+    //   addOnQuestionOptions,
+    //   departmentId: department._id,
+    //   companyId: department.companyId,
+    // });
     setIsShowModalAddJob(false);
     setNewJob(objJob);
     setReload((prev) => !prev);
@@ -116,6 +127,8 @@ function Companymanage(props) {
                     childQuestion={childQuestion}
                     setChildQuestion={setChildQuestion}
                     deleteAddOnQuestion={deleteAddOnQuestion}
+                    addOnQuestionOptions={addOnQuestionOptions}
+                    setAddOnQuestionOptions={setAddOnQuestionOptions}
                   />
                 </div>
               </div>

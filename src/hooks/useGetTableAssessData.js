@@ -5,7 +5,9 @@ import { getCandidateForDepartment } from "../services/DepartmentApi";
 
 const useGetTableAssessData = () => {
   const [listApplyCadi, setListApplyCadi] = React.useState([]);
+  const [listSelectCandi, setListSelectCandi] = React.useState([]);
   const [tableData, setTableData] = React.useState([]);
+  const [tableDataSelect, setTableDataSelect] = React.useState([]);
   let key = localStorage.getItem("key");
   async function getListApplyCandi() {
     setListApplyCadi(
@@ -14,9 +16,16 @@ const useGetTableAssessData = () => {
       )
     );
   }
-  function createTable() {
+  async function getListSelectCandi() {
+    setListSelectCandi(
+      await getCandidateForDepartment(key, { sender: "company" }).then(
+        (res) => res.data
+      )
+    );
+  }
+  function createTable(list) {
     let tableData = [];
-    tableData = listApplyCadi.map((item, idx) => {
+    tableData = list.map((item, idx) => {
       return [
         idx + 1,
         item.employeeInfo.name,
@@ -26,10 +35,6 @@ const useGetTableAssessData = () => {
         item.comment,
         item.status,
         item.interview.status,
-        // <div className='d-flex'>
-        //   <button className='btn btn-primary mx-1'>Đặt lịch pv</button>
-        //   <button className='btn btn-danger mx-1'>Xóa</button>
-        // </div>,
         <FormBookInterView item={item} localkey={key} />,
         <input type='checkbox' className='checkbox-primary' />,
       ];
@@ -54,16 +59,22 @@ const useGetTableAssessData = () => {
 
   useEffect(() => {
     getListApplyCandi();
+    getListSelectCandi();
   }, []);
   useEffect(() => {
     if (listApplyCadi.length > 0) {
-      setTableData(createTable());
+      setTableData(createTable(listApplyCadi));
     }
   }, [listApplyCadi]);
+  useEffect(() => {
+    if (listSelectCandi.length > 0) {
+      setTableDataSelect(createTable(listSelectCandi));
+    }
+  }, [listSelectCandi]);
   // useEffect(() => {
   //   console.log(tableData);
   // }, [tableData]);
-  return { listApplyCadi, tableData };
+  return { listApplyCadi, tableData, tableDataSelect };
 };
 
 export default useGetTableAssessData;

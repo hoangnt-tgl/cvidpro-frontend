@@ -29,16 +29,17 @@ const useNeedRecuited = ({ search }) => {
     location: "",
     workingEnvironment: "",
     experience: "",
-    quantity: 0,
-    salaryMin: 0,
-    salaryMax: 0,
+    quantity: null,
+    salaryMin: null,
+    salaryMax: null,
     description: "",
     question: [],
+    addOnQuestion: [],
   };
   const initQuestion = {
     name: "",
     detail: [],
-    point: 0,
+    point: "",
   };
   const [reload, setReload] = useState(false);
   const [listJob, setListJob] = useState([]);
@@ -50,17 +51,21 @@ const useNeedRecuited = ({ search }) => {
   const [positionOptions, setPositionOptions] = useState([]);
   const [majorOptions, setMajorOptions] = useState([]);
   const [questionOptions, setQuestionOptions] = useState([]);
+  const [addOnQuestionOptions, setAddOnQuestionOptions] = useState([]);
   const [newQuestion, setNewQuestion] = useState(initQuestion);
   const [childQuestion, setChildQuestion] = useState("");
   const [environmentOption, setEnvironmentOption] = useState([]);
   const [newJob, setNewJob] = useState(objJob);
+  useEffect(() => {
+    // console.log(addOnQuestionOptions);
+  }, [addOnQuestionOptions]);
   useEffect(() => {
     console.log(key);
     async function fetchData() {
       if (!key) return;
       setDepartment(
         await getDepartmentByKey(key).then((res) => {
-          console.log(res);
+          // console.log(res);
           return res.data;
         })
       );
@@ -74,7 +79,7 @@ const useNeedRecuited = ({ search }) => {
       try {
         setListJob(
           await getJobForDepartment(department._id).then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             return res.data;
           })
         );
@@ -160,14 +165,18 @@ const useNeedRecuited = ({ search }) => {
       .then((res) => res.data)
       .then((res) => {
         setQuestionOptions(res);
-        setNewJob({ ...newJob, question: res });
+        // let newObject = new Object(...res);
+        let newObject = JSON.parse(JSON.stringify(res));
+        //cmt setNewJob question mai mo len de test phan add chung res ?? neu mo len la clg ban loi [object ojbect]
+        // setNewJob({ ...newJob, question: newObject });
       });
   }, []);
   const handleAddQuestion = async () => {
     let question = newQuestion;
     question.detail.push(childQuestion);
-    setNewJob({ ...newJob, question: [...questionOptions, newQuestion] });
-    setQuestionOptions([...questionOptions, newQuestion]);
+    // setNewJob({ ...newJob, question: [...questionOptions, newQuestion] });
+    // setQuestionOptions([...questionOptions, newQuestion]);
+    setAddOnQuestionOptions([...addOnQuestionOptions, question]);
     setChildQuestion("");
     setNewQuestion(initQuestion);
   };
@@ -198,6 +207,8 @@ const useNeedRecuited = ({ search }) => {
     setChildQuestion,
     setReload,
     deleteAddOnQuestion,
+    addOnQuestionOptions,
+    setAddOnQuestionOptions,
   ];
 };
 
