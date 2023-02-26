@@ -4,33 +4,25 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import Footer from "../Layout/Footer";
 import PageTitle from "../Layout/PageTitle";
 import { gẹtJobDetail } from "../../services/CompanyApi";
+import { Accordion, Card, Button, Nav, Form, Container } from "react-bootstrap";
+import { getListQuestion } from "../../services/GetListService";
 
 var bnr = require("./../../images/banner/bnr1.jpg");
-
-const blogGrid = [
-  {
-    image: require("./../../images/blog/grid/pic1.jpg"),
-  },
-  {
-    image: require("./../../images/blog/grid/pic2.jpg"),
-  },
-  {
-    image: require("./../../images/blog/grid/pic3.jpg"),
-  },
-  {
-    image: require("./../../images/blog/grid/pic4.jpg"),
-  },
-];
 
 function Jobdetail() {
   const { id } = useParams();
   const [job, setJob] = useState({});
+  const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     const fetchJobDetail = async () => {
-      const { data } = await gẹtJobDetail(id);
-      setJob(data);
+      gẹtJobDetail(id).then((res) => {
+        setJob(res.data);
+      });
+      getListQuestion().then((res) => {
+        setQuestions(res.data);
+      });
     };
     fetchJobDetail();
   }, []);
@@ -150,61 +142,51 @@ function Jobdetail() {
               </div>
             </div>
           </div>
-          <div className="section-full content-inner">
-            <div className="container">
-              <div className="row">
-                {/* {blogGrid.map((item, index) => (
-                  <div className="col-xl-3 col-lg-6 col-md-6" key={index}>
-                    <div className="m-b30 blog-grid">
-                      <div className="dez-post-media dez-img-effect ">
-                        {" "}
-                        <Link to={"/blog-details"}>
-                          <img src={item.image} alt="" />
-                        </Link>{" "}
-                      </div>
-                      <div className="dez-info p-a20 border-1">
-                        <div className="dez-post-title ">
-                          <h5 className="post-title">
-                            <Link to={"/blog-details"}>Title of blog post</Link>
-                          </h5>
-                        </div>
-                        <div className="dez-post-meta ">
-                          <ul>
-                            <li className="post-date">
-                              {" "}
-                              <i className="ti-location-pin"></i> London{" "}
-                            </li>
-                            <li className="post-author">
-                              <i className="ti-user"></i>By{" "}
-                              <Link to={"#"}>Jone</Link>{" "}
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="dez-post-text">
-                          <p>
-                            All the Lorem Ipsum generators on the Internet tend
-                            to repeat predefined chunks.
-                          </p>
-                        </div>
-                        <div className="dez-post-readmore">
-                          <Link
-                            to={"/blog-details"}
-                            title="READ MORE"
-                            rel="bookmark"
-                            className="site-button-link"
-                          >
-                            <span className="fw6">READ MORE</span>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))} */}
-              </div>
-            </div>
-          </div>
         </div>
+        <Container className="mt-4">
+        <Accordion>
+          <Card border="primary">
+            <Card.Header className="d-flex w-100 py-1">
+              <Nav.Item className="mr-auto h4 fw" as={Nav.Item}>
+                Tiêu chí đánh giá
+              </Nav.Item>
+              <Nav.Item className="align-self-center" style={{ width: "50px" }}>
+                Điểm
+              </Nav.Item>
+            </Card.Header>
+          </Card>
+          {questions.map((question, index) => {
+            return (
+              <Card border="primary">
+                <Card.Header className="d-flex w-100 py-1">
+                  <Accordion.Toggle
+                    as={Nav.Link}
+                    eventKey={index + 1}
+                    className="mr-auto"
+                  >
+                    {index + 1 + ". " + question.name}{" "}
+                    <i className="fa fa-question-circle ms-0"></i>
+                  </Accordion.Toggle>
+                  <Form.Control type="number" min="0" max="10" style={{maxWidth: '50px'}}></Form.Control>
+                </Card.Header>
+                <Accordion.Collapse eventKey={index + 1}>
+                  <Card.Body className="border-top">
+                    {question.detail.map((item, index2) => {
+                      return (
+                        <>
+                          <Nav.Item>{item}</Nav.Item>
+                        </>
+                      );
+                    })}
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+            );
+          })}
+        </Accordion>
+      </Container>
       </div>
+      
       <Footer />
     </>
   );

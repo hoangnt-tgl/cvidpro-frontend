@@ -28,7 +28,7 @@ export function AuthReducer(state = initialState, action) {
       ...state,
       auth: action.payload,
       errorMessage: "",
-      successMessage: "Signup Successfully Completed",
+      successMessage: "Đăng kí thành công",
       showLoading: false,
     };
   }
@@ -37,7 +37,7 @@ export function AuthReducer(state = initialState, action) {
       ...state,
       auth: action.payload,
       errorMessage: "",
-      successMessage: "Login Successfully Completed",
+      successMessage: "Đăng nhập thành công",
       showLoading: false,
     };
   }

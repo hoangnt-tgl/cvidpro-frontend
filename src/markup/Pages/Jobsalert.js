@@ -1,33 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Modal } from "react-bootstrap";
 import Header2 from "./../Layout/HeaderEmployee";
 import Footer from "./../Layout/Footer";
-import Profilesidebar from "./../Element/Profilesidebar";
-
-const jobAlert = [
-  { id: 1, title: "Social Media Expert", date: "December 15,2018" },
-  { id: 2, title: "Web Designer", date: "November 10,2018" },
-  { id: 3, title: "Finance Accountant", date: "October 5,2018" },
-  { id: 4, title: "Social Media Expert", date: "December 15,2018" },
-  { id: 5, title: "Web Designer", date: "November 10,2018" },
-  { id: 6, title: "Finance Accountant", date: "October 5,2018" },
-  { id: 7, title: "Social Media Expert", date: "December 15,2018" },
-  { id: 8, title: "Web Designer", date: "November 10,2018" },
-  { id: 9, title: "Finance Accountant", date: "October 5,2018" },
-  { id: 10, title: "Social Media Expert", date: "December 15,2018" },
-];
-
+import { gẹtApplyJobForEmployee } from "../../services/EmployeeApi";
+import { Table } from "react-bootstrap";
+import { displayTime } from "../../services/TimeService";
+import { confirmJob } from "../../services/EmployeeApi";
 function Jobsalert(props) {
-  const [company, setCompany] = useState(false);
-  const [contacts, setContacts] = useState(jobAlert);
+  const [isLoading, setIsLoading] = useState(true);
+  const [jobList, setJobList] = useState([]);
   // delete data
-  const handleDeleteClick = (contactId) => {
-    const newContacts = [...contacts];
-    const index = contacts.findIndex((contact) => contact.id === contactId);
-    newContacts.splice(index, 1);
-    setContacts(newContacts);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    async function fetchData() {
+      gẹtApplyJobForEmployee("company").then((res) => {
+        setJobList(res.data);
+        setIsLoading(false);
+      });
+    }
+    fetchData();
+  }, []);
+
+  const handleConfirm = (id) => {
+    confirmJob(id).then((res) => {
+      gẹtApplyJobForEmployee("company").then((res) => {
+        setJobList(res.data);
+      });
+    });
   };
+
   return (
     <>
       <Header2 />
@@ -43,98 +44,81 @@ function Jobsalert(props) {
                     </h5>
                   </div>
                   <ul className="cv-manager w-100">
-                    {contacts.map((contact, index) => (
-                      <li key={index}>
-                        <div className="d-flex float-left">
-                          <div className="job-post-info">
-                            <h6>
-                              <Link to={"#"}>{contact.title}</Link>
-                            </h6>
-                            <ul>
-                              <li>
-                                <i className="fa fa-bookmark-o"></i> Full Time
-                              </li>
-                              <li>
-                                <i className="fa fa-map-marker"></i> Sacramento,
-                                California
-                              </li>
+                    <Table striped bordered hover size="sm">
+                      <thead>
+                        <tr>
+                          <th>Vị trí tuyển dụng</th>
+                          <th>Chức vụ</th>
+                          <th>Địa điểm</th>
+                          <th>Thời gian ứng tuyển</th>
 
-                              <li>
-                                <i className="fa fa-clock-o"></i> 11 days ago
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div className="job-links action-bx">
-                          <Link to={"/files/pdf-sample.pdf"} target="blank">
-                            <i className="fa fa-download"></i>
-                          </Link>
-                          <Link
-                            to={"#"}
-                            onClick={() => handleDeleteClick(contact.id)}
-                          >
-                            <i className="ti-trash"></i>
-                          </Link>
-                        </div>
-                      </li>
-                    ))}
+                          <th>Thông tin phỏng vấn</th>
+                          <th>Tác vụ</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {jobList?.map((item, index) => (
+                          <tr>
+                            <td>
+                              <Link
+                                to={`/search-job/job-detail/${item._id}`}
+                                target="_blank"
+                              >
+                                {item.jobInfo.title}
+                              </Link>
+                            </td>
+                            <td>{item.jobInfo.position}</td>
+                            <td>{item.jobInfo.location}</td>
+                            <td>{displayTime(item.createdAt)}</td>
+
+                            <td>
+                              {item.status}
+                              {item.status === "confirm" && (
+                                <Link to={"#"}>Xem thông tin</Link>
+                              )}
+                            </td>
+
+                            <td>
+                              {/* Hai button */}
+                              <div className="d-flex">
+                                <Link
+                                  to={"#"}
+                                  className="btn btn-danger btn-sm m-1"
+                                >
+                                  <i className="fa fa-trash"></i>
+                                </Link>
+                                <Link
+                                  to={"#"}
+                                  className="btn btn-success btn-sm m-1"
+                                  onClick={() => handleConfirm(item._id)}
+                                >
+                                  <i className="fa fa-check"></i>
+                                </Link>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                        <td colspan="6">
+                          {!isLoading && jobList?.length === 0 && (
+                            <>
+                              <div className="text-center">
+                                <h3 className="text-danger">
+                                  Bạn chưa có lời mời nào
+                                </h3>
+                                <Link
+                                  to="/jobs-saved-jobs"
+                                  className="site-button button-sm"
+                                >
+                                  Tìm kiếm công việc
+                                </Link>
+                              </div>
+                            </>
+                          )}
+                        </td>
+                      </tbody>
+                    </Table>
                   </ul>
                 </div>
-                <Modal
-                  show={company}
-                  onHide={setCompany}
-                  className=" fade modal-bx-info"
-                >
-                  <div role="document">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <div className="logo-img">
-                          <img
-                            alt=""
-                            src={require("./../../images/logo/icon2.png")}
-                          />
-                        </div>
-                        <h5 className="modal-title">Company Name</h5>
-                        <button
-                          type="button"
-                          className="close"
-                          onClick={() => setCompany(false)}
-                        >
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div className="modal-body">
-                        <ul>
-                          <li>
-                            <strong>Job Title :</strong>
-                            <p> Web Developer – PHP, HTML, CSS </p>
-                          </li>
-                          <li>
-                            <strong>Experience :</strong>
-                            <p>5 Year 3 Months</p>
-                          </li>
-                          <li>
-                            <strong>Deseription :</strong>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting industry has been the industry's
-                              standard dummy text ever since.
-                            </p>
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="modal-footer">
-                        <button
-                          type="button"
-                          className="btn btn-secondary"
-                          onClick={() => setCompany(false)}
-                        >
-                          Close
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </Modal>
               </div>
             </div>
           </div>

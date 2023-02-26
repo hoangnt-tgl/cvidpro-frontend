@@ -1,2 +1,4 @@
 node_modules
 projectnotes.txt
+.vscode
+netlify.toml
