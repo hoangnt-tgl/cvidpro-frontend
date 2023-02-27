@@ -44,8 +44,11 @@
   vertical-align: middle;
   text-align: left;
   max-width: 300px;
+  white-space: nowrap;
 }
-
+.table-resume tr td{
+  text-align: center;
+}
 .tableAssess .table th,
 .tableAssess .table thead th {
   font-weight: 500;

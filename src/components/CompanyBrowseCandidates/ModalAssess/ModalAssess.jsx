@@ -6,20 +6,47 @@ import FormAssess from "../FormAssess/FormAssess";
 import { useState } from "react";
 import { createOrder } from "../../../services/OrderApi";
 import { useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useEffect } from "react";
 
 const ModalAssess = ({ openModal, setOpenModal, jobId, employeeId }) => {
   let history = useHistory();
   const [input, setInput] = useState();
   const [check, setCheck] = useState(false);
-  async function handleSubmit(e) {
-    e.preventDefault();
-    if (!input && !check) return;
-    let data = { jobId, employeeId, comment: input, rating: check };
+  const schema = yup
+    .object({
+      rating: yup.string().required("Vui lòng đánh giá"),
+      comment: yup.string().required("Vui lòng nhập nhận xét"),
+    })
+    .required();
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    setError,
+    clearErrors,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
+  async function handleOnSubmit(data) {
+    // e.preventDefault();
+    console.log(data);
+    let dataSumit = {
+      jobId,
+      employeeId,
+      comment: data.comment,
+      rating: data.rating,
+    };
     try {
-      await createOrder(data);
-      let key = localStorage.getItem("key");
-      history.push(`/`);
-      // history.push(`/order/get-order-for-department/${key}`);
+      await createOrder(dataSumit);
+      history.push(`/company-manage-resume`);
     } catch (error) {
       console.log(error);
     }
@@ -48,13 +75,32 @@ const ModalAssess = ({ openModal, setOpenModal, jobId, employeeId }) => {
               </button>
             </div>
             <div className='modal-body '>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit(handleOnSubmit)}>
                 <div style={{ width: "fit-content", margin: "0 auto" }}>
                   <div className='d-flex'>
                     <p className='name'>Xếp loại :</p>
-                    <CheckBox setCheck={setCheck} check={check} />
+                    <CheckBox
+                      setCheck={setCheck}
+                      check={check}
+                      setValue={setValue}
+                      register={{ ...register("rating") }}
+                    />
+                    {errors?.rating?.message && (
+                      <p>
+                        <>{errors?.rating?.message}</>
+                      </p>
+                    )}
                   </div>
-                  <FormAssess setInput={setInput} />
+                  <FormAssess
+                    setInput={setInput}
+                    setValue={setValue}
+                    register={{ ...register("comment") }}
+                  />
+                  {errors?.comment?.message && (
+                    <p>
+                      <>{errors?.comment?.message}</>
+                    </p>
+                  )}
                 </div>
                 <div className='d-flex justify-content-center mt-3'>
                   <button type='submit' className='btn btn-secondary'>

@@ -1,6 +1,6 @@
 import React from "react";
 
-const FormAssess = ({ setInput }) => {
+const FormAssess = ({ setInput, register, setValue }) => {
   return (
     <>
       {" "}
@@ -12,7 +12,11 @@ const FormAssess = ({ setInput }) => {
               class='textarea--style-6'
               name='Đánh giá'
               placeholder='Đánh giá ứng viên'
-              onChange={(e) => setInput(e.target.value)}
+              onChange={(e) => {
+                // setInput(e.target.value);
+                setValue("comment", e.target.value);
+              }}
+              register={register}
             ></textarea>
           </div>
         </div>

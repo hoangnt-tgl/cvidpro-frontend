@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 import Header2 from "../Layout/HeaderDepartment";
 import Footer from "../Layout/Footer";
 import { Modal } from "react-bootstrap";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
 import TableResume from "../../components/CompanyMangeResume/TableResume/TableResume";
+import useGetTableAssessData from "../../hooks/useGetTableAssessData";
 const managerBlog = [
   {
     id: 1,
@@ -38,7 +41,8 @@ const managerBlog = [
 ];
 function Companymanage(props) {
   const [company, setCompany] = useState(false);
-  const [contacts, setContacts] = useState(managerBlog);
+  const { tableData, tableDataSelect } = useGetTableAssessData();
+  const [key, setKey] = useState("Apply");
   return (
     <>
       <Header2 />
@@ -62,9 +66,23 @@ function Companymanage(props) {
                       </select>
                     </div>
                   </div>
-                  <ul className='cv-manager'>
-                    <TableResume />
-                  </ul>
+                  <Tabs
+                    id='controlled-tab-example'
+                    activeKey={key}
+                    onSelect={(k) => setKey(k)}
+                    className='mb-3'
+                  >
+                    <Tab eventKey='Apply' title='Apply'>
+                      <ul className='cv-manager'>
+                        <TableResume tableData={tableData} />
+                      </ul>
+                    </Tab>
+                    <Tab eventKey='Select' title='Select'>
+                      <ul className='cv-manager'>
+                        <TableResume tableData={tableDataSelect} />
+                      </ul>
+                    </Tab>
+                  </Tabs>
 
                   {/* pagination */}
                   <div className='pagination-bx m-t30 float-right'>
