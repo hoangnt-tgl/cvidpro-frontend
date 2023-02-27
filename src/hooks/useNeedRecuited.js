@@ -56,9 +56,10 @@ const useNeedRecuited = ({ search }) => {
   const [childQuestion, setChildQuestion] = useState("");
   const [environmentOption, setEnvironmentOption] = useState([]);
   const [newJob, setNewJob] = useState(objJob);
+  const [preloadValue, setPreloadValue] = useState([]);
   useEffect(() => {
-    // console.log(addOnQuestionOptions);
-  }, [addOnQuestionOptions]);
+    // console.log(preloadValue);
+  }, [preloadValue]);
   useEffect(() => {
     console.log(key);
     async function fetchData() {
@@ -80,6 +81,37 @@ const useNeedRecuited = ({ search }) => {
         setListJob(
           await getJobForDepartment(department._id).then((res) => {
             // console.log(res.data);
+            setPreloadValue(
+              res.data.map((item) => ({
+                position: item.position,
+                level: item.level,
+                industry: item.industry,
+                location: item.location,
+                environment: item.workingEnvironment,
+                major: item.major,
+                experience: item.experience,
+                salaryMin: item.salaryMin,
+                salaryMax: item.salaryMax,
+                description: item.description,
+                quantity: item.quantity,
+                title: item.title,
+                question0: item.questions[0],
+                question1: item.questions[1],
+                question2: item.questions[2],
+                question3: item.questions[3],
+                question4: item.questions[4],
+                question5: item.questions[5],
+                question6: item.questions[6],
+                question7: item.questions[7],
+                question8: item.questions[8],
+                question9: item.questions[9],
+                question10: item.questions[10],
+                question11: item.questions[11],
+                question12: item.questions[12],
+                question13: item.questions[13],
+                question14: item.questions[14],
+              }))
+            );
             return res.data;
           })
         );
@@ -209,6 +241,7 @@ const useNeedRecuited = ({ search }) => {
     deleteAddOnQuestion,
     addOnQuestionOptions,
     setAddOnQuestionOptions,
+    preloadValue,
   ];
 };
 

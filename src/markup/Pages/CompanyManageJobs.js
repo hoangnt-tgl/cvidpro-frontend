@@ -61,6 +61,7 @@ function Companymanage(props) {
     deleteAddOnQuestion,
     addOnQuestionOptions,
     setAddOnQuestionOptions,
+    preloadValue,
   ] = useNeedRecuited(search);
 
   const [isShowModalInfo, setIsShowModalInfo] = useState(true);
@@ -73,7 +74,7 @@ function Companymanage(props) {
   const handleAddJob = async () => {
     await createJob({
       ...newJob,
-    addOnQuestionOptions,
+      addOnQuestionOptions,
       departmentId: department._id,
       companyId: department.companyId,
     });
@@ -104,11 +105,34 @@ function Companymanage(props) {
                     setShowAddJob={setIsShowModalAddJob}
                     setReload={setReload}
                     keyDepart={key}
+                    // list default value
+                    levelOptions={levelOptions}
+                    provinceOptions={provinceOptions}
+                    jobTitleOption={jobTitleOption}
+                    industryOptions={industryOptions}
+                    positionOptions={positionOptions}
+                    majorOptions={majorOptions}
+                    questionOptions={questionOptions}
+                    setQuestionOptions={setQuestionOptions}
+                    newQuestion={newQuestion}
+                    environmentOption={environmentOption}
+                    handleAddQuestion={handleAddQuestion}
+                    setNewJob={setNewJob}
+                    newJob={newJob}
+                    handleAddJob={handleAddJob}
+                    setNewQuestion={setNewQuestion}
+                    childQuestion={childQuestion}
+                    setChildQuestion={setChildQuestion}
+                    deleteAddOnQuestion={deleteAddOnQuestion}
+                    addOnQuestionOptions={addOnQuestionOptions}
+                    setAddOnQuestionOptions={setAddOnQuestionOptions}
+                    preloadValue={preloadValue}
                   />
                   {/* Modal tạo vị trí tuyển dụng */}
                   <ModalAddNeedPosi
                     showAddJob={isShowModalAddJob}
                     setShowAddJob={setIsShowModalAddJob}
+                    isAddNew={true}
                     levelOptions={levelOptions}
                     provinceOptions={provinceOptions}
                     jobTitleOption={jobTitleOption}

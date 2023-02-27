@@ -1,10 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { deleteJobForDepartment } from "../../../services/CompanyApi";
+import ModalAddNeedPosi from "../ModalAddNeededPosi/ModalAddNeedPosi";
 import ModalInfoNeededPosi from "../ModalInfoNeededPosi/ModalInfoNeededPosi";
 
-const ItemListNeededPostion = ({ item, keyDepart, setReload }) => {
-  const [isShowModalInfo, setIsShowModalInfo] = useState(false);
+const ItemListNeededPostion = ({
+  index,
+  item,
+  keyDepart,
+  setReload,
+  // list default values
+  setNewJob,
+  newJob,
+  jobTitleOption,
+  positionOptions,
+  levelOptions,
+  majorOptions,
+  industryOptions,
+  provinceOptions,
+  environmentOption,
+  questionOptions,
+  handleAddJob,
+  newQuestion,
+  setNewQuestion,
+  childQuestion,
+  setChildQuestion,
+  handleAddQuestion,
+  deleteAddOnQuestion,
+  addOnQuestionOptions,
+  setAddOnQuestionOptions,
+  preloadValue,
+}) => {
+  const [isShowEditPositionInfo, setIsShowEditPositionInfo] = useState(false);
+
   function getStatusJob(job) {
     if (job.confirm1.confirmed === -1) return "Không được duyệt";
     if (job.confirm2.confirmed !== 1) return "Đang chờ duyệt";
@@ -15,9 +43,7 @@ const ItemListNeededPostion = ({ item, keyDepart, setReload }) => {
     await deleteJobForDepartment(keyDepart, idJob);
     setReload((prev) => !prev);
   };
-  function handleToggleModalCompany() {
-    setIsShowModalInfo(!isShowModalInfo);
-  }
+
   return (
     <>
       <tr>
@@ -26,24 +52,15 @@ const ItemListNeededPostion = ({ item, keyDepart, setReload }) => {
             {item.title}
           </Link>
           <ul className='job-post-info'>
-            {/* <li>
-                  <i className="fa fa-map-marker"></i>{" "}
-                  Sacramento, California
-                </li> */}
             <li>
               <i className='fa fa-bookmark-o'></i> {item.position}
             </li>
-            {/* <li>
-                  <i className="fa fa-filter"></i> Web Designer
-                </li> */}
           </ul>
         </td>
-        {/* <td className="application text-primary">
-              (5) Applications
-            </td> */}
+
         <td className='expired pending'>{getStatusJob(item)} </td>
         <td className='job-links'>
-          <Link to={"#"} onClick={() => handleToggleModalCompany()}>
+          <Link to={"#"} onClick={() => setIsShowEditPositionInfo(true)}>
             <i className='fa fa-eye'></i>
           </Link>
           <Link to={"#"} onClick={() => handleDeleteJob(item._id)}>
@@ -51,10 +68,35 @@ const ItemListNeededPostion = ({ item, keyDepart, setReload }) => {
           </Link>
         </td>
       </tr>
-      <ModalInfoNeededPosi
+      {/* <ModalInfoNeededPosi
         setCompany={handleToggleModalCompany}
         company={isShowModalInfo}
         info={item}
+      /> */}
+      <ModalAddNeedPosi
+        showAddJob={isShowEditPositionInfo}
+        setShowAddJob={setIsShowEditPositionInfo}
+        isAddNew={false}
+        levelOptions={levelOptions}
+        provinceOptions={provinceOptions}
+        jobTitleOption={jobTitleOption}
+        industryOptions={industryOptions}
+        positionOptions={positionOptions}
+        majorOptions={majorOptions}
+        questionOptions={questionOptions}
+        newQuestion={newQuestion}
+        environmentOption={environmentOption}
+        handleAddQuestion={handleAddQuestion}
+        setNewJob={setNewJob}
+        newJob={newJob}
+        handleAddJob={handleAddJob}
+        setNewQuestion={setNewQuestion}
+        childQuestion={childQuestion}
+        setChildQuestion={setChildQuestion}
+        deleteAddOnQuestion={deleteAddOnQuestion}
+        addOnQuestionOptions={addOnQuestionOptions}
+        setAddOnQuestionOptions={setAddOnQuestionOptions}
+        preloadValue={preloadValue[index]}
       />
     </>
   );
