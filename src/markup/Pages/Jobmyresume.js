@@ -745,7 +745,7 @@ function Jobmyresume(props) {
                                       <InputGroup.Text className="title-cv">Từ</InputGroup.Text>
                                     </InputGroup.Prepend>
                                     <FormControl
-                                      className="m-0"
+                                      className="answer"
                                       value={formatMonthInput(item.start)}
                                       style={{ maxHeight: "38px" }}
                                       type="month"
@@ -760,7 +760,7 @@ function Jobmyresume(props) {
                                       <InputGroup.Text className="title-cv">Đến</InputGroup.Text>
                                     </InputGroup.Prepend>
                                     <FormControl
-                                      className="m-0"
+                                      className="answer"
                                       style={{ maxHeight: "38px" }}
                                       type="month"
                                       value={formatMonthInput(item.end)}
@@ -787,7 +787,7 @@ function Jobmyresume(props) {
                                       <InputGroup.Text className="title-cv">Địa chỉ</InputGroup.Text>
                                     </InputGroup.Prepend>
                                     <FormControl
-                                      className="m-0"
+                                      className="answer"
                                       style={{ maxHeight: "38px" }}
                                       value={item.address}
                                     />
@@ -796,7 +796,7 @@ function Jobmyresume(props) {
                               </div>
                             </Card.Header>
                             <Card.Body>
-                              <Card.Title className="text-center">
+                              <Card.Title className="header-cv">
                                 Quá trình làm việc
                               </Card.Title>
                               {item.process.map((element, index2) => {
@@ -813,7 +813,7 @@ function Jobmyresume(props) {
                                             </InputGroup.Text>
                                           </InputGroup.Prepend>
                                           <FormControl
-                                            className="m-0"
+                                            className="answer"
                                             style={{ maxHeight: "38px" }}
                                             type="month"
                                             value={formatMonthInput(
@@ -832,7 +832,7 @@ function Jobmyresume(props) {
                                             </InputGroup.Text>
                                           </InputGroup.Prepend>
                                           <FormControl
-                                            className="m-0"
+                                            className="answer"
                                             style={{ maxHeight: "38px" }}
                                             type="month"
                                             value={formatMonthInput(element.to)}
@@ -861,7 +861,7 @@ function Jobmyresume(props) {
                                             </InputGroup.Text>
                                           </InputGroup.Prepend>
                                           <FormControl
-                                            className="m-0"
+                                            className="answer"
                                             style={{ maxHeight: "38px" }}
                                             value={element.workDescription}
                                           />
@@ -879,7 +879,7 @@ function Jobmyresume(props) {
                                           <FormControl
                                             as={Select}
                                             size="sm"
-                                            className="m-0 p-0"
+                                            className="answer"
                                             options={majors}
                                             value={getValueSelect(
                                               element.major
@@ -899,7 +899,7 @@ function Jobmyresume(props) {
                                           <FormControl
                                             as={Select}
                                             size="sm"
-                                            className="m-0 p-0"
+                                            className="answer"
                                             options={jobTitleOption}
                                             value={getValueSelect(
                                               element.jobTitle
@@ -917,7 +917,7 @@ function Jobmyresume(props) {
                                             </InputGroup.Text>
                                           </InputGroup.Prepend>
                                           <FormControl
-                                            className="m-0"
+                                            className="answer"
                                             style={{ maxHeight: "38px" }}
                                             value={element.address}
                                           />
@@ -935,7 +935,7 @@ function Jobmyresume(props) {
                                           <FormControl
                                             as={Select}
                                             size="sm"
-                                            className="m-0 p-0"
+                                            className="answer"
                                             options={resultOption}
                                             value={getValueSelect(
                                               element.result
@@ -959,7 +959,7 @@ function Jobmyresume(props) {
                                 <FormControl
                                   as={Select}
                                   size="sm"
-                                  className="m-0 p-0"
+                                  className="answer"
                                   options={listLeaving}
                                   value={getValueSelect(item.leaving)}
                                 ></FormControl>
@@ -983,7 +983,7 @@ function Jobmyresume(props) {
                                       <InputGroup.Text className="title-cv">Từ</InputGroup.Text>
                                     </InputGroup.Prepend>
                                     <FormControl
-                                      className="m-0"
+                                      className="answer"
                                       value={formatMonthInput(item.start)}
                                       style={{ maxHeight: "38px" }}
                                       type="month"
@@ -998,7 +998,7 @@ function Jobmyresume(props) {
                                       <InputGroup.Text className="title-cv">Đến</InputGroup.Text>
                                     </InputGroup.Prepend>
                                     <FormControl
-                                      className="m-0"
+                                      className="answer"
                                       style={{ maxHeight: "38px" }}
                                       type="month"
                                       value={formatMonthInput(item.end)}
@@ -1052,7 +1052,7 @@ function Jobmyresume(props) {
                                 </InputGroup.Prepend>
                                 <FormControl
                                   value={newWork.company}
-                                  className="m-0"
+                                  className="answer"
                                   style={{ maxHeight: "38px" }}
                                   onChange={(e) => {
                                     setNewWork({
@@ -1071,7 +1071,7 @@ function Jobmyresume(props) {
                                   <InputGroup.Text className="title-cv">Từ</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                  className="m-0"
+                                  className="answer"
                                   value={formatMonthInput(
                                     newWork.process[0]?.from
                                   )}
@@ -1089,7 +1089,7 @@ function Jobmyresume(props) {
                                   <InputGroup.Text className="title-cv">Đến</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                  className="m-0"
+                                  className="answer"
                                   style={{ maxHeight: "38px" }}
                                   type="month"
                                   value={formatMonthInput(
@@ -1127,7 +1127,7 @@ function Jobmyresume(props) {
                                   <InputGroup.Text className="title-cv">Địa chỉ</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                  className="m-0"
+                                  className="answer"
                                   style={{ maxHeight: "38px" }}
                                   value={newWork.address}
                                   onChange={(e) => {
@@ -1142,7 +1142,7 @@ function Jobmyresume(props) {
                           </div>
                         </Card.Header>
                         <Card.Body>
-                          <Card.Title className="text-center">
+                          <Card.Title className="header-cv">
                             Quá trình làm việc
                           </Card.Title>
                           {newWork.process.map((element, index2) => {
@@ -1157,7 +1157,7 @@ function Jobmyresume(props) {
                                         <InputGroup.Text className="title-cv">Từ</InputGroup.Text>
                                       </InputGroup.Prepend>
                                       <FormControl
-                                        className="m-0"
+                                        className="answer"
                                         style={{ maxHeight: "38px" }}
                                         type="month"
                                         value={formatMonthInput(element.from)}
@@ -1172,7 +1172,7 @@ function Jobmyresume(props) {
                                         <InputGroup.Text className="title-cv">Đến</InputGroup.Text>
                                       </InputGroup.Prepend>
                                       <FormControl
-                                        className="m-0"
+                                        className="answer"
                                         style={{ maxHeight: "38px" }}
                                         type="month"
                                         value={formatMonthInput(element.to)}
@@ -1210,7 +1210,7 @@ function Jobmyresume(props) {
                                         </InputGroup.Text>
                                       </InputGroup.Prepend>
                                       <FormControl
-                                        className="m-0"
+                                        className="answer"
                                         style={{ maxHeight: "38px" }}
                                         value={element.workDescription}
                                       />
@@ -1228,7 +1228,7 @@ function Jobmyresume(props) {
                                       <FormControl
                                         as={Select}
                                         size="sm"
-                                        className="m-0 p-0"
+                                        className="answer"
                                         options={majors}
                                         value={getValueSelect(element.major)}
                                       />
@@ -1246,7 +1246,7 @@ function Jobmyresume(props) {
                                       <FormControl
                                         as={Select}
                                         size="sm"
-                                        className="m-0 p-0"
+                                        className="answer"
                                         options={jobTitleOption}
                                         value={getValueSelect(element.jobTitle)}
                                       />
@@ -1262,7 +1262,7 @@ function Jobmyresume(props) {
                                         </InputGroup.Text>
                                       </InputGroup.Prepend>
                                       <FormControl
-                                        className="m-0"
+                                        className="answer"
                                         style={{ maxHeight: "38px" }}
                                         value={element.address}
                                       />
@@ -1280,7 +1280,7 @@ function Jobmyresume(props) {
                                       <FormControl
                                         as={Select}
                                         size="sm"
-                                        className="m-0 p-0"
+                                        className="answer"
                                         options={resultOption}
                                         value={getValueSelect(element.result)}
                                       />
@@ -1300,7 +1300,7 @@ function Jobmyresume(props) {
                                   <InputGroup.Text className="title-cv">Từ</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                  className="m-0"
+                                  className="answer"
                                   style={{ maxHeight: "38px" }}
                                   type="month"
                                   value={formatMonthInput(newProcess.from)}
@@ -1327,7 +1327,7 @@ function Jobmyresume(props) {
                                   <InputGroup.Text className="title-cv">Đến</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                  className="m-0"
+                                  className="answer"
                                   style={{ maxHeight: "38px" }}
                                   type="month"
                                   value={formatMonthInput(newProcess.to)}
@@ -1375,7 +1375,7 @@ function Jobmyresume(props) {
                                   <InputGroup.Text className="title-cv">Công việc</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                  className="m-0"
+                                  className="answer"
                                   style={{ maxHeight: "38px" }}
                                   value={newProcess.workDescription}
                                   onChange={(e) => {
@@ -1399,7 +1399,7 @@ function Jobmyresume(props) {
                                 <FormControl
                                   as={Select}
                                   size="sm"
-                                  className="m-0 p-0"
+                                  className="answer"
                                   options={majors}
                                   value={getValueSelect(newProcess.major)}
                                   onChange={(e) => {
@@ -1423,7 +1423,7 @@ function Jobmyresume(props) {
                                 <FormControl
                                   as={Select}
                                   size="sm"
-                                  className="m-0 p-0"
+                                  className="answer"
                                   options={jobTitleOption}
                                   value={getValueSelect(newProcess.jobTitle)}
                                   onChange={(e) => {
@@ -1443,7 +1443,7 @@ function Jobmyresume(props) {
                                   <InputGroup.Text className="title-cv">Địa chỉ</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                  className="m-0"
+                                  className="answer"
                                   style={{ maxHeight: "38px" }}
                                   value={newProcess.address}
                                   onChange={(e) => {
@@ -1465,7 +1465,7 @@ function Jobmyresume(props) {
                                 <FormControl
                                   as={Select}
                                   size="sm"
-                                  className="m-0 p-0"
+                                  className="answer"
                                   options={resultOption}
                                   value={getValueSelect(newProcess.result)}
                                   onChange={(e) => {
@@ -1496,7 +1496,7 @@ function Jobmyresume(props) {
                             <FormControl
                               as={Select}
                               size="sm"
-                              className="m-0 p-0"
+                              className="answer"
                               options={listLeaving}
                               value={getValueSelect(newWork.leaving)}
                               onChange={(e) => {
@@ -1535,7 +1535,7 @@ function Jobmyresume(props) {
                                 </InputGroup.Prepend>
                                 <FormControl
                                   type="month"
-                                  className="m-0"
+                                  className="answer"
                                   style={{ maxHeight: "38px" }}
                                   value={formatMonthInput(newNotWork.start)}
                                   onChange={(e) => {
@@ -1561,7 +1561,7 @@ function Jobmyresume(props) {
                                 </InputGroup.Prepend>
                                 <FormControl
                                   type="month"
-                                  className="m-0"
+                                  className="answer"
                                   style={{ maxHeight: "38px" }}
                                   value={formatMonthInput(newNotWork.end)}
                                   onChange={(e) => {
