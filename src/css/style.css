@@ -117,15 +117,16 @@
 body,
 html {
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 500;
-  font-style: italic;
+  font-family: "Montserrat", sans-serif;
+  /* font-style: italic; */
 }
 body {
+  /* background-color: #a85b5b; */
   background-color: #fff;
+
   font-family: "Montserrat", sans-serif;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 500 !important;
   color: #6f6f6f;
   padding: 0;
   margin: 0;
