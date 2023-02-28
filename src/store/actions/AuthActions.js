@@ -89,7 +89,6 @@ export function logout(history) {
     "/company/login",
     "/employee/register",
     "/company/register",
-    "/register-2",
   ];
   if (
     history &&
@@ -97,7 +96,7 @@ export function logout(history) {
     history.location.pathname &&
     accessHref.indexOf(history.location.pathname) === -1
   ) {
-    history.push("/login");
+    history.push("/");
   }
   return {
     type: LOGOUT_ACTION,
