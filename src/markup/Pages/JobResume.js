@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import Header from "./../Layout/HeaderCompany";
 import Footer from "./../Layout/Footer";
 import swal from "sweetalert";
+import "../../css/layout.css"
 import {
   Modal,
   Button,
@@ -246,7 +247,8 @@ function JobResume(props) {
                     </ul>
                     <div className="progress-box m-t10">
                       <div className="progress-info">
-                        Điểm CV:<span>{userInformation.points}</span>
+                         Điểm CV:
+                       <span>{userInformation.points}</span>
                       </div>
                       <div className="progress">
                         <div
