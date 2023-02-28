@@ -165,10 +165,10 @@ const useNeedRecuited = ({ search }) => {
       .then((res) => res.data)
       .then((res) => {
         setQuestionOptions(res);
-        // let newObject = new Object(...res);
-        let newObject = JSON.parse(JSON.stringify(res));
+        // let newObject = res;
+        // let newObject = JSON.parse(JSON.stringify(res));
         //cmt setNewJob question mai mo len de test phan add chung res ?? neu mo len la clg ban loi [object ojbect]
-        // setNewJob({ ...newJob, question: newObject });
+        // setNewJob({ ...newJob, question: res] });
       });
   }, []);
   const handleAddQuestion = async () => {
