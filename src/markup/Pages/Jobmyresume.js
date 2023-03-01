@@ -873,7 +873,7 @@ function Jobmyresume(props) {
                                             style={{ maxHeight: "38px" }}
                                           >
                                             <InputGroup.Text className="title-cv">
-                                              Chuyên nghành cong viec
+                                              Chuyên nghành
                                             </InputGroup.Text>
                                           </InputGroup.Prepend>
                                           <FormControl
