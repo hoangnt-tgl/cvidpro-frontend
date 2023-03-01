@@ -68,7 +68,7 @@ function Jobdetail() {
                     <ul className="job-info">
                       <li>
                         <strong>Chức vụ:</strong> {job?.position}
-                      </li>w
+                      </li>
                       <li>
                         <strong>Số lượng:</strong> {job?.quantity}
                       </li>
