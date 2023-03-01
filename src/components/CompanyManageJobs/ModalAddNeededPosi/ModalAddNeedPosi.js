@@ -6,7 +6,7 @@ import icon from "../../../images/logo/icon2.png";
 import ModalMoreOption from "../ModalMoreOption/ModalMoreOption";
 import { useState, useEffect } from "react";
 //hook form
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 const ModalAddNeedPosi = ({
@@ -37,13 +37,13 @@ const ModalAddNeedPosi = ({
   const [isShowModal, setIsShowModal] = useState(false);
   const schema = yup
     .object({
-      position: yup.string().required("Vui lòng nhập "),
+      position: yup.mixed().required("Vui lòng nhập "),
       level: yup.array().required("Vui lòng nhập "),
-      industry: yup.string().required("Vui lòng nhập "),
+      industry: yup.mixed().required("Vui lòng nhập "),
       major: yup.array().required("Vui lòng nhập "),
-      environment: yup.string().required("Vui lòng nhập "),
+      environment: yup.mixed().required("Vui lòng nhập "),
       experience: yup.string().required("Vui lòng nhập "),
-      title: yup.string().required("Vui lòng nhập "),
+      title: yup.mixed().required("Vui lòng nhập "),
       quantity: yup
         .number()
         .min(1, "Vui lòng nhập số lượng lớn hơn 1")
@@ -60,7 +60,7 @@ const ModalAddNeedPosi = ({
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập"),
       description: yup.string().required("Vui lòng nhập "),
-      location: yup.string().required("Vui lòng nhập "),
+      location: yup.mixed().required("Vui lòng nhập "),
       question0: yup
         .number()
         .min(1, "Vui lòng nhập số lượng lớn hơn 1")
@@ -90,6 +90,7 @@ const ModalAddNeedPosi = ({
     setError,
     clearErrors,
     reset,
+    control,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
@@ -99,11 +100,31 @@ const ModalAddNeedPosi = ({
     }, [preloadValue]),
   });
   useEffect(() => {
-    console.log(preloadValue);
+    // console.log(preloadValue);
   }, [preloadValue]);
   function handleOnSubmit(data) {
     console.log(data);
-    handleAddJob();
+    const objJob = {
+      title: data.title.value,
+      position: data.position.value,
+      level: data.level.value,
+      major: data.major.value,
+      industry: data.industry.value,
+      location: data.location.value,
+      workingEnvironment: data.environment.value,
+      experience: data.experience,
+      quantity: data.quantity,
+      salaryMin: data.salaryMin,
+      salaryMax: data.salaryMax,
+      description: data.description,
+      question: data.question,
+      addOnQuestionOptions,
+    };
+    if (isAddNew) {
+      handleAddJob(objJob);
+    } else {
+      handleAddJob(objJob);
+    }
   }
   useEffect(() => {
     reset(preloadValue);
@@ -141,7 +162,21 @@ const ModalAddNeedPosi = ({
               >
                 <div className='form-group'>
                   <label>Chức danh công việc</label>
-                  <Select
+                  <Controller
+                    name='title'
+                    control={control}
+                    onChange={(e) => {
+                      setNewJob({ ...newJob, title: e.label });
+                    }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        placeholder='Chọn chức danh công việc'
+                        options={jobTitleOption}
+                      />
+                    )}
+                  />
+                  {/* <Select
                     name='title'
                     {...register("title")}
                     placeholder='Chọn chức danh công việc'
@@ -150,10 +185,10 @@ const ModalAddNeedPosi = ({
                       setNewJob({ ...newJob, title: e.label });
                     }}
                     value={
-                      preloadValue?.title && { label: preloadValue?.title }
+                      preloadValue?.title.length > 0 && preloadValue?.title
                     }
                     options={jobTitleOption}
-                  />
+                  /> */}
                   {errors?.title?.message && (
                     <p>
                       <>{errors?.title?.message}</>
@@ -162,7 +197,21 @@ const ModalAddNeedPosi = ({
                 </div>
                 <div className='form-group'>
                   <label>Chức vụ</label>
-                  <Select
+                  <Controller
+                    name='position'
+                    control={control}
+                    onChange={(e) => {
+                      setNewJob({ ...newJob, position: e.label });
+                    }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        placeholder='Chọn chức vụ'
+                        options={positionOptions}
+                      />
+                    )}
+                  />
+                  {/* <Select
                     name='position'
                     {...register("position")}
                     placeholder='Chọn chức vụ'
@@ -171,12 +220,11 @@ const ModalAddNeedPosi = ({
                       setNewJob({ ...newJob, position: e.label });
                     }}
                     value={
-                      preloadValue?.position && {
-                        label: preloadValue?.position,
-                      }
+                      preloadValue?.position.length > 0 &&
+                      preloadValue?.position
                     }
                     options={positionOptions}
-                  />
+                  /> */}
                   {errors?.position?.message && (
                     <p>
                       <>{errors?.position?.message}</>
@@ -184,8 +232,26 @@ const ModalAddNeedPosi = ({
                   )}
                 </div>
                 <div className='form-group'>
-                  <label>Cấp bậc</label>
-                  <Select
+                  <label>Cấp bậc</label>{" "}
+                  <Controller
+                    name='level'
+                    control={control}
+                    onChange={(e) => {
+                      setNewJob({
+                        ...newJob,
+                        level: e.map((item) => item.label),
+                      });
+                    }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        placeholder='Chọn cấp bậc'
+                        isMulti
+                        options={levelOptions}
+                      />
+                    )}
+                  />
+                  {/* <Select
                     name='level'
                     {...register("level")}
                     isMulti
@@ -202,10 +268,10 @@ const ModalAddNeedPosi = ({
                       });
                     }}
                     value={
-                      preloadValue?.level && { label: preloadValue?.level }
+                      preloadValue?.level.length > 0 && preloadValue?.level
                     }
                     options={levelOptions}
-                  />
+                  /> */}
                   {errors?.level?.message && (
                     <p>
                       <>{errors?.level?.message}</>
@@ -214,7 +280,25 @@ const ModalAddNeedPosi = ({
                 </div>
                 <div className='form-group'>
                   <label for=''>Chuyên nghành ứng viên</label>
-                  <Select
+                  <Controller
+                    name='major'
+                    control={control}
+                    onChange={(e) => {
+                      setNewJob({
+                        ...newJob,
+                        major: e.map((item) => item.label),
+                      });
+                    }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        isMulti
+                        placeholder='Chọn chuyên ngành ứng viên'
+                        options={majorOptions}
+                      />
+                    )}
+                  />
+                  {/* <Select
                     name='major'
                     {...register("major")}
                     isMulti
@@ -231,10 +315,10 @@ const ModalAddNeedPosi = ({
                       });
                     }}
                     value={
-                      preloadValue?.major && { label: preloadValue?.major }
+                      preloadValue?.major.length > 0 && preloadValue?.major
                     }
                     options={majorOptions}
-                  />
+                  /> */}
                   {errors?.major?.message && (
                     <p>
                       <>{errors?.major?.message}</>
@@ -243,7 +327,21 @@ const ModalAddNeedPosi = ({
                 </div>
                 <div className='form-group'>
                   <label for=''>Lĩnh vực kinh doanh</label>
-                  <Select
+                  <Controller
+                    name='industry'
+                    control={control}
+                    onChange={(e) => {
+                      setNewJob({ ...newJob, industry: e.label });
+                    }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        placeholder='Chọn lĩnh vực kinh doanh'
+                        options={industryOptions}
+                      />
+                    )}
+                  />
+                  {/* <Select
                     name='industry'
                     {...register("industry")}
                     placeholder='Chọn lĩnh vực kinh doanh'
@@ -252,12 +350,11 @@ const ModalAddNeedPosi = ({
                       setNewJob({ ...newJob, industry: e.label });
                     }}
                     value={
-                      preloadValue?.industry && {
-                        label: preloadValue?.industry,
-                      }
+                      preloadValue?.industry.length > 0 &&
+                      preloadValue?.industry
                     }
                     options={industryOptions}
-                  />
+                  /> */}
                   {errors?.industry?.message && (
                     <p>
                       <>{errors?.industry?.message}</>
@@ -266,7 +363,21 @@ const ModalAddNeedPosi = ({
                 </div>
                 <div className='form-group'>
                   <label for=''>Nơi làm việc</label>
-                  <Select
+                  <Controller
+                    name='location'
+                    control={control}
+                    onChange={(e) => {
+                      setNewJob({ ...newJob, location: e.label });
+                    }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        options={provinceOptions}
+                        placeholder='Chọn nơi làm việc'
+                      />
+                    )}
+                  />
+                  {/* <Select
                     name='location'
                     {...register("location")}
                     placeholder='Chọn nơi làm việc'
@@ -275,12 +386,11 @@ const ModalAddNeedPosi = ({
                       setNewJob({ ...newJob, location: e.label });
                     }}
                     value={
-                      preloadValue?.location && {
-                        label: preloadValue?.location,
-                      }
+                      preloadValue?.location.length > 0 &&
+                      preloadValue?.location
                     }
                     options={provinceOptions}
-                  />
+                  /> */}
                   {errors?.location?.message && (
                     <p>
                       <>{errors?.location?.message}</>
@@ -289,7 +399,21 @@ const ModalAddNeedPosi = ({
                 </div>
                 <div className='form-group'>
                   <label for=''>Môi trường làm việc</label>
-                  <Select
+                  <Controller
+                    name='environment'
+                    control={control}
+                    onChange={(e) => {
+                      setNewJob({ ...newJob, environment: e.label });
+                    }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        placeholder='Chọn môi trường làm việc'
+                        options={environmentOption}
+                      />
+                    )}
+                  />
+                  {/* <Select
                     name='environment'
                     {...register("environment")}
                     placeholder='Chọn môi trường làm việc'
@@ -301,12 +425,11 @@ const ModalAddNeedPosi = ({
                       });
                     }}
                     value={
-                      preloadValue?.environment && {
-                        label: preloadValue?.environment,
-                      }
+                      preloadValue?.environment.length > 0 &&
+                      preloadValue?.environment
                     }
                     options={environmentOption}
-                  />
+                  /> */}
                   {errors?.environment?.message && (
                     <p>
                       <>{errors?.position?.message}</>
@@ -407,7 +530,10 @@ const ModalAddNeedPosi = ({
                     name='description'
                     {...register("description")}
                     theme='snow'
-                    value={preloadValue?.description && newJob.description}
+                    defaultValue={
+                      preloadValue?.description && preloadValue.description
+                    }
+                    value={newJob.description}
                     onChange={(e) => {
                       // console.log(e);
                       setValue("description", e);
