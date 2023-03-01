@@ -63,14 +63,14 @@ function Jobdetail() {
                             <li>
                               <i className="ti-money"></i>
                               <strong className="font-weight-700 text-black">
-                                Mức lương
+                                Mức lương 
                               </strong>{" "}
                               Lương thỏa thuận
                             </li>
                             <li>
                               <i className="ti-shield"></i>
                               <strong className="font-weight-700 text-black">
-                                Kinh nghiệm
+                                Kinh nghiệm làm việc
                               </strong>
                               {job?.experience}
                             </li>
