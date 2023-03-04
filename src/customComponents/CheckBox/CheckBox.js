@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { listOptions } from "../../constants/common";
 import "./styles.css";
-const CheckBox = ({ check, setCheck }) => {
+const CheckBox = ({ check, setCheck, register, setValue }) => {
   return (
     <>
       {listOptions.map((item, idx) => {
@@ -13,7 +13,11 @@ const CheckBox = ({ check, setCheck }) => {
               <input
                 type='checkbox'
                 checked={check === item.value && true}
-                onClick={() => setCheck(item.value)}
+                onClick={() => {
+                  setCheck(item.value);
+                  setValue("rating", item.value);
+                }}
+                register={register}
               />
               <span class='checkmark-custom'></span>
             </label>
@@ -26,7 +30,11 @@ const CheckBox = ({ check, setCheck }) => {
               <input
                 type='checkbox'
                 checked={check === item.value && true}
-                onClick={() => setCheck(item.value)}
+                onClick={() => {
+                  setCheck(item.value);
+                  setValue("rating", item.value);
+                }}
+                register={register}
               />
               <span class='checkmark-custom'></span>
             </label>
@@ -39,7 +47,11 @@ const CheckBox = ({ check, setCheck }) => {
               <input
                 type='checkbox'
                 checked={check === item.value && true}
-                onClick={() => setCheck(item.value)}
+                onClick={() => {
+                  setCheck(item.value);
+                  setValue("rating", item.value);
+                }}
+                register={register}
               />
               <span class='checkmark-custom'></span>
             </label>
@@ -52,7 +64,11 @@ const CheckBox = ({ check, setCheck }) => {
               <input
                 type='checkbox'
                 checked={check === item.value && true}
-                onClick={() => setCheck(item.value)}
+                onClick={() => {
+                  setCheck(item.value);
+                  setValue("rating", item.value);
+                }}
+                register={register}
               />
               <span class='checkmark-custom'></span>
             </label>

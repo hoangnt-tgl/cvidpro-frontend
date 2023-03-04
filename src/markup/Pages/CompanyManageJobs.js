@@ -31,6 +31,7 @@ function Companymanage(props) {
     salaryMax: 0,
     description: "",
     question: [],
+    addOnQuestion: [],
   };
   const initQuestion = {
     name: "",
@@ -58,6 +59,9 @@ function Companymanage(props) {
     setChildQuestion,
     setReload,
     deleteAddOnQuestion,
+    addOnQuestionOptions,
+    setAddOnQuestionOptions,
+    preloadValue,
   ] = useNeedRecuited(search);
 
   const [isShowModalInfo, setIsShowModalInfo] = useState(true);
@@ -70,9 +74,17 @@ function Companymanage(props) {
   const handleAddJob = async () => {
     await createJob({
       ...newJob,
+      addOnQuestionOptions,
       departmentId: department._id,
       companyId: department.companyId,
     });
+
+    // console.log({
+    //   ...newJob,
+    //   addOnQuestionOptions,
+    //   departmentId: department._id,
+    //   companyId: department.companyId,
+    // });
     setIsShowModalAddJob(false);
     setNewJob(objJob);
     setReload((prev) => !prev);
@@ -93,11 +105,7 @@ function Companymanage(props) {
                     setShowAddJob={setIsShowModalAddJob}
                     setReload={setReload}
                     keyDepart={key}
-                  />
-                  {/* Modal tạo vị trí tuyển dụng */}
-                  <ModalAddNeedPosi
-                    showAddJob={isShowModalAddJob}
-                    setShowAddJob={setIsShowModalAddJob}
+                    // list default value
                     levelOptions={levelOptions}
                     provinceOptions={provinceOptions}
                     jobTitleOption={jobTitleOption}
@@ -116,6 +124,35 @@ function Companymanage(props) {
                     childQuestion={childQuestion}
                     setChildQuestion={setChildQuestion}
                     deleteAddOnQuestion={deleteAddOnQuestion}
+                    addOnQuestionOptions={addOnQuestionOptions}
+                    setAddOnQuestionOptions={setAddOnQuestionOptions}
+                    preloadValue={preloadValue}
+                  />
+                  {/* Modal tạo vị trí tuyển dụng */}
+                  <ModalAddNeedPosi
+                    showAddJob={isShowModalAddJob}
+                    setShowAddJob={setIsShowModalAddJob}
+                    isAddNew={true}
+                    levelOptions={levelOptions}
+                    provinceOptions={provinceOptions}
+                    jobTitleOption={jobTitleOption}
+                    industryOptions={industryOptions}
+                    positionOptions={positionOptions}
+                    majorOptions={majorOptions}
+                    questionOptions={questionOptions}
+                    setQuestionOptions={setQuestionOptions}
+                    newQuestion={newQuestion}
+                    environmentOption={environmentOption}
+                    handleAddQuestion={handleAddQuestion}
+                    setNewJob={setNewJob}
+                    newJob={newJob}
+                    handleAddJob={handleAddJob}
+                    setNewQuestion={setNewQuestion}
+                    childQuestion={childQuestion}
+                    setChildQuestion={setChildQuestion}
+                    deleteAddOnQuestion={deleteAddOnQuestion}
+                    addOnQuestionOptions={addOnQuestionOptions}
+                    setAddOnQuestionOptions={setAddOnQuestionOptions}
                   />
                 </div>
               </div>
