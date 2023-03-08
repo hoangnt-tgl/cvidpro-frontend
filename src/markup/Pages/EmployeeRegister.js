@@ -38,6 +38,13 @@ function Register2(props) {
     password: "",
     confirmPassword: "",
   };
+  const style={
+    control: base => ({
+      ...base,
+      height: "2px",
+      minHeight: "2px"
+    })
+  };
   const [errors, setErrors] = useState(errorsObj);
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
@@ -68,6 +75,7 @@ function Register2(props) {
     { value: "Nam", label: "Nam" },
     { value: "Nữ", label: "Nữ" },
   ];
+
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -273,7 +281,7 @@ function Register2(props) {
                         <div className="dez-separator bg-primary style-liner"></div>
                       </div>
                       <p>Vui lòng nhập chính xác thông tin</p>
-                      <div className="form-group">
+                      <div className="form-group register">
                         <input
                           value={name}
                           onChange={(e) => setName(e.target.value)}
@@ -284,7 +292,7 @@ function Register2(props) {
                           {errors.name && <div>{errors.name}</div>}
                         </div>
                       </div>
-                      <div className="form-group">
+                      <div className="form-group register">
                         <input
                           value={username}
                           text="text"
@@ -296,7 +304,7 @@ function Register2(props) {
                           {errors.username && <div>{errors.username}</div>}
                         </div>
                       </div>
-                      <div className="form-group">
+                      <div className="form-group register">
                         <input
                           type="date"
                           value={birthday}
@@ -308,11 +316,10 @@ function Register2(props) {
                           {errors.birthday && <div>{errors.birthday}</div>}
                         </div>
                       </div>
-                      <div className="form-group">
+                      <div className="form-group register">
                         <Select
                           placeholder="Chọn giới tính"
-                          style={{height:'50px'}}
-
+                          style={style}            
                           className="select-font"
                           onChange={(e) => setGender(e.label)}
                           options={genderOptions}
@@ -321,7 +328,7 @@ function Register2(props) {
                           {errors.gender && <div>{errors.gender}</div>}
                         </div>
                       </div>
-                      <div className="form-group">
+                      <div className="form-group register">
                         <Select
                           placeholder="Chọn tỉnh/thành phố"
                           onChange={(e) => setProvince(e.label)}
@@ -331,7 +338,7 @@ function Register2(props) {
                           {errors.province && <div>{errors.province}</div>}
                         </div>
                       </div>
-                      <div className="form-group">
+                      <div className="form-group register">
                         <Select
                           placeholder="Chọn quận/huyện"
                           onChange={(e) => setDistrict(e.label)}
@@ -342,7 +349,7 @@ function Register2(props) {
                         </div>
                       </div>
 
-                      <div className="form-group">
+                      <div className="form-group register">
                         <Select
                           defaultValue=""
                           placeholder="Chọn phường/xã"
@@ -354,7 +361,7 @@ function Register2(props) {
                         </div>
                       </div>
 
-                      <div className="form-group">
+                      <div className="form-group register">
                         <input
                           value={address}
                           onChange={(e) => setAddress(e.target.value)}
@@ -365,7 +372,7 @@ function Register2(props) {
                           {errors.address && <div>{errors.address}</div>}
                         </div>
                       </div>
-                      <div className="form-group">
+                      <div className="form-group register">
                         <Select
                           placeholder="Chọn trình độ"
                           onChange={(e) => setLevel(e.label)}
@@ -375,7 +382,7 @@ function Register2(props) {
                           {errors.level && <div>{errors.level}</div>}
                         </div>
                       </div>
-                      <div className="form-group">
+                      <div className="form-group register">
                         <Select
                           placeholder="Chọn trường"
                           onChange={(e) => setSchool(e.label)}
@@ -386,7 +393,7 @@ function Register2(props) {
                         </div>
                       </div>
 
-                      <div className="form-group">
+                      <div className="form-group register">
                         <Select
                           placeholder="Chọn ngành"
                           onChange={(e) => setMajor(e.label)}
@@ -396,7 +403,7 @@ function Register2(props) {
                           {errors.major && <div>{errors.major}</div>}
                         </div>
                       </div>
-                      <div className="form-group">
+                      <div className="form-group register">
                         <Select
                           placeholder="Chọn chức danh"
                           onChange={(e) => setJobTitle(e.label)}
@@ -406,7 +413,7 @@ function Register2(props) {
                           {errors.jobTitle && <div>{errors.jobTitle}</div>}
                         </div>
                       </div>
-                      <div className="form-group">
+                      <div className="form-group register">
                         <input
                           type="month"
                           value={startYear}
@@ -418,7 +425,7 @@ function Register2(props) {
                           {errors.startYear && <div>{errors.startYear}</div>}
                         </div>
                       </div>
-                      <div className="form-group">
+                      <div className="form-group register">
                         <input
                           type="month"
                           value={endYear}
@@ -430,7 +437,7 @@ function Register2(props) {
                           {errors.endYear && <div>{errors.endYear}</div>}
                         </div>
                       </div>
-                      <div className="form-group">
+                      <div className="form-group register">
                         <input
                           value={email}
                           type="email"
@@ -442,7 +449,7 @@ function Register2(props) {
                           {errors.email && <div>{errors.email}</div>}
                         </div>
                       </div>
-                      <div className="form-group">
+                      <div className="form-group register">
                         <input
                           value={password}
                           className="form-control"
@@ -453,7 +460,7 @@ function Register2(props) {
                           {errors.password && <div>{errors.password}</div>}
                         </div>
                       </div>
-                      <div className="form-group">
+                      <div className="form-group register">
                         <input
                           value={confirmPassword}
                           className="form-control"
