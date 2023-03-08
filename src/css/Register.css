@@ -1,0 +1,25 @@
+#Background-Register{
+    background-color: #C0C0C0;
+}
+
+#login{
+    background-color: #C0C0C0;
+}
+.register1{
+    margin-bottom: 0 !important;
+}
+.form-word{
+    font-weight: 550;
+    text-align: center;
+}
+p{
+    margin-bottom: 10 !important;
+}
+
+.input{
+  height: 30px !important;
+}
+
+.select-font{
+    font-size: 14px !important;
+}

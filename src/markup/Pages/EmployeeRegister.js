@@ -15,6 +15,7 @@ import {
   loadingToggleAction,
   employeeSignupAction,
 } from "../../store/actions/AuthActions";
+import "../../css/Register.css"
 
 var bnr = require("./../../images/background/bg6.jpg");
 function Register2(props) {
@@ -264,8 +265,8 @@ function Register2(props) {
                     {props.successMessage && (
                       <div className="">{props.successMessage}</div>
                     )}
-                    <form className=" dez-form p-b30 mx-4" onSubmit={onSignUp}>
-                      <h3 className="form-title m-t0">
+                    <form className=" dez-form p-b30 mx-2" onSubmit={onSignUp} id="Background-Register">
+                      <h3 className="register1">
                         Đăng ký người tìm việc
                       </h3>
                       <div className="dez-separator-outer m-b5">
@@ -276,7 +277,7 @@ function Register2(props) {
                         <input
                           value={name}
                           onChange={(e) => setName(e.target.value)}
-                          className="form-control small"
+                          className="form-control input"
                           placeholder="Nhập họ và tên"
                         />
                         <div className="text-danger">
@@ -288,7 +289,7 @@ function Register2(props) {
                           value={username}
                           text="text"
                           onChange={(e) => setUsername(e.target.value)}
-                          className="form-control"
+                          className="form-control input"
                           placeholder="Nhập số điện thoại"
                         />
                         <div className="text-danger">
@@ -300,7 +301,7 @@ function Register2(props) {
                           type="date"
                           value={birthday}
                           onChange={(e) => setBirthday(e.target.value)}
-                          className="form-control"
+                          className="form-control input"
                           placeholder="Nhập ngày sinh"
                         />
                         <div className="text-danger">
@@ -310,6 +311,9 @@ function Register2(props) {
                       <div className="form-group">
                         <Select
                           placeholder="Chọn giới tính"
+                          style={{height:'50px'}}
+
+                          className="select-font"
                           onChange={(e) => setGender(e.label)}
                           options={genderOptions}
                         />
@@ -354,7 +358,7 @@ function Register2(props) {
                         <input
                           value={address}
                           onChange={(e) => setAddress(e.target.value)}
-                          className="form-control"
+                          className="form-control input"
                           placeholder="Nhập địa chỉ"
                         />
                         <div className="text-danger">
