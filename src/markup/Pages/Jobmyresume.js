@@ -42,6 +42,8 @@ import {
   getAllListMajor,
   getListQuestion,
   getListJobTitle,
+  getListLanguage,
+  getCertificateByLanguage,
 } from "../../services/GetListService";
 var bnr2 = require("./../../images/banner/bnr1.jpg");
 var bnr = require("./../../images/background/bg3.jpg");
@@ -88,6 +90,15 @@ function Jobmyresume(props) {
     isCurrent: false,
   };
 
+  const languageCertificate = {
+    language: "",
+    name: "",
+    startTime: "",
+    endTime: "",
+    point: "",
+    organizer: "",
+  };
+
   // option lý do nghỉ việc
   const listLeaving = [
     { value: "Nghỉ theo mong muốn", label: "Nghỉ theo mong muốn" },
@@ -111,6 +122,8 @@ function Jobmyresume(props) {
   const [majors, setMajors] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [jobTitleOption, setJobTitleOption] = useState([]);
+  const [languageOption, setLanguageOption] = useState([]);
+  const [certificateOption, setCertificateOption] = useState([]);
   const [listProvince, setListProvince] = useState([]);
   const [listDistrict, setListDistrict] = useState([]);
   const [listWard, setListWard] = useState([]);
@@ -121,6 +134,8 @@ function Jobmyresume(props) {
   const [tabKey, setTabKey] = useState("working");
 
   const [newShortTraining, setNewShortTraining] = useState(objShortTraining);
+  const [newLanguageCertificate, setNewLanguageCertificate] =
+    useState(languageCertificate);
 
   const [schools, setSchools] = useState([]);
   const [basicdetails, setBasicDetails] = useState(false);
@@ -128,6 +143,8 @@ function Jobmyresume(props) {
   const [education, setEducation] = useState(false);
   const [showModalConfirmPhone, setShowModalConfirmPhone] = useState(false);
   const [showShortTraining, setShowShortTraining] = useState(false);
+  const [showLanguageCertification, setShowLanguageCertification] =
+    useState(false);
   const [itskills, setItSkills] = useState(false);
   const [otherSkill, setOtherSkill] = useState(false);
 
@@ -135,24 +152,30 @@ function Jobmyresume(props) {
   const [otp, setOtp] = useState("");
   useEffect(() => {
     async function fetchData() {
-      let listLevel = await getListLevel();
-      setLevels(listLevel.data.map((item) => ({ value: item, label: item })));
-      let listSchool = await getListSchools();
-      setSchools(
-        listSchool.data.map((item) => ({ value: item._id, label: item.name }))
-      );
-      let listMajor = await getAllListMajor();
-      setMajors(listMajor.data.map((item) => ({ value: item, label: item })));
-      let listQuestion = await getListQuestion();
-      setQuestions(listQuestion.data);
+      getListLevel().then((res) => {
+        setLevels(res.data.map((item) => ({ value: item, label: item })));
+      });
+      getListSchools().then((res) => {
+        setSchools(
+          res.data.map((item) => ({ value: item.name, label: item.name }))
+        );
+      });
+      getAllListMajor().then((res) => {
+        setMajors(res.data.map((item) => ({ value: item, label: item })));
+      });
 
-      let listJobTitle = await getListJobTitle();
-      setJobTitleOption(
-        listJobTitle.data.map((item) => ({
-          value: item.name,
-          label: item.name,
-        }))
-      );
+      getListQuestion().then((res) => {
+        setQuestions(res.data);
+      });
+
+      getListJobTitle().then((res) => {
+        setJobTitleOption(
+          res.data.map((item) => ({ value: item.name, label: item.name }))
+        );
+      });
+      getListLanguage().then((res) => {
+        setLanguageOption(res.map((item) => ({ value: item, label: item })));
+      });
     }
     fetchData();
   }, []);
@@ -172,6 +195,17 @@ function Jobmyresume(props) {
     }
     fetchData();
   }, [reload]);
+
+  useEffect(() => {
+    if (newLanguageCertificate.language) {
+      getCertificateByLanguage(newLanguageCertificate.language).then((res) => {
+        console.log(res);
+        setCertificateOption(
+          res.map((item) => ({ value: item.name, label: item.name }))
+        );
+      });
+    }
+  }, [newLanguageCertificate.language]);
   function handleSendOTP() {
     let timeWait = 10;
     sendOTP(userInformation._id, userInformation.username).then((res) => {
@@ -1654,7 +1688,7 @@ function Jobmyresume(props) {
                           </Accordion.Toggle>
                           <Form.Control
                             className="align-self-center mr-0"
-                            value={userInformation.pointList[index]}
+                            // value={userInformation?.pointList[index]}
                             style={{ width: "50px" }}
                             onChange={(e) => {
                               if (isNaN(e.target.value)) e.target.value = 0;
@@ -2091,16 +2125,12 @@ function Jobmyresume(props) {
                   </div>
                 </Modal>
               </div>
-              <div
-                id="accomplishments_bx"
-                className="job-bx table-job-bx bg-white m-b30"
-                style={{ display: "none" }}
-              >
+              <div className="job-bx table-job-bx bg-white m-b30">
                 <div className="d-flex">
-                  <h5 className="m-b15">IT Skills</h5>
+                  <h5 className="m-b15">Chứng chỉ ngoại ngữ</h5>
                   <Link
                     to={"#"}
-                    onClick={() => setItSkills(true)}
+                    onClick={() => setShowLanguageCertification(true)}
                     className="site-button add-btn button-sm"
                   >
                     <i className="fa fa-pencil m-r5"></i> Thêm
@@ -2110,275 +2140,175 @@ function Jobmyresume(props) {
                   Mention your employment details including your current and
                   previous company work experience
                 </p>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Skills</th>
-                      <th>Version</th>
-                      <th>Last Used</th>
-                      <th>Experience</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Bootstrap</td>
-                      <td>3</td>
-                      <td>2018</td>
-                      <td>1 Year 5 Months</td>
-                      <td>
-                        <Link
-                          to={"#"}
-                          className="m-l15 font-14"
-                          data-toggle="modal"
-                          data-target="#itskills"
-                        >
-                          <i className="fa fa-pencil"></i>
-                        </Link>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Bootstrap</td>
-                      <td>4</td>
-                      <td>2013</td>
-                      <td>5 Year 5 Months</td>
-                      <td>
-                        <Link
-                          to={"#"}
-                          className="m-l15 font-14"
-                          data-toggle="modal"
-                          data-target="#itskills"
-                        >
-                          <i className="fa fa-pencil"></i>
-                        </Link>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>html</td>
-                      <td>5</td>
-                      <td>2016</td>
-                      <td>2 Year 7 Months</td>
-                      <td>
-                        <Link
-                          to={"#"}
-                          className="m-l15 font-14"
-                          data-toggle="modal"
-                          data-target="#itskills"
-                        >
-                          <i className="fa fa-pencil"></i>
-                        </Link>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>css</td>
-                      <td>3</td>
-                      <td>2018</td>
-                      <td>0 Year 5 Months</td>
-                      <td>
-                        <Link
-                          to={"#"}
-                          className="m-l15 font-14"
-                          data-toggle="modal"
-                          data-target="#itskills"
-                        >
-                          <i className="fa fa-pencil"></i>
-                        </Link>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>photoshop</td>
-                      <td>64bit</td>
-                      <td>2017</td>
-                      <td>1 Year 0 Months</td>
-                      <td>
-                        <Link
-                          to={"#"}
-                          className="m-l15 font-14"
-                          data-toggle="modal"
-                          data-target="#itskills"
-                        >
-                          <i className="fa fa-pencil"></i>
-                        </Link>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <Modal
-                  className="modal fade modal-bx-info editor"
-                  show={itskills}
-                  onHide={setItSkills}
-                >
-                  <div className="modal-dialog my-0" role="document">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h5 className="modal-title">IT Skills</h5>
-                        <button
-                          type="button"
-                          className="close"
-                          onClick={() => setItSkills(false)}
-                        >
-                          <span>&times;</span>
-                        </button>
-                      </div>
-                      <div className="modal-body">
-                        <form>
-                          <div className="row">
-                            <div className="col-lg-12 col-md-12">
-                              <div className="form-group">
-                                <label>IT Skills</label>
-                                <input
-                                  type="email"
-                                  className="form-control"
-                                  placeholder="Enter IT Skills"
-                                />
-                              </div>
+                <div className="row">
+                  <div className="col-lg-12 col-md-12 col-sm-12">
+                    {userInformation.shortTraining?.map((item, index) => {
+                      return (
+                        <>
+                          <div className="clearfix m-b20">
+                            <div className="badge-time">
+                              <span className="badge badge-primary">
+                                <i className="fa fa-graduation-cap" />
+                                <span>
+                                  {getMonthYear(item.start)} -{" "}
+                                  {getMonthYear(item.end)}
+                                </span>
+                              </span>
                             </div>
-                            <div className="col-lg-6 col-md-6">
-                              <div className="form-group">
-                                <label>Version</label>
-                                <input
-                                  type="email"
-                                  className="form-control"
-                                  placeholder="Enter Version"
-                                />
-                              </div>
+                            <div className="d-flex">
+                              <label className="m-b0">{item.certificate}</label>
+                              <Link
+                                to={"#"}
+                                onClick={() =>
+                                  handleDeleteShortTraining(item._id)
+                                }
+                                className="site-button add-btn button-sm"
+                                style={{ backgroundColor: "red" }}
+                              >
+                                <i className="ti-trash m-r5"></i>
+                              </Link>
                             </div>
-                            <div className="col-lg-6 col-md-6">
-                              <div className="form-group">
-                                <label>Last Used</label>
-                                <Form.Control as="select"></Form.Control>
-                              </div>
-                            </div>
-                            <div className="col-lg-12 col-md-6">
-                              <div className="form-group">
-                                <label>Experience</label>
-                                <div className="row">
-                                  <div className="col-lg-6 col-md-6 col-sm-6 col-6">
-                                    <Form.Control as="select"></Form.Control>
-                                  </div>
-                                  <div className="col-lg-6 col-md-6 col-sm-6 col-6">
-                                    <Form.Control as="select"></Form.Control>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                            <p className="m-b0 font-16">
+                              Đơn vị tổ chức: {item.organizer}
+                            </p>
                           </div>
-                        </form>
-                      </div>
-                      <div className="modal-footer">
-                        <button
-                          type="button"
-                          className="site-button"
-                          onClick={() => setItSkills(false)}
-                        >
-                          Cancel
-                        </button>
-                        <button type="button" className="site-button">
-                          Save
-                        </button>
-                      </div>
-                    </div>
+                          <hr />
+                        </>
+                      );
+                    })}
                   </div>
-                </Modal>
-              </div>
-              <div
-                id="desired_career_profile_bx"
-                className="job-bx table-job-bx bg-white m-b30"
-                style={{ display: "none" }}
-              >
-                <div className="d-flex">
-                  <h5 className="m-b15">IT Skills</h5>
-                  <Link
-                    to={"#"}
-                    onClick={() => setOtherSkill(true)}
-                    className="site-button add-btn button-sm"
-                  >
-                    <i className="fa fa-pencil m-r5"></i> Thêm
-                  </Link>
                 </div>
-                <p>
-                  Mention your employment details including your current and
-                  previous company work experience
-                </p>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Tên kĩ năng</th>
-                      <th>Xếp loại</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>css</td>
-                      <td>3</td>
-                      <td>2018</td>
-                      <td>0 Year 5 Months</td>
-                      <td>
-                        <Link to={"#"} className="m-l15 font-14">
-                          <i className="fa fa-pencil"></i>
-                        </Link>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
                 <Modal
                   className="modal fade modal-bx-info editor"
-                  show={otherSkill}
-                  onHide={setOtherSkill}
+                  show={showLanguageCertification}
+                  onHide={setShowLanguageCertification}
                 >
                   <div className="modal-dialog my-0" role="document">
                     <div className="modal-content">
                       <div className="modal-header">
-                        <h5 className="modal-title">IT Skills</h5>
+                        <h5 className="modal-title">Chứng chỉ ngoại ngữ</h5>
                         <button
                           type="button"
                           className="close"
-                          onClick={() => setOtherSkill(false)}
+                          onClick={() => setShowLanguageCertification(false)}
                         >
                           <span>&times;</span>
                         </button>
                       </div>
                       <div className="modal-body">
-                        <form>
+                        <form
+                          id="addLanguageCertification"
+                          // onSubmit={handleAddShortTraining}
+                          action="javascript:void(0);"
+                        >
                           <div className="row">
-                            <div className="col-lg-12 col-md-12">
+                            <div className="col-lg-6 col-md-6">
                               <div className="form-group">
-                                <label>IT Skills</label>
+                                <label>Từ</label>
                                 <input
-                                  type="email"
+                                  type="date"
                                   className="form-control"
-                                  placeholder="Enter IT Skills"
+                                  value={newLanguageCertificate.startTime}
+                                  onChange={(e) => {
+                                    setNewLanguageCertificate({
+                                      ...newLanguageCertificate,
+                                      startTime: e.target.value,
+                                    });
+                                  }}
+                                  required
                                 />
                               </div>
                             </div>
                             <div className="col-lg-6 col-md-6">
                               <div className="form-group">
-                                <label>Version</label>
-                                <input
-                                  type="email"
+                                <label>Đến</label>
+                                <Form.Control
+                                  type="date"
                                   className="form-control"
-                                  placeholder="Enter Version"
-                                />
-                              </div>
-                            </div>
-                            <div className="col-lg-6 col-md-6">
-                              <div className="form-group">
-                                <label>Last Used</label>
-                                <Form.Control as="select"></Form.Control>
+                                  value={newLanguageCertificate.endTime}
+                                  onChange={(e) => {
+                                    setNewLanguageCertificate({
+                                      ...newLanguageCertificate,
+                                      endTime: e.target.value,
+                                    });
+                                  }}
+                                  required
+                                ></Form.Control>
                               </div>
                             </div>
                             <div className="col-lg-12 col-md-6">
                               <div className="form-group">
-                                <label>Experience</label>
-                                <div className="row">
-                                  <div className="col-lg-6 col-md-6 col-sm-6 col-6">
-                                    <Form.Control as="select"></Form.Control>
-                                  </div>
-                                  <div className="col-lg-6 col-md-6 col-sm-6 col-6">
-                                    <Form.Control as="select"></Form.Control>
-                                  </div>
-                                </div>
+                                <label>Ngoại ngữ</label>
+                                <FormControl
+                                  as={Select}
+                                  size="sm"
+                                  className="m-0 p-0"
+                                  options={languageOption}
+                                  value={getValueSelect(
+                                    newLanguageCertificate.language
+                                  )}
+                                  onChange={(e) => {
+                                    setNewLanguageCertificate({
+                                      ...newLanguageCertificate,
+                                      language: e.value,
+                                      name: "",
+                                    });
+                                  }}
+                                />
+                              </div>
+                            </div>
+                            <div className="col-lg-12 col-md-6">
+                              <div className="form-group">
+                                <label>Tên chứng chỉ</label>
+                                <FormControl
+                                  as={Select}
+                                  size="sm"
+                                  className="m-0 p-0"
+                                  options={certificateOption}
+                                  value={getValueSelect(
+                                    newLanguageCertificate.name
+                                  )}
+                                  onChange={(e) => {
+                                    setNewLanguageCertificate({
+                                      ...newLanguageCertificate,
+                                      name: e.value,
+                                    });
+                                  }}
+                                />
+                              </div>
+                            </div>
+                            <div className="col-lg-12 col-md-12">
+                              <div className="form-group">
+                                <label>Đơn vị tổ chức</label>
+                                <input
+                                  className="form-control"
+                                  placeholder="Nhập đơn vị tổ chức"
+                                  value={newLanguageCertificate.organizer}
+                                  onChange={(e) => {
+                                    setNewLanguageCertificate({
+                                      ...newLanguageCertificate,
+                                      organizer: e.target.value,
+                                    });
+                                  }}
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div className="col-lg-12 col-md-12">
+                              <div className="form-group">
+                                <label>Điểm</label>
+                                <input
+                                  className="form-control"
+                                  placeholder="Nhập điểm"
+                                  value={newLanguageCertificate.point}
+                                  onChange={(e) => {
+                                    setNewLanguageCertificate({
+                                      ...newLanguageCertificate,
+                                      point: e.target.value,
+                                    });
+                                  }}
+                                  required
+                                />
                               </div>
                             </div>
                           </div>
@@ -2388,11 +2318,23 @@ function Jobmyresume(props) {
                         <button
                           type="button"
                           className="site-button"
-                          onClick={() => setOtherSkill(false)}
+                          onClick={() => setShowLanguageCertification(false)}
                         >
                           Cancel
                         </button>
-                        <button type="button" className="site-button">
+                        <button
+                          type="submit"
+                          className="site-button btn"
+                          form="addLanguageCertification"
+                          disabled={
+                            newLanguageCertificate.startTime === "" ||
+                            newLanguageCertificate.endTime === "" ||
+                            newLanguageCertificate.language === "" ||
+                            newLanguageCertificate.name === "" ||
+                            newLanguageCertificate.organizer === "" ||
+                            newLanguageCertificate.point === ""
+                          }
+                        >
                           Save
                         </button>
                       </div>

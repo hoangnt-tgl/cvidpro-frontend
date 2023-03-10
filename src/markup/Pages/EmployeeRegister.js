@@ -440,6 +440,7 @@ function Register2(props) {
                       </div>
                       <div className="form-group">
                         <input
+                          type="password"
                           value={password}
                           className="form-control"
                           onChange={(e) => setPassword(e.target.value)}
@@ -451,6 +452,7 @@ function Register2(props) {
                       </div>
                       <div className="form-group">
                         <input
+                          type="password"
                           value={confirmPassword}
                           className="form-control"
                           onChange={(e) => setConfirmPassword(e.target.value)}

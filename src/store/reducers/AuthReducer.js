@@ -28,7 +28,7 @@ export function AuthReducer(state = initialState, action) {
       ...state,
       auth: action.payload,
       errorMessage: "",
-      successMessage: "Đăng kí thành công",
+      successMessage: "Đăng kí thành công. Vui lòng kiểm tra email để kích hoạt tài khoản",
       showLoading: false,
     };
   }
