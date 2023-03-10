@@ -448,9 +448,11 @@ function Jobmyresume(props) {
                       </li>
                     </ul>
                     <div className="progress-box m-t10">
-                      <div className="progress-info"  width="10000px" height="500px"   >
+                      <div className="progress-info">
                         Điểm CV:
-                        <span className="score-progcess">{userInformation.points}</span>
+                      </div>
+                      <div className="score">  
+                        <span className="score-progcess" style={{marginLeft:`${userInformation.points*10}%`}}>{userInformation.points}</span>
                       </div>
                       <div className="progress" >
                         <div

@@ -331,6 +331,7 @@ function Register2(props) {
                       <div className="form-group register">
                         <Select
                           placeholder="Chọn tỉnh/thành phố"
+                          className="select-font"
                           onChange={(e) => setProvince(e.label)}
                           options={provinces}
                         />
@@ -341,6 +342,7 @@ function Register2(props) {
                       <div className="form-group register">
                         <Select
                           placeholder="Chọn quận/huyện"
+                          className="select-font"
                           onChange={(e) => setDistrict(e.label)}
                           options={districts}
                         />
@@ -353,6 +355,7 @@ function Register2(props) {
                         <Select
                           defaultValue=""
                           placeholder="Chọn phường/xã"
+                          className="select-font"
                           onChange={(e) => setWard(e.label)}
                           options={wards}
                         />
@@ -375,6 +378,7 @@ function Register2(props) {
                       <div className="form-group register">
                         <Select
                           placeholder="Chọn trình độ"
+                          className="select-font"
                           onChange={(e) => setLevel(e.label)}
                           options={levels}
                         />
@@ -385,6 +389,7 @@ function Register2(props) {
                       <div className="form-group register">
                         <Select
                           placeholder="Chọn trường"
+                          className="select-font"
                           onChange={(e) => setSchool(e.label)}
                           options={schools}
                         />
@@ -396,6 +401,7 @@ function Register2(props) {
                       <div className="form-group register">
                         <Select
                           placeholder="Chọn ngành"
+                          className="select-font"
                           onChange={(e) => setMajor(e.label)}
                           options={majors}
                         />
@@ -406,6 +412,7 @@ function Register2(props) {
                       <div className="form-group register">
                         <Select
                           placeholder="Chọn chức danh"
+                          className="select-font"
                           onChange={(e) => setJobTitle(e.label)}
                           options={jobTitles}
                         />
@@ -418,7 +425,7 @@ function Register2(props) {
                           type="month"
                           value={startYear}
                           onChange={(e) => setStartYear(e.target.value)}
-                          className="form-control"
+                          className="form-control input"
                           placeholder="Nhập năm bắt đầu"
                         />
                         <div className="text-danger">
@@ -430,7 +437,7 @@ function Register2(props) {
                           type="month"
                           value={endYear}
                           onChange={(e) => setEndYear(e.target.value)}
-                          className="form-control"
+                          className="form-control input"
                           placeholder="Nhập năm kết thúc"
                         />
                         <div className="text-danger">
@@ -442,7 +449,7 @@ function Register2(props) {
                           value={email}
                           type="email"
                           onChange={(e) => setEmail(e.target.value)}
-                          className="form-control"
+                          className="form-control input"
                           placeholder="Nhập email"
                         />
                         <div className="text-danger">
@@ -452,7 +459,7 @@ function Register2(props) {
                       <div className="form-group register">
                         <input
                           value={password}
-                          className="form-control"
+                          className="form-control input"
                           onChange={(e) => setPassword(e.target.value)}
                           placeholder="Nhập mật khẩu"
                         />
@@ -463,7 +470,7 @@ function Register2(props) {
                       <div className="form-group register">
                         <input
                           value={confirmPassword}
-                          className="form-control"
+                          className="form-control input"
                           onChange={(e) => setConfirmPassword(e.target.value)}
                           placeholder="Nhập lại mật khẩu"
                         />

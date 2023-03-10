@@ -18,10 +18,12 @@ p{
 
 .input{
   height: 30px !important;
+  font-weight: 630 !important;
 }
 
 .select-font{
     font-size: 14px !important;
+    font-weight: 630 !important;
 }
 
 .register{
