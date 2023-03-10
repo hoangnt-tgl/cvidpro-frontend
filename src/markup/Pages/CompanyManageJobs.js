@@ -78,16 +78,18 @@ function Companymanage(props) {
     //   departmentId: department._id,
     //   companyId: department.companyId,
     // });
+
     await createJob({
       ...data,
       departmentId: department._id,
       companyId: department.companyId,
     });
-    console.log({
-      ...data,
-      departmentId: department._id,
-      companyId: department.companyId,
-    });
+    // console.log(newJob);
+    // console.log({
+    //   ...data,
+    //   departmentId: department._id,
+    //   companyId: department.companyId,
+    // });
     setIsShowModalAddJob(false);
     setNewJob(objJob);
     setReload((prev) => !prev);

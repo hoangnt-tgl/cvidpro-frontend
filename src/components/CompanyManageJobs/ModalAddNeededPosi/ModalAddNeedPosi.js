@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import ReactSelectShowType from "../../../customComponents/ReactSelectShowType/ReactSelectShowType";
 const ModalAddNeedPosi = ({
   showAddJob,
   setShowAddJob,
@@ -87,11 +88,9 @@ const ModalAddNeedPosi = ({
     register,
     handleSubmit,
     setValue,
-    setError,
-    clearErrors,
     reset,
     control,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: useMemo(() => {
@@ -99,16 +98,13 @@ const ModalAddNeedPosi = ({
       return preloadValue;
     }, [preloadValue]),
   });
-  useEffect(() => {
-    // console.log(preloadValue);
-  }, [preloadValue]);
   function handleOnSubmit(data) {
-    console.log(data);
+    // console.log(data);
     const objJob = {
       title: data.title.value,
       position: data.position.value,
-      level: data.level.value,
-      major: data.major.value,
+      level: data.level.map((item) => item.value),
+      major: data.major.map((item) => item.value),
       industry: data.industry.value,
       location: data.location.value,
       workingEnvironment: data.environment.value,
@@ -117,7 +113,23 @@ const ModalAddNeedPosi = ({
       salaryMin: data.salaryMin,
       salaryMax: data.salaryMax,
       description: data.description,
-      question: data.question,
+      question: [
+        data.question0,
+        data.question1,
+        data.question2,
+        data.question3,
+        data.question4,
+        data.question5,
+        data.question6,
+        data.question7,
+        data.question8,
+        data.question9,
+        data.question10,
+        data.question11,
+        data.question12,
+        data.question13,
+        data.question14,
+      ],
       addOnQuestionOptions,
     };
     if (isAddNew) {
@@ -169,26 +181,20 @@ const ModalAddNeedPosi = ({
                       setNewJob({ ...newJob, title: e.label });
                     }}
                     render={({ field }) => (
-                      <Select
-                        {...field}
+                      <ReactSelectShowType
+                        register={{ ...field }}
                         placeholder='Chọn chức danh công việc'
                         options={jobTitleOption}
+                        minInput={1}
                       />
+                      // <Select
+                      //   {...field}
+                      //   placeholder='Chọn chức danh công việc'
+                      //   options={jobTitleOption}
+                      // />
                     )}
                   />
-                  {/* <Select
-                    name='title'
-                    {...register("title")}
-                    placeholder='Chọn chức danh công việc'
-                    onChange={(e) => {
-                      setValue("title", e.label);
-                      setNewJob({ ...newJob, title: e.label });
-                    }}
-                    value={
-                      preloadValue?.title.length > 0 && preloadValue?.title
-                    }
-                    options={jobTitleOption}
-                  /> */}
+
                   {errors?.title?.message && (
                     <p>
                       <>{errors?.title?.message}</>
@@ -211,20 +217,7 @@ const ModalAddNeedPosi = ({
                       />
                     )}
                   />
-                  {/* <Select
-                    name='position'
-                    {...register("position")}
-                    placeholder='Chọn chức vụ'
-                    onChange={(e) => {
-                      setValue("position", e.label);
-                      setNewJob({ ...newJob, position: e.label });
-                    }}
-                    value={
-                      preloadValue?.position.length > 0 &&
-                      preloadValue?.position
-                    }
-                    options={positionOptions}
-                  /> */}
+
                   {errors?.position?.message && (
                     <p>
                       <>{errors?.position?.message}</>
@@ -251,27 +244,6 @@ const ModalAddNeedPosi = ({
                       />
                     )}
                   />
-                  {/* <Select
-                    name='level'
-                    {...register("level")}
-                    isMulti
-                    closeMenuOnSelect={false}
-                    placeholder='Chọn cấp bậc'
-                    onChange={(e) => {
-                      setValue(
-                        "level",
-                        e.map((item) => item.label)
-                      );
-                      setNewJob({
-                        ...newJob,
-                        level: e.map((item) => item.label),
-                      });
-                    }}
-                    value={
-                      preloadValue?.level.length > 0 && preloadValue?.level
-                    }
-                    options={levelOptions}
-                  /> */}
                   {errors?.level?.message && (
                     <p>
                       <>{errors?.level?.message}</>
@@ -290,35 +262,22 @@ const ModalAddNeedPosi = ({
                       });
                     }}
                     render={({ field }) => (
-                      <Select
-                        {...field}
-                        isMulti
+                      <ReactSelectShowType
+                        register={{ ...field }}
+                        isMulti={true}
                         placeholder='Chọn chuyên ngành ứng viên'
                         options={majorOptions}
+                        minInput={1}
                       />
+                      // <Select
+                      //   {...field}
+                      //   isMulti
+                      //   placeholder='Chọn chuyên ngành ứng viên'
+                      //   options={majorOptions}
+                      // />
                     )}
                   />
-                  {/* <Select
-                    name='major'
-                    {...register("major")}
-                    isMulti
-                    closeMenuOnSelect={false}
-                    placeholder='Chọn chuyên ngành ứng viên'
-                    onChange={(e) => {
-                      setValue(
-                        "major",
-                        e.map((item) => item.label)
-                      );
-                      setNewJob({
-                        ...newJob,
-                        major: e.map((item) => item.label),
-                      });
-                    }}
-                    value={
-                      preloadValue?.major.length > 0 && preloadValue?.major
-                    }
-                    options={majorOptions}
-                  /> */}
+
                   {errors?.major?.message && (
                     <p>
                       <>{errors?.major?.message}</>
@@ -341,20 +300,7 @@ const ModalAddNeedPosi = ({
                       />
                     )}
                   />
-                  {/* <Select
-                    name='industry'
-                    {...register("industry")}
-                    placeholder='Chọn lĩnh vực kinh doanh'
-                    onChange={(e) => {
-                      setValue("industry", e.label);
-                      setNewJob({ ...newJob, industry: e.label });
-                    }}
-                    value={
-                      preloadValue?.industry.length > 0 &&
-                      preloadValue?.industry
-                    }
-                    options={industryOptions}
-                  /> */}
+
                   {errors?.industry?.message && (
                     <p>
                       <>{errors?.industry?.message}</>
@@ -370,27 +316,20 @@ const ModalAddNeedPosi = ({
                       setNewJob({ ...newJob, location: e.label });
                     }}
                     render={({ field }) => (
-                      <Select
-                        {...field}
-                        options={provinceOptions}
+                      <ReactSelectShowType
+                        register={{ ...field }}
                         placeholder='Chọn nơi làm việc'
+                        options={provinceOptions}
+                        minInput={1}
                       />
+                      // <Select
+                      //   {...field}
+                      //   options={provinceOptions}
+                      //   placeholder='Chọn nơi làm việc'
+                      // />
                     )}
                   />
-                  {/* <Select
-                    name='location'
-                    {...register("location")}
-                    placeholder='Chọn nơi làm việc'
-                    onChange={(e) => {
-                      setValue("location", e.label);
-                      setNewJob({ ...newJob, location: e.label });
-                    }}
-                    value={
-                      preloadValue?.location.length > 0 &&
-                      preloadValue?.location
-                    }
-                    options={provinceOptions}
-                  /> */}
+
                   {errors?.location?.message && (
                     <p>
                       <>{errors?.location?.message}</>
@@ -413,23 +352,7 @@ const ModalAddNeedPosi = ({
                       />
                     )}
                   />
-                  {/* <Select
-                    name='environment'
-                    {...register("environment")}
-                    placeholder='Chọn môi trường làm việc'
-                    onChange={(e) => {
-                      setValue("environment", e.label);
-                      setNewJob({
-                        ...newJob,
-                        workingEnvironment: e.label,
-                      });
-                    }}
-                    value={
-                      preloadValue?.environment.length > 0 &&
-                      preloadValue?.environment
-                    }
-                    options={environmentOption}
-                  /> */}
+
                   {errors?.environment?.message && (
                     <p>
                       <>{errors?.position?.message}</>
@@ -621,42 +544,12 @@ const ModalAddNeedPosi = ({
                             })}
                           </Card.Body>
                         </Accordion.Collapse>
-                        {/* {errors?.question0?.message && (
-                          <p>
-                            <>{errors?.question0?.message}</>
-                          </p>
-                        )} */}
                         {errors[`question${index}`]?.message && (
                           <p>
                             <>{errors[`question${index}`]?.message}</>
                           </p>
                         )}
                       </Card>
-
-                      // <li className="list-group-item">
-                      //   <div className="row">
-                      //     <div className="col-10">
-
-                      //     </div>
-                      //     <div className="col-2">
-                      //       <button
-                      //         className="btn btn-danger btn-sm"
-                      //         onClick={() => {
-                      //           let newCriteria = [
-                      //             ...newJob.criteria,
-                      //           ];
-                      //           newCriteria.splice(index, 1);
-                      //           setNewJob({
-                      //             ...newJob,
-                      //             criteria: newCriteria,
-                      //           });
-                      //         }}
-                      //       >
-                      //         Xóa
-                      //       </button>
-                      //     </div>
-                      //   </div>
-                      // </li>
                     ))}
                     {addOnQuestionOptions?.map((question, index) => (
                       <Card border='primary' key={index}>
@@ -711,19 +604,6 @@ const ModalAddNeedPosi = ({
                     Thêm tiêu chí
                   </button>
                 </div>
-
-                {/* <input
-              type="number"
-              className="form-control"
-              placeholder="Nhập mức lương tối đa"
-              value={newJob.salaryMax}
-              onChange={(e) => {
-                setNewJob({
-                  ...newJob,
-                  salaryMax: e.target.value,
-                });
-              }}
-            /> */}
               </div>
               <div className='modal-footer'>
                 <button
