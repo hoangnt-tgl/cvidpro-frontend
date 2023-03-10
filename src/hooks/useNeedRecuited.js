@@ -34,7 +34,6 @@ const useNeedRecuited = ({ search }) => {
     salaryMax: null,
     description: "",
     question: [],
-    addOnQuestion: [],
   };
   const initQuestion = {
     name: "",
@@ -61,7 +60,7 @@ const useNeedRecuited = ({ search }) => {
     // console.log(preloadValue);
   }, [preloadValue]);
   useEffect(() => {
-    console.log(key);
+    // console.log(key);
     async function fetchData() {
       if (!key) return;
       setDepartment(
@@ -83,18 +82,33 @@ const useNeedRecuited = ({ search }) => {
             // console.log(res.data);
             setPreloadValue(
               res.data.map((item) => ({
-                position: item.position,
-                level: item.level,
-                industry: item.industry,
-                location: item.location,
-                environment: item.workingEnvironment,
-                major: item.major,
+                position: [
+                  {
+                    value: item.position,
+                    label: item.position,
+                  },
+                ],
+                level: item.level.map((item) => ({ value: item, label: item })),
+                industry: [
+                  {
+                    value: item.industry,
+                    label: item.industry,
+                  },
+                ],
+                location: [{ value: item.location, label: item.location }],
+                environment: [
+                  {
+                    value: item.workingEnvironment,
+                    label: item.workingEnvironment,
+                  },
+                ],
+                major: item.major.map((item) => ({ value: item, label: item })),
                 experience: item.experience,
                 salaryMin: item.salaryMin,
                 salaryMax: item.salaryMax,
                 description: item.description,
                 quantity: item.quantity,
-                title: item.title,
+                title: [{ value: item.title, label: item.title }],
                 question0: item.questions[0],
                 question1: item.questions[1],
                 question2: item.questions[2],
@@ -197,10 +211,6 @@ const useNeedRecuited = ({ search }) => {
       .then((res) => res.data)
       .then((res) => {
         setQuestionOptions(res);
-        // let newObject = res;
-        // let newObject = JSON.parse(JSON.stringify(res));
-        //cmt setNewJob question mai mo len de test phan add chung res ?? neu mo len la clg ban loi [object ojbect]
-        // setNewJob({ ...newJob, question: res] });
       });
   }, []);
   const handleAddQuestion = async () => {

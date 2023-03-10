@@ -46,9 +46,37 @@ function Jobdetail() {
                           />
                         </div>
                       </div>
-                      <div>
-                      <h5 className="font-weight-3400">Mô tả việc</h5>
-                      <div className="dez-divider divider-2px bg-gray-dark mb-4 mt-0"></div>
+                      <div className="col-lg-12 col-md-6">
+                        <div className="widget bg-white p-lr20 p-t20  widget_getintuch radius-sm">
+                          <h4 className="text-black font-weight-700 p-t10 m-b15">
+                            Mô tả công việc
+                          </h4>
+                          <ul>
+                            <li>
+                              <i className="ti-location-pin"></i>
+                              <strong className="font-weight-700 text-black">
+                                Địa chỉ
+                              </strong>
+                              <span className="text-black-light">
+                                {job?.location}
+                              </span>
+                            </li>
+                            <li>
+                              <i className="ti-money"></i>
+                              <strong className="font-weight-700 text-black">
+                                Mức lương 
+                              </strong>{" "}
+                              Lương thỏa thuận
+                            </li>
+                            <li>
+                              <i className="ti-shield"></i>
+                              <strong className="font-weight-700 text-black">
+                                Kinh nghiệm làm việc
+                              </strong>
+                              {job?.experience}
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                        <div>
                        <h5 className="font-weight-3400">Mô tả </h5>

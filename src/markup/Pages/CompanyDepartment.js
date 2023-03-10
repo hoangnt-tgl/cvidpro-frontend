@@ -13,6 +13,7 @@ function CompanyDepartment(props) {
   const [company, setCompany] = useState(false);
   const [addDepartment, setAddDepartment] = useState(false);
   const [listDepartment, setListDepartment] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [newDepartment, setNewDepartment] = useState({
     departmentName: "",
     managerName: "",
@@ -34,6 +35,7 @@ function CompanyDepartment(props) {
     async function fetchData() {
       let myCompany = await getMyCompany(props.history);
       setCompanyInfo(myCompany);
+      setIsLoading(false);
     }
     fetchData();
     window.addEventListener("resize", () => setInnerWidth(window.innerWidth));
@@ -86,14 +88,16 @@ function CompanyDepartment(props) {
                       </tr>
                     </thead>
                     <tbody>
-                      {listDepartment?.length === 0 && (
-                        <>
-                          <tr className="text-center">
-                            <td colSpan="4">Chưa có phòng ban nào</td>
-                          </tr>
-                        </>
-                      )}
-                      {companyInfo.confirm2?.confirmed !== 1 && (
+                      {companyInfo.confirm2?.confirmed === 1 &&
+                        listDepartment?.length === 0 &&
+                        !isLoading && (
+                          <>
+                            <tr className="text-center">
+                              <td colSpan="4">Chưa có phòng ban nào</td>
+                            </tr>
+                          </>
+                        )}
+                      {companyInfo.confirm2?.confirmed !== 1 && !isLoading && (
                         <>
                           <tr className="text-center">
                             <td colSpan="4">Tài khoản chưa được duyệt</td>
