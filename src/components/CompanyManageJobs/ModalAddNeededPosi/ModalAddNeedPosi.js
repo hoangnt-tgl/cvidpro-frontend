@@ -47,40 +47,96 @@ const ModalAddNeedPosi = ({
       title: yup.mixed().required("Vui lòng nhập "),
       quantity: yup
         .number()
-        .min(1, "Vui lòng nhập số lượng lớn hơn 1")
+        .min(1, "Vui lòng nhập số lớn hơn 1")
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập"),
       salaryMin: yup
         .number()
-        .min(1, "Vui lòng nhập số lượng lớn hơn 1")
+        .min(1, "Vui lòng nhập số lớn hơn 1")
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập"),
       salaryMax: yup
         .number()
-        .min(1, "Vui lòng nhập số lượng lớn hơn 1")
+        .min(1, "Vui lòng nhập số lớn hơn 1")
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập"),
       description: yup.string().required("Vui lòng nhập "),
       location: yup.mixed().required("Vui lòng nhập "),
       question0: yup
         .number()
-        .min(1, "Vui lòng nhập số lượng lớn hơn 1")
+        .min(0, "Vui lòng nhập số lớn hơn 0")
         .required("Vui lòng nhập ")
-        .typeError("Vui lòng nhập"),
-      question1: yup.number().required("Vui lòng nhập "),
-      question2: yup.number().required("Vui lòng nhập "),
-      question3: yup.number().required("Vui lòng nhập "),
-      question4: yup.number().required("Vui lòng nhập "),
-      question5: yup.number().required("Vui lòng nhập "),
-      question6: yup.number().required("Vui lòng nhập "),
-      question7: yup.number().required("Vui lòng nhập "),
-      question8: yup.number().required("Vui lòng nhập "),
-      question9: yup.number().required("Vui lòng nhập "),
-      question10: yup.number().required("Vui lòng nhập "),
-      question11: yup.number().required("Vui lòng nhập "),
-      question12: yup.number().required("Vui lòng nhập "),
-      question13: yup.number().required("Vui lòng nhập "),
-      question14: yup.number().required("Vui lòng nhập "),
+        .typeError("Vui lòng nhập "),
+      question1: yup
+        .number()
+        .min(0, "Vui lòng nhập số lớn hơn 0")
+        .required("Vui lòng nhập ")
+        .typeError("Vui lòng nhập "),
+      question2: yup
+        .number()
+        .min(0, "Vui lòng nhập số lớn hơn 0")
+        .required("Vui lòng nhập ")
+        .typeError("Vui lòng nhập "),
+      question3: yup
+        .number()
+        .min(0, "Vui lòng nhập số lớn hơn 0")
+        .required("Vui lòng nhập ")
+        .typeError("Vui lòng nhập "),
+      question4: yup
+        .number()
+        .min(0, "Vui lòng nhập số lớn hơn 0")
+        .required("Vui lòng nhập ")
+        .typeError("Vui lòng nhập "),
+      question5: yup
+        .number()
+        .min(0, "Vui lòng nhập số lớn hơn 0")
+        .required("Vui lòng nhập ")
+        .typeError("Vui lòng nhập "),
+      question6: yup
+        .number()
+        .min(0, "Vui lòng nhập số lớn hơn 0")
+        .required("Vui lòng nhập ")
+        .typeError("Vui lòng nhập "),
+      question7: yup
+        .number()
+        .min(0, "Vui lòng nhập số lớn hơn 0")
+        .required("Vui lòng nhập ")
+        .typeError("Vui lòng nhập "),
+      question8: yup
+        .number()
+        .min(0, "Vui lòng nhập số lớn hơn 0")
+        .required("Vui lòng nhập ")
+        .typeError("Vui lòng nhập "),
+      question9: yup
+        .number()
+        .min(0, "Vui lòng nhập số lớn hơn 0")
+        .required("Vui lòng nhập ")
+        .typeError("Vui lòng nhập "),
+      question10: yup
+        .number()
+        .min(0, "Vui lòng nhập số lớn hơn 0")
+        .required("Vui lòng nhập ")
+        .typeError("Vui lòng nhập "),
+      question11: yup
+        .number()
+        .min(0, "Vui lòng nhập số lớn hơn 0")
+        .required("Vui lòng nhập ")
+        .typeError("Vui lòng nhập "),
+      question12: yup
+        .number()
+        .min(0, "Vui lòng nhập số lớn hơn 0")
+        .required("Vui lòng nhập ")
+        .typeError("Vui lòng nhập "),
+      question13: yup
+        .number()
+        .min(0, "Vui lòng nhập số lớn hơn 0")
+        .required("Vui lòng nhập ")
+        .typeError("Vui lòng nhập "),
+      question14: yup
+        .number()
+        .min(0, "Vui lòng nhập số lớn hơn 0")
+        .required("Vui lòng nhập ")
+        .typeError("Vui lòng nhập "),
     })
     .required();
 
@@ -108,27 +164,27 @@ const ModalAddNeedPosi = ({
       industry: data.industry.value,
       location: data.location.value,
       workingEnvironment: data.environment.value,
-      experience: data.experience,
-      quantity: data.quantity,
-      salaryMin: data.salaryMin,
-      salaryMax: data.salaryMax,
+      experience: data.experience.toString(),
+      quantity: data.quantity.toString(),
+      salaryMin: data.salaryMin.toString(),
+      salaryMax: data.salaryMax.toString(),
       description: data.description,
       question: [
-        data.question0,
-        data.question1,
-        data.question2,
-        data.question3,
-        data.question4,
-        data.question5,
-        data.question6,
-        data.question7,
-        data.question8,
-        data.question9,
-        data.question10,
-        data.question11,
-        data.question12,
-        data.question13,
-        data.question14,
+        data.question0.toString(),
+        data.question1.toString(),
+        data.question2.toString(),
+        data.question3.toString(),
+        data.question4.toString(),
+        data.question5.toString(),
+        data.question6.toString(),
+        data.question7.toString(),
+        data.question8.toString(),
+        data.question9.toString(),
+        data.question10.toString(),
+        data.question11.toString(),
+        data.question12.toString(),
+        data.question13.toString(),
+        data.question14.toString(),
       ],
       addOnQuestionOptions,
     };
@@ -141,9 +197,7 @@ const ModalAddNeedPosi = ({
   useEffect(() => {
     reset(preloadValue);
   }, [preloadValue]);
-  useEffect(() => {
-    // console.log(errors);
-  }, [errors]);
+
   return (
     <>
       {" "}
