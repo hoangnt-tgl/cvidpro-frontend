@@ -8,7 +8,6 @@ const ReactSelectShowType = ({
   minInput,
   isMulti,
 }) => {
-  const MIN_INPUT_LENGTH = 3;
   const filterOption = (candidate, input) => {
     return (
       // Min input length
@@ -21,9 +20,7 @@ const ReactSelectShowType = ({
   // Only show no options when at min length or can create custom message
   // or return null if no minLength message desired
   const noOptionsMessage = (input) =>
-    input.length >= MIN_INPUT_LENGTH
-      ? "Không có lựa chọn phù hợp"
-      : "Gõ để tìm kiếm";
+    input.length >= minInput ? "Không có lựa chọn phù hợp" : "Gõ để tìm kiếm";
 
   return (
     <Select
