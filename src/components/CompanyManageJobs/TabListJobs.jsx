@@ -9,6 +9,27 @@ const TabListJobs = ({
   keyDepart,
   setShowAddJob,
   setReload,
+  // list default values
+  setNewJob,
+  newJob,
+  jobTitleOption,
+  positionOptions,
+  levelOptions,
+  majorOptions,
+  industryOptions,
+  provinceOptions,
+  environmentOption,
+  questionOptions,
+  handleAddJob,
+  newQuestion,
+  setNewQuestion,
+  childQuestion,
+  setChildQuestion,
+  handleAddQuestion,
+  deleteAddOnQuestion,
+  addOnQuestionOptions,
+  setAddOnQuestionOptions,
+  preloadValue,
 }) => {
   return (
     <>
@@ -31,17 +52,37 @@ const TabListJobs = ({
           </tr>
         </thead>
         <tbody>
-          {listJob
-            ?.filter((item) => item)
-            .map((item, idx) => (
-              <ItemListNeededPostion
-                key={idx}
-                item={item}
-                handleOpenModalCompany={handleOpenModalCompany}
-                keyDepart={keyDepart}
-                setReload={setReload}
-              />
-            ))}
+          {listJob?.map((item, idx) => (
+            <ItemListNeededPostion
+              key={idx}
+              index={idx}
+              item={item}
+              handleOpenModalCompany={handleOpenModalCompany}
+              keyDepart={keyDepart}
+              setReload={setReload}
+              // list default value
+              levelOptions={levelOptions}
+              provinceOptions={provinceOptions}
+              jobTitleOption={jobTitleOption}
+              industryOptions={industryOptions}
+              positionOptions={positionOptions}
+              majorOptions={majorOptions}
+              questionOptions={questionOptions}
+              newQuestion={newQuestion}
+              environmentOption={environmentOption}
+              handleAddQuestion={handleAddQuestion}
+              setNewJob={setNewJob}
+              newJob={newJob}
+              handleAddJob={handleAddJob}
+              setNewQuestion={setNewQuestion}
+              childQuestion={childQuestion}
+              setChildQuestion={setChildQuestion}
+              deleteAddOnQuestion={deleteAddOnQuestion}
+              addOnQuestionOptions={addOnQuestionOptions}
+              setAddOnQuestionOptions={setAddOnQuestionOptions}
+              preloadValue={preloadValue}
+            />
+          ))}
         </tbody>
       </table>
     </>

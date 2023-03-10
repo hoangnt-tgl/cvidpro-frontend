@@ -34,7 +34,6 @@ const useNeedRecuited = ({ search }) => {
     salaryMax: null,
     description: "",
     question: [],
-    addOnQuestion: [],
   };
   const initQuestion = {
     name: "",
@@ -56,11 +55,12 @@ const useNeedRecuited = ({ search }) => {
   const [childQuestion, setChildQuestion] = useState("");
   const [environmentOption, setEnvironmentOption] = useState([]);
   const [newJob, setNewJob] = useState(objJob);
+  const [preloadValue, setPreloadValue] = useState([]);
   useEffect(() => {
-    // console.log(addOnQuestionOptions);
-  }, [addOnQuestionOptions]);
+    // console.log(preloadValue);
+  }, [preloadValue]);
   useEffect(() => {
-    console.log(key);
+    // console.log(key);
     async function fetchData() {
       if (!key) return;
       setDepartment(
@@ -80,6 +80,52 @@ const useNeedRecuited = ({ search }) => {
         setListJob(
           await getJobForDepartment(department._id).then((res) => {
             // console.log(res.data);
+            setPreloadValue(
+              res.data.map((item) => ({
+                position: [
+                  {
+                    value: item.position,
+                    label: item.position,
+                  },
+                ],
+                level: item.level.map((item) => ({ value: item, label: item })),
+                industry: [
+                  {
+                    value: item.industry,
+                    label: item.industry,
+                  },
+                ],
+                location: [{ value: item.location, label: item.location }],
+                environment: [
+                  {
+                    value: item.workingEnvironment,
+                    label: item.workingEnvironment,
+                  },
+                ],
+                major: item.major.map((item) => ({ value: item, label: item })),
+                experience: item.experience,
+                salaryMin: item.salaryMin,
+                salaryMax: item.salaryMax,
+                description: item.description,
+                quantity: item.quantity,
+                title: [{ value: item.title, label: item.title }],
+                question0: item.questions[0],
+                question1: item.questions[1],
+                question2: item.questions[2],
+                question3: item.questions[3],
+                question4: item.questions[4],
+                question5: item.questions[5],
+                question6: item.questions[6],
+                question7: item.questions[7],
+                question8: item.questions[8],
+                question9: item.questions[9],
+                question10: item.questions[10],
+                question11: item.questions[11],
+                question12: item.questions[12],
+                question13: item.questions[13],
+                question14: item.questions[14],
+              }))
+            );
             return res.data;
           })
         );
@@ -165,10 +211,6 @@ const useNeedRecuited = ({ search }) => {
       .then((res) => res.data)
       .then((res) => {
         setQuestionOptions(res);
-        // let newObject = new Object(...res);
-        let newObject = JSON.parse(JSON.stringify(res));
-        //cmt setNewJob question mai mo len de test phan add chung res ?? neu mo len la clg ban loi [object ojbect]
-        // setNewJob({ ...newJob, question: newObject });
       });
   }, []);
   const handleAddQuestion = async () => {
@@ -209,6 +251,7 @@ const useNeedRecuited = ({ search }) => {
     deleteAddOnQuestion,
     addOnQuestionOptions,
     setAddOnQuestionOptions,
+    preloadValue,
   ];
 };
 
