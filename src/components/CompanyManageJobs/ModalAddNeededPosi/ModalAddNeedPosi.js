@@ -64,77 +64,77 @@ const ModalAddNeedPosi = ({
       location: yup.mixed().required("Vui lòng nhập "),
       question0: yup
         .number()
-        .min(1, "Vui lòng nhập số lớn hơn 1")
+        .min(0, "Vui lòng nhập số lớn hơn 0")
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập "),
       question1: yup
         .number()
-        .min(1, "Vui lòng nhập số lớn hơn 1")
+        .min(0, "Vui lòng nhập số lớn hơn 0")
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập "),
       question2: yup
         .number()
-        .min(1, "Vui lòng nhập số lớn hơn 1")
+        .min(0, "Vui lòng nhập số lớn hơn 0")
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập "),
       question3: yup
         .number()
-        .min(1, "Vui lòng nhập số lớn hơn 1")
+        .min(0, "Vui lòng nhập số lớn hơn 0")
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập "),
       question4: yup
         .number()
-        .min(1, "Vui lòng nhập số lớn hơn 1")
+        .min(0, "Vui lòng nhập số lớn hơn 0")
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập "),
       question5: yup
         .number()
-        .min(1, "Vui lòng nhập số lớn hơn 1")
+        .min(0, "Vui lòng nhập số lớn hơn 0")
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập "),
       question6: yup
         .number()
-        .min(1, "Vui lòng nhập số lớn hơn 1")
+        .min(0, "Vui lòng nhập số lớn hơn 0")
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập "),
       question7: yup
         .number()
-        .min(1, "Vui lòng nhập số lớn hơn 1")
+        .min(0, "Vui lòng nhập số lớn hơn 0")
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập "),
       question8: yup
         .number()
-        .min(1, "Vui lòng nhập số lớn hơn 1")
+        .min(0, "Vui lòng nhập số lớn hơn 0")
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập "),
       question9: yup
         .number()
-        .min(1, "Vui lòng nhập số lớn hơn 1")
+        .min(0, "Vui lòng nhập số lớn hơn 0")
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập "),
       question10: yup
         .number()
-        .min(1, "Vui lòng nhập số lớn hơn 1")
+        .min(0, "Vui lòng nhập số lớn hơn 0")
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập "),
       question11: yup
         .number()
-        .min(1, "Vui lòng nhập số lớn hơn 1")
+        .min(0, "Vui lòng nhập số lớn hơn 0")
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập "),
       question12: yup
         .number()
-        .min(1, "Vui lòng nhập số lớn hơn 1")
+        .min(0, "Vui lòng nhập số lớn hơn 0")
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập "),
       question13: yup
         .number()
-        .min(1, "Vui lòng nhập số lớn hơn 1")
+        .min(0, "Vui lòng nhập số lớn hơn 0")
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập "),
       question14: yup
         .number()
-        .min(1, "Vui lòng nhập số lớn hơn 1")
+        .min(0, "Vui lòng nhập số lớn hơn 0")
         .required("Vui lòng nhập ")
         .typeError("Vui lòng nhập "),
     })
