@@ -77,7 +77,7 @@ function Companymanage(props) {
     //   departmentId: department._id,
     //   companyId: department.companyId,
     // });
-
+    console.log(data);
     await createJob({
       ...data,
       departmentId: department._id,

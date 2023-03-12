@@ -62,81 +62,21 @@ const ModalAddNeedPosi = ({
         .typeError("Vui lòng nhập"),
       description: yup.string().required("Vui lòng nhập "),
       location: yup.mixed().required("Vui lòng nhập "),
-      question0: yup
-        .number()
-        .min(0, "Vui lòng nhập số lớn hơn 0")
-        .required("Vui lòng nhập ")
-        .typeError("Vui lòng nhập "),
-      question1: yup
-        .number()
-        .min(0, "Vui lòng nhập số lớn hơn 0")
-        .required("Vui lòng nhập ")
-        .typeError("Vui lòng nhập "),
-      question2: yup
-        .number()
-        .min(0, "Vui lòng nhập số lớn hơn 0")
-        .required("Vui lòng nhập ")
-        .typeError("Vui lòng nhập "),
-      question3: yup
-        .number()
-        .min(0, "Vui lòng nhập số lớn hơn 0")
-        .required("Vui lòng nhập ")
-        .typeError("Vui lòng nhập "),
-      question4: yup
-        .number()
-        .min(0, "Vui lòng nhập số lớn hơn 0")
-        .required("Vui lòng nhập ")
-        .typeError("Vui lòng nhập "),
-      question5: yup
-        .number()
-        .min(0, "Vui lòng nhập số lớn hơn 0")
-        .required("Vui lòng nhập ")
-        .typeError("Vui lòng nhập "),
-      question6: yup
-        .number()
-        .min(0, "Vui lòng nhập số lớn hơn 0")
-        .required("Vui lòng nhập ")
-        .typeError("Vui lòng nhập "),
-      question7: yup
-        .number()
-        .min(0, "Vui lòng nhập số lớn hơn 0")
-        .required("Vui lòng nhập ")
-        .typeError("Vui lòng nhập "),
-      question8: yup
-        .number()
-        .min(0, "Vui lòng nhập số lớn hơn 0")
-        .required("Vui lòng nhập ")
-        .typeError("Vui lòng nhập "),
-      question9: yup
-        .number()
-        .min(0, "Vui lòng nhập số lớn hơn 0")
-        .required("Vui lòng nhập ")
-        .typeError("Vui lòng nhập "),
-      question10: yup
-        .number()
-        .min(0, "Vui lòng nhập số lớn hơn 0")
-        .required("Vui lòng nhập ")
-        .typeError("Vui lòng nhập "),
-      question11: yup
-        .number()
-        .min(0, "Vui lòng nhập số lớn hơn 0")
-        .required("Vui lòng nhập ")
-        .typeError("Vui lòng nhập "),
-      question12: yup
-        .number()
-        .min(0, "Vui lòng nhập số lớn hơn 0")
-        .required("Vui lòng nhập ")
-        .typeError("Vui lòng nhập "),
-      question13: yup
-        .number()
-        .min(0, "Vui lòng nhập số lớn hơn 0")
-        .required("Vui lòng nhập ")
-        .typeError("Vui lòng nhập "),
-      question14: yup
-        .number()
-        .min(0, "Vui lòng nhập số lớn hơn 0")
-        .required("Vui lòng nhập ")
-        .typeError("Vui lòng nhập "),
+      question0: yup.string(),
+      question1: yup.string(),
+      question2: yup.string(),
+      question3: yup.string(),
+      question4: yup.string(),
+      question5: yup.string(),
+      question6: yup.string(),
+      question7: yup.string(),
+      question8: yup.string(),
+      question9: yup.string(),
+      question10: yup.string(),
+      question11: yup.string(),
+      question12: yup.string(),
+      question13: yup.string(),
+      question14: yup.string(),
     })
     .required();
 
@@ -190,6 +130,35 @@ const ModalAddNeedPosi = ({
     };
     if (isAddNew) {
       handleAddJob(objJob);
+      reset({
+        position: [],
+        level: [],
+        industry: [],
+        location: [],
+        environment: [],
+        major: [],
+        experience: "",
+        salaryMin: "",
+        salaryMax: "",
+        description: "",
+        quantity: "",
+        title: [],
+        question0: "",
+        question1: "",
+        question2: "",
+        question3: "",
+        question4: "",
+        question5: "",
+        question6: "",
+        question7: "",
+        question8: "",
+        question9: "",
+        question10: "",
+        question11: "",
+        question12: "",
+        question13: "",
+        question14: "",
+      });
     } else {
       handleAddJob(objJob);
     }
@@ -236,7 +205,8 @@ const ModalAddNeedPosi = ({
                     }}
                     render={({ field }) => (
                       <ReactSelectShowType
-                        register={{ ...field }}
+                        {...field}
+                        // register={{ ...field }}
                         placeholder='Chọn chức danh công việc'
                         options={jobTitleOption}
                         minInput={1}
@@ -317,7 +287,8 @@ const ModalAddNeedPosi = ({
                     }}
                     render={({ field }) => (
                       <ReactSelectShowType
-                        register={{ ...field }}
+                        {...field}
+                        // register={{ ...field }}
                         isMulti={true}
                         placeholder='Chọn chuyên ngành ứng viên'
                         options={majorOptions}
@@ -371,7 +342,8 @@ const ModalAddNeedPosi = ({
                     }}
                     render={({ field }) => (
                       <ReactSelectShowType
-                        register={{ ...field }}
+                        {...field}
+                        // register={{ ...field }}
                         placeholder='Chọn nơi làm việc'
                         options={provinceOptions}
                         minInput={1}
