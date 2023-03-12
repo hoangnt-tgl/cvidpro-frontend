@@ -216,17 +216,15 @@ const useNeedRecuited = ({ search }) => {
   const handleAddQuestion = async () => {
     let question = newQuestion;
     question.detail.push(childQuestion);
-    // setNewJob({ ...newJob, question: [...questionOptions, newQuestion] });
-    // setQuestionOptions([...questionOptions, newQuestion]);
     setAddOnQuestionOptions([...addOnQuestionOptions, question]);
     setChildQuestion("");
     setNewQuestion(initQuestion);
   };
   const deleteAddOnQuestion = (index) => {
-    let question = questionOptions;
+    let question = addOnQuestionOptions;
     question.splice(index, 1);
     let newQuestion = new Array(...question);
-    setQuestionOptions(newQuestion);
+    setAddOnQuestionOptions(newQuestion);
   };
   return [
     listJob,
