@@ -1,0 +1,45 @@
+.register-wrapper {
+  padding: 1rem 6rem;
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+.select-style {
+  font-weight: 400;
+  height: 40px;
+}
+.register-steps {
+  /* border: 2px solid black; */
+  height: 100vh;
+  transition: all 0.5s ease-in-out;
+  animation: smoothAppear 0.5s ease-in-out forwards;
+}
+.header-register {
+  /* border: 2px solid blue; */
+  height: 15%;
+}
+.body-register {
+  /* border: 2px solid red; */
+  height: 70%;
+  position: relative;
+}
+.body-register p {
+  margin-bottom: 5px;
+}
+.body-register input {
+  border-radius: 5px;
+}
+.body-register .form-group {
+  margin-bottom: 1rem;
+}
+.register-btn {
+  /* border: 2px solid red; */
+  position: absolute;
+  bottom: -12%;
+  right: 0;
+  display: flex;
+  gap: 5px;
+}
+.register-btn button {
+  margin: 0px 0px;
+}
