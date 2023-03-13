@@ -19,6 +19,7 @@ import {
   getListEnvironment,
   getListIndustry,
 } from "../../services/GetListService";
+import "../../css/jobsave.css"
 import { createOrder } from "../../services/OrderApi";
 import swal from "sweetalert";
 function Jobsavedjobs(props) {
@@ -206,7 +207,7 @@ function Jobsavedjobs(props) {
               <div className=" m-b30">
                 <div className="section-full">
                   <div className="find-job-bx">
-                    <form className="dezPlaceAni">
+                    <form className="dezPlaceAni backgroundjobsave">
                       <div className="row">
                         <div className="col-lg-6 col-md-6">
                           <div className="form-group">
@@ -247,6 +248,7 @@ function Jobsavedjobs(props) {
                               isMulti={true}
                               closeMenuOnSelect={false}
                               isDisabled={resume.jobCriteria?.status}
+                              className="jobsave"
                             ></FormControl>
                           </div>
                         </div>
