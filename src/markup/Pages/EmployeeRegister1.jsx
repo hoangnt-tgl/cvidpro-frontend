@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
-
 import {
   getListSchools,
   getListProvince,
@@ -16,7 +15,6 @@ import {
   employeeSignupAction,
 } from "../../store/actions/AuthActions";
 import FormRegister from "../../components/EmployeeRegister/Step1/FormRegister";
-import Level from "../../components/EmployeeRegister/Step3/Level";
 import FormRegister1 from "../../components/EmployeeRegister/Step2/FormRegister1";
 import "../../components/EmployeeRegister/RegisterStyles.css";
 import FormRegister2 from "../../components/EmployeeRegister/Step3/FormRegister2";
@@ -265,25 +263,30 @@ function Register2(props) {
   }
 
   return (
-    <div className='vh-100 container-xxl register-wrapper'>
-      <div className='header-regiser'>
-        <div className='text-left p-tb30'>
+    <div className="register-container">
+      <div className="header-regiser">
+        <div className="text-left p-tb30">
           <Link to={"./"}>
-            <h1 className='m-b0'>CVIDPRO</h1>
+            <h1 className="m-b0">CVIDPRO</h1>
           </Link>
         </div>
       </div>
-      <div className='container-xl'>
-        <div className='bg-img-fix' style={{ backgroundImage: `url(${bnr})` }}>
-          <div className='row'>
-            <div className='col-md-4 col-sm-4 col-12 bg-white'>
-              <FormRegister />
-            </div>
-            <div className='col-md-4 col-sm-4 col-12 bg-white'>
-              <FormRegister1 />
-            </div>
-            <div className='col-md-4 col-sm-4 col-12 bg-white'>
-              <FormRegister2 />
+      <div className="vh-100 container-xxl register-wrapper">
+        <div className="container-md form-container">
+          <div
+            className="bg-img-fix"
+            style={{ backgroundImage: `url(${bnr})` }}
+          >
+            <div className="row">
+              <div className="col-md-12 col-sm-12 col-12 bg-white">
+                <FormRegister />
+              </div>
+              <div className="col-md-12 col-sm-12 col-12 bg-white d-none">
+                <FormRegister1 />
+              </div>
+              <div className="col-md-12 col-sm-12 col-12 bg-white d-none">
+                <FormRegister2 />
+              </div>
             </div>
           </div>
         </div>
