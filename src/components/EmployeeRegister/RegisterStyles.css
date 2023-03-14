@@ -1,10 +1,10 @@
 .register-container {
-  background-color: #fbfcfc;
+  background-color: white;
   height: 100vh;
+  overflow: hidden;
 }
 .header-regiser {
-  padding: 1rem 0rem;
-  /* background: linear-gradient(270deg, rgb(0, 90, 255) 0%, rgb(0, 23, 68) 100%); */
+  padding: 0rem 1rem;
 }
 .header-regiser h1 {
   color: black;
@@ -15,10 +15,14 @@
 }
 .form-container {
   margin: 0 auto;
-  background-color: white;
   padding: 2rem 6rem;
   position: relative;
-  /* box-shadow: 0 2px 10px 0 rgb(0 0 0 / 5%); */
+}
+.wrapper-form {
+  background-color: #f0f0f0;
+  box-shadow: 0 2px 10px 0 rgb(0 0 0 / 5%);
+  /* background-color: wheat; */
+  padding: 10px 20px;
 }
 .select-style {
   font-weight: 400;
@@ -55,9 +59,10 @@
 }
 .register-btn {
   /* border: 2px solid red; */
-  position: absolute;
-  right: 0;
+  /* position: absolute; */
+  /* right: 0; */
   display: flex;
+  justify-content: right;
   gap: 5px;
 }
 .register-btn button {

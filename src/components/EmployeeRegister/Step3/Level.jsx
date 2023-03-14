@@ -1,7 +1,7 @@
 import React from "react";
 import ReactSelectShowType from "../../../customComponents/ReactSelectShowType/ReactSelectShowType";
 import Select from "react-select";
-const Level = () => {
+const Level = ({ setStep }) => {
   return (
     <>
       <form>
@@ -104,7 +104,13 @@ const Level = () => {
           </span>
         </div>
         <div className='form-group text-right register-btn'>
-          <button type='button' className='site-button dz-xs-flex m-r5 '>
+          <button
+            type='button'
+            className='site-button dz-xs-flex m-r5 '
+            onClick={() => {
+              setStep((prev) => prev - 1);
+            }}
+          >
             <i className='fa fa-arrow-left' aria-hidden='true'></i> Quay lại
           </button>
           <button type='submit' className='site-button dz-xs-flex m-r5 btn'>

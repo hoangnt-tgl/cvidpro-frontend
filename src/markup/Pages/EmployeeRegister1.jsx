@@ -273,14 +273,16 @@ function Register2(props) {
                   <h1 className='m-b0'>CVIDPRO</h1>
                 </Link>
               </div>
-              <div className={step === 1 ? `appear` : `register-steps`}>
-                <FormRegister setStep={setStep} />
-              </div>
-              <div className={step === 2 ? ` appear` : `register-steps`}>
-                <FormRegister1 setStep={setStep} />
-              </div>
-              <div className={step === 3 ? `appear` : `register-steps`}>
-                <FormRegister2 setStep={setStep} />
+              <div className='wrapper-form'>
+                <div className={step === 1 ? `appear` : `register-steps`}>
+                  <FormRegister setStep={setStep} />
+                </div>
+                <div className={step === 2 ? ` appear` : `register-steps`}>
+                  <FormRegister1 setStep={setStep} />
+                </div>
+                <div className={step === 3 ? `appear` : `register-steps`}>
+                  <FormRegister2 setStep={setStep} />
+                </div>
               </div>
             </div>
           </div>
