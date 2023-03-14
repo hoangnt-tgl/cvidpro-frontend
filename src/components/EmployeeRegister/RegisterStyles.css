@@ -3,49 +3,41 @@
   height: 100vh;
 }
 .header-regiser {
-  padding: 1rem 3rem;
-  color: white;
-  background: linear-gradient(270deg, rgb(0, 90, 255) 0%, rgb(0, 23, 68) 100%);
+  padding: 1rem 0rem;
+  /* background: linear-gradient(270deg, rgb(0, 90, 255) 0%, rgb(0, 23, 68) 100%); */
 }
 .header-regiser h1 {
-  color: white;
+  color: black;
 }
 .register-wrapper {
   color: var(--text-dark);
   font-weight: 600;
-  /* height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; */
 }
 .form-container {
-  max-width: 1000px;
   margin: 0 auto;
   background-color: white;
   padding: 2rem 6rem;
-  position: absolute;
-  min-width: 800px;
-  left: 50%;
-  top: 7%;
-  transform: translateX(-50%);
-  box-shadow: 0 2px 10px 0 rgb(0 0 0 / 5%);
+  position: relative;
+  /* box-shadow: 0 2px 10px 0 rgb(0 0 0 / 5%); */
 }
 .select-style {
   font-weight: 400;
   height: 40px;
 }
 .register-steps {
-  /* border: 2px solid black; */
-  height: 70vh;
+  opacity: 0;
+  display: none;
+}
+.appear {
+  animation: smoothAppear 0.8s ease forwards;
   transition: all 0.5s ease-in-out;
-  animation: smoothAppear 0.5s ease-in-out forwards;
 }
 .header-register {
   /* border: 2px solid blue; */
   height: 15%;
 }
 .header-register h3 {
-  text-align: center;
+  /* text-align: left; */
 }
 .body-register {
   /* border: 2px solid red; */
@@ -64,11 +56,48 @@
 .register-btn {
   /* border: 2px solid red; */
   position: absolute;
-  bottom: -12%;
   right: 0;
   display: flex;
   gap: 5px;
 }
 .register-btn button {
   margin: 0px 0px;
+}
+
+@keyframes smoothAppear {
+  0% {
+    opacity: 0;
+    display: none;
+  }
+  100% {
+    opacity: 1;
+    display: block;
+  }
+}
+@keyframes smoothImg {
+  0% {
+    opacity: 1;
+    background: url("../../images/background/bg6.jpg") no-repeat center
+      center/cover fixed;
+  }
+  25% {
+    opacity: 1;
+    background: url("../../images/background/bg6.jpg") no-repeat center
+      center/cover fixed;
+  }
+  50% {
+    opacity: 1;
+    background: url("../../images/background/bg2.jpg") no-repeat center
+      center/cover fixed;
+  }
+  100% {
+    opacity: 1;
+    background: url("../../images/background/bg2.jpg") no-repeat center
+      center/cover fixed;
+  }
+}
+.register-img {
+  /* background: url("../../images/background/bg1.jpg") no-repeat center
+    center/cover fixed; */
+  animation: smoothImg 10s ease infinite forwards;
 }

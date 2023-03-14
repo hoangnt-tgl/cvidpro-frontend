@@ -3,7 +3,7 @@ import Level from "./Level";
 
 const FormRegister2 = () => {
   return (
-    <div className='register-steps'>
+    <div className=''>
       <div className='header-register'></div>
       <div className='body-register'>
         <Level />

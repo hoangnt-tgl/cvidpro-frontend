@@ -263,33 +263,29 @@ function Register2(props) {
   }
 
   return (
-    <div className="register-container">
-      <div className="header-regiser">
-        <div className="text-left p-tb30">
-          <Link to={"./"}>
-            <h1 className="m-b0">CVIDPRO</h1>
-          </Link>
-        </div>
-      </div>
-      <div className="vh-100 container-xxl register-wrapper">
-        <div className="container-md form-container">
-          <div
-            className="bg-img-fix"
-            style={{ backgroundImage: `url(${bnr})` }}
-          >
-            <div className="row">
-              <div className="col-md-12 col-sm-12 col-12 bg-white">
-                <FormRegister />
+    <div className='container-fluid '>
+      <div className='row register-container'>
+        <div className='col-md-6 col-sm-12 col-12 bg-white'>
+          <div className=' register-wrapper'>
+            <div className='container-md form-container'>
+              <div className='header-regiser'>
+                <Link to={"./"}>
+                  <h1 className='m-b0'>CVIDPRO</h1>
+                </Link>
               </div>
-              <div className="col-md-12 col-sm-12 col-12 bg-white d-none">
-                <FormRegister1 />
+              <div className={step === 1 ? `appear` : `register-steps`}>
+                <FormRegister setStep={setStep} />
               </div>
-              <div className="col-md-12 col-sm-12 col-12 bg-white d-none">
-                <FormRegister2 />
+              <div className={step === 2 ? ` appear` : `register-steps`}>
+                <FormRegister1 setStep={setStep} />
+              </div>
+              <div className={step === 3 ? `appear` : `register-steps`}>
+                <FormRegister2 setStep={setStep} />
               </div>
             </div>
           </div>
         </div>
+        <div className='col-md-6 col-sm-12 col-12 bg-white register-img'></div>
       </div>
     </div>
   );

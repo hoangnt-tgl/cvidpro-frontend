@@ -1,7 +1,7 @@
 import React from "react";
 import ReactSelectShowType from "../../../customComponents/ReactSelectShowType/ReactSelectShowType";
 
-const Address = () => {
+const Address = ({ setStep }) => {
   return (
     <>
       <form>
@@ -62,7 +62,7 @@ const Address = () => {
           <button
             type='button'
             className='site-button dz-xs-flex m-r5 '
-            //   onClick={() => setStep(2)}
+            onClick={() => setStep((prev) => prev - 1)}
           >
             <i className='fa fa-arrow-left' aria-hidden='true'></i> Quay lại
           </button>
@@ -70,7 +70,7 @@ const Address = () => {
             type='button'
             className='site-button dz-xs-flex m-r5 btn'
             //   disabled={!province || !district || !ward || !address}
-            //   onClick={onSubmitStep2}
+            onClick={() => setStep((prev) => prev + 1)}
           >
             Tiếp tục <i className='fa fa-arrow-right' aria-hidden='true'></i>
           </button>

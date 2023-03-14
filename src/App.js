@@ -37,8 +37,8 @@ function App(props) {
       <Route path='/' exact component={HomePage} />
       <Route path='/employee/login' exact component={EmployeeLogin} />
       <Route path='/company/login' exact component={CompanyLogin} />
-      <Route path='/employee/register' exact component={EmployeeRegister} />
-      <Route path='/employee/register1' exact component={EmployeeRegister1} />
+      {/* <Route path='/employee/register' exact component={EmployeeRegister} /> */}
+      <Route path='/employee/register' exact component={EmployeeRegister1} />
       <Route path='/company/register' exact component={CompanyRegister} />
       <Route path='/confirm/job-detail/:id' exact component={JobDetailAdmin} />
       <Route path='/confirm/job-resume/:id' exact component={JobResumeAdmin} />

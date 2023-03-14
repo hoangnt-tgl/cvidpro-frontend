@@ -1,6 +1,6 @@
 import React from "react";
 import Select from "react-select";
-const PersonalInfo = () => {
+const PersonalInfo = ({ setStep }) => {
   return (
     <>
       {" "}
@@ -37,7 +37,7 @@ const PersonalInfo = () => {
         </div>
         <div className='form-group'>
           <p>Giới tính</p>
-          <div className="select-style">
+          <div className='select-style'>
             {" "}
             <Select
               placeholder='Chọn giới tính'
@@ -76,7 +76,13 @@ const PersonalInfo = () => {
           </div>
         </div>
         <div className='form-group text-right register-btn'>
-          <button type='button' className='site-button dz-xs-flex m-r5 btn'>
+          <button
+            type='button'
+            className='site-button dz-xs-flex m-r5 btn'
+            onClick={() => {
+              setStep((prev) => prev + 1);
+            }}
+          >
             Tiếp tục <i className='fa fa-arrow-right' aria-hidden='true'></i>
           </button>
         </div>
