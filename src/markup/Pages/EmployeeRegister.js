@@ -211,46 +211,7 @@ function Register2(props) {
     e.preventDefault();
     let error = false;
     const errorObj = { ...errorsObj };
-    // if (name === "") {
-    //   errorObj.name = "Vui lòng nhập tên";
-    //   error = true;
-    // }
-    // if (name !== "" && !name.includes(" ")) {
-    //   errorObj.name = "Vui lòng nhập đầy đủ họ và tên";
-    //   error = true;
-    // }
-    // if (username === "") {
-    //   errorObj.username = "Vui lòng nhập số điện thoại";
-    //   error = true;
-    // }
-    // if (username !== "" && username.length !== 10) {
-    //   errorObj.username = "Số điện thoại không hợp lệ";
-    //   error = true;
-    // }
-    // if (birthday === "") {
-    //   errorObj.birthday = "Vui lòng nhập ngày sinh";
-    //   error = true;
-    // }
-    // if (gender === "") {
-    //   errorObj.gender = "Vui lòng nhập giới tính";
-    //   error = true;
-    // }
-    // if (province === "") {
-    //   errorObj.province = "Vui lòng nhập tỉnh/thành phố";
-    //   error = true;
-    // }
-    // if (district === "") {
-    //   errorObj.district = "Vui lòng nhập quận/huyện";
-    //   error = true;
-    // }
-    // if (ward === "") {
-    //   errorObj.ward = "Vui lòng nhập phường/xã";
-    //   error = true;
-    // }
-    // if (address === "") {
-    //   errorObj.address = "Vui lòng nhập địa chỉ";
-    //   error = true;
-    // }
+
     if (level === "") {
       errorObj.level = "Vui lòng nhập trình độ";
       error = true;
@@ -275,34 +236,7 @@ function Register2(props) {
       errorObj.endYear = "Vui lòng nhập năm kết thúc";
       error = true;
     }
-    // if (email === "") {
-    //   errorObj.email = "Vui lòng nhập email";
-    //   error = true;
-    // }
-    // if (email !== "" && !email.includes("@") && !email.includes(".")) {
-    //   errorObj.email = "Email không hợp lệ";
-    //   error = true;
-    // }
-    // if (password === "") {
-    //   errorObj.password = "Vui lòng nhập mật khẩu";
-    //   error = true;
-    // }
-    // if (password !== "" && password.length < 6) {
-    //   errorObj.password = "Mật khẩu phải có ít nhất 6 ký tự";
-    //   error = true;
-    // }
-    // if (password !== "" && password.length > 20) {
-    //   errorObj.password = "Mật khẩu không được quá 20 ký tự";
-    //   error = true;
-    // }
-    // if (confirmPassword === "") {
-    //   errorObj.confirmPassword = "Vui lòng nhập lại mật khẩu";
-    //   error = true;
-    // }
-    // if (confirmPassword !== "" && confirmPassword !== password) {
-    //   errorObj.confirmPassword = "Mật khẩu không khớp";
-    //   error = true;
-    // }
+
     setErrors(errorObj);
     if (error) return;
     dispatch(loadingToggleAction(true));
@@ -336,8 +270,7 @@ function Register2(props) {
               <div className="login-form style-2">
                 <div className="logo-header text-center p-tb30">
                   <Link to={"./"}>
-                    <h1 className="m-b0">CVIDPRO</h1>
-                    {/* <img src={require("./../../images/logo.png")} alt="" /> */}
+                    <h1 className='m-b0'>CVIDPRO</h1>
                   </Link>
                 </div>
                 <div className="clearfix"></div>
@@ -735,8 +668,8 @@ function Register2(props) {
                     </form>
                   </div>
                 </div>
-                <div className="bottom-footer clearfix m-t10 m-b20 row text-center">
-                  <div className="col-lg-12 text-center">
+                <div className='bottom-footer clearfix m-t10 m-b20 row text-center d-none'>
+                  <div className='col-lg-12 text-center'>
                     <span>
                       {" "}
                       © Copyright by{" "}
