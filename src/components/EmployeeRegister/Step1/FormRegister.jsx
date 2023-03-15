@@ -1,7 +1,8 @@
 import React from "react";
 import PersonalInfo from "./PersonalInfo";
-import "../RegisterStyles.css";
-const FormRegister = ({ setStep }) => {
+import "../RegisterStyles.css"; //hook form
+
+const FormRegister = ({ setStep, setInfoRegister1 }) => {
   return (
     <div className=''>
       <div className='header-register'>
@@ -12,7 +13,7 @@ const FormRegister = ({ setStep }) => {
         {/* <p>Vui lòng nhập chính xác thông tin</p> */}
       </div>
       <div className='body-register'>
-        <PersonalInfo setStep={setStep} />
+        <PersonalInfo setStep={setStep} setInfoRegister1={setInfoRegister1} />
       </div>
     </div>
   );
