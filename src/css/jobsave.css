@@ -1,9 +1,7 @@
-.jobsave{
+.job-pri{
     font-weight: 550 !important;
-    font-family: inherit !important;
-    border-style: solid !important;
+    border: 1px solid #010101 !important;
 }
-
-.backgroundjobsave{
-    background-color: #87CEFA !important;
+.job-primary{
+    padding: 0px 0px !important;
 }
