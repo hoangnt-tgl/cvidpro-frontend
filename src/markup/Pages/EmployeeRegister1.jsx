@@ -15,8 +15,8 @@ import useGetOptions from "../../hooks/useGetOptions";
 
 function Register2(props) {
   //hookforms end
-  const { setInfoRegister1, setInfoRegister2, setInfoRegister3 } =
-    useRegister();
+  const { setInfoRegister1, setInfoRegister2, setInfoRegister3, registerUser } =
+    useRegister(props.history);
   const { optionsSelect, fetchDistric, fetchWard, fetchSchoolAndMajor } =
     useGetOptions();
   const [step, setStep] = useState(1);
@@ -54,6 +54,7 @@ function Register2(props) {
                     setInfoRegister3={setInfoRegister3}
                     optionsSelect={optionsSelect}
                     fetchSchoolAndMajor={fetchSchoolAndMajor}
+                    registerUser={registerUser}
                   />
                 </div>
               </div>
