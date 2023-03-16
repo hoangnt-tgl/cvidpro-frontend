@@ -75,7 +75,9 @@ const useGetOptions = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
+  useEffect(() => {
+    console.log(optionsSelect);
+  }, [optionsSelect]);
   return { optionsSelect, fetchDistric, fetchWard, fetchSchoolAndMajor };
 };
 
