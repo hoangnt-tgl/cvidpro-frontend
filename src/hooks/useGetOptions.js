@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { getInfoCompany } from "../services/CompanyApi";
 import {
+  getListCompanyType,
   getListDistrict,
+  getListIndustry,
   getListJobTitle,
   getListLevel,
   getListMajorByLevel,
@@ -8,7 +11,7 @@ import {
   getListSchools,
 } from "../services/GetListService";
 
-const useGetOptions = () => {
+const useGetOptions = (isAll) => {
   const [optionsSelect, setOpionsSelect] = useState({});
   async function fetchData() {
     let levels = await getListLevel().then((res) => {
@@ -72,13 +75,47 @@ const useGetOptions = () => {
       }));
     });
   }
+  function fetchFieldOptions() {
+    getListCompanyType().then((res) => {
+      console.log(res.data);
+      setOpionsSelect((prev) => ({
+        ...prev,
+        companyTypes: res.data.map((item) => ({
+          value: item._id,
+          label: item.name,
+        })),
+      }));
+    });
+    getListIndustry().then((res) => {
+      console.log(res.data);
+      setOpionsSelect((prev) => ({
+        ...prev,
+        field: res.data.map((item) => ({
+          value: item._id,
+          label: item.name,
+        })),
+      }));
+    });
+  }
+  async function getCompanyInfo(taxCode) {
+    return await getInfoCompany(taxCode);
+  }
   useEffect(() => {
-    fetchData();
+    if (isAll) {
+      fetchData();
+    }
   }, []);
   useEffect(() => {
     console.log(optionsSelect);
   }, [optionsSelect]);
-  return { optionsSelect, fetchDistric, fetchWard, fetchSchoolAndMajor };
+  return {
+    optionsSelect,
+    fetchDistric,
+    fetchWard,
+    fetchSchoolAndMajor,
+    fetchFieldOptions,
+    getCompanyInfo,
+  };
 };
 
 export default useGetOptions;

@@ -1,22 +1,14 @@
-import React from "react";
-import Select from "react-select";
+import React, { useEffect } from "react";
 //hookform
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
-  const genderOptions = [
-    { value: "Nam", label: "Nam" },
-    { value: "Nữ", label: "Nữ" },
-  ];
+
+const CompanyInfo = ({ setInfoRegister1, setStep, fetchFieldOptions }) => {
   const schema = yup.object().shape({
     name: yup.string().required("Vui lòng nhập họ và tên"),
+    position: yup.string().required("Vui lòng nhập chức vụ"),
     phone: yup.string().required("Vui lòng nhập số điện thoại").length(10),
-    birthday: yup
-      .date()
-      .required("Vui lòng nhập ngày sinh")
-      .typeError("Vui lòng nhập ngày sinh"),
-    gender: yup.object().required("Vui lòng nhập giới tính"),
     email: yup
       .string()
       .required("Vui lòng nhập email")
@@ -41,23 +33,26 @@ const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  function onHandleSubmit(data) {
+  async function onHandleSubmit(data) {
+    console.log(data);
     setInfoRegister1(data);
     // console.log(data);
-    // console.log(errors);
     if (Object.keys(errors).length === 0) {
+      await fetchFieldOptions();
       setStep(2);
     }
   }
+  useEffect(() => {
+    fetchFieldOptions();
+  }, []);
   return (
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
-        <p>Thông tin cá nhân :</p>
+        {" "}
+        <p>Thông tin về công ty :</p>
         <div className='form-group'>
-          <p>Họ và tên</p>
           <input
-            type='text'
-            className='form-control small'
+            className='form-control'
             placeholder='Nhập họ và tên'
             {...register("name")}
           />
@@ -66,9 +61,17 @@ const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
           </div>
         </div>
         <div className='form-group'>
-          <p>Số điện thoại</p>
           <input
-            type='text'
+            className='form-control'
+            placeholder='Nhập chức vụ'
+            {...register("position")}
+          />
+          <div className='text-danger'>
+            {errors?.position?.message && <div>{errors.position.message}</div>}
+          </div>
+        </div>
+        <div className='form-group'>
+          <input
             className='form-control'
             placeholder='Nhập số điện thoại'
             {...register("phone")}
@@ -78,40 +81,6 @@ const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
           </div>
         </div>
         <div className='form-group'>
-          <p>Ngày sinh</p>
-          <input
-            type='date'
-            className='form-control'
-            placeholder='Nhập ngày sinh'
-            {...register("birthday")}
-          />
-          <div className='text-danger'>
-            {errors.birthday?.message && <div>{errors.birthday.message}</div>}
-          </div>
-        </div>
-        <div className='form-group'>
-          <p>Giới tính</p>
-          <div className='select-style'>
-            {" "}
-            <Controller
-              name='gender'
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  placeholder='Chọn giới tính'
-                  options={genderOptions}
-                />
-              )}
-            />
-          </div>
-
-          <div className='text-danger'>
-            {errors.gender?.message && <div>{errors.gender.message}</div>}
-          </div>
-        </div>
-        <div className='form-group'>
-          <p>Email</p>
           <input
             type='email'
             className='form-control'
@@ -119,29 +88,31 @@ const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
             {...register("email")}
           />
           <div className='text-danger'>
-            {errors.email?.message && <div>{errors.email.message}</div>}
+            {errors?.email?.message && <div>{errors.email.message}</div>}
           </div>
         </div>
         <div className='form-group'>
-          <p>Mật khẩu</p>
           <input
             className='form-control'
-            placeholder='Nhập mật khẩu'
+            type='password'
+            placeholder='Nhập mật khẩu'
+            minLength='6'
             {...register("password")}
           />
           <div className='text-danger'>
-            {errors.password?.message && <div>{errors.password.message}</div>}
+            {errors?.password?.message && <div>{errors.password.message}</div>}
           </div>
         </div>
         <div className='form-group'>
-          <p>Nhập lại mật khẩu</p>
           <input
             className='form-control'
-            placeholder='Nhập lại mật khẩu'
+            type='password'
+            placeholder='Nhập lại mật khẩu'
+            minLength='6'
             {...register("confirmPassword")}
           />
           <div className='text-danger'>
-            {errors.confirmPassword?.message && (
+            {errors?.confirmPassword?.message && (
               <div>{errors.confirmPassword.message}</div>
             )}
           </div>
@@ -156,4 +127,4 @@ const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
   );
 };
 
-export default PersonalInfo;
+export default CompanyInfo;

@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import {
+  companySignupAction,
   employeeSignupAction,
   loadingToggleAction,
 } from "../store/actions/AuthActions";
@@ -33,11 +34,39 @@ const useRegister = (history) => {
     console.log(data);
     dispatch(employeeSignupAction(data, history));
   }
+  function registerCompany(infoRegister2) {
+    let data = {
+      email: infoRegister1.email,
+      password: infoRegister1.password,
+      name: infoRegister1.name,
+      status: infoRegister2.status,
+      position: infoRegister1.position,
+      phone: infoRegister1.phone,
+      companyType: infoRegister2.companyType.value,
+      field: infoRegister2.field,
+      companyName: infoRegister2.companyInfo.companyName,
+      address: infoRegister2.companyInfo.address,
+      username: infoRegister2.companyInfo.taxCode,
+      mainIndustry: infoRegister2.mainIndustry,
+      businessLicense: infoRegister2.businessLicense,
+      engName: infoRegister2.companyInfo.engName,
+      sortName: infoRegister2.companyInfo.sortName,
+      typeOfBusiness: infoRegister2.companyInfo.typeOfBusiness,
+      openDate: infoRegister2.companyInfo.ppenDate,
+      companyPhone: infoRegister2.companyInfo.companyPhone,
+      representative: infoRegister2.companyInfo.representative,
+      managedBy: infoRegister2.companyInfo.managedBy,
+    };
+    console.log(data);
+    dispatch(loadingToggleAction(true));
+    dispatch(companySignupAction(data, history));
+  }
   return {
     setInfoRegister1,
     setInfoRegister2,
     setInfoRegister3,
     registerUser,
+    registerCompany,
   };
 };
 
