@@ -10,6 +10,7 @@ const Level = ({
   fetchSchoolAndMajor,
   setInfoRegister3,
   optionsSelect,
+  registerUser,
 }) => {
   const schema = yup.object().shape({
     level: yup.object().required("Vui lòng chọn trình độ"),
@@ -46,7 +47,7 @@ const Level = ({
     console.log(data);
     // console.log(errors);
     if (Object.keys(errors).length === 0) {
-      setStep(3);
+      registerUser(data);
     }
   }
   return (

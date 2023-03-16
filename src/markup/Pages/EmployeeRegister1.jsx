@@ -12,57 +12,40 @@ import "../../components/EmployeeRegister/RegisterStyles.css";
 import FormRegister2 from "../../components/EmployeeRegister/Step3/FormRegister2";
 import useRegister from "../../hooks/useRegister";
 import useGetOptions from "../../hooks/useGetOptions";
+import RegisterLayout from "../../customComponents/RegisterLayout/RegisterLayout";
 
 function Register2(props) {
   //hookforms end
-  const { setInfoRegister1, setInfoRegister2, setInfoRegister3 } =
-    useRegister();
+  const { setInfoRegister1, setInfoRegister2, setInfoRegister3, registerUser } =
+    useRegister(props.history);
   const { optionsSelect, fetchDistric, fetchWard, fetchSchoolAndMajor } =
-    useGetOptions();
+    useGetOptions(true);
   const [step, setStep] = useState(1);
 
   return (
-    <div className='container-fluid '>
-      <div className='row register-container'>
-        <div className='col-md-6 col-sm-12 col-12 bg-white align-middle'>
-          <div className=' register-wrapper'>
-            <div className='container-md form-container'>
-              <div className='header-regiser'>
-                <Link to={"./"}>
-                  <h1 className='m-b0'>CVIDPRO</h1>
-                </Link>
-              </div>
-              <div className='wrapper-form'>
-                <div className={step === 1 ? `appear` : `register-steps`}>
-                  <FormRegister
-                    setStep={setStep}
-                    setInfoRegister1={setInfoRegister1}
-                  />
-                </div>
-                <div className={step === 2 ? ` appear` : `register-steps`}>
-                  <FormRegister1
-                    setStep={setStep}
-                    optionsSelect={optionsSelect}
-                    fetchDistric={fetchDistric}
-                    fetchWard={fetchWard}
-                    setInfoRegister2={setInfoRegister2}
-                  />
-                </div>
-                <div className={step === 3 ? `appear` : `register-steps`}>
-                  <FormRegister2
-                    setStep={setStep}
-                    setInfoRegister3={setInfoRegister3}
-                    optionsSelect={optionsSelect}
-                    fetchSchoolAndMajor={fetchSchoolAndMajor}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className='col-md-6 col-sm-12 col-12 bg-white register-img'></div>
+    <RegisterLayout>
+      <div className={step === 1 ? `appear` : `register-steps`}>
+        <FormRegister setStep={setStep} setInfoRegister1={setInfoRegister1} />
       </div>
-    </div>
+      <div className={step === 2 ? ` appear` : `register-steps`}>
+        <FormRegister1
+          setStep={setStep}
+          optionsSelect={optionsSelect}
+          fetchDistric={fetchDistric}
+          fetchWard={fetchWard}
+          setInfoRegister2={setInfoRegister2}
+        />
+      </div>
+      <div className={step === 3 ? `appear` : `register-steps`}>
+        <FormRegister2
+          setStep={setStep}
+          setInfoRegister3={setInfoRegister3}
+          optionsSelect={optionsSelect}
+          fetchSchoolAndMajor={fetchSchoolAndMajor}
+          registerUser={registerUser}
+        />
+      </div>
+    </RegisterLayout>
   );
 }
 const mapStateToProps = (state) => {

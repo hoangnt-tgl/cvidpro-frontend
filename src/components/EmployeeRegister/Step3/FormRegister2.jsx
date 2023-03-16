@@ -6,6 +6,7 @@ const FormRegister2 = ({
   fetchSchoolAndMajor,
   setInfoRegister3,
   optionsSelect,
+  registerUser,
 }) => {
   return (
     <div className=''>
@@ -16,6 +17,7 @@ const FormRegister2 = ({
           optionsSelect={optionsSelect}
           fetchSchoolAndMajor={fetchSchoolAndMajor}
           setInfoRegister3={setInfoRegister3}
+          registerUser={registerUser}
         />
       </div>
     </div>
