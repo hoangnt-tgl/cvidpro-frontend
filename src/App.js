@@ -26,6 +26,7 @@ import JobResumeAdmin from "./markup/Pages/JobResumeAdmin";
 import EmployeeRegister1 from "./markup/Pages/EmployeeRegister1";
 import CompanyRegister1 from "./markup/Pages/CompanyRegister1";
 // import ForgotPassword from "./markup/Pages/ForgotPassword";
+import { Toaster } from "react-hot-toast";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ function App(props) {
         >
           <Index />
         </Suspense>
+        <Toaster />
       </>
     );
   } else {
@@ -80,6 +82,31 @@ function App(props) {
         >
           {routes}
         </Suspense>
+        <Toaster
+          position='top-right'
+          reverseOrder={false}
+          gutter={8}
+          containerClassName=''
+          containerStyle={{}}
+          toastOptions={{
+            // Define default options
+            className: "",
+            duration: 3000,
+            style: {
+              background: "#363636",
+              color: "#fff",
+            },
+
+            // Default options for specific types
+            success: {
+              duration: 3000,
+              theme: {
+                primary: "green",
+                secondary: "black",
+              },
+            },
+          }}
+        />
       </div>
     );
   }
