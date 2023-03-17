@@ -6,7 +6,7 @@ const RegisterLayout = ({ children }) => {
     <>
       <div className='container-fluid '>
         <div className='row register-container'>
-          <div className='col-md-6 col-sm-12 col-12 bg-white align-middle'>
+          <div className='col-md-6 col-sm-12 col-12 bg-white d-flex align-items-center'>
             <div className=' register-wrapper'>
               <div className='container-md form-container'>
                 <div className='header-regiser'>

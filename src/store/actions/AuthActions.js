@@ -1,3 +1,6 @@
+import { toast } from "react-hot-toast";
+import { logoutNoti, toastNoti } from "../../constants/notifications";
+import { toastPromise } from "../../hooks/useToast";
 import {
   formatError,
   employeeLogin,
@@ -17,7 +20,7 @@ export const LOGOUT_ACTION = "[Logout action] logout action";
 
 export function employeeSignupAction(data, history) {
   return (dispatch) => {
-    employeeSignUp(data)
+    let signupApi = employeeSignUp(data)
       .then((response) => {
         dispatch(confirmedSignupAction({}));
         history.push("/employee/login");
@@ -26,12 +29,13 @@ export function employeeSignupAction(data, history) {
         const errorMessage = formatError(error.response.data.message || "");
         dispatch(signupFailedAction(errorMessage));
       });
+    toastPromise(signupApi, toastNoti("register"));
   };
 }
 
 export function employeeLoginAction(email, password, history) {
   return (dispatch) => {
-    employeeLogin(email, password)
+    let loginApi = employeeLogin(email, password)
       .then((response) => {
         saveTokenInLocalStorage(response.data);
         runLogoutTimer(dispatch, response.data.expiresIn * 1000, history);
@@ -46,26 +50,28 @@ export function employeeLoginAction(email, password, history) {
         const errorMessage = formatError(error.response.data.message || "");
         dispatch(loginFailedAction(errorMessage));
       });
+    toastPromise(loginApi, toastNoti("login"));
   };
 }
 
 export function companySignupAction(data, history) {
   return (dispatch) => {
-    companySignUp(data)
+    const signupApi = companySignUp(data)
       .then((response) => {
         dispatch(confirmedSignupAction({}));
-        history.push("/company/login");
+        // history.push("/company/login");
       })
       .catch((error) => {
         const errorMessage = formatError(error.response.data.message || "");
         dispatch(signupFailedAction(errorMessage));
       });
+    toastPromise(signupApi, toastNoti("register"));
   };
 }
 
 export function companyLoginAction(email, password, history) {
   return (dispatch) => {
-    companyLogin(email, password)
+    const loginApi = companyLogin(email, password)
       .then((response) => {
         console.log(response.data);
         saveTokenInLocalStorage(response.data);
@@ -77,6 +83,7 @@ export function companyLoginAction(email, password, history) {
         const errorMessage = formatError(error.response.data.message || "");
         dispatch(loginFailedAction(errorMessage));
       });
+    toastPromise(loginApi, toastNoti("login"));
   };
 }
 export function logout(history) {
@@ -91,6 +98,7 @@ export function logout(history) {
     "/company/register",
     "/register-2",
   ];
+  toast.success(logoutNoti);
   if (
     history &&
     history.location &&

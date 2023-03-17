@@ -16,6 +16,7 @@ import FormRegister from "../../components/Registers/CompanyRegister/Step1/FormR
 import FormRegister1 from "../../components/Registers/CompanyRegister/Step2/FormRegister1";
 import useRegister from "../../hooks/useRegister";
 import useGetOptions from "../../hooks/useGetOptions";
+import Stepper from "../../customComponents/Stepper/Stepper";
 
 function Register2(props) {
   const { setInfoRegister1, registerCompany } = useRegister(props.history);
@@ -33,8 +34,11 @@ function Register2(props) {
   const [openDate, setOpenDate] = useState("");
   const [status, setStatus] = useState("");
   const [typeOfBusiness, setTypeOfBusiness] = useState("");
-  const [step, setStep] = useState(2);
-
+  const [step, setStep] = useState(1);
+  let totalStep = [
+    { step: 1, title: "Thông tin đăng ký" },
+    { step: 2, title: "Thông tin công ty" },
+  ];
   const dispatch = useDispatch();
 
   // function getCompanyInfo(e) {
@@ -62,6 +66,8 @@ function Register2(props) {
 
   return (
     <RegisterLayout>
+      <h3 className='form-title m-t0'>Đăng ký doanh nghiệp</h3>
+      <Stepper step={step} totalStep={totalStep} />
       <div className={step === 1 ? `appear` : `register-steps`}>
         <FormRegister
           setStep={setStep}

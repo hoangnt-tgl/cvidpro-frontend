@@ -49,7 +49,6 @@ const CompanyInfo = ({ setInfoRegister1, setStep, fetchFieldOptions }) => {
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         {" "}
-        <p>Thông tin về công ty :</p>
         <div className='form-group'>
           <input
             className='form-control'
