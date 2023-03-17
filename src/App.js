@@ -28,6 +28,20 @@ import CompanyRegister1 from "./markup/Pages/CompanyRegister1";
 // import ForgotPassword from "./markup/Pages/ForgotPassword";
 import { Toaster } from "react-hot-toast";
 
+const toastOptions = {
+  // Define default options
+  className: "",
+  duration: 3000,
+  style: {},
+  // Default options for specific types
+  success: {
+    duration: 5000,
+    theme: {
+      primary: "green",
+      secondary: "black",
+    },
+  },
+};
 function App(props) {
   const dispatch = useDispatch();
   // useEffect(() => {
@@ -63,7 +77,14 @@ function App(props) {
         >
           <Index />
         </Suspense>
-        <Toaster />
+        <Toaster
+          position='top-right'
+          reverseOrder={false}
+          gutter={8}
+          containerClassName=''
+          containerStyle={{}}
+          toastOptions={toastOptions}
+        />
       </>
     );
   } else {
@@ -88,24 +109,7 @@ function App(props) {
           gutter={8}
           containerClassName=''
           containerStyle={{}}
-          toastOptions={{
-            // Define default options
-            className: "",
-            duration: 3000,
-            style: {
-              background: "#363636",
-              color: "#fff",
-            },
-
-            // Default options for specific types
-            success: {
-              duration: 3000,
-              theme: {
-                primary: "green",
-                secondary: "black",
-              },
-            },
-          }}
+          toastOptions={toastOptions}
         />
       </div>
     );

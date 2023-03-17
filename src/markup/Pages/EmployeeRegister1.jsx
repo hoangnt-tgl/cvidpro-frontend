@@ -1,11 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { connect, useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 
-import {
-  loadingToggleAction,
-  employeeSignupAction,
-} from "../../store/actions/AuthActions";
 import FormRegister from "../../components/EmployeeRegister/Step1/FormRegister";
 import FormRegister1 from "../../components/EmployeeRegister/Step2/FormRegister1";
 import "../../components/EmployeeRegister/RegisterStyles.css";
@@ -13,6 +8,7 @@ import FormRegister2 from "../../components/EmployeeRegister/Step3/FormRegister2
 import useRegister from "../../hooks/useRegister";
 import useGetOptions from "../../hooks/useGetOptions";
 import RegisterLayout from "../../customComponents/RegisterLayout/RegisterLayout";
+import Stepper from "../../customComponents/Stepper/Stepper";
 
 function Register2(props) {
   //hookforms end
@@ -21,9 +17,15 @@ function Register2(props) {
   const { optionsSelect, fetchDistric, fetchWard, fetchSchoolAndMajor } =
     useGetOptions(true);
   const [step, setStep] = useState(1);
-
+  const totalStep = [
+    { step: 1, title: "Thông tin đăng ký" },
+    { step: 2, title: "Thông tin cá nhân" },
+    { step: 3, title: "Thông tin học vấn" },
+  ];
   return (
     <RegisterLayout>
+      <h3 className='form-title m-t0'>Đăng ký người tìm việc</h3>
+      <Stepper step={step} totalStep={totalStep} />
       <div className={step === 1 ? `appear` : `register-steps`}>
         <FormRegister setStep={setStep} setInfoRegister1={setInfoRegister1} />
       </div>

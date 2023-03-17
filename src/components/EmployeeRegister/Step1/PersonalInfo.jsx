@@ -52,7 +52,6 @@ const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
   return (
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
-        <p>Thông tin cá nhân :</p>
         <div className='form-group'>
           <p>Họ và tên</p>
           <input
