@@ -14,7 +14,12 @@
     "react-datepicker": "^4.10.0",
     "react-devtools": "^4.21.0",
     "react-dom": "^16.12.0",
+<<<<<<< HEAD
     "react-hook-form": "^7.43.4",
+=======
+    "react-hook-form": "^7.43.2",
+    "react-hot-toast": "^2.4.0",
+>>>>>>> 69f604443d5040fb667e230bf424105883f4402a
     "react-image-lightbox": "^5.1.1",
     "react-masonry-css": "^1.0.14",
     "react-quill": "^2.0.0",

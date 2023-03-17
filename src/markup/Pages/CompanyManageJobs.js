@@ -69,19 +69,23 @@ function Companymanage(props) {
 
   function handleToggleModalCompany() {
     setIsShowModalInfo(!isShowModalInfo);
-    console.log("123");
   }
-  const handleAddJob = async () => {
+  const handleAddJob = async (data) => {
+    // await createJob({
+    //   ...newJob,
+    //   addOnQuestionOptions,
+    //   departmentId: department._id,
+    //   companyId: department.companyId,
+    // });
+    console.log(data);
     await createJob({
-      ...newJob,
-      addOnQuestionOptions,
+      ...data,
       departmentId: department._id,
       companyId: department.companyId,
     });
-
+    // console.log(newJob);
     // console.log({
-    //   ...newJob,
-    //   addOnQuestionOptions,
+    //   ...data,
     //   departmentId: department._id,
     //   companyId: department.companyId,
     // });

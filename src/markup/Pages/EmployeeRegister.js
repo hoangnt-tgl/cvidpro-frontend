@@ -15,7 +15,11 @@ import {
   loadingToggleAction,
   employeeSignupAction,
 } from "../../store/actions/AuthActions";
+<<<<<<< HEAD
 import "../../css/Register.css"
+=======
+import ReactSelectShowType from "../../customComponents/ReactSelectShowType/ReactSelectShowType";
+>>>>>>> 69f604443d5040fb667e230bf424105883f4402a
 
 var bnr = require("./../../images/background/bg6.jpg");
 function Register2(props) {
@@ -71,6 +75,7 @@ function Register2(props) {
   const [majors, setMajors] = useState([]);
   const [jobTitles, setJobTitles] = useState([]);
   const [isAgree, setIsAgree] = useState(false);
+  const [step, setStep] = useState(1);
   const genderOptions = [
     { value: "Nam", label: "Nam" },
     { value: "Nữ", label: "Nữ" },
@@ -127,8 +132,8 @@ function Register2(props) {
     }
     fetchSchoolAndMajor();
   }, [level]);
-
-  function onSignUp(e) {
+  function onSubmitStep1(e) {
+    console.log("123");
     e.preventDefault();
     let error = false;
     const errorObj = { ...errorsObj };
@@ -154,46 +159,6 @@ function Register2(props) {
     }
     if (gender === "") {
       errorObj.gender = "Vui lòng nhập giới tính";
-      error = true;
-    }
-    if (province === "") {
-      errorObj.province = "Vui lòng nhập tỉnh/thành phố";
-      error = true;
-    }
-    if (district === "") {
-      errorObj.district = "Vui lòng nhập quận/huyện";
-      error = true;
-    }
-    if (ward === "") {
-      errorObj.ward = "Vui lòng nhập phường/xã";
-      error = true;
-    }
-    if (address === "") {
-      errorObj.address = "Vui lòng nhập địa chỉ";
-      error = true;
-    }
-    if (level === "") {
-      errorObj.level = "Vui lòng nhập trình độ";
-      error = true;
-    }
-    if (school === "") {
-      errorObj.school = "Vui lòng nhập trường";
-      error = true;
-    }
-    if (major === "") {
-      errorObj.major = "Vui lòng nhập chuyên ngành";
-      error = true;
-    }
-    if (jobTitle === "") {
-      errorObj.jobTitle = "Vui lòng nhập chức danh";
-      error = true;
-    }
-    if (startYear === "") {
-      errorObj.startYear = "Vui lòng nhập năm bắt đầu";
-      error = true;
-    }
-    if (endYear === "") {
-      errorObj.endYear = "Vui lòng nhập năm kết thúc";
       error = true;
     }
     if (email === "") {
@@ -225,6 +190,66 @@ function Register2(props) {
       error = true;
     }
     setErrors(errorObj);
+    if (!error) {
+      setStep(2);
+    }
+  }
+  function onSubmitStep2(e) {
+    e.preventDefault();
+    let error = false;
+    const errorObj = { ...errorsObj };
+    if (province === "") {
+      errorObj.province = "Vui lòng nhập tỉnh/thành phố";
+      error = true;
+    }
+    if (district === "") {
+      errorObj.district = "Vui lòng nhập quận/huyện";
+      error = true;
+    }
+    if (ward === "") {
+      errorObj.ward = "Vui lòng nhập phường/xã";
+      error = true;
+    }
+    if (address === "") {
+      errorObj.address = "Vui lòng nhập địa chỉ";
+      error = true;
+    }
+    setErrors(errorObj);
+    if (!error) {
+      setStep(3);
+    }
+  }
+  function onSignUp(e) {
+    e.preventDefault();
+    let error = false;
+    const errorObj = { ...errorsObj };
+
+    if (level === "") {
+      errorObj.level = "Vui lòng nhập trình độ";
+      error = true;
+    }
+    if (school === "") {
+      errorObj.school = "Vui lòng nhập trường";
+      error = true;
+    }
+    if (major === "") {
+      errorObj.major = "Vui lòng nhập chuyên ngành";
+      error = true;
+    }
+    if (jobTitle === "") {
+      errorObj.jobTitle = "Vui lòng nhập chức danh";
+      error = true;
+    }
+    if (startYear === "") {
+      errorObj.startYear = "Vui lòng nhập năm bắt đầu";
+      error = true;
+    }
+    if (endYear === "") {
+      errorObj.endYear = "Vui lòng nhập năm kết thúc";
+      error = true;
+    }
+
+    setErrors(errorObj);
     if (error) return;
     dispatch(loadingToggleAction(true));
     let data = {
@@ -247,9 +272,6 @@ function Register2(props) {
     };
     dispatch(employeeSignupAction(data, props.history));
   }
-  useEffect(() => {
-    console.log("school", school);
-  }, [school]);
 
   return (
     <div className="page-wraper">
@@ -260,8 +282,7 @@ function Register2(props) {
               <div className="login-form style-2">
                 <div className="logo-header text-center p-tb30">
                   <Link to={"./"}>
-                    <h1 className="m-b0">CVIDPRO</h1>
-                    {/* <img src={require("./../../images/logo.png")} alt="" /> */}
+                    <h1 className='m-b0'>CVIDPRO</h1>
                   </Link>
                 </div>
                 <div className="clearfix"></div>
@@ -281,6 +302,7 @@ function Register2(props) {
                         <div className="dez-separator bg-primary style-liner"></div>
                       </div>
                       <p>Vui lòng nhập chính xác thông tin</p>
+<<<<<<< HEAD
                       <div className="form-group register">
                         <input
                           value={name}
@@ -499,6 +521,348 @@ function Register2(props) {
                           Đăng ký
                         </button>
                       </div>
+=======
+                      {step === 1 && (
+                        <>
+                          <div className="form-group">
+                            <input
+                              value={name}
+                              onChange={(e) => setName(e.target.value)}
+                              className="form-control small"
+                              placeholder="Nhập họ và tên"
+                            />
+                            <div className="text-danger">
+                              {errors.name && <div>{errors.name}</div>}
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <input
+                              value={username}
+                              text="text"
+                              onChange={(e) => setUsername(e.target.value)}
+                              className="form-control"
+                              placeholder="Nhập số điện thoại"
+                            />
+                            <div className="text-danger">
+                              {errors.username && <div>{errors.username}</div>}
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <input
+                              type="date"
+                              value={birthday}
+                              onChange={(e) => setBirthday(e.target.value)}
+                              className="form-control"
+                              placeholder="Nhập ngày sinh"
+                            />
+                            <div className="text-danger">
+                              {errors.birthday && <div>{errors.birthday}</div>}
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <Select
+                              placeholder="Chọn giới tính"
+                              onChange={(e) => setGender(e.label)}
+                              options={genderOptions}
+                            />
+                            <div className="text-danger">
+                              {errors.gender && <div>{errors.gender}</div>}
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <input
+                              value={email}
+                              type="email"
+                              onChange={(e) => setEmail(e.target.value)}
+                              className="form-control"
+                              placeholder="Nhập email"
+                            />
+                            <div className="text-danger">
+                              {errors.email && <div>{errors.email}</div>}
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <input
+                              type="password"
+                              value={password}
+                              className="form-control"
+                              onChange={(e) => setPassword(e.target.value)}
+                              placeholder="Nhập mật khẩu"
+                            />
+                            <div className="text-danger">
+                              {errors.password && <div>{errors.password}</div>}
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <input
+                              type="password"
+                              value={confirmPassword}
+                              className="form-control"
+                              onChange={(e) =>
+                                setConfirmPassword(e.target.value)
+                              }
+                              placeholder="Nhập lại mật khẩu"
+                            />
+                            <div className="text-danger">
+                              {errors.confirmPassword && (
+                                <div>{errors.confirmPassword}</div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="form-group text-right">
+                            <button
+                              type="button"
+                              className="site-button dz-xs-flex m-r5 btn"
+                              disabled={
+                                !name ||
+                                !username ||
+                                !password ||
+                                !confirmPassword ||
+                                !email ||
+                                !birthday ||
+                                !gender
+                              }
+                              onClick={onSubmitStep1}
+                            >
+                              Tiếp tục{" "}
+                              <i
+                                className="fa fa-arrow-right"
+                                aria-hidden="true"
+                              ></i>
+                            </button>
+                          </div>
+                        </>
+                      )}
+                      {step === 2 && (
+                        <>
+                          <div className="form-group">
+                            {/* <Select
+                              placeholder='Chọn tỉnh/thành phố'
+                              onChange={(e) => setProvince(e.label)}
+                              options={provinces}
+                            /> */}
+                            <ReactSelectShowType
+                              placeholder="Chọn tỉnh/thành phố"
+                              onChange={(e) => setProvince(e.label)}
+                              options={provinces}
+                              minInput={1}
+                            />
+                            <div className="text-danger">
+                              {errors.province && <div>{errors.province}</div>}
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            {/* <Select
+                              placeholder='Chọn quận/huyện'
+                              onChange={(e) => setDistrict(e.label)}
+                              options={districts}
+                            /> */}
+                            <ReactSelectShowType
+                              placeholder="Chọn quận/huyện"
+                              onChange={(e) => setDistrict(e.label)}
+                              options={districts}
+                              minInput={1}
+                            />
+                            <div className="text-danger">
+                              {errors.district && <div>{errors.district}</div>}
+                            </div>
+                          </div>
+
+                          <div className="form-group">
+                            <ReactSelectShowType
+                              placeholder="Chọn phường/xã"
+                              onChange={(e) => setWard(e.label)}
+                              options={wards}
+                              minInput={1}
+                            />
+                            {/* <Select
+                              defaultValue=''
+                              placeholder='Chọn phường/xã'
+                              onChange={(e) => setWard(e.label)}
+                              options={wards}
+                            /> */}
+                            <div className="text-danger">
+                              {errors.ward && <div>{errors.ward}</div>}
+                            </div>
+                          </div>
+
+                          <div className="form-group">
+                            <input
+                              value={address}
+                              onChange={(e) => setAddress(e.target.value)}
+                              className="form-control"
+                              placeholder="Nhập địa chỉ"
+                            />
+                            <div className="text-danger">
+                              {errors.address && <div>{errors.address}</div>}
+                            </div>
+                          </div>
+                          <div className="form-group text-right">
+                            <button
+                              type="button"
+                              className="site-button dz-xs-flex m-r5 "
+                              onClick={() => setStep(1)}
+                            >
+                              <i
+                                className="fa fa-arrow-left"
+                                aria-hidden="true"
+                              ></i>{" "}
+                              Quay lại
+                            </button>
+                            <button
+                              type="button"
+                              className="site-button dz-xs-flex m-r5 btn"
+                              disabled={
+                                !province || !district || !ward || !address
+                              }
+                              onClick={onSubmitStep2}
+                            >
+                              Tiếp tục{" "}
+                              <i
+                                className="fa fa-arrow-right"
+                                aria-hidden="true"
+                              ></i>
+                            </button>
+                          </div>
+                        </>
+                      )}
+                      {step === 3 && (
+                        <>
+                          <div className="form-group">
+                            <Select
+                              placeholder="Chọn trình độ"
+                              onChange={(e) => setLevel(e.label)}
+                              options={levels}
+                            />
+                            <div className="text-danger">
+                              {errors.level && <div>{errors.level}</div>}
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <ReactSelectShowType
+                              placeholder="Chọn trường"
+                              onChange={(e) => setSchool(e.label)}
+                              options={schools}
+                              minInput={1}
+                            />
+                            {/* <Select
+                              placeholder='Chọn trường'
+                              onChange={(e) => setSchool(e.label)}
+                              options={schools}
+                            /> */}
+                            <div className="text-danger">
+                              {errors.school && <div>{errors.school}</div>}
+                            </div>
+                          </div>
+
+                          <div className="form-group">
+                            <ReactSelectShowType
+                              minInput={1}
+                              placeholder="Chọn ngành"
+                              onChange={(e) => setMajor(e.label)}
+                              options={majors}
+                            />
+                            {/* <Select
+                              placeholder='Chọn ngành'
+                              onChange={(e) => setMajor(e.label)}
+                              options={majors}
+                            /> */}
+                            <div className="text-danger">
+                              {errors.major && <div>{errors.major}</div>}
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <ReactSelectShowType
+                              minInput={1}
+                              placeholder="Chọn chức danh"
+                              onChange={(e) => setJobTitle(e.label)}
+                              options={jobTitles}
+                            />
+                            {/* <Select
+                              placeholder='Chọn chức danh'
+                              onChange={(e) => setJobTitle(e.label)}
+                              options={jobTitles}
+                            /> */}
+                            <div className="text-danger">
+                              {errors.jobTitle && <div>{errors.jobTitle}</div>}
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <input
+                              type="month"
+                              value={startYear}
+                              onChange={(e) => setStartYear(e.target.value)}
+                              className="form-control"
+                              placeholder="Nhập năm bắt đầu"
+                            />
+                            <div className="text-danger">
+                              {errors.startYear && (
+                                <div>{errors.startYear}</div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <input
+                              type="month"
+                              value={endYear}
+                              onChange={(e) => setEndYear(e.target.value)}
+                              className="form-control"
+                              placeholder="Nhập năm kết thúc"
+                            />
+                            <div className="text-danger">
+                              {errors.endYear && <div>{errors.endYear}</div>}
+                            </div>
+                          </div>
+
+                          <div className="form-group text-left">
+                            <span className="custom-control custom-checkbox">
+                              <input
+                                type="checkbox"
+                                className="custom-control-input"
+                                id="check1"
+                                checked={isAgree}
+                                onChange={(e) => setIsAgree(e.target.checked)}
+                              />
+                              <label
+                                className="custom-control-label"
+                                htmlFor="check1"
+                              >
+                                Tôi đồng ý với các điều khoản và điều kiện
+                              </label>
+                            </span>
+                          </div>
+                          <div className="form-group text-right">
+                            <button
+                              type="button"
+                              className="site-button dz-xs-flex m-r5 "
+                              onClick={() => setStep(2)}
+                            >
+                              <i
+                                className="fa fa-arrow-left"
+                                aria-hidden="true"
+                              ></i>{" "}
+                              Quay lại
+                            </button>
+                            <button
+                              type="submit"
+                              className="site-button dz-xs-flex m-r5 btn"
+                              disabled={
+                                !isAgree ||
+                                !level ||
+                                !school ||
+                                !major ||
+                                !jobTitle ||
+                                !startYear ||
+                                !endYear
+                              }
+                            >
+                              Đăng ký
+                            </button>
+                          </div>
+                        </>
+                      )}
+
+>>>>>>> 69f604443d5040fb667e230bf424105883f4402a
                       <div className="dz-social clearfix d-none">
                         <h5 className="form-title m-t5 pull-left">
                           Sign In With
@@ -537,8 +901,8 @@ function Register2(props) {
                     </form>
                   </div>
                 </div>
-                <div className="bottom-footer clearfix m-t10 m-b20 row text-center">
-                  <div className="col-lg-12 text-center">
+                <div className='bottom-footer clearfix m-t10 m-b20 row text-center d-none'>
+                  <div className='col-lg-12 text-center'>
                     <span>
                       {" "}
                       © Copyright by{" "}
