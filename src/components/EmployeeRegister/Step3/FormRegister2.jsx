@@ -10,7 +10,6 @@ const FormRegister2 = ({
 }) => {
   return (
     <div className=''>
-      <div className='header-register'></div>
       <div className='body-register'>
         <Level
           setStep={setStep}
