@@ -4,6 +4,7 @@ import Select from "react-select";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+// import '../RegisterStyles.css'
 const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
   const genderOptions = [
     { value: "Nam", label: "Nam" },
@@ -126,6 +127,7 @@ const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
           <input
             className='form-control'
             placeholder='Nhập mật khẩu'
+            type="password"
             {...register("password")}
           />
           <div className='text-danger'>
@@ -136,6 +138,7 @@ const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
           <p>Nhập lại mật khẩu</p>
           <input
             className='form-control'
+            type="password"
             placeholder='Nhập lại mật khẩu'
             {...register("confirmPassword")}
           />

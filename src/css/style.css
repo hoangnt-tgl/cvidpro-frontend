@@ -9732,7 +9732,7 @@ ul[class*="list-"] {
 .testimonial-10 .testimonial-position {
   text-transform: uppercase;
   font-family: "Montserrat", sans-serif;
-  color: #888q;
+  color: #888;
   font-size: 12px;
   font-style: inherit;
 }
@@ -9774,7 +9774,6 @@ ul[class*="list-"] {
 }
 
 /*== >Pricing table  ===*/
-
 .pricingtable-inner {
   text-align: center;
 }

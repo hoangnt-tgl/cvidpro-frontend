@@ -27,11 +27,19 @@ const ReactSelectShowType = ({
     <Select
       {...register}
       isMulti={isMulti}
+      closeMenuOnSelect={isMulti && false}
       onChange={onChange}
       noOptionsMessage={noOptionsMessage}
       filterOption={filterOption}
       placeholder={placeholder}
       options={options}
+      styles={{
+        noOptionsMessage: (baseStyles, state) => ({
+          ...baseStyles,
+          color: "black",
+          fontWeight: "550",
+        }),
+      }}
     />
   );
 };
