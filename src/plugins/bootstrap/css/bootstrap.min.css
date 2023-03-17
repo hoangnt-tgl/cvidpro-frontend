@@ -1726,8 +1726,9 @@ pre code {
   color: #495057;
   background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid #ced4da;
-  border-radius: 0.25rem;
+  border: 2px solid #666666;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px !important;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 @media screen and (prefers-reduced-motion: reduce) {
@@ -1847,6 +1848,7 @@ select.form-control:focus::-ms-value {
   font-size: 0.875rem;
   line-height: 1.5;
   border-radius: 0.2rem;
+  font-weight: 500;
 }
 .input-group-sm > .input-group-append > select.btn:not([size]):not([multiple]),
 .input-group-sm

@@ -13,8 +13,10 @@ function Jobsappliedjob(props) {
   useEffect(() => {
     window.scrollTo(0, 0);
     async function fetchData() {
-      setJobList((await gẹtApplyJobForEmployee()).data);
-      setIsLoading(false);
+      gẹtApplyJobForEmployee("employee").then((res) => {
+        setJobList(res.data);
+        setIsLoading(false);
+      });
     }
     fetchData();
   }, []);
@@ -28,7 +30,7 @@ function Jobsappliedjob(props) {
               <div className="m-b30 browse-job">
                 <div className="job-bx-title clearfix d-flex align-items-center">
                   <h5 className="font-weight-700 pull-left text-uppercase mr-auto my-0">
-                    Công việc đã ứng tuyển
+                    Vị trí đã ứng tuyển
                   </h5>
                   <div className="float-right">
                     {/* <span className="select-title">Lọc theo</span>
@@ -43,88 +45,99 @@ function Jobsappliedjob(props) {
                   </div>
                 </div>
                 <ul className="post-job-bx browse-job">
-                  {!isLoading && jobList?.length === 0 && (
-                    <>
-                      <div className="text-center">
-                        <h3 className="text-danger">
-                          Bạn chưa ứng tuyển công việc nào
-                        </h3>
-                        <Link
-                          to="/jobs-saved-jobs"
-                          className="site-button button-sm"
-                        >
-                          Tìm việc ngay
-                        </Link>
-                      </div>
-                    </>
-                  )}
-                  <div className="row">
-                  <Table responsive="sm">
-                    </Table>
-                    {jobList?.map((item, index) => (
-                      <div className="col-lg-6 mb-2">
-                        <li key={index}>
-                          <div className="post-bx">
-                            <div className="job-post-info m-a0">
-                              <h4>
-                                <Link
-                                  to={`/search-job/job-detail/${item._id}`}
-                                  target="_blank"
-                                >
-                                  {item.jobInfo.title}
-                                </Link>
-                              </h4>
-                              <ul>
-                                <li>
-                                  <Link to={"#"}>{item.jobInfo.position}</Link>
-                                </li>
-                                <li>
-                                  <i className="fa fa-map-marker"></i>{" "}
-                                  {item.jobInfo.location}
-                                </li>
-                                {/* <li>
-                                  <i className="fa fa-money"></i> 25,000
-                                </li> */}
-                              </ul>
-                              <div className="job-time m-t15 m-b10">
-                                {item.jobInfo.major.map((ele, index) => (
-                                  <Link to={"#"} className="mr-1">
-                                    <span>{ele}</span>
-                                  </Link>
-                                ))}
-                              </div>
-                              <div className="posted-info clearfix">
-                                <p className="m-tb0 text-primary float-left">
-                                  <span className="text-black m-r10">
-                                    Lịch phỏng vấn:
-                                  </span>{" "}
-                                  {displayTime(item.interview?.date)}
-                                </p>
-                                {/* disable link */}
-                                {item.interview?.date && (
-                                  <div className="float-right">
-                                    <Link
-                                      to={"#"}
-                                      className="btn-info button-sm mx-2"
-                                    >
-                                      Từ chối
-                                    </Link>
-                                    <Link
-                                      to={"#"}
-                                      className="site-button button-sm "
-                                    >
-                                      Xác nhận
-                                    </Link>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
+                  <Table striped bordered hover size="sm">
+                    <thead>
+                      <tr>
+                        <th>
+                          <div className="custom-control custom-checkbox">
+                            <input
+                              type="checkbox"
+                              className="custom-control-input"
+                              id="customCheck1"
+                            />
+                            <label className="custom-control-label" />
                           </div>
-                        </li>
-                      </div>
-                    ))}
-                  </div>
+                        </th>
+                        <th>Vị trí tuyển dụng</th>
+                        <th>Chức vụ</th>
+                        <th>Địa điểm</th>
+                        <th>Thời gian ứng tuyển</th>
+                        <th>Trạng thái</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {jobList?.map((item, index) => (
+                        <tr>
+                          <td>
+                            {/* checkbox */}
+                            <div className="custom-control custom-checkbox">
+                              <input
+                                type="checkbox"
+                                className="custom-control-input"
+                                id="customCheck1"
+                              />
+                              <label className="custom-control-label" />
+                            </div>
+                          </td>
+                          <td>
+                            <Link
+                              to={`/search-job/job-detail/${item._id}`}
+                              target="_blank"
+                            >
+                              {item.jobInfo.title}
+                            </Link>
+                          </td>
+                          <td>{item.jobInfo.position}</td>
+                          <td>{item.jobInfo.location}</td>
+                          <td>{displayTime(item.createdAt)}</td>
+                          <td></td>
+                        </tr>
+                      ))}
+
+                      {!isLoading && jobList?.length === 0 && (
+                        <td colspan="6">
+                          <div className="text-center">
+                            <h3 className="text-danger">
+                              Bạn chưa ứng tuyển công việc nào
+                            </h3>
+                            <Link
+                              to="/jobs-saved-jobs"
+                              className="site-button button-sm"
+                            >
+                              Tìm kiếm công việc
+                            </Link>
+                          </div>
+                        </td>
+                      )}
+                    </tbody>
+                  </Table>
                 </ul>
+              </div>
+              {/* Tổng tiền bên góc phải và nút thanh toán ở dưới */}
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="d-flex justify-content-between">
+                    <div className="d-flex align-items-center">
+                      <h5 className="font-weight-700 text-uppercase mr-3">
+                        Tổng tiền
+                      </h5>
+                      <h5 className="font-weight-700 text-uppercase">0 VND</h5>
+                    </div>
+                    <div className="d-flex align-items-center">
+                      <h5 className="font-weight-700 text-uppercase mr-3">
+                        Số lượng
+                      </h5>
+                      <h5 className="font-weight-700 text-uppercase">0</h5>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="d-flex justify-content-end">
+                    <Link to="/jobs-saved-jobs" className="site-button button">
+                      Thanh toán
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

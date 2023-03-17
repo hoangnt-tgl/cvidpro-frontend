@@ -341,9 +341,6 @@ function Jobsavedjobs(props) {
                 </div>
                 <div className="job-bx clearfix job-primary">
                   <div className="job-bx-title clearfix ">
-                    <h5 className="font-weight-700 pull-left text-uppercase mr-auto my-0 text-white">
-                     Tìm thấy {listJob.length} việc làm phù hợp
-                    </h5>
                     {/* <div className="float-right">
                         <span className="select-title">Sắp xếp: </span>
                         <select className="custom-btn btn-sm">

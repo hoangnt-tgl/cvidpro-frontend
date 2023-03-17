@@ -29,16 +29,16 @@ const useNeedRecuited = ({ search }) => {
     location: "",
     workingEnvironment: "",
     experience: "",
-    quantity: 0,
-    salaryMin: 0,
-    salaryMax: 0,
+    quantity: null,
+    salaryMin: null,
+    salaryMax: null,
     description: "",
     question: [],
   };
   const initQuestion = {
     name: "",
     detail: [],
-    point: 0,
+    point: "",
   };
   const [reload, setReload] = useState(false);
   const [listJob, setListJob] = useState([]);
@@ -50,17 +50,22 @@ const useNeedRecuited = ({ search }) => {
   const [positionOptions, setPositionOptions] = useState([]);
   const [majorOptions, setMajorOptions] = useState([]);
   const [questionOptions, setQuestionOptions] = useState([]);
+  const [addOnQuestionOptions, setAddOnQuestionOptions] = useState([]);
   const [newQuestion, setNewQuestion] = useState(initQuestion);
   const [childQuestion, setChildQuestion] = useState("");
   const [environmentOption, setEnvironmentOption] = useState([]);
   const [newJob, setNewJob] = useState(objJob);
+  const [preloadValue, setPreloadValue] = useState([]);
   useEffect(() => {
-    console.log(key);
+    // console.log(preloadValue);
+  }, [preloadValue]);
+  useEffect(() => {
+    // console.log(key);
     async function fetchData() {
       if (!key) return;
       setDepartment(
         await getDepartmentByKey(key).then((res) => {
-          console.log(res);
+          // console.log(res);
           return res.data;
         })
       );
@@ -74,7 +79,53 @@ const useNeedRecuited = ({ search }) => {
       try {
         setListJob(
           await getJobForDepartment(department._id).then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
+            setPreloadValue(
+              res.data.map((item) => ({
+                position: [
+                  {
+                    value: item.position,
+                    label: item.position,
+                  },
+                ],
+                level: item.level.map((item) => ({ value: item, label: item })),
+                industry: [
+                  {
+                    value: item.industry,
+                    label: item.industry,
+                  },
+                ],
+                location: [{ value: item.location, label: item.location }],
+                environment: [
+                  {
+                    value: item.workingEnvironment,
+                    label: item.workingEnvironment,
+                  },
+                ],
+                major: item.major.map((item) => ({ value: item, label: item })),
+                experience: item.experience,
+                salaryMin: item.salaryMin,
+                salaryMax: item.salaryMax,
+                description: item.description,
+                quantity: item.quantity,
+                title: [{ value: item.title, label: item.title }],
+                question0: item.questions[0],
+                question1: item.questions[1],
+                question2: item.questions[2],
+                question3: item.questions[3],
+                question4: item.questions[4],
+                question5: item.questions[5],
+                question6: item.questions[6],
+                question7: item.questions[7],
+                question8: item.questions[8],
+                question9: item.questions[9],
+                question10: item.questions[10],
+                question11: item.questions[11],
+                question12: item.questions[12],
+                question13: item.questions[13],
+                question14: item.questions[14],
+              }))
+            );
             return res.data;
           })
         );
@@ -160,22 +211,20 @@ const useNeedRecuited = ({ search }) => {
       .then((res) => res.data)
       .then((res) => {
         setQuestionOptions(res);
-        setNewJob({ ...newJob, question: res });
       });
   }, []);
   const handleAddQuestion = async () => {
     let question = newQuestion;
     question.detail.push(childQuestion);
-    setNewJob({ ...newJob, question: [...questionOptions, newQuestion] });
-    setQuestionOptions([...questionOptions, newQuestion]);
+    setAddOnQuestionOptions([...addOnQuestionOptions, question]);
     setChildQuestion("");
     setNewQuestion(initQuestion);
   };
   const deleteAddOnQuestion = (index) => {
-    let question = questionOptions;
+    let question = addOnQuestionOptions;
     question.splice(index, 1);
     let newQuestion = new Array(...question);
-    setQuestionOptions(newQuestion);
+    setAddOnQuestionOptions(newQuestion);
   };
   return [
     listJob,
@@ -198,6 +247,9 @@ const useNeedRecuited = ({ search }) => {
     setChildQuestion,
     setReload,
     deleteAddOnQuestion,
+    addOnQuestionOptions,
+    setAddOnQuestionOptions,
+    preloadValue,
   ];
 };
 

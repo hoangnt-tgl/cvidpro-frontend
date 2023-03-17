@@ -93,7 +93,7 @@ class HeaderEmployee extends Component {
                 >
                   <ul className="nav navbar-nav">
                     <li className="active-">
-                      <Link to={"#"}>Trang chủ</Link>
+                      <Link to={"#"}>Trang chu</Link>
                     </li>
 
                     <li className="">

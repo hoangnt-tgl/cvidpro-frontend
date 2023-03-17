@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, ModalDialog } from "react-bootstrap";
 import TableAssess from "../../../customComponents/TableAssess/TableAssess";
-import { compareItemArr, compareItemArrNum, createTable } from "../../../helperFC/Function";
+import { createTable } from "../../../helperFC/Function";
 import icon from "../../../images/logo/icon2.png";
 import "./styles.css";
 
@@ -21,31 +21,6 @@ const ModalTableAssess = ({
       "KẾT QUẢ",
     ],
     tableData: createTable(currentJobLookingFor, item),
-    // tableData: [
-    //   ["Trình độ", "Đại học", "Đại học", "Đạt"],
-    //   [
-    //     "Chuyên ngành",
-    //     "Công nghệ điện - điện tử",
-    //     "Công nghệ điện - điện tử",
-    //     "Đạt",
-    //   ],
-    //   [
-    //     "Chức danh công việc",
-    //     "Kỹ sư điện hệ thống",
-    //     "Kỹ sư điện hệ thống",
-    //     "Đạt",
-    //   ],
-    //   ["Chức vụ", "Trưởng phòng", "Trưởng phòng", "Đạt"],
-    //   ["Lĩnh vực làm việc", "Kỹ thuật", "Kỹ thuật", "Đạt"],
-    //   ["Loại hình đơn vị tuyển dụng", "Cổ phần", "Cổ phần", "Đạt"],
-    //   ["Môi trường làm việc", "Tất cả", "Tất cả", "Đạt"],
-    //   ["Nơi làm việc", "TpHCM", "TpHCM", "Đạt"],
-    //   ["Số năm kinh nghiệm", "10 năm", "10 năm", "Đạt"],
-    //   ["Trình độ", "Đại học", "Đại học", "Đạt"],
-    //   ["Tiêu chí đánh giá", "", "", ""],
-    //   ["TC1", "9 điểm", "9 điểm", "Đạt"],
-    //   ["TCn", "8 điểm", "8 điểm", "Đạt"],
-    // ],
   };
   return (
     <>
@@ -85,3 +60,29 @@ const ModalTableAssess = ({
 };
 
 export default ModalTableAssess;
+
+// tableData: [
+//   ["Trình độ", "Đại học", "Đại học", "Đạt"],
+//   [
+//     "Chuyên ngành",
+//     "Công nghệ điện - điện tử",
+//     "Công nghệ điện - điện tử",
+//     "Đạt",
+//   ],
+//   [
+//     "Chức danh công việc",
+//     "Kỹ sư điện hệ thống",
+//     "Kỹ sư điện hệ thống",
+//     "Đạt",
+//   ],
+//   ["Chức vụ", "Trưởng phòng", "Trưởng phòng", "Đạt"],
+//   ["Lĩnh vực làm việc", "Kỹ thuật", "Kỹ thuật", "Đạt"],
+//   ["Loại hình đơn vị tuyển dụng", "Cổ phần", "Cổ phần", "Đạt"],
+//   ["Môi trường làm việc", "Tất cả", "Tất cả", "Đạt"],
+//   ["Nơi làm việc", "TpHCM", "TpHCM", "Đạt"],
+//   ["Số năm kinh nghiệm", "10 năm", "10 năm", "Đạt"],
+//   ["Trình độ", "Đại học", "Đại học", "Đạt"],
+//   ["Tiêu chí đánh giá", "", "", ""],
+//   ["TC1", "9 điểm", "9 điểm", "Đạt"],
+//   ["TCn", "8 điểm", "8 điểm", "Đạt"],
+// ],

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import Logout from "./Logout";
+import "../../css/layout.css"
 
 var bnr3 = require("./../../images/background/bg3.jpg");
 
@@ -56,7 +57,7 @@ class HeaderEmployee extends Component {
         <header className="site-header mo-left header border-bottom fullwidth">
           <div className="sticky-header main-bar-wraper navbar-expand-lg">
             <div className="main-bar clearfix">
-              <div className="container clearfix">
+              <div className="container clearfix toolbar">
                 <div className="logo-header mostion">
                   <Link to={"./"}>
                     <img
