@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ReactSelectShowType from "../../../../customComponents/ReactSelectShowType/ReactSelectShowType";
 import Select from "react-select";
 //hookform
 import { Controller, useForm } from "react-hook-form";
@@ -61,19 +60,21 @@ const CompanyTaxInfo = ({
   return (
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
-        <p>Thông tin công ty</p>{" "}
         <div className='form-group'>
-          <Controller
-            name='companyType'
-            control={control}
-            render={({ field }) => (
-              <Select
-                {...field}
-                placeholder='Chọn loại hình công ty'
-                options={optionsSelect.companyTypes}
-              />
-            )}
-          />
+          <p>Loại hình công ty</p>
+          <div className='select-style'>
+            <Controller
+              name='companyType'
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  placeholder='Chọn loại hình công ty'
+                  options={optionsSelect.companyTypes}
+                />
+              )}
+            />
+          </div>
           <div className='text-danger'>
             {errors?.companyType?.message && (
               <div>{errors.companyType.message}</div>
@@ -81,24 +82,29 @@ const CompanyTaxInfo = ({
           </div>
         </div>
         <div className='form-group'>
-          <Controller
-            name='field'
-            control={control}
-            render={({ field }) => (
-              <ReactSelectShowType
-                {...field}
-                placeholder='Chọn lĩnh vực hoạt động'
-                options={optionsSelect?.field}
-                minInput={1}
-                isMulti={true}
-              />
-            )}
-          />
+          <p>Lĩnh vực hoạt động</p>
+          <div className='select-style'>
+            {" "}
+            <Controller
+              name='field'
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  placeholder='Chọn lĩnh vực hoạt động'
+                  options={optionsSelect?.field}
+                  isMulti={true}
+                />
+              )}
+            />
+          </div>
+
           <div className='text-danger'>
             {errors?.field?.message && <div>{errors.field.message}</div>}
           </div>
         </div>
         <div className='form-group'>
+          <p>Mã số thuế</p>
           <input
             {...register("taxCode")}
             onBlur={handleGetLegalCompanyInfo}
@@ -109,15 +115,17 @@ const CompanyTaxInfo = ({
             {errors?.taxCode?.message && <div>{errors.taxCode.message}</div>}
           </div>
         </div>
-        {!errors?.taxCode?.message && (
+        {getValues("companyInfo")?.companyName && (
           <>
             <div className='form-group'>
+              <p>Tên công ty</p>
               <input
                 value={getValues("companyInfo")?.companyName}
                 className='form-control'
               />
             </div>
             <div className='form-group'>
+              <p>Địa chỉ</p>
               <input
                 value={getValues("companyInfo")?.address}
                 className='form-control'
@@ -126,6 +134,7 @@ const CompanyTaxInfo = ({
           </>
         )}
         <div className='form-group'>
+          <p>Ngành nghề chính</p>
           <input
             className='form-control'
             placeholder='Nhập ngành nghề chính'
@@ -138,6 +147,7 @@ const CompanyTaxInfo = ({
           </div>
         </div>
         <div className='form-group'>
+          <p>Giấy phép kinh doanh</p>
           <input
             type='file'
             className='form-control'

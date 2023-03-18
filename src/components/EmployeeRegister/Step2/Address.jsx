@@ -4,6 +4,7 @@ import ReactSelectShowType from "../../../customComponents/ReactSelectShowType/R
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+// import '../RegisterStyles.css'
 const Address = ({
   setStep,
   setInfoRegister2,
@@ -38,7 +39,6 @@ const Address = ({
   return (
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
-        <p>Địa chỉ :</p>
         <div className='form-group'>
           <p>Tỉnh/thành phố</p>
           <div className='select-style'>

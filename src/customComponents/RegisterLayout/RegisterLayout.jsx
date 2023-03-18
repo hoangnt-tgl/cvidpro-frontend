@@ -18,7 +18,9 @@ const RegisterLayout = ({ children }) => {
               </div>
             </div>
           </div>
-          <div className='col-md-6 col-sm-12 col-12 bg-white register-img'></div>
+          <div className='col-md-6 col-sm-12 col-12 bg-white '>
+            <div className='register-img'></div>
+          </div>
         </div>
       </div>
     </>
