@@ -54,7 +54,6 @@ const Level = ({
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         <div className='form-group'>
-          <p>Trình độ</p>
           <div className='select-style'>
             {" "}
             <Controller

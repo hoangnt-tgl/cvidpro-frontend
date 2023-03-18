@@ -50,6 +50,7 @@ const CompanyInfo = ({ setInfoRegister1, setStep, fetchFieldOptions }) => {
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         {" "}
         <div className='form-group'>
+          <p>Họ và tên</p>
           <input
             className='form-control'
             placeholder='Nhập họ và tên'
@@ -60,6 +61,7 @@ const CompanyInfo = ({ setInfoRegister1, setStep, fetchFieldOptions }) => {
           </div>
         </div>
         <div className='form-group'>
+          <p>Chức vụ</p>
           <input
             className='form-control'
             placeholder='Nhập chức vụ'
@@ -70,6 +72,7 @@ const CompanyInfo = ({ setInfoRegister1, setStep, fetchFieldOptions }) => {
           </div>
         </div>
         <div className='form-group'>
+          <p>Số điện thoại</p>
           <input
             className='form-control'
             placeholder='Nhập số điện thoại'
@@ -80,6 +83,7 @@ const CompanyInfo = ({ setInfoRegister1, setStep, fetchFieldOptions }) => {
           </div>
         </div>
         <div className='form-group'>
+          <p>Email</p>
           <input
             type='email'
             className='form-control'
@@ -91,6 +95,7 @@ const CompanyInfo = ({ setInfoRegister1, setStep, fetchFieldOptions }) => {
           </div>
         </div>
         <div className='form-group'>
+          <p>Mật khẩu</p>
           <input
             className='form-control'
             type='password'
@@ -103,6 +108,7 @@ const CompanyInfo = ({ setInfoRegister1, setStep, fetchFieldOptions }) => {
           </div>
         </div>
         <div className='form-group'>
+          <p>Nhập lại mật khẩu</p>
           <input
             className='form-control'
             type='password'
