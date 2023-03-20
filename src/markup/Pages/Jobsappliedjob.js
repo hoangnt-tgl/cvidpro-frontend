@@ -120,7 +120,31 @@ function Jobsappliedjob(props) {
                 </ul>
               </div>
               {/* Tổng tiền bên góc phải và nút thanh toán ở dưới */}
-           
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="d-flex justify-content-between">
+                    <div className="d-flex align-items-center">
+                      <h5 className="font-weight-700 text-uppercase mr-3 jobposition">
+                        Tổng tiền
+                      </h5>
+                      <h5 className="font-weight-700 text-uppercase jobposition">0 VND</h5>
+                    </div>
+                    <div className="d-flex align-items-center">
+                      <h5 className="font-weight-700 text-uppercase mr-3 jobposition">
+                        Số lượng
+                      </h5>
+                      <h5 className="font-weight-700 text-uppercase jobposition">0</h5>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="d-flex justify-content-end">
+                    <Link to="/jobs-saved-jobs" className="site-button button">
+                      Thanh toán
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
