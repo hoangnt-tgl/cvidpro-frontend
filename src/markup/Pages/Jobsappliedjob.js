@@ -6,6 +6,8 @@ import { Table } from "react-bootstrap";
 import Profilesidebar from "./../Element/Profilesidebar";
 import { displayTime } from "../../services/TimeService";
 import { gẹtApplyJobForEmployee } from "../../services/EmployeeApi";
+import loginbg from "./../../images/bg6.jpg";
+import "../../css/jobsave.css"
 
 function Jobsappliedjob(props) {
   const [jobList, setJobList] = useState([]);
@@ -23,13 +25,17 @@ function Jobsappliedjob(props) {
   return (
     <>
       <Header2 />
-      <div className="page-content bg-white">
+      <div className="page-content bg-white" >
         <div className="content-block">
-          <div className="section-full bg-white p-t50 p-b20">
+          <div className="section-full bg-white p-t50 p-b20"  
+          style={{
+            backgroundImage: "url(" + loginbg + ")",
+            backgroundSize: "cover",
+          }}>
             <div className="container">
               <div className="m-b30 browse-job">
                 <div className="job-bx-title clearfix d-flex align-items-center">
-                  <h5 className="font-weight-700 pull-left text-uppercase mr-auto my-0">
+                  <h5 className="font-weight-700 pull-left text-uppercase mr-auto my-0 jobposition">
                     Vị trí đã ứng tuyển
                   </h5>
                   <div className="float-right">
@@ -48,7 +54,7 @@ function Jobsappliedjob(props) {
                   <Table striped bordered hover size="sm">
                     <thead>
                       <tr>
-                        <th>
+                        <th className="jobbox">
                           <div className="custom-control custom-checkbox">
                             <input
                               type="checkbox"
@@ -58,11 +64,11 @@ function Jobsappliedjob(props) {
                             <label className="custom-control-label" />
                           </div>
                         </th>
-                        <th>Vị trí tuyển dụng</th>
-                        <th>Chức vụ</th>
-                        <th>Địa điểm</th>
-                        <th>Thời gian ứng tuyển</th>
-                        <th>Trạng thái</th>
+                        <th className="jobbox">Vị trí tuyển dụng</th>
+                        <th className="jobbox">Chức vụ</th>
+                        <th className="jobbox">Địa điểm</th>
+                        <th className="jobbox">Thời gian ứng tuyển</th>
+                        <th className="jobbox">Trạng thái</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -95,7 +101,7 @@ function Jobsappliedjob(props) {
                       ))}
 
                       {!isLoading && jobList?.length === 0 && (
-                        <td colspan="6">
+                        <td colspan="6" className="jobbox">
                           <div className="text-center">
                             <h3 className="text-danger">
                               Bạn chưa ứng tuyển công việc nào
@@ -114,31 +120,7 @@ function Jobsappliedjob(props) {
                 </ul>
               </div>
               {/* Tổng tiền bên góc phải và nút thanh toán ở dưới */}
-              <div className="row">
-                <div className="col-md-6">
-                  <div className="d-flex justify-content-between">
-                    <div className="d-flex align-items-center">
-                      <h5 className="font-weight-700 text-uppercase mr-3">
-                        Tổng tiền
-                      </h5>
-                      <h5 className="font-weight-700 text-uppercase">0 VND</h5>
-                    </div>
-                    <div className="d-flex align-items-center">
-                      <h5 className="font-weight-700 text-uppercase mr-3">
-                        Số lượng
-                      </h5>
-                      <h5 className="font-weight-700 text-uppercase">0</h5>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="d-flex justify-content-end">
-                    <Link to="/jobs-saved-jobs" className="site-button button">
-                      Thanh toán
-                    </Link>
-                  </div>
-                </div>
-              </div>
+           
             </div>
           </div>
         </div>

@@ -8,3 +8,10 @@
 .toolbar{
     max-width: 790px !important;
 }
+.jobbox{
+    background-color: white;
+    border: 1px solid #010101 !important;
+}
+.jobposition{
+    color:white !important;
+}
