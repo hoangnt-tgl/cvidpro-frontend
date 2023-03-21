@@ -21,7 +21,7 @@ const RegisterLayout = ({ children, isLoginPage = false }) => {
               </div>
             </div>
           </div>
-          <div className='col-md-6 col-sm-12 col-12 bg-white '>
+          <div className='col-md-6 col-sm-12 col-12 bg-white register-img-box'>
             <div className='register-img'></div>
           </div>
         </div>

@@ -59,19 +59,15 @@ const Login = ({ onLogin }) => {
           <div className='form-group form-group-login d-flex justify-content-between w-100'>
             <div className='d-flex justify-content-center align-items-center'>
               <input
-                className='checkbox-login'
+                className='checkbox-login mr-1'
                 type='checkbox'
                 checked={true}
-                // onClick={() => {
-                //   setCheck(item.value);
-                //   setValue("rating", item.value);
-                // }}
                 // register={register}
               />
-              <span>Ghi nhớ đăng nhập</span>
+              <span>Ghi nhớ</span>
             </div>
             <div>
-              <span>Quên mật khẩu</span>
+              <span>Quên mật khẩu ?</span>
             </div>
           </div>
           <BigRoundedBtn type='submit' title='Đăng nhập' />

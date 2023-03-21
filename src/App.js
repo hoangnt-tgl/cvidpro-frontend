@@ -13,9 +13,8 @@ import "./plugins/slick/slick-theme.min.css";
 
 // import { ToastContainer } from 'react-toastify';
 import HomePage from "./markup/Pages/Homepage1";
-import EmployeeLogin from "./markup/Pages/EmployeeLogin";
-import CompanyLogin from "./markup/Pages/CompanyLogin";
-import CompanyLogin1 from "./markup/Pages/CompanyLogin1.jsx";
+import EmployeeLogin from "./markup/Pages/EmployeeLogin1";
+import CompanyLogin from "./markup/Pages/CompanyLogin1.jsx";
 import JobDetailAdmin from "./markup/Pages/JobDetailAdmin";
 
 import CompanyManageJob from "./markup/Pages/CompanyManageJobs";
@@ -51,13 +50,10 @@ function App(props) {
     <Switch>
       <Route path='/' exact component={HomePage} />
       <Route path='/employee/login' exact component={EmployeeLogin} />
-      {/* <Route path='/company/login' exact component={CompanyLogin} /> */}
-      <Route path='/company/login' exact component={CompanyLogin1} />
+      <Route path='/company/login' exact component={CompanyLogin} />
 
-      {/* <Route path='/employee/register' exact component={EmployeeRegister} /> */}
       <Route path='/employee/register' exact component={EmployeeRegister1} />
       <Route path='/company/register' exact component={CompanyRegister1} />
-      {/* <Route path='/company/register1' exact component={CompanyRegister1} /> */}
       <Route path='/confirm/job-detail/:id' exact component={JobDetailAdmin} />
       <Route path='/confirm/job-resume/:id' exact component={JobResumeAdmin} />
     </Switch>

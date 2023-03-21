@@ -112,7 +112,7 @@
 }
 
 @media (min-width: 350px) {
-  .form-container {
+  .register-wrapper .form-container {
     padding: 1rem 0rem;
   }
   .wrapper-form {
@@ -130,6 +130,9 @@
     margin: 0 auto;
   }
   .register-img {
+    display: none;
+  }
+  .register-img-box{
     display: none;
   }
 }
@@ -151,6 +154,9 @@
     padding: 1rem 2rem;
   }
   .register-img {
+    display: block;
+  }
+  .register-img-box{
     display: block;
   }
   .wrapper-form {

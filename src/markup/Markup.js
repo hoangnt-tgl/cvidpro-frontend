@@ -52,8 +52,7 @@ import Portfoliogrid2 from "./Pages/Portfoliogrid2";
 
 import CompanyRegister from "./Pages/CompanyRegister";
 import EmployeeRegister from "./Pages/EmployeeRegister";
-import EmployeeLogin from "./Pages/EmployeeLogin";
-// import CompanyLogin from "./Pages/CompanyLogin";
+import EmployeeLogin from "./Pages/EmployeeLogin1";
 import CompanyLogin from "./Pages/CompanyLogin1";
 
 import Error404 from "./Pages/Error404";

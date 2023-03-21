@@ -31,6 +31,10 @@
   top: 0;
   opacity: 0.8;
 }
+
+.form-group.form-group-login span {
+  font-weight: 400;
+}
 .form-control.login-input:focus {
   border: 1px solid var(--blue);
 }
@@ -43,4 +47,26 @@
   border-radius: 10px !important;
   padding: 0 20px !important;
   margin: 35px auto;
+}
+
+@media (min-width: 350px) {
+  .form-title {
+    font-weight: 500;
+  }
+}
+@media (min-width: 425px) {
+}
+@media (min-width: 600px) {
+}
+@media (min-width: 768px) {
+}
+@media (min-width: 950px) {
+}
+@media (min-width: 1200px) {
+}
+@media (min-width: 1440px) {
+}
+@media (min-width: 1900px) {
+}
+@media (min-width: 2000px) {
 }
