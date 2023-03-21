@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./RegisterStyles.css";
-const RegisterLayout = ({ children }) => {
+const RegisterLayout = ({ children, isLoginPage = false }) => {
   return (
     <>
       <div className='container-fluid '>
@@ -9,11 +9,14 @@ const RegisterLayout = ({ children }) => {
           <div className='col-md-6 col-sm-12 col-12 bg-white d-flex align-items-center'>
             <div className=' register-wrapper'>
               <div className='container-md form-container'>
-                <div className='header-regiser'>
-                  <Link to={"./"}>
-                    <h1 className='m-b0'>CVIDPRO</h1>
-                  </Link>
-                </div>
+                {!isLoginPage && (
+                  <div className='header-regiser'>
+                    <Link to={"./"}>
+                      <h1 className='m-b0'>CVIDPRO</h1>
+                    </Link>
+                  </div>
+                )}
+
                 <div className='wrapper-form'>{children}</div>
               </div>
             </div>

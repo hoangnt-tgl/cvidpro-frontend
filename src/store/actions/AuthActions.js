@@ -25,10 +25,10 @@ export function employeeSignupAction(data, history) {
         dispatch(confirmedSignupAction({}));
         history.push("/employee/login");
       })
-      .catch((error) => {
-        const errorMessage = formatError(error.response.data.message || "");
-        dispatch(signupFailedAction(errorMessage));
-      });
+      // .catch((error) => {
+      //   const errorMessage = formatError(error.response.data.message || "");
+      //   dispatch(signupFailedAction(errorMessage));
+      // });
     toastPromise(signupApi, toastNoti("register"));
   };
 }
@@ -46,10 +46,10 @@ export function employeeLoginAction(email, password, history) {
           history.push("/jobs-my-resume");
         }
       })
-      .catch((error) => {
-        const errorMessage = formatError(error.response.data.message || "");
-        dispatch(loginFailedAction(errorMessage));
-      });
+      // .catch((error) => {
+      //   const errorMessage = formatError(error.response.data.message || "");
+      //   dispatch(loginFailedAction(errorMessage));
+      // });
     toastPromise(loginApi, toastNoti("login"));
   };
 }
@@ -61,10 +61,10 @@ export function companySignupAction(data, history) {
         dispatch(confirmedSignupAction({}));
         // history.push("/company/login");
       })
-      .catch((error) => {
-        const errorMessage = formatError(error.response.data.message || "");
-        dispatch(signupFailedAction(errorMessage));
-      });
+      // .catch((error) => {
+      //   const errorMessage = formatError(error.response.data.message || "");
+      //   dispatch(signupFailedAction(errorMessage));
+      // });
     toastPromise(signupApi, toastNoti("register"));
   };
 }
@@ -79,10 +79,10 @@ export function companyLoginAction(email, password, history) {
         dispatch(loginConfirmedAction(response.data));
         history.push("/company-profile");
       })
-      .catch((error) => {
-        const errorMessage = formatError(error.response.data.message || "");
-        dispatch(loginFailedAction(errorMessage));
-      });
+      // .catch((error) => {
+      //   const errorMessage = formatError(error.response.data.message || "");
+      //   dispatch(loginFailedAction(errorMessage));
+      // });
     toastPromise(loginApi, toastNoti("login"));
   };
 }
