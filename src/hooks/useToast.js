@@ -6,7 +6,7 @@ function toastPromise(promise, notifications) {
     {
       loading: notifications.loading,
       success: notifications.success,
-      error: notifications.error,
+      error: (error) => error.response.data.message || "",
     },
     {
       style: {
