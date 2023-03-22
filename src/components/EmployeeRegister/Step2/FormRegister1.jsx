@@ -7,6 +7,7 @@ const FormRegister1 = ({
   fetchDistric,
   fetchWard,
   setInfoRegister2,
+  setChildStep,
 }) => {
   return (
     <div className=''>
@@ -17,6 +18,7 @@ const FormRegister1 = ({
           fetchDistric={fetchDistric}
           fetchWard={fetchWard}
           setInfoRegister2={setInfoRegister2}
+          setChildStep={setChildStep}
         />
       </div>
     </div>

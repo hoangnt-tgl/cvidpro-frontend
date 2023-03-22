@@ -1,31 +1,30 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import RegisterLayout from "../../customComponents/RegisterLayout/RegisterLayout";
-import FormRegister from "../../components/Registers/CompanyRegister/Step1/FormRegister";
-import FormRegister1 from "../../components/Registers/CompanyRegister/Step2/FormRegister1";
+import FormRegister from "../../components/Registers/IndividualRegister/Step1/FormRegister";
+import FormRegister1 from "../../components/Registers/IndividualRegister/Step2/FormRegister1";
+import FormRegister2 from "../../components/Registers/IndividualRegister/Step3/FormRegister2";
 import useRegister from "../../hooks/useRegister";
 import useGetOptions from "../../hooks/useGetOptions";
 import Stepper from "../../customComponents/Stepper/Stepper";
-import FormRegister2 from "../../components/Registers/CompanyRegister/Step3/FormRegister2";
 
-function Register2(props) {
+function Register3(props) {
   const { setInfoRegister1, setInfoRegister2, registerCompany, infoRegister1 } =
     useRegister(props.history);
   const { optionsSelect, fetchFieldOptions, getCompanyInfo } =
     useGetOptions(false);
-  const [step, setStep] = useState(1);
   const [childStep, setChildStep] = useState(0);
   const [childStep1, setChildStep1] = useState(0);
   const [childStep2, setChildStep2] = useState(0);
+  const [step, setStep] = useState(1);
   let totalStep = [
-    { step: 1, title: "Thông tin đăng nhập" },
-    { step: 2, title: "Thông tin doanh nghiệp" },
-    { step: 3, title: "Thông tin người đại diện" },
+    { step: 1, title: "Thông tin đăng ký" },
+    { step: 2, title: "Thông tin công ty" },
   ];
 
   return (
     <RegisterLayout>
-      <h3 className='form-title m-t0'>Đăng ký doanh nghiệp</h3>
+      <h3 className='form-title m-t0'>Đăng ký cá nhân</h3>
       <Stepper
         Step={step}
         totalStep={totalStep}
@@ -51,7 +50,7 @@ function Register2(props) {
           setInfoRegister2={setInfoRegister2}
         />
       </div>
-      <div className={step === 3 ? `appear` : `register-steps`}>
+      <div className={step === 2 ? `appear` : `register-steps`}>
         <FormRegister2
           setChildStep2={setChildStep2}
           optionsSelect={optionsSelect}
@@ -68,4 +67,4 @@ const mapStateToProps = (state) => {
     showLoading: state.auth.showLoading,
   };
 };
-export default connect(mapStateToProps)(Register2);
+export default connect(mapStateToProps)(Register3);

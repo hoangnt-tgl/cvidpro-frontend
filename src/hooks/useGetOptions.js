@@ -105,9 +105,7 @@ const useGetOptions = (isAll) => {
       fetchData();
     }
   }, []);
-  useEffect(() => {
-    console.log(optionsSelect);
-  }, [optionsSelect]);
+
   return {
     optionsSelect,
     fetchDistric,

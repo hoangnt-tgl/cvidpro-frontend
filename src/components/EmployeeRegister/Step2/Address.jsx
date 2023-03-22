@@ -4,6 +4,7 @@ import ReactSelectShowType from "../../../customComponents/ReactSelectShowType/R
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useRef } from "react";
 // import '../RegisterStyles.css'
 const Address = ({
   setStep,
@@ -11,7 +12,14 @@ const Address = ({
   optionsSelect,
   fetchDistric,
   fetchWard,
+  setChildStep,
 }) => {
+  const checkStepRef = useRef({
+    city: false,
+    district: false,
+    ward: false,
+    address: false,
+  });
   const schema = yup.object().shape({
     city: yup.object().required("Vui lòng chọn tỉnh/thành phố"),
     district: yup.object().required("Vui lòng chọn quận/huyện"),
@@ -30,10 +38,20 @@ const Address = ({
   });
   function onHandleSubmit(data) {
     setInfoRegister2(data);
-    console.log(data);
-    // console.log(errors);
     if (Object.keys(errors).length === 0) {
       setStep(3);
+    }
+  }
+  function handleCheckInput(e) {
+    if (e.target.dataset.testid === "address") {
+      if (e.target.value !== "" && !checkStepRef.current.address) {
+        setChildStep((prev) => prev + 1 / 3 / 4);
+        checkStepRef.current.address = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.address) {
+        setChildStep((prev) => prev - 1 / 3 / 4);
+        checkStepRef.current.address = false;
+      }
     }
   }
   return (
@@ -53,10 +71,14 @@ const Address = ({
                   options={optionsSelect?.provinces}
                   minInput={1}
                   onChange={(value) => {
-                    console.log(value);
                     setValue("city", value);
+                    if (checkStepRef.current.city === false) {
+                      setChildStep((prev) => prev + 1 / 3 / 4);
+                      checkStepRef.current.city = true;
+                    }
                     fetchDistric(value?.value);
                   }}
+                  className={checkStepRef.current.city ? " filled" : ""}
                 />
               )}
             />
@@ -82,9 +104,13 @@ const Address = ({
                   onChange={(value) => {
                     setValue("district", value);
                     let city = getValues("city").value;
-                    console.log(city);
+                    if (checkStepRef.current.district === false) {
+                      setChildStep((prev) => prev + 1 / 3 / 4);
+                      checkStepRef.current.district = true;
+                    }
                     fetchWard(city, value?.value);
                   }}
+                  className={checkStepRef.current.district ? " filled" : ""}
                 />
               )}
             />
@@ -107,21 +133,36 @@ const Address = ({
                   placeholder='Chọn phường/xã'
                   options={optionsSelect?.wards || []}
                   minInput={1}
+                  onChange={(value) => {
+                    setValue("ward", value);
+                    if (value !== null && !checkStepRef.current.ward) {
+                      setChildStep((prev) => prev + 1 / 3 / 4);
+                      checkStepRef.current.ward = true;
+                    }
+                  }}
+                  className={checkStepRef.current.ward ? " filled" : ""}
                 />
               )}
             />
           </div>
 
           <div className='text-danger'>
-            {errors?.address?.ward && <div>{errors.address.ward}</div>}
+            {errors?.ward?.message && <div>{errors.ward.message}</div>}
           </div>
         </div>
         <div className='form-group'>
           <p>Địa chỉ</p>
           <input
-            className='form-control'
+            // className='form-control'
+            className={
+              checkStepRef.current.address
+                ? "form-control filled"
+                : "form-control"
+            }
             placeholder='Nhập địa chỉ'
             {...register("address")}
+            data-testid='address'
+            onBlur={handleCheckInput}
           />
           <div className='text-danger'>
             {errors?.address?.message && <div>{errors.address.message}</div>}

@@ -123,7 +123,6 @@ const CompanyTaxInfo = ({
                   placeholder='Chọn lĩnh vực hoạt động'
                   options={optionsSelect?.field}
                   isMulti={true}
-                  closeMenuOnSelect={false}
                   className={checkStepRef.current.field ? " filled" : ""}
                 />
               )}

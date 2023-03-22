@@ -4,8 +4,18 @@ import Select from "react-select";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useRef } from "react";
 // import '../RegisterStyles.css'
-const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
+const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
+  const checkStepRef = useRef({
+    name: false,
+    phone: false,
+    birthday: false,
+    gender: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
+  });
   const genderOptions = [
     { value: "Nam", label: "Nam" },
     { value: "Nữ", label: "Nữ" },
@@ -38,16 +48,85 @@ const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
   function onHandleSubmit(data) {
     setInfoRegister1(data);
-    // console.log(data);
-    // console.log(errors);
     if (Object.keys(errors).length === 0) {
       setStep(2);
+    }
+  }
+  function handleCheckInput(e) {
+    if (e.target.dataset.testid === "name") {
+      if (e.target.value !== "" && !checkStepRef.current.name) {
+        setChildStep((prev) => prev + 1 / 3 / 7);
+        checkStepRef.current.name = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.name) {
+        setChildStep((prev) => prev - 1 / 3 / 7);
+        checkStepRef.current.name = false;
+      }
+    }
+    if (e.target.dataset.testid === "phone") {
+      if (e.target.value !== "" && !checkStepRef.current.phone) {
+        setChildStep((prev) => prev + 1 / 3 / 7);
+        checkStepRef.current.phone = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.phone) {
+        setChildStep((prev) => prev - 1 / 3 / 7);
+        checkStepRef.current.phone = false;
+      }
+    }
+    if (e.target.dataset.testid === "birthday") {
+      if (e.target.value !== "" && !checkStepRef.current.birthday) {
+        setChildStep((prev) => prev + 1 / 3 / 7);
+        checkStepRef.current.birthday = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.birthday) {
+        setChildStep((prev) => prev - 1 / 3 / 7);
+        checkStepRef.current.birthday = false;
+      }
+    }
+
+    if (e.target.dataset.testid === "email") {
+      if (e.target.value !== "" && !checkStepRef.current.email) {
+        setChildStep((prev) => prev + 1 / 3 / 7);
+        checkStepRef.current.email = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.email) {
+        setChildStep((prev) => prev - 1 / 3 / 7);
+        checkStepRef.current.email = false;
+      }
+    }
+    if (e.target.dataset.testid === "password") {
+      if (e.target.value !== "" && !checkStepRef.current.password) {
+        setChildStep((prev) => prev + 1 / 3 / 7);
+        checkStepRef.current.password = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.password) {
+        setChildStep((prev) => prev - 1 / 3 / 7);
+        checkStepRef.current.password = false;
+      }
+    }
+    if (e.target.dataset.testid === "confirmPassword") {
+      if (e.target.value !== "" && !checkStepRef.current.confirmPassword) {
+        setChildStep((prev) => prev + 1 / 3 / 7);
+        checkStepRef.current.confirmPassword = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.confirmPassword) {
+        setChildStep((prev) => prev - 1 / 3 / 7);
+        checkStepRef.current.confirmPassword = false;
+      }
+    }
+  }
+  function handleCheckInputSelect(e) {
+    if (e !== null && !checkStepRef.current.gender) {
+      setChildStep((prev) => prev + 1 / 3 / 7);
+      checkStepRef.current.gender = true;
+      setValue("gender", e);
     }
   }
   return (
@@ -57,9 +136,15 @@ const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
           <p>Họ và tên</p>
           <input
             type='text'
-            className='form-control small'
+            className={
+              checkStepRef.current.name
+                ? "form-control small filled"
+                : "form-control small"
+            }
             placeholder='Nhập họ và tên'
             {...register("name")}
+            data-testid='name'
+            onBlur={handleCheckInput}
           />
           <div className='text-danger'>
             {errors?.name?.message && <div>{errors.name.message}</div>}
@@ -69,9 +154,15 @@ const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
           <p>Số điện thoại</p>
           <input
             type='text'
-            className='form-control'
+            className={
+              checkStepRef.current.phone
+                ? "form-control small filled"
+                : "form-control small"
+            }
             placeholder='Nhập số điện thoại'
             {...register("phone")}
+            data-testid='phone'
+            onBlur={handleCheckInput}
           />
           <div className='text-danger'>
             {errors?.phone?.message && <div>{errors.phone.message}</div>}
@@ -81,9 +172,15 @@ const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
           <p>Ngày sinh</p>
           <input
             type='date'
-            className='form-control'
+            className={
+              checkStepRef.current.birthday
+                ? "form-control small filled"
+                : "form-control small"
+            }
             placeholder='Nhập ngày sinh'
             {...register("birthday")}
+            data-testid='birthday'
+            onBlur={handleCheckInput}
           />
           <div className='text-danger'>
             {errors.birthday?.message && <div>{errors.birthday.message}</div>}
@@ -99,8 +196,10 @@ const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
               render={({ field }) => (
                 <Select
                   {...field}
+                  onChange={(e) => handleCheckInputSelect(e)}
                   placeholder='Chọn giới tính'
                   options={genderOptions}
+                  className={checkStepRef.current.gender ? " filled" : ""}
                 />
               )}
             />
@@ -114,9 +213,15 @@ const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
           <p>Email</p>
           <input
             type='email'
-            className='form-control'
+            className={
+              checkStepRef.current.email
+                ? "form-control small filled"
+                : "form-control small"
+            }
             placeholder='Nhập email'
             {...register("email")}
+            data-testid='email'
+            onBlur={handleCheckInput}
           />
           <div className='text-danger'>
             {errors.email?.message && <div>{errors.email.message}</div>}
@@ -125,10 +230,16 @@ const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
         <div className='form-group'>
           <p>Mật khẩu</p>
           <input
-            className='form-control'
+            className={
+              checkStepRef.current.password
+                ? "form-control small filled"
+                : "form-control small"
+            }
             placeholder='Nhập mật khẩu'
-            type="password"
+            type='password'
             {...register("password")}
+            data-testid='password'
+            onBlur={handleCheckInput}
           />
           <div className='text-danger'>
             {errors.password?.message && <div>{errors.password.message}</div>}
@@ -137,10 +248,16 @@ const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
         <div className='form-group'>
           <p>Nhập lại mật khẩu</p>
           <input
-            className='form-control'
-            type="password"
+            className={
+              checkStepRef.current.confirmPassword
+                ? "form-control small filled"
+                : "form-control small"
+            }
+            type='password'
             placeholder='Nhập lại mật khẩu'
             {...register("confirmPassword")}
+            data-testid='confirmPassword'
+            onBlur={handleCheckInput}
           />
           <div className='text-danger'>
             {errors.confirmPassword?.message && (

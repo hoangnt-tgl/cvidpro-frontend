@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 //hookform
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -6,17 +6,10 @@ import * as yup from "yup";
 import "./styles.css";
 import BigSizeInput from "../../customComponents/BigSizeInput/BigSizeInput";
 import BigRoundedBtn from "../../customComponents/BigRoundedBtn/BigRoundedBtn";
+import { Link } from "react-router-dom";
+import { loginCompany } from "../../constants/description";
 
-const Login = ({ onLogin }) => {
-  const inputFiled = [
-    { register: "name", placeholder: "", title: "Tên đăng nhập", type: "text" },
-    {
-      register: "password",
-      placeholder: "",
-      title: "Mật khẩu",
-      type: "password",
-    },
-  ];
+const Login = ({ onLogin, where, inputFiled }) => {
   const schema = yup.object().shape({
     name: yup.string().required("Vui lòng nhập tài khoản"),
     password: yup
@@ -34,7 +27,6 @@ const Login = ({ onLogin }) => {
     resolver: yupResolver(schema),
   });
   function onHandleSubmit(data) {
-    console.log("form", data);
     onLogin(data);
     console.log(errors);
   }
@@ -47,16 +39,40 @@ const Login = ({ onLogin }) => {
             return (
               <BigSizeInput
                 key={index}
+                name={item.register}
                 getValues={getValues}
                 register={{ ...register(item.register) }}
                 errors={errors}
                 title={item.title}
                 placeholder={item.placeholder}
                 type={item.type}
+                description={item.description}
               />
             );
           })}
-          <div className='form-group form-group-login d-flex justify-content-between w-100'>
+          <div className=' d-flex justify-content-between w-100'>
+            <div className='d-flex justify-content-center align-items-center'>
+              {where === "company" ? (
+                <>
+                  {" "}
+                  <span>
+                    Đăng ký tài khoản :{" "}
+                    <Link to='/company/register'>Doanh nghiệp</Link> -{" "}
+                    <Link to='/company/register/individual'>Cá nhân</Link>
+                  </span>
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <span>
+                    Đăng ký tài khoản :{" "}
+                    <Link to='/employee/register'>Cá nhân</Link>
+                  </span>
+                </>
+              )}
+            </div>
+          </div>
+          <div className=' d-flex justify-content-between w-100'>
             <div className='d-flex justify-content-center align-items-center'>
               <input
                 className='checkbox-login mr-1'
