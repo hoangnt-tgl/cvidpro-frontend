@@ -4,7 +4,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useRef } from "react";
-const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
+const PresenterInfo = ({
+  setChildStep1,
+  setStep,
+  setInfoRegister1,
+  fetchFieldOptions,
+}) => {
   const checkStepRef = useRef({
     name: false,
     position: false,
@@ -13,13 +18,22 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
   });
   const schema = yup.object().shape({
     name: yup.string().required("Vui lòng nhập họ và tên"),
-    position: yup.string().required("Vui lòng nhập chức vụ"),
     phone: yup.string().required("Vui lòng nhập số điện thoại").length(10),
     email: yup
       .string()
       .required("Vui lòng nhập email")
       .email("Email không hợp lệ"),
-    checked: yup.boolean().oneOf([true], "Vui lòng đồng ý điều khoản"),
+    password: yup
+      .string()
+      .required("Vui lòng nhập mật khẩu")
+      .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
+      .max(20, "Mật khẩu không được quá 20 ký tự"),
+    confirmPassword: yup
+      .string()
+      .required("Vui lòng nhập lại mật khẩu")
+      .min(6)
+      .max(20)
+      .oneOf([yup.ref("password")], "Mật khẩu không khớp"),
   });
   const {
     register,
@@ -29,47 +43,69 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
     resolver: yupResolver(schema),
   });
   async function onHandleSubmit(data) {
-    registerCompany(data);
+    setInfoRegister1(data);
+    await fetchFieldOptions();
+    setStep(2);
   }
   function handleCheckInput(e) {
     if (e.target.dataset.testid === "name") {
       if (e.target.value !== "" && !checkStepRef.current.name) {
-        setChildStep2((prev) => prev + 1 / 3 / 4);
+        setChildStep1((prev) => prev + 1 / 2 / 5);
         checkStepRef.current.name = true;
       }
       if (e.target.value === "" && checkStepRef.current.name) {
-        setChildStep2((prev) => prev - 1 / 3 / 4);
+        setChildStep1((prev) => prev - 1 / 2 / 5);
         checkStepRef.current.name = false;
       }
     }
     if (e.target.dataset.testid === "position") {
       if (e.target.value !== "" && !checkStepRef.current.position) {
-        setChildStep2((prev) => prev + 1 / 3 / 4);
+        setChildStep1((prev) => prev + 1 / 2 / 5);
         checkStepRef.current.position = true;
       }
       if (e.target.value === "" && checkStepRef.current.position) {
-        setChildStep2((prev) => prev - 1 / 3 / 4);
+        setChildStep1((prev) => prev - 1 / 2 / 5);
         checkStepRef.current.position = false;
       }
     }
     if (e.target.dataset.testid === "phone") {
       if (e.target.value !== "" && !checkStepRef.current.phone) {
-        setChildStep2((prev) => prev + 1 / 3 / 4);
+        setChildStep1((prev) => prev + 1 / 2 / 5);
         checkStepRef.current.phone = true;
       }
       if (e.target.value === "" && checkStepRef.current.phone) {
-        setChildStep2((prev) => prev - 1 / 3 / 4);
+        setChildStep1((prev) => prev - 1 / 2 / 5);
         checkStepRef.current.phone = false;
       }
     }
     if (e.target.dataset.testid === "email") {
       if (e.target.value !== "" && !checkStepRef.current.email) {
-        setChildStep2((prev) => prev + 1 / 3 / 4);
+        setChildStep1((prev) => prev + 1 / 2 / 5);
         checkStepRef.current.email = true;
       }
       if (e.target.value === "" && checkStepRef.current.email) {
-        setChildStep2((prev) => prev - 1 / 3 / 4);
+        setChildStep1((prev) => prev - 1 / 2 / 5);
         checkStepRef.current.email = false;
+      }
+    }
+    if (e.target.dataset.testid === "password") {
+      if (e.target.value !== "" && !checkStepRef.current.password) {
+        setChildStep1((prev) => prev + 1 / 2 / 5);
+        checkStepRef.current.password = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.password) {
+        setChildStep1((prev) => prev - 1 / 2 / 5);
+        checkStepRef.current.password = false;
+      }
+    }
+    if (e.target.dataset.testid === "confirmPassword") {
+      if (e.target.value !== "" && !checkStepRef.current.confirmPassword) {
+        setChildStep1((prev) => prev + 1 / 2 / 5);
+        checkStepRef.current.confirmPassword = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.confirmPassword) {
+        setChildStep1((prev) => prev - 1 / 2 / 5);
+        checkStepRef.current.confirmPassword = false;
       }
     }
   }
@@ -90,23 +126,6 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
           />
           <div className='text-danger'>
             {errors?.name?.message && <div>{errors.name.message}</div>}
-          </div>
-        </div>
-        <div className='form-group'>
-          <p>Chức vụ</p>
-          <input
-            className={
-              checkStepRef.current.position
-                ? "form-control filled"
-                : "form-control"
-            }
-            placeholder='Nhập chức vụ'
-            {...register("position")}
-            data-testid='position'
-            onBlur={handleCheckInput}
-          />
-          <div className='text-danger'>
-            {errors?.position?.message && <div>{errors.position.message}</div>}
           </div>
         </div>
         <div className='form-group'>
@@ -144,39 +163,52 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
             {errors?.email?.message && <div>{errors.email.message}</div>}
           </div>
         </div>
-        <div className='form-group text-left'>
-          <span className='custom-control custom-checkbox'>
-            <input
-              type='checkbox'
-              className='custom-control-input'
-              id='check1'
-              {...register("checked")}
-            />
-            <label className='custom-control-label' htmlFor='check1'>
-              Tôi đồng ý với các điều khoản và điều kiện
-            </label>
-          </span>
+        <div className='form-group'>
+          <p>Mật khẩu</p>
+          <input
+            className={
+              checkStepRef.current.password
+                ? "form-control filled"
+                : "form-control"
+            }
+            type='password'
+            placeholder='Nhập mật khẩu'
+            minLength='6'
+            data-testid='password'
+            {...register("password")}
+            onBlur={handleCheckInput}
+          />
           <div className='text-danger'>
-            {errors?.checked?.message && <div>{errors.checked.message}</div>}
+            {errors?.password?.message && <div>{errors.password.message}</div>}
+          </div>
+        </div>
+        <div className='form-group'>
+          <p>Nhập lại mật khẩu</p>
+          <input
+            className={
+              checkStepRef.current.confirmPassword
+                ? "form-control filled"
+                : "form-control"
+            }
+            type='password'
+            placeholder='Nhập lại mật khẩu'
+            minLength='6'
+            data-testid='confirmPassword'
+            {...register("confirmPassword")}
+            onBlur={handleCheckInput}
+          />
+          <div className='text-danger'>
+            {errors?.confirmPassword?.message && (
+              <div>{errors.confirmPassword.message}</div>
+            )}
           </div>
         </div>
         <div className='form-group '>
-          <button
-            type='button'
-            className='site-button dz-xs-flex m-r5 '
-            onClick={() => {
-              setStep((prev) => prev - 1);
-            }}
-          >
-            <i className='fa fa-arrow-left' aria-hidden='true'></i> Quay lại
-          </button>
-          <button
-            type='submit'
-            className='site-button dz-xs-flex m-r5 float-right btn btn-lg'
-            disabled={Object.keys(errors).length > 0}
-          >
-            Đăng ký
-          </button>
+          <div className='form-group text-right register-btn'>
+            <button type='submit' className='site-button dz-xs-flex m-r5 btn'>
+              Tiếp tục <i className='fa fa-arrow-right' aria-hidden='true'></i>
+            </button>
+          </div>
         </div>
       </form>
     </>

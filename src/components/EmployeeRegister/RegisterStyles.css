@@ -25,7 +25,7 @@
 }
 .select-style {
   font-weight: 400;
-  height: 40px;
+  min-height: 40px;
 }
 .register-steps {
   opacity: 0;
@@ -103,5 +103,4 @@
 .register-img {
   /* background: url("../../images/background/bg1.jpg") no-repeat center
     center/cover fixed; */
-
 }

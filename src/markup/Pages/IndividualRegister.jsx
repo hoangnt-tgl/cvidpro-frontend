@@ -9,17 +9,25 @@ import useGetOptions from "../../hooks/useGetOptions";
 import Stepper from "../../customComponents/Stepper/Stepper";
 
 function Register3(props) {
-  const { setInfoRegister1, setInfoRegister2, registerCompany, infoRegister1 } =
-    useRegister(props.history);
-  const { optionsSelect, fetchFieldOptions, getCompanyInfo } =
-    useGetOptions(false);
-  const [childStep, setChildStep] = useState(0);
+  const {
+    setInfoRegister1,
+    setInfoRegister2,
+    registerCompanyIn,
+    infoRegister1,
+  } = useRegister(props.history);
+  const {
+    optionsSelect,
+    fetchFieldOptions,
+    getCompanyInfo,
+    fetchDistric,
+    fetchWard,
+  } = useGetOptions(true);
   const [childStep1, setChildStep1] = useState(0);
   const [childStep2, setChildStep2] = useState(0);
   const [step, setStep] = useState(1);
   let totalStep = [
     { step: 1, title: "Thông tin đăng ký" },
-    { step: 2, title: "Thông tin công ty" },
+    { step: 2, title: "Thông tin cơ sở" },
   ];
 
   return (
@@ -28,33 +36,28 @@ function Register3(props) {
       <Stepper
         Step={step}
         totalStep={totalStep}
-        step={childStep + childStep1 + childStep2}
-      />
+        step={childStep2 + childStep1}
+      />{" "}
       <div className={step === 1 ? `appear` : `register-steps`}>
-        <FormRegister
-          setChildStep={setChildStep}
-          setStep={setStep}
-          setInfoRegister1={setInfoRegister1}
-          getCompanyInfo={getCompanyInfo}
+        <FormRegister2
           fetchFieldOptions={fetchFieldOptions}
+          setInfoRegister1={setInfoRegister1}
+          setChildStep1={setChildStep1}
+          optionsSelect={optionsSelect}
+          setStep={setStep}
         />
       </div>
       <div className={step === 2 ? `appear` : `register-steps`}>
         <FormRegister1
-          setChildStep1={setChildStep1}
+          setChildStep2={setChildStep2}
           setStep={setStep}
           optionsSelect={optionsSelect}
           getCompanyInfo={getCompanyInfo}
-          registerCompany={registerCompany}
+          registerCompanyIn={registerCompanyIn}
           infoRegister1={infoRegister1}
           setInfoRegister2={setInfoRegister2}
-        />
-      </div>
-      <div className={step === 2 ? `appear` : `register-steps`}>
-        <FormRegister2
-          setChildStep2={setChildStep2}
-          optionsSelect={optionsSelect}
-          registerCompany={registerCompany}
+          fetchDistric={fetchDistric}
+          fetchWard={fetchWard}
         />
       </div>
     </RegisterLayout>

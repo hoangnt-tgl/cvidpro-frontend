@@ -4,13 +4,15 @@ import Select from "react-select";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import ReactSelectShowType from "../../../../customComponents/ReactSelectShowType/ReactSelectShowType";
 
 const CompanyTaxInfo = ({
-  infoRegister1,
   setStep,
   optionsSelect,
-  setInfoRegister2,
+  registerCompanyIn,
   setChildStep1,
+  fetchDistric,
+  fetchWard,
 }) => {
   const checkStepRef = useRef({
     companyType: false,
@@ -19,90 +21,43 @@ const CompanyTaxInfo = ({
     businessLicense: false,
   });
   const schema = yup.object().shape({
-    companyType: yup.object().required("Vui lòng chọn loại hình công ty"),
     field: yup.array().required("Vui lòng nhập lĩnh vực kinh doanh"),
-    mainIndustry: yup.string().required("Vui lòng nhập ngành nghề chính"),
-    businessLicense: yup.mixed().required("Vui lòng tải giấy phép kinh doanh"),
+    city: yup.object().required("Vui lòng chọn tỉnh/thành phố"),
+    district: yup.object().required("Vui lòng chọn quận/huyện"),
+    ward: yup.object().required("Vui lòng chọn phường/xã"),
+    address: yup.string().required("Vui lòng nhập địa chỉ"),
   });
   const {
     register,
     handleSubmit,
     setValue,
     control,
+    getValues,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
-  function uploadBusinessLicense(e) {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = async () => {
-        const base64 = reader.result;
-        setValue("businessLicense", base64);
-      };
-      if (!checkStepRef.current.businessLicense) {
-        setChildStep1((prev) => prev + 1 / 3 / 4);
-        checkStepRef.current.businessLicense = true;
-      }
-    } else {
-      if (checkStepRef.current.businessLicense) {
-        setChildStep1((prev) => prev - 1 / 3 / 4);
-        checkStepRef.current.businessLicense = false;
-      }
-    }
-  }
 
   function handleCheckInput(e) {
-    if (e.target.dataset.testid === "mainIndustry") {
-      if (e.target.value !== "" && !checkStepRef.current.mainIndustry) {
-        setChildStep1((prev) => prev + 1 / 3 / 4);
-        checkStepRef.current.mainIndustry = true;
+    if (e.target.dataset.testid === "address") {
+      if (e.target.value !== "" && !checkStepRef.current.address) {
+        setChildStep1((prev) => prev + 1 / 2 / 5);
+        checkStepRef.current.address = true;
       }
-      if (e.target.value === "" && checkStepRef.current.mainIndustry) {
-        setChildStep1((prev) => prev - 1 / 3 / 4);
-        checkStepRef.current.mainIndustry = false;
+      if (e.target.value === "" && checkStepRef.current.address) {
+        setChildStep1((prev) => prev - 1 / 2 / 5);
+        checkStepRef.current.address = false;
       }
     }
   }
   function onHandleSubmit(data) {
-    setInfoRegister2(data);
-    setStep(3);
+    console.log(data);
+    registerCompanyIn(data);
   }
 
   return (
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
-        <div className='form-group'>
-          <p>Loại hình công ty</p>
-          <div className='select-style'>
-            <Controller
-              name='companyType'
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  onChange={(value) => {
-                    setValue("companyType", value);
-                    if (checkStepRef.current.companyType === false) {
-                      setChildStep1((prev) => prev + 1 / 3 / 4);
-                      checkStepRef.current.companyType = true;
-                    }
-                  }}
-                  placeholder='Chọn loại hình công ty'
-                  options={optionsSelect.companyTypes}
-                  className={checkStepRef.current.companyType ? " filled" : ""}
-                />
-              )}
-            />
-          </div>
-          <div className='text-danger'>
-            {errors?.companyType?.message && (
-              <div>{errors.companyType.message}</div>
-            )}
-          </div>
-        </div>
         <div className='form-group'>
           <p>Lĩnh vực hoạt động</p>
           <div className='select-style'>
@@ -134,59 +89,114 @@ const CompanyTaxInfo = ({
           </div>
         </div>
 
-        {infoRegister1?.companyInfo?.companyName && (
-          <>
-            <div className='form-group'>
-              <p>Tên công ty</p>
-              <input
-                value={infoRegister1?.companyInfo?.companyName}
-                className='form-control filled'
-              />
-            </div>
-            <div className='form-group'>
-              <p>Địa chỉ</p>
-              <input
-                value={infoRegister1?.companyInfo?.address}
-                className='form-control filled'
-              />
-            </div>
-          </>
-        )}
         <div className='form-group'>
-          <p>Ngành nghề chính</p>
-          <input
-            className={
-              checkStepRef.current.mainIndustry
-                ? "form-control filled"
-                : "form-control"
-            }
-            placeholder='Nhập ngành nghề chính'
-            {...register("mainIndustry")}
-            data-testid='mainIndustry'
-            onBlur={(e) => handleCheckInput(e)}
-          />
+          <p>Tỉnh/thành phố</p>
+          <div className='select-style'>
+            {" "}
+            <Controller
+              name='city'
+              control={control}
+              render={({ field }) => (
+                <ReactSelectShowType
+                  {...field}
+                  placeholder='Chọn tỉnh/thành phố'
+                  options={optionsSelect?.provinces}
+                  minInput={1}
+                  onChange={(value) => {
+                    setValue("city", value);
+                    if (checkStepRef.current.city === false) {
+                      setChildStep1((prev) => prev + 1 / 3 / 4);
+                      checkStepRef.current.city = true;
+                    }
+                    fetchDistric(value?.value);
+                  }}
+                  className={checkStepRef.current.city ? " filled" : ""}
+                />
+              )}
+            />
+          </div>
+
           <div className='text-danger'>
-            {errors?.mainIndustry?.message && (
-              <div>{errors.mainIndustry.message}</div>
-            )}
+            {errors?.city?.message && <div>{errors.city.message}</div>}
           </div>
         </div>
         <div className='form-group'>
-          <p>Giấy phép kinh doanh</p>
+          <p>Quận/huyện</p>
+          <div className='select-style'>
+            {" "}
+            <Controller
+              name='district'
+              control={control}
+              render={({ field }) => (
+                <ReactSelectShowType
+                  {...field}
+                  placeholder='Chọn quận/huyện'
+                  options={optionsSelect?.districts || []}
+                  minInput={1}
+                  onChange={(value) => {
+                    setValue("district", value);
+                    let city = getValues("city").value;
+                    if (checkStepRef.current.district === false) {
+                      setChildStep1((prev) => prev + 1 / 3 / 4);
+                      checkStepRef.current.district = true;
+                    }
+                    fetchWard(city, value?.value);
+                  }}
+                  className={checkStepRef.current.district ? " filled" : ""}
+                />
+              )}
+            />
+          </div>
+
+          <div className='text-danger'>
+            {errors?.district?.message && <div>{errors.district.message}</div>}
+          </div>
+        </div>
+        <div className='form-group'>
+          <p>Phường/xã</p>
+          <div className='select-style'>
+            {" "}
+            <Controller
+              name='ward'
+              control={control}
+              render={({ field }) => (
+                <ReactSelectShowType
+                  {...field}
+                  placeholder='Chọn phường/xã'
+                  options={optionsSelect?.wards || []}
+                  minInput={1}
+                  onChange={(value) => {
+                    setValue("ward", value);
+                    if (value !== null && !checkStepRef.current.ward) {
+                      setChildStep1((prev) => prev + 1 / 3 / 4);
+                      checkStepRef.current.ward = true;
+                    }
+                  }}
+                  className={checkStepRef.current.ward ? " filled" : ""}
+                />
+              )}
+            />
+          </div>
+
+          <div className='text-danger'>
+            {errors?.ward?.message && <div>{errors.ward.message}</div>}
+          </div>
+        </div>
+        <div className='form-group'>
+          <p>Địa chỉ</p>
           <input
-            type='file'
             className={
-              checkStepRef.current.businessLicense
+              checkStepRef.current.address
                 ? "form-control filled"
                 : "form-control"
             }
-            accept='image/*'
-            onChange={uploadBusinessLicense}
+            placeholder='Nhập địa chỉ'
+            {...register("address")}
+            data-testid='address'
+            onBlur={handleCheckInput}
           />
           <div className='text-danger'>
-            {errors?.businessLicense?.message && (
-              <div>{errors.businessLicense.message}</div>
-            )}
+            {errors?.address?.message && <div>{errors.address.message}</div>}
           </div>
         </div>
         {/* Next Step Button */}
@@ -205,7 +215,7 @@ const CompanyTaxInfo = ({
             className='site-button dz-xs-flex m-r5 float-right btn btn-lg'
             disabled={Object.keys(errors).length > 0}
           >
-            Tiếp tục <i className='fa fa-arrow-right' aria-hidden='true'></i>
+            Đăng ký
           </button>
         </div>
       </form>

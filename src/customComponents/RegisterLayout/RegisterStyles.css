@@ -20,7 +20,7 @@
 
 .select-style {
   font-weight: 400;
-  height: 40px;
+  min-height: 40px;
 }
 .select-style .css-b62m3t-container {
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
