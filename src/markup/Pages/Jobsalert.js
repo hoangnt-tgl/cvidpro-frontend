@@ -6,7 +6,9 @@ import { gẹtApplyJobForEmployee } from "../../services/EmployeeApi";
 import { Table } from "react-bootstrap";
 import { displayTime } from "../../services/TimeService";
 import { confirmJob } from "../../services/EmployeeApi";
+import "../../css/jobsave.css"
 function Jobsalert(props) {
+  var brg1= require("./../../images/background/bg1.jpg");
   const [isLoading, setIsLoading] = useState(true);
   const [jobList, setJobList] = useState([]);
   // delete data
@@ -34,12 +36,16 @@ function Jobsalert(props) {
       <Header2 />
       <div className="page-content bg-white">
         <div className="content-block">
-          <div className="section-full bg-white p-t50 p-b20">
+          <div className="section-full bg-white p-t50 p-b20"   
+          style={{
+            backgroundImage: "url(" + brg1 + ")",
+            backgroundSize: "cover",
+          }}>
             <div className="container">
-              <div className="m-b30">
-                <div className="job-bx table-job-bx browse-job clearfix">
+              <div className="m-b30 jobposition">
+                <div className="job-bx table-job-bx browse-job clearfix jobalert">
                   <div className="job-bx-title clearfix">
-                    <h5 className="font-weight-700 pull-left text-uppercase">
+                    <h5 className="font-weight-700 pull-left text-uppercase" style={{fontWeight:'600'}}>
                       Lời mời
                     </h5>
                   </div>
@@ -47,13 +53,13 @@ function Jobsalert(props) {
                     <Table striped bordered hover size="sm">
                       <thead>
                         <tr>
-                          <th>Vị trí tuyển dụng</th>
-                          <th>Chức vụ</th>
-                          <th>Địa điểm</th>
-                          <th>Thời gian ứng tuyển</th>
+                          <th style={{border:"1px solid #000"}}>Vị trí tuyển dụng</th>
+                          <th style={{border:"1px solid #000"}}>Chức vụ</th>
+                          <th style={{border:"1px solid #000"}}>Địa điểm</th>
+                          <th style={{border:"1px solid #000"}}>Thời gian ứng tuyển</th>
 
-                          <th>Thông tin phỏng vấn</th>
-                          <th>Tác vụ</th>
+                          <th style={{border:"1px solid #000"}}>Thông tin phỏng vấn</th>
+                          <th style={{border:"1px solid #000"}}>Tác vụ</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -98,7 +104,7 @@ function Jobsalert(props) {
                             </td>
                           </tr>
                         ))}
-                        <td colspan="6">
+                        <td colspan="6" style={{border:"1px solid #000"}}>
                           {!isLoading && jobList?.length === 0 && (
                             <>
                               <div className="text-center">

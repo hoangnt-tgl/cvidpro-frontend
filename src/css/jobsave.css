@@ -15,3 +15,10 @@
 .jobposition{
     color:white !important;
 }
+.jobalert{
+   background-color:white !important;
+}
+
+.jobalert2{
+    border: 1px solid #000 !important;
+ }
