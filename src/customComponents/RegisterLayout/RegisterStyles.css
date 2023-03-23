@@ -68,6 +68,10 @@
 }
 .register-btn button {
   margin: 0px 0px;
+  transition: all ease-in-out 0.5s;
+}
+.register-btn button:active {
+  transform: scale(0.95);
 }
 
 .register-wrapper .filled.form-control {

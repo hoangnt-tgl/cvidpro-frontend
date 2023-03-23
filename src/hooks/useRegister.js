@@ -72,6 +72,7 @@ const useRegister = (history) => {
       province: infoRegister2.city.value,
       district: infoRegister2.district.value,
       ward: infoRegister2.ward.value,
+      type: 6,
     };
     console.log(data);
     dispatch(loadingToggleAction(true));

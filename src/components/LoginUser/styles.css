@@ -51,8 +51,11 @@ span a:hover {
   border-radius: 10px !important;
   padding: 0 20px !important;
   margin: 35px auto;
+  transition: all ease-in-out 0.5s;
 }
-
+.form-group .btn-login:active {
+  scale: 0.95;
+}
 @media (min-width: 350px) {
   .form-title {
     font-weight: 500;

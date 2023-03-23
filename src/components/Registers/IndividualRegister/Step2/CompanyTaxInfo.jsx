@@ -15,10 +15,11 @@ const CompanyTaxInfo = ({
   fetchWard,
 }) => {
   const checkStepRef = useRef({
-    companyType: false,
     field: false,
-    mainIndustry: false,
-    businessLicense: false,
+    city: false,
+    district: false,
+    ward: false,
+    address: false,
   });
   const schema = yup.object().shape({
     field: yup.array().required("Vui lòng nhập lĩnh vực kinh doanh"),
@@ -71,10 +72,11 @@ const CompanyTaxInfo = ({
                   onChange={(value) => {
                     setValue("field", value);
                     if (checkStepRef.current.field === false) {
-                      setChildStep1((prev) => prev + 1 / 3 / 4);
+                      setChildStep1((prev) => prev + 1 / 2 / 5);
                       checkStepRef.current.field = true;
                     }
                   }}
+                  closeMenuOnSelect={false}
                   placeholder='Chọn lĩnh vực hoạt động'
                   options={optionsSelect?.field}
                   isMulti={true}
@@ -105,7 +107,7 @@ const CompanyTaxInfo = ({
                   onChange={(value) => {
                     setValue("city", value);
                     if (checkStepRef.current.city === false) {
-                      setChildStep1((prev) => prev + 1 / 3 / 4);
+                      setChildStep1((prev) => prev + 1 / 2 / 5);
                       checkStepRef.current.city = true;
                     }
                     fetchDistric(value?.value);
@@ -137,7 +139,7 @@ const CompanyTaxInfo = ({
                     setValue("district", value);
                     let city = getValues("city").value;
                     if (checkStepRef.current.district === false) {
-                      setChildStep1((prev) => prev + 1 / 3 / 4);
+                      setChildStep1((prev) => prev + 1 / 2 / 5);
                       checkStepRef.current.district = true;
                     }
                     fetchWard(city, value?.value);
@@ -168,7 +170,7 @@ const CompanyTaxInfo = ({
                   onChange={(value) => {
                     setValue("ward", value);
                     if (value !== null && !checkStepRef.current.ward) {
-                      setChildStep1((prev) => prev + 1 / 3 / 4);
+                      setChildStep1((prev) => prev + 1 / 2 / 5);
                       checkStepRef.current.ward = true;
                     }
                   }}

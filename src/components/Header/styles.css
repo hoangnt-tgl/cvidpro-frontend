@@ -2,6 +2,7 @@
   /* border: 2px solid purple; */
   background-color: white;
   transition: all ease-in-out 0.5s;
+  padding: 0px 70px;
 }
 .stick.nav-container {
   position: fixed;
