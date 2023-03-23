@@ -1,24 +1,20 @@
 import React from "react";
-import Level from "./Level";
+import PresenterInfo from "./PresenterInfo";
 
 const FormRegister2 = ({
+  setChildStep2,
   setStep,
-  fetchSchoolAndMajor,
-  setInfoRegister3,
   optionsSelect,
-  registerUser,
-  setChildStep,
+  registerCompany,
 }) => {
   return (
     <div className=''>
       <div className='body-register'>
-        <Level
+        <PresenterInfo
+          setChildStep2={setChildStep2}
           setStep={setStep}
+          registerCompany={registerCompany}
           optionsSelect={optionsSelect}
-          fetchSchoolAndMajor={fetchSchoolAndMajor}
-          setInfoRegister3={setInfoRegister3}
-          registerUser={registerUser}
-          setChildStep={setChildStep}
         />
       </div>
     </div>

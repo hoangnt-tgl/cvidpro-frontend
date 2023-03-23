@@ -27,7 +27,7 @@ const ReactSelectShowType = ({
     <Select
       {...register}
       isMulti={isMulti}
-      closeMenuOnSelect={isMulti && false}
+      closeMenuOnSelect={!isMulti}
       onChange={onChange}
       noOptionsMessage={noOptionsMessage}
       filterOption={filterOption}

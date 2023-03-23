@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import QuestionMark from "../QuestionMark.jsx/QuestionMark";
 
 const BigSizeInput = ({
+  name,
   register,
   errors,
   title,
   placeholder,
   getValues,
   type,
+  description,
 }) => {
   const [focus, setFocus] = useState(false);
   return (
@@ -18,7 +21,16 @@ const BigSizeInput = ({
             : "form-group form-group-login"
         }
       >
-        <p>{title}</p>
+        <p>
+          {title}{" "}
+          {description.isShow && (
+            <QuestionMark
+              description={description.content}
+              placement='bottom'
+            />
+          )}
+        </p>
+
         <input
           {...register}
           type={type}
@@ -29,9 +41,9 @@ const BigSizeInput = ({
           className='form-control small login-input '
           placeholder={placeholder}
         />
-      </div>
-      <div className='text-danger'>
-        {errors?.name?.message && <div>{errors.name.message}</div>}
+        <div className='text-danger position-absolute'>
+          {errors[name]?.message && <div>{errors[name].message}</div>}
+        </div>
       </div>
     </>
   );

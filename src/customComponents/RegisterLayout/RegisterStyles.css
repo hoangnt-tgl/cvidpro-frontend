@@ -20,11 +20,14 @@
 
 .select-style {
   font-weight: 400;
-  height: 40px;
+  min-height: 40px;
 }
 .select-style .css-b62m3t-container {
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px !important;
+}
+.filled .css-13cymwt-control {
+  background-color: var(--semiblue);
 }
 .register-steps {
   opacity: 0;
@@ -65,8 +68,15 @@
 }
 .register-btn button {
   margin: 0px 0px;
+  transition: all ease-in-out 0.5s;
+}
+.register-btn button:active {
+  transform: scale(0.95);
 }
 
+.register-wrapper .filled.form-control {
+  background-color: var(--semiblue);
+}
 @keyframes smoothAppear {
   0% {
     opacity: 0;
@@ -151,24 +161,29 @@
 }
 @media (min-width: 768px) {
   .register-wrapper .form-container {
-    padding: 1rem 2rem;
+    padding: 1rem 0.5rem;
   }
   .register-img {
     display: block;
+    z-index: 9999;
   }
   .register-img-box {
     display: block;
+    z-index: 9999;
   }
   .wrapper-form {
     padding: 0px 0px;
   }
 }
 @media (min-width: 950px) {
+  .register-wrapper .form-container {
+    padding: 2rem 1rem;
+  }
 }
 @media (min-width: 1200px) {
   .register-wrapper .form-container {
     margin: 0 auto;
-    padding: 2rem 6rem;
+    padding: 2rem 2rem;
     position: relative;
   }
   .wrapper-form h3 {

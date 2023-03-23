@@ -1,11 +1,10 @@
 import React from "react";
 import "./styles.css";
-const Stepper = ({ step, totalStep }) => {
+const Stepper = ({ step, totalStep, Step }) => {
   let innwerWidth = window.innerWidth;
   function checkProgressPer() {
-    return (step / totalStep?.length) * 100;
+    return step * 100;
   }
-  console.log(innwerWidth); //575
   return (
     <div className='my-sm-3'>
       <div className='steps'>
@@ -29,14 +28,14 @@ const Stepper = ({ step, totalStep }) => {
                 return (
                   <div
                     className={
-                      step === item.step
+                      Step === item.step
                         ? "step step-active"
-                        : step < item.step
+                        : Step < item.step
                         ? "step"
                         : "step step-completed"
                     }
                   >
-                    {step > item.step && (
+                    {Step > item.step && (
                       <span className='step-indicator'>
                         <svg
                           xmlns='http://www.w3.org/2000/svg'
@@ -68,10 +67,10 @@ const Stepper = ({ step, totalStep }) => {
                 return (
                   <div
                     className={
-                      step === item.step ? "step step-active" : "d-none"
+                      Step === item.step ? "step step-active" : "d-none"
                     }
                   >
-                    {step > item.step && (
+                    {Step > item.step && (
                       <span className='step-indicator'>
                         <svg
                           xmlns='http://www.w3.org/2000/svg'

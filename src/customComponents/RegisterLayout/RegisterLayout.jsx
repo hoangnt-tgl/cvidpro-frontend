@@ -9,13 +9,13 @@ const RegisterLayout = ({ children, isLoginPage = false }) => {
           <div className='col-md-6 col-sm-12 col-12 bg-white d-flex align-items-center'>
             <div className=' register-wrapper'>
               <div className='container-md form-container'>
-                {!isLoginPage && (
+                {/* {!isLoginPage && (
                   <div className='header-regiser'>
                     <Link to={"./"}>
                       <h1 className='m-b0'>CVIDPRO</h1>
                     </Link>
                   </div>
-                )}
+                )} */}
 
                 <div className='wrapper-form'>{children}</div>
               </div>

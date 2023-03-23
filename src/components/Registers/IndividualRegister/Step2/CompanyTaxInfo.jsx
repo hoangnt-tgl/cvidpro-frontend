@@ -1,26 +1,28 @@
-import React from "react";
-import ReactSelectShowType from "../../../customComponents/ReactSelectShowType/ReactSelectShowType";
+import React, { useEffect, useRef, useState } from "react";
+import Select from "react-select";
 //hookform
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useRef } from "react";
-// import '../RegisterStyles.css'
-const Address = ({
+import ReactSelectShowType from "../../../../customComponents/ReactSelectShowType/ReactSelectShowType";
+
+const CompanyTaxInfo = ({
   setStep,
-  setInfoRegister2,
   optionsSelect,
+  registerCompanyIn,
+  setChildStep1,
   fetchDistric,
   fetchWard,
-  setChildStep,
 }) => {
   const checkStepRef = useRef({
+    field: false,
     city: false,
     district: false,
     ward: false,
     address: false,
   });
   const schema = yup.object().shape({
+    field: yup.array().required("Vui lòng nhập lĩnh vực kinh doanh"),
     city: yup.object().required("Vui lòng chọn tỉnh/thành phố"),
     district: yup.object().required("Vui lòng chọn quận/huyện"),
     ward: yup.object().required("Vui lòng chọn phường/xã"),
@@ -30,33 +32,65 @@ const Address = ({
     register,
     handleSubmit,
     setValue,
-    getValues,
     control,
+    getValues,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
-  function onHandleSubmit(data) {
-    setInfoRegister2(data);
-    if (Object.keys(errors).length === 0) {
-      setStep(3);
-    }
-  }
+
   function handleCheckInput(e) {
     if (e.target.dataset.testid === "address") {
       if (e.target.value !== "" && !checkStepRef.current.address) {
-        setChildStep((prev) => prev + 1 / 3 / 4);
+        setChildStep1((prev) => prev + 1 / 2 / 5);
         checkStepRef.current.address = true;
       }
       if (e.target.value === "" && checkStepRef.current.address) {
-        setChildStep((prev) => prev - 1 / 3 / 4);
+        setChildStep1((prev) => prev - 1 / 2 / 5);
         checkStepRef.current.address = false;
       }
     }
   }
+  function onHandleSubmit(data) {
+    console.log(data);
+    registerCompanyIn(data);
+  }
+
   return (
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
+        <div className='form-group'>
+          <p>Lĩnh vực hoạt động</p>
+          <div className='select-style'>
+            {" "}
+            <Controller
+              name='field'
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  onChange={(value) => {
+                    setValue("field", value);
+                    if (checkStepRef.current.field === false) {
+                      setChildStep1((prev) => prev + 1 / 2 / 5);
+                      checkStepRef.current.field = true;
+                    }
+                  }}
+                  closeMenuOnSelect={false}
+                  placeholder='Chọn lĩnh vực hoạt động'
+                  options={optionsSelect?.field}
+                  isMulti={true}
+                  className={checkStepRef.current.field ? " filled" : ""}
+                />
+              )}
+            />
+          </div>
+
+          <div className='text-danger'>
+            {errors?.field?.message && <div>{errors.field.message}</div>}
+          </div>
+        </div>
+
         <div className='form-group'>
           <p>Tỉnh/thành phố</p>
           <div className='select-style'>
@@ -73,7 +107,7 @@ const Address = ({
                   onChange={(value) => {
                     setValue("city", value);
                     if (checkStepRef.current.city === false) {
-                      setChildStep((prev) => prev + 1 / 3 / 4);
+                      setChildStep1((prev) => prev + 1 / 2 / 5);
                       checkStepRef.current.city = true;
                     }
                     fetchDistric(value?.value);
@@ -105,7 +139,7 @@ const Address = ({
                     setValue("district", value);
                     let city = getValues("city").value;
                     if (checkStepRef.current.district === false) {
-                      setChildStep((prev) => prev + 1 / 3 / 4);
+                      setChildStep1((prev) => prev + 1 / 2 / 5);
                       checkStepRef.current.district = true;
                     }
                     fetchWard(city, value?.value);
@@ -136,7 +170,7 @@ const Address = ({
                   onChange={(value) => {
                     setValue("ward", value);
                     if (value !== null && !checkStepRef.current.ward) {
-                      setChildStep((prev) => prev + 1 / 3 / 4);
+                      setChildStep1((prev) => prev + 1 / 2 / 5);
                       checkStepRef.current.ward = true;
                     }
                   }}
@@ -153,7 +187,6 @@ const Address = ({
         <div className='form-group'>
           <p>Địa chỉ</p>
           <input
-            // className='form-control'
             className={
               checkStepRef.current.address
                 ? "form-control filled"
@@ -168,20 +201,23 @@ const Address = ({
             {errors?.address?.message && <div>{errors.address.message}</div>}
           </div>
         </div>
-        <div className='form-group text-right register-btn'>
+        {/* Next Step Button */}
+        <div className='form-group '>
           <button
             type='button'
             className='site-button dz-xs-flex m-r5 '
-            onClick={() => setStep((prev) => prev - 1)}
+            onClick={() => {
+              setStep((prev) => prev - 1);
+            }}
           >
             <i className='fa fa-arrow-left' aria-hidden='true'></i> Quay lại
           </button>
           <button
             type='submit'
-            className='site-button dz-xs-flex m-r5 btn'
+            className='site-button dz-xs-flex m-r5 float-right btn btn-lg'
             disabled={Object.keys(errors).length > 0}
           >
-            Tiếp tục <i className='fa fa-arrow-right' aria-hidden='true'></i>
+            Đăng ký
           </button>
         </div>
       </form>
@@ -189,4 +225,4 @@ const Address = ({
   );
 };
 
-export default Address;
+export default CompanyTaxInfo;
