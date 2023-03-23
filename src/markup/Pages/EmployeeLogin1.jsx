@@ -8,6 +8,7 @@ import {
 } from "../../store/actions/AuthActions";
 import LoginEmployee from "../../components/LoginUser/Login";
 import { loginEmployee } from "../../constants/description";
+import Header from "../../components/Header/Header";
 
 function Login(props) {
   const inputFiled = [
@@ -43,14 +44,17 @@ function Login(props) {
   }
 
   return (
-    <RegisterLayout isLoginPage={true}>
-      <h1 className='form-title mx-auto'>Đăng nhập</h1>
-      <LoginEmployee
-        onLogin={onLogin}
-        where='employee'
-        inputFiled={inputFiled}
-      />
-    </RegisterLayout>
+    <>
+      <Header />
+      <RegisterLayout isLoginPage={true}>
+        <h1 className='form-title mx-auto'>Đăng nhập</h1>
+        <LoginEmployee
+          onLogin={onLogin}
+          where='employee'
+          inputFiled={inputFiled}
+        />
+      </RegisterLayout>
+    </>
   );
 }
 

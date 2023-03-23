@@ -5,7 +5,7 @@ function Footer() {
   return (
     <footer className='site-footer'>
       <div className='footer-top'>
-        <div className='container' style={{ maxWidth: "1440px" }}>
+        <div className='container' style={{ maxWidth: "1560px" }}>
           <div className='row'>
             <div className='col-xl-5 col-lg-4 col-md-12 col-sm-12'>
               <div className='widget'>

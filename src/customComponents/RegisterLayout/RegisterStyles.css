@@ -161,9 +161,11 @@
   }
   .register-img {
     display: block;
+    z-index: 9999;
   }
   .register-img-box {
     display: block;
+    z-index: 9999;
   }
   .wrapper-form {
     padding: 0px 0px;
