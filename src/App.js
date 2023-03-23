@@ -23,17 +23,18 @@ import CompanyBrowseCandidates from "./markup/Pages/CompanyBrowseCandidates";
 import JobResumeAdmin from "./markup/Pages/JobResumeAdmin";
 import EmployeeRegister1 from "./markup/Pages/EmployeeRegister1";
 import CompanyRegister1 from "./markup/Pages/CompanyRegister1";
+import IndividualRegister from "./markup/Pages/IndividualRegister.jsx";
 // import ForgotPassword from "./markup/Pages/ForgotPassword";
 import { Toaster } from "react-hot-toast";
 
 const toastOptions = {
   // Define default options
   className: "",
-  duration: 3000,
+  duration: 7000,
   style: {},
   // Default options for specific types
   success: {
-    duration: 5000,
+    duration: 7000,
     theme: {
       primary: "green",
       secondary: "black",
@@ -41,19 +42,18 @@ const toastOptions = {
   },
 };
 function App(props) {
-  const dispatch = useDispatch();
-  // useEffect(() => {
-  //     checkAutoLogin(dispatch, props.history);
-  // }, [dispatch, props.history]);
-
   let routes = (
     <Switch>
       <Route path='/' exact component={HomePage} />
       <Route path='/employee/login' exact component={EmployeeLogin} />
       <Route path='/company/login' exact component={CompanyLogin} />
-
       <Route path='/employee/register' exact component={EmployeeRegister1} />
       <Route path='/company/register' exact component={CompanyRegister1} />
+      <Route
+        path='/company/register/individual'
+        exact
+        component={IndividualRegister}
+      />
       <Route path='/confirm/job-detail/:id' exact component={JobDetailAdmin} />
       <Route path='/confirm/job-resume/:id' exact component={JobResumeAdmin} />
     </Switch>

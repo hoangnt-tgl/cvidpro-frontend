@@ -6,37 +6,41 @@
   line-height: 30px;
   font-size: 17px !important;
   border-radius: 10px;
-  padding: 35px 20px;
+  padding: 15px 20px;
   transition: border ease-in-out 0.5s;
-  border: 1px solid #e1e6eb;
+  border: 2px solid #e1e6eb;
 }
 
 .form-group.form-group-login {
   position: relative;
-  margin: 15px auto;
+  margin: 20px auto 40px auto;
   /* border: 2px solid red; */
 }
 .form-group.form-group-login p {
   position: absolute;
-  transform: translateY(-50%) scale(1.1);
+  transform: translateY(-50%) scale(1);
   top: 50%;
   padding: 12px 20px;
   transition: all ease-in-out 0.5s;
   opacity: 0.5;
-  pointer-events: none;
+  pointer-events: hover;
 }
 
 .form-group.form-group-login.focus p {
-  transform: translateY(0%) scale(1);
+  transform: translateY(-80%) scale(1.1);
   top: 0;
   opacity: 0.8;
 }
 
 .form-group.form-group-login span {
-  font-weight: 400;
+  font-weight: 500;
+}
+span a:hover {
+  text-decoration: underline;
+  color: #2e55fa;
 }
 .form-control.login-input:focus {
-  border: 1px solid var(--blue);
+  border: 2px solid var(--blue);
 }
 .checkbox-login {
   width: fit-content;
@@ -47,8 +51,11 @@
   border-radius: 10px !important;
   padding: 0 20px !important;
   margin: 35px auto;
+  transition: all ease-in-out 0.5s;
 }
-
+.form-group .btn-login:active {
+  scale: 0.95;
+}
 @media (min-width: 350px) {
   .form-title {
     font-weight: 500;

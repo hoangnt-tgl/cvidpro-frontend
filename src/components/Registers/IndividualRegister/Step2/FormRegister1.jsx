@@ -7,8 +7,10 @@ const FormRegister1 = ({
   optionsSelect,
   getCompanyInfo,
   infoRegister1,
-  registerCompany,
-  setChildStep1,
+  registerCompanyIn,
+  setChildStep2,
+  fetchDistric,
+  fetchWard,
 }) => {
   return (
     <>
@@ -20,9 +22,11 @@ const FormRegister1 = ({
             setStep={setStep}
             setInfoRegister2={setInfoRegister2}
             getCompanyInfo={getCompanyInfo}
-            registerCompany={registerCompany}
+            registerCompanyIn={registerCompanyIn}
             infoRegister1={infoRegister1}
-            setChildStep1={setChildStep1}
+            setChildStep1={setChildStep2}
+            fetchDistric={fetchDistric}
+            fetchWard={fetchWard}
           />
         </div>
       </div>

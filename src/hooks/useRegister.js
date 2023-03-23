@@ -34,28 +34,45 @@ const useRegister = (history) => {
     console.log(data);
     dispatch(employeeSignupAction(data, history));
   }
-  function registerCompany(infoRegister2) {
+  function registerCompany(infoRegister3) {
+    let data = {
+      email: infoRegister3.email,
+      password: infoRegister1.password,
+      name: infoRegister3.name,
+      status: infoRegister1.companyInfo.status,
+      position: infoRegister3.position,
+      phone: infoRegister3.phone,
+      companyType: infoRegister2.companyType.value,
+      field: infoRegister2.field.map((item) => item.label),
+      companyName: infoRegister1.companyInfo.companyName,
+      address: infoRegister1.companyInfo.address,
+      username: infoRegister1.companyInfo.taxCode,
+      mainIndustry: infoRegister1.mainIndustry,
+      businessLicense: infoRegister2.businessLicense,
+      engName: infoRegister1.companyInfo.engName,
+      sortName: infoRegister1.companyInfo.sortName,
+      typeOfBusiness: infoRegister1.companyInfo.typeOfBusiness,
+      openDate: infoRegister1.companyInfo.ppenDate,
+      companyPhone: infoRegister1.companyInfo.companyPhone,
+      representative: infoRegister1.companyInfo.representative,
+      managedBy: infoRegister1.companyInfo.managedBy,
+    };
+    console.log(data);
+    dispatch(loadingToggleAction(true));
+    dispatch(companySignupAction(data, history));
+  }
+  function registerCompanyIn(infoRegister2) {
     let data = {
       email: infoRegister1.email,
       password: infoRegister1.password,
       name: infoRegister1.name,
-      status: infoRegister2.status,
-      position: infoRegister1.position,
       phone: infoRegister1.phone,
-      companyType: infoRegister2.companyType.value,
       field: infoRegister2.field.map((item) => item.label),
-      companyName: infoRegister2.companyInfo.companyName,
-      address: infoRegister2.companyInfo.address,
-      username: infoRegister2.companyInfo.taxCode,
-      mainIndustry: infoRegister2.mainIndustry,
-      businessLicense: infoRegister2.businessLicense,
-      engName: infoRegister2.companyInfo.engName,
-      sortName: infoRegister2.companyInfo.sortName,
-      typeOfBusiness: infoRegister2.companyInfo.typeOfBusiness,
-      openDate: infoRegister2.companyInfo.ppenDate,
-      companyPhone: infoRegister2.companyInfo.companyPhone,
-      representative: infoRegister2.companyInfo.representative,
-      managedBy: infoRegister2.companyInfo.managedBy,
+      address: infoRegister2.address,
+      province: infoRegister2.city.value,
+      district: infoRegister2.district.value,
+      ward: infoRegister2.ward.value,
+      type: 6,
     };
     console.log(data);
     dispatch(loadingToggleAction(true));
@@ -67,6 +84,8 @@ const useRegister = (history) => {
     setInfoRegister3,
     registerUser,
     registerCompany,
+    infoRegister1,
+    registerCompanyIn,
   };
 };
 

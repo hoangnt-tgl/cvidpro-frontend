@@ -7,8 +7,32 @@ import {
   employeeLoginAction,
 } from "../../store/actions/AuthActions";
 import LoginEmployee from "../../components/LoginUser/Login";
+import { loginEmployee } from "../../constants/description";
+import Header from "../../components/Header/Header";
 
 function Login(props) {
+  const inputFiled = [
+    {
+      register: "name",
+      placeholder: "",
+      title: "Tên đăng nhập",
+      type: "text",
+      description: {
+        isShow: true,
+        content: loginEmployee.username,
+      },
+    },
+    {
+      register: "password",
+      placeholder: "",
+      title: "Mật khẩu",
+      type: "password",
+      description: {
+        isShow: false,
+        content: loginEmployee.username,
+      },
+    },
+  ];
   const dispatch = useDispatch();
 
   function onLogin(data) {
@@ -20,10 +44,17 @@ function Login(props) {
   }
 
   return (
-    <RegisterLayout isLoginPage={true}>
-      <h1 className='form-title mx-auto'>Đăng nhập</h1>
-      <LoginEmployee onLogin={onLogin} />
-    </RegisterLayout>
+    <>
+      <Header />
+      <RegisterLayout isLoginPage={true}>
+        <h1 className='form-title mx-auto'>Đăng nhập</h1>
+        <LoginEmployee
+          onLogin={onLogin}
+          where='employee'
+          inputFiled={inputFiled}
+        />
+      </RegisterLayout>
+    </>
   );
 }
 
