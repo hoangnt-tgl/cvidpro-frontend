@@ -75,7 +75,9 @@ const CompanyTaxInfo = ({
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         <div className='form-group'>
-          <p>Loại hình công ty</p>
+          <p>
+            Loại hình công ty <span className='asterisk'></span>
+          </p>
           <div className='select-style'>
             <Controller
               name='companyType'
@@ -104,7 +106,9 @@ const CompanyTaxInfo = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Lĩnh vực hoạt động</p>
+          <p>
+            Lĩnh vực hoạt động <span className='asterisk'></span>
+          </p>
           <div className='select-style'>
             {" "}
             <Controller
@@ -138,7 +142,7 @@ const CompanyTaxInfo = ({
         {infoRegister1?.companyInfo?.companyName && (
           <>
             <div className='form-group'>
-              <p>Tên công ty</p>
+              <p>Tên công ty </p>
               <input
                 value={infoRegister1?.companyInfo?.companyName}
                 className='form-control filled'
@@ -154,7 +158,9 @@ const CompanyTaxInfo = ({
           </>
         )}
         <div className='form-group'>
-          <p>Ngành nghề chính</p>
+          <p>
+            Ngành nghề chính <span className='asterisk'></span>
+          </p>
           <input
             className={
               checkStepRef.current.mainIndustry
@@ -173,7 +179,9 @@ const CompanyTaxInfo = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Giấy phép kinh doanh</p>
+          <p>
+            Giấy phép kinh doanh <span className='asterisk'></span>
+          </p>
           <input
             type='file'
             className={

@@ -7,9 +7,14 @@ import "./styles.css";
 import BigSizeInput from "../../customComponents/BigSizeInput/BigSizeInput";
 import BigRoundedBtn from "../../customComponents/BigRoundedBtn/BigRoundedBtn";
 import { Link } from "react-router-dom";
-import { loginCompany } from "../../constants/description";
 
-const Login = ({ onLogin, where, inputFiled }) => {
+const Login = ({
+  onLogin,
+  where,
+  inputFiled,
+  setIsIndividual = () => {},
+  isIndividual = false,
+}) => {
   const schema = yup.object().shape({
     name: yup.string().required("Vui lòng nhập tài khoản"),
     password: yup
@@ -34,6 +39,29 @@ const Login = ({ onLogin, where, inputFiled }) => {
   return (
     <>
       <>
+        {where === "company" && (
+          <div className=' d-flex justify-content-start w-100 mb-4'>
+            <div className='d-flex justify-content-center align-items-center mr-5'>
+              <input
+                className='checkbox-login mr-1'
+                type='checkbox'
+                checked={!isIndividual && true}
+                onClick={() => setIsIndividual(false)}
+              />
+              <span>Doanh nghiệp</span>
+            </div>
+            <div className='d-flex justify-content-center align-items-center'>
+              <input
+                className='checkbox-login mr-1'
+                type='checkbox'
+                checked={isIndividual && true}
+                onClick={() => setIsIndividual(true)}
+              />
+              <span>Cá nhân</span>
+            </div>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit(onHandleSubmit)}>
           {inputFiled.map((item, index) => {
             return (
@@ -51,6 +79,21 @@ const Login = ({ onLogin, where, inputFiled }) => {
             );
           })}
           <div className=' d-flex justify-content-between w-100'>
+            <div className='d-flex justify-content-center align-items-center'>
+              <input
+                className='checkbox-login mr-1'
+                type='checkbox'
+                checked={true}
+                // register={register}
+              />
+              <span>Ghi nhớ</span>
+            </div>
+            <div>
+              <span>Quên mật khẩu ?</span>
+            </div>
+          </div>
+          <BigRoundedBtn type='submit' title='Đăng nhập' />
+          <div className=' d-flex justify-content-center w-100'>
             <div className='d-flex justify-content-center align-items-center'>
               {where === "company" ? (
                 <>
@@ -72,21 +115,6 @@ const Login = ({ onLogin, where, inputFiled }) => {
               )}
             </div>
           </div>
-          <div className=' d-flex justify-content-between w-100'>
-            <div className='d-flex justify-content-center align-items-center'>
-              <input
-                className='checkbox-login mr-1'
-                type='checkbox'
-                checked={true}
-                // register={register}
-              />
-              <span>Ghi nhớ</span>
-            </div>
-            <div>
-              <span>Quên mật khẩu ?</span>
-            </div>
-          </div>
-          <BigRoundedBtn type='submit' title='Đăng nhập' />
         </form>
       </>
     </>

@@ -17,15 +17,30 @@
   /* border: 2px solid red; */
 }
 .form-group.form-group-login p {
+  /* margin-bottom: 0px; */
+  /* pointer-events: none; */
   position: absolute;
   transform: translateY(-50%) scale(1);
   top: 50%;
   padding: 12px 20px;
   transition: all ease-in-out 0.5s;
   opacity: 0.5;
-  pointer-events: hover;
+  pointer-events: none;
 }
-
+.question-icon {
+  position: absolute;
+  transition: all ease-in-out 0.5s;
+  opacity: 0.5;
+  transform: translateY(-50%) scale(1);
+  top: 50%;
+  right: 5%;
+}
+/* .form-group.form-group-login.focus .question-icon {
+  transform: translateY(-110%) ;
+  left: 21%;
+  top: 0;
+  opacity: 0.8;
+} */
 .form-group.form-group-login.focus p {
   transform: translateY(-80%) scale(1.1);
   top: 0;
@@ -34,6 +49,9 @@
 
 .form-group.form-group-login span {
   font-weight: 500;
+}
+.form-group.form-group-login.focus .form-control.login-input {
+  border: 2px solid var(--blue);
 }
 span a:hover {
   text-decoration: underline;

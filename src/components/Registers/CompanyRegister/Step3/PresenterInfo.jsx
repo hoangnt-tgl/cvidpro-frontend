@@ -7,12 +7,14 @@ import { useRef } from "react";
 const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
   const checkStepRef = useRef({
     name: false,
+    lastName: false,
     position: false,
     phone: false,
     email: false,
   });
   const schema = yup.object().shape({
-    name: yup.string().required("Vui lòng nhập họ và tên"),
+    name: yup.string().required("Vui lòng nhập họ và tên lót"),
+    lastName: yup.string().required("Vui lòng nhập tên"),
     position: yup.string().required("Vui lòng nhập chức vụ"),
     phone: yup.string().required("Vui lòng nhập số điện thoại").length(10),
     email: yup
@@ -34,41 +36,51 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
   function handleCheckInput(e) {
     if (e.target.dataset.testid === "name") {
       if (e.target.value !== "" && !checkStepRef.current.name) {
-        setChildStep2((prev) => prev + 1 / 3 / 4);
+        setChildStep2((prev) => prev + 1 / 3 / 5);
         checkStepRef.current.name = true;
       }
       if (e.target.value === "" && checkStepRef.current.name) {
-        setChildStep2((prev) => prev - 1 / 3 / 4);
+        setChildStep2((prev) => prev - 1 / 3 / 5);
         checkStepRef.current.name = false;
+      }
+    }
+    if (e.target.dataset.testid === "lastName") {
+      if (e.target.value !== "" && !checkStepRef.current.lastName) {
+        setChildStep2((prev) => prev + 1 / 3 / 5);
+        checkStepRef.current.lastName = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.lastName) {
+        setChildStep2((prev) => prev - 1 / 3 / 5);
+        checkStepRef.current.lastName = false;
       }
     }
     if (e.target.dataset.testid === "position") {
       if (e.target.value !== "" && !checkStepRef.current.position) {
-        setChildStep2((prev) => prev + 1 / 3 / 4);
+        setChildStep2((prev) => prev + 1 / 3 / 5);
         checkStepRef.current.position = true;
       }
       if (e.target.value === "" && checkStepRef.current.position) {
-        setChildStep2((prev) => prev - 1 / 3 / 4);
+        setChildStep2((prev) => prev - 1 / 3 / 5);
         checkStepRef.current.position = false;
       }
     }
     if (e.target.dataset.testid === "phone") {
       if (e.target.value !== "" && !checkStepRef.current.phone) {
-        setChildStep2((prev) => prev + 1 / 3 / 4);
+        setChildStep2((prev) => prev + 1 / 3 / 5);
         checkStepRef.current.phone = true;
       }
       if (e.target.value === "" && checkStepRef.current.phone) {
-        setChildStep2((prev) => prev - 1 / 3 / 4);
+        setChildStep2((prev) => prev - 1 / 3 / 5);
         checkStepRef.current.phone = false;
       }
     }
     if (e.target.dataset.testid === "email") {
       if (e.target.value !== "" && !checkStepRef.current.email) {
-        setChildStep2((prev) => prev + 1 / 3 / 4);
+        setChildStep2((prev) => prev + 1 / 3 / 5);
         checkStepRef.current.email = true;
       }
       if (e.target.value === "" && checkStepRef.current.email) {
-        setChildStep2((prev) => prev - 1 / 3 / 4);
+        setChildStep2((prev) => prev - 1 / 3 / 5);
         checkStepRef.current.email = false;
       }
     }
@@ -77,23 +89,54 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         {" "}
-        <div className='form-group'>
-          <p>Họ và tên</p>
-          <input
-            className={
-              checkStepRef.current.name ? "form-control filled" : "form-control"
-            }
-            placeholder='Nhập họ và tên'
-            {...register("name")}
-            data-testid='name'
-            onBlur={handleCheckInput}
-          />
-          <div className='text-danger'>
-            {errors?.name?.message && <div>{errors.name.message}</div>}
+        <div className='form-group  d-flex justify-content-between'>
+          <div className='w-100 mr-5'>
+            {" "}
+            <p>
+              Họ và tên lót <span className='asterisk'></span>
+            </p>
+            <input
+              className={
+                checkStepRef.current.name
+                  ? "form-control filled"
+                  : "form-control"
+              }
+              placeholder='Nhập họ và tên'
+              {...register("name")}
+              data-testid='name'
+              onBlur={handleCheckInput}
+            />
+            <div className='text-danger'>
+              {errors?.name?.message && <div>{errors.name.message}</div>}
+            </div>
+          </div>
+          <div className='w-100'>
+            {" "}
+            <p>
+              Tên <span className='asterisk'></span>
+            </p>
+            <input
+              className={
+                checkStepRef.current.lastName
+                  ? "form-control filled"
+                  : "form-control"
+              }
+              placeholder='Nhập họ và tên'
+              {...register("lastName")}
+              data-testid='lastName'
+              onBlur={handleCheckInput}
+            />
+            <div className='text-danger'>
+              {errors?.lastName?.message && (
+                <div>{errors.lastName.message}</div>
+              )}
+            </div>
           </div>
         </div>
         <div className='form-group'>
-          <p>Chức vụ</p>
+          <p>
+            Chức vụ <span className='asterisk'></span>
+          </p>
           <input
             className={
               checkStepRef.current.position
@@ -110,7 +153,9 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
           </div>
         </div>
         <div className='form-group'>
-          <p>Số điện thoại</p>
+          <p>
+            Số điện thoại <span className='asterisk'></span>
+          </p>
           <input
             className={
               checkStepRef.current.phone
@@ -127,7 +172,9 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
           </div>
         </div>
         <div className='form-group'>
-          <p>Email</p>
+          <p>
+            Email <span className='asterisk'></span>
+          </p>
           <input
             type='email'
             className={
