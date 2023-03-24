@@ -50,11 +50,11 @@ import Portfoliogrid2 from "./Pages/Portfoliogrid2";
 //import Loginpage2 from './Pages/Loginpage2';
 //import Loginpage3 from './Pages/Loginpage3';
 
-import CompanyRegister from "./Pages/CompanyRegister";
-import EmployeeRegister from "./Pages/EmployeeRegister";
+import CompanyRegister from "./Pages/CompanyRegister1";
+import EmployeeRegister from "./Pages/EmployeeRegister1";
 import EmployeeLogin from "./Pages/EmployeeLogin1";
 import CompanyLogin from "./Pages/CompanyLogin1";
-
+import IndividualRegister from "./Pages/IndividualRegister.jsx";
 import Error404 from "./Pages/Error404";
 
 import Contact from "./Pages/Contact";
@@ -77,6 +77,11 @@ const Markup = () => {
           <Route path='/company/login' exact component={CompanyLogin} />
           <Route path='/employee/register' exact component={EmployeeRegister} />
           <Route path='/employee/login' exact component={EmployeeLogin} />
+          <Route
+            path='/company/register/individual'
+            exact
+            component={IndividualRegister}
+          />
           <Route
             path='/confirm/job-detail/:id'
             exact
