@@ -21,15 +21,21 @@ const BigSizeInput = ({
             : "form-group form-group-login"
         }
       >
-        <p>
+        <p
+          //  onClick={() => setFocus(true)}
+          className=''
+        >
           {title}{" "}
+        </p>
+        <div className="question-icon">
+          {" "}
           {description.isShow && (
             <QuestionMark
               description={description.content}
               placement='bottom'
             />
           )}
-        </p>
+        </div>
 
         <input
           {...register}

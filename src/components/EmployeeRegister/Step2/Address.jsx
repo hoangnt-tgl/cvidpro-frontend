@@ -58,7 +58,9 @@ const Address = ({
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         <div className='form-group'>
-          <p>Tỉnh/thành phố</p>
+          <p>
+            Tỉnh/thành phố <span className='asterisk'></span>
+          </p>
           <div className='select-style'>
             {" "}
             <Controller
@@ -89,7 +91,9 @@ const Address = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Quận/huyện</p>
+          <p>
+            Quận/huyện <span className='asterisk'></span>
+          </p>
           <div className='select-style'>
             {" "}
             <Controller
@@ -121,7 +125,9 @@ const Address = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Phường/xã</p>
+          <p>
+            Phường/xã <span className='asterisk'></span>
+          </p>
           <div className='select-style'>
             {" "}
             <Controller
@@ -151,7 +157,9 @@ const Address = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Địa chỉ</p>
+          <p>
+            Địa chỉ <span className='asterisk'></span>
+          </p>
           <input
             // className='form-control'
             className={

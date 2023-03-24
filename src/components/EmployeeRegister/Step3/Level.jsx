@@ -86,7 +86,9 @@ const Level = ({
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         <div className='form-group'>
-          <p>Trình độ</p>
+          <p>
+            Trình độ <span className='asterisk'></span>
+          </p>
           <div className='select-style'>
             {" "}
             <Controller
@@ -117,7 +119,9 @@ const Level = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Trường</p>
+          <p>
+            Trường <span className='asterisk'></span>
+          </p>
           <div className='select-style'>
             {" "}
             <Controller
@@ -148,7 +152,9 @@ const Level = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Ngành</p>
+          <p>
+            Ngành <span className='asterisk'></span>
+          </p>
           <div className='select-style'>
             {" "}
             <Controller
@@ -178,7 +184,9 @@ const Level = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Chức danh</p>
+          <p>
+            Chức danh <span className='asterisk'></span>
+          </p>
           <div className='select-style'>
             {" "}
             <Controller
@@ -208,7 +216,9 @@ const Level = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Năm bắt đầu</p>
+          <p>
+            Năm bắt đầu <span className='asterisk'></span>
+          </p>
           <input
             {...register("startYear")}
             type='month'
@@ -239,7 +249,9 @@ const Level = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Năm kết thúc</p>
+          <p>
+            Năm kết thúc <span className='asterisk'></span>
+          </p>
           <input
             {...register("endYear")}
             type='month'

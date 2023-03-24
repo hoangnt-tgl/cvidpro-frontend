@@ -93,7 +93,9 @@ const CompanyInfo = ({
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         {" "}
         <div className='form-group'>
-          <p>Mã số thuế</p>
+          <p>
+            Mã số thuế <span className='asterisk'></span>
+          </p>
           <input
             {...register("taxCode")}
             onBlur={handleGetLegalCompanyInfo}
@@ -110,7 +112,9 @@ const CompanyInfo = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Mật khẩu</p>
+          <p>
+            Mật khẩu <span className='asterisk'></span>
+          </p>
           <input
             className={
               checkStepRef.current.password
@@ -129,7 +133,9 @@ const CompanyInfo = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Nhập lại mật khẩu</p>
+          <p>
+            Nhập lại mật khẩu <span className='asterisk'></span>
+          </p>
           <input
             className={
               checkStepRef.current.confirmPassword

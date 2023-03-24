@@ -8,6 +8,7 @@ import { useRef } from "react";
 // import '../RegisterStyles.css'
 const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
   const checkStepRef = useRef({
+    lastName: false,
     name: false,
     phone: false,
     birthday: false,
@@ -21,7 +22,8 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
     { value: "Nữ", label: "Nữ" },
   ];
   const schema = yup.object().shape({
-    name: yup.string().required("Vui lòng nhập họ và tên"),
+    name: yup.string().required("Vui lòng nhập họ và lót"),
+    lastName: yup.string().required("Vui lòng nhập tên "),
     phone: yup.string().required("Vui lòng nhập số điện thoại").length(10),
     birthday: yup
       .date()
@@ -62,69 +64,79 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
   function handleCheckInput(e) {
     if (e.target.dataset.testid === "name") {
       if (e.target.value !== "" && !checkStepRef.current.name) {
-        setChildStep((prev) => prev + 1 / 3 / 7);
+        setChildStep((prev) => prev + 1 / 3 / 8);
         checkStepRef.current.name = true;
       }
       if (e.target.value === "" && checkStepRef.current.name) {
-        setChildStep((prev) => prev - 1 / 3 / 7);
+        setChildStep((prev) => prev - 1 / 3 / 8);
         checkStepRef.current.name = false;
+      }
+    }
+    if (e.target.dataset.testid === "lastName") {
+      if (e.target.value !== "" && !checkStepRef.current.lastName) {
+        setChildStep((prev) => prev + 1 / 3 / 8);
+        checkStepRef.current.lastName = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.lastName) {
+        setChildStep((prev) => prev - 1 / 3 / 8);
+        checkStepRef.current.lastName = false;
       }
     }
     if (e.target.dataset.testid === "phone") {
       if (e.target.value !== "" && !checkStepRef.current.phone) {
-        setChildStep((prev) => prev + 1 / 3 / 7);
+        setChildStep((prev) => prev + 1 / 3 / 8);
         checkStepRef.current.phone = true;
       }
       if (e.target.value === "" && checkStepRef.current.phone) {
-        setChildStep((prev) => prev - 1 / 3 / 7);
+        setChildStep((prev) => prev - 1 / 3 / 8);
         checkStepRef.current.phone = false;
       }
     }
     if (e.target.dataset.testid === "birthday") {
       if (e.target.value !== "" && !checkStepRef.current.birthday) {
-        setChildStep((prev) => prev + 1 / 3 / 7);
+        setChildStep((prev) => prev + 1 / 3 / 8);
         checkStepRef.current.birthday = true;
       }
       if (e.target.value === "" && checkStepRef.current.birthday) {
-        setChildStep((prev) => prev - 1 / 3 / 7);
+        setChildStep((prev) => prev - 1 / 3 / 8);
         checkStepRef.current.birthday = false;
       }
     }
 
     if (e.target.dataset.testid === "email") {
       if (e.target.value !== "" && !checkStepRef.current.email) {
-        setChildStep((prev) => prev + 1 / 3 / 7);
+        setChildStep((prev) => prev + 1 / 3 / 8);
         checkStepRef.current.email = true;
       }
       if (e.target.value === "" && checkStepRef.current.email) {
-        setChildStep((prev) => prev - 1 / 3 / 7);
+        setChildStep((prev) => prev - 1 / 3 / 8);
         checkStepRef.current.email = false;
       }
     }
     if (e.target.dataset.testid === "password") {
       if (e.target.value !== "" && !checkStepRef.current.password) {
-        setChildStep((prev) => prev + 1 / 3 / 7);
+        setChildStep((prev) => prev + 1 / 3 / 8);
         checkStepRef.current.password = true;
       }
       if (e.target.value === "" && checkStepRef.current.password) {
-        setChildStep((prev) => prev - 1 / 3 / 7);
+        setChildStep((prev) => prev - 1 / 3 / 8);
         checkStepRef.current.password = false;
       }
     }
     if (e.target.dataset.testid === "confirmPassword") {
       if (e.target.value !== "" && !checkStepRef.current.confirmPassword) {
-        setChildStep((prev) => prev + 1 / 3 / 7);
+        setChildStep((prev) => prev + 1 / 3 / 8);
         checkStepRef.current.confirmPassword = true;
       }
       if (e.target.value === "" && checkStepRef.current.confirmPassword) {
-        setChildStep((prev) => prev - 1 / 3 / 7);
+        setChildStep((prev) => prev - 1 / 3 / 8);
         checkStepRef.current.confirmPassword = false;
       }
     }
   }
   function handleCheckInputSelect(e) {
     if (e !== null && !checkStepRef.current.gender) {
-      setChildStep((prev) => prev + 1 / 3 / 7);
+      setChildStep((prev) => prev + 1 / 3 / 8);
       checkStepRef.current.gender = true;
       setValue("gender", e);
     }
@@ -132,26 +144,52 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
   return (
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
-        <div className='form-group'>
-          <p>Họ và tên</p>
-          <input
-            type='text'
-            className={
-              checkStepRef.current.name
-                ? "form-control small filled"
-                : "form-control small"
-            }
-            placeholder='Nhập họ và tên'
-            {...register("name")}
-            data-testid='name'
-            onBlur={handleCheckInput}
-          />
-          <div className='text-danger'>
-            {errors?.name?.message && <div>{errors.name.message}</div>}
+        <div className='form-group d-flex justify-content-between'>
+          <div className='w-100 mr-5'>
+            <p>
+              Họ và tên lót <span className='asterisk'></span>
+            </p>
+            <input
+              type='text'
+              className={
+                checkStepRef.current.name
+                  ? "form-control small filled"
+                  : "form-control small"
+              }
+              placeholder='Họ và tên lót'
+              {...register("name")}
+              data-testid='name'
+              onBlur={handleCheckInput}
+            />
+            <div className='text-danger'>
+              {errors?.name?.message && <div>{errors.name.message}</div>}
+            </div>
+          </div>
+          <div className='w-100'>
+            <p>
+              Tên <span className='asterisk'></span>
+            </p>
+            <input
+              type='text'
+              className={
+                checkStepRef.current.lastName
+                  ? "form-control small filled"
+                  : "form-control small"
+              }
+              placeholder='Tên'
+              {...register("lastName")}
+              data-testid='lastName'
+              onBlur={handleCheckInput}
+            />
+            <div className='text-danger'>
+              {errors?.lastName?.message && <div>{errors.lastName.message}</div>}
+            </div>
           </div>
         </div>
         <div className='form-group'>
-          <p>Số điện thoại</p>
+          <p>
+            Số điện thoại <span className='asterisk'></span>
+          </p>
           <input
             type='text'
             className={
@@ -169,7 +207,9 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
           </div>
         </div>
         <div className='form-group'>
-          <p>Ngày sinh</p>
+          <p>
+            Ngày sinh <span className='asterisk'></span>
+          </p>
           <input
             type='date'
             className={
@@ -187,7 +227,9 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
           </div>
         </div>
         <div className='form-group'>
-          <p>Giới tính</p>
+          <p>
+            Giới tính <span className='asterisk'></span>
+          </p>
           <div className='select-style'>
             {" "}
             <Controller
@@ -210,7 +252,9 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
           </div>
         </div>
         <div className='form-group'>
-          <p>Email</p>
+          <p>
+            Email <span className='asterisk'></span>
+          </p>
           <input
             type='email'
             className={
@@ -228,7 +272,9 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
           </div>
         </div>
         <div className='form-group'>
-          <p>Mật khẩu</p>
+          <p>
+            Mật khẩu <span className='asterisk'></span>
+          </p>
           <input
             className={
               checkStepRef.current.password
@@ -246,7 +292,9 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
           </div>
         </div>
         <div className='form-group'>
-          <p>Nhập lại mật khẩu</p>
+          <p>
+            Nhập lại mật khẩu <span className='asterisk'></span>
+          </p>
           <input
             className={
               checkStepRef.current.confirmPassword

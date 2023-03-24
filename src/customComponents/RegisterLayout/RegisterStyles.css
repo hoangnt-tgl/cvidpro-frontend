@@ -77,6 +77,14 @@
 .register-wrapper .filled.form-control {
   background-color: var(--semiblue);
 }
+.asterisk {
+  color: red;
+}
+.asterisk::before {
+  content: "*";
+  color: red;
+  font-size: 18px;
+}
 @keyframes smoothAppear {
   0% {
     opacity: 0;

@@ -10,11 +10,34 @@ import RegisterLayout from "../../customComponents/RegisterLayout/RegisterLayout
 import { loginCompany } from "../../constants/description";
 import Header from "../../components/Header/Header";
 function Login(props) {
+  const [isIndividual, setIsIndividual] = React.useState(false);
   const inputFiled = [
     {
       register: "name",
       placeholder: "",
-      title: "Tên đăng nhập",
+      title: "Mã số thuế",
+      type: "text",
+      description: {
+        isShow: true,
+        content: loginCompany.username,
+      },
+    },
+    {
+      register: "password",
+      placeholder: "",
+      title: "Mật khẩu",
+      type: "password",
+      description: {
+        isShow: false,
+        content: loginCompany.username,
+      },
+    },
+  ];
+  const inputFiledIn = [
+    {
+      register: "name",
+      placeholder: "",
+      title: "Số điện thoại",
       type: "text",
       description: {
         isShow: true,
@@ -47,9 +70,11 @@ function Login(props) {
       <RegisterLayout isLoginPage={true}>
         <h1 className='form-title mx-auto'>Đăng nhập</h1>
         <LoginCompany
+          setIsIndividual={setIsIndividual}
+          isIndividual={isIndividual}
           onLogin={onLogin}
           where='company'
-          inputFiled={inputFiled}
+          inputFiled={isIndividual ? inputFiledIn : inputFiled}
         />
       </RegisterLayout>
     </>
