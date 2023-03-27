@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
 import swal from "sweetalert";
+import loginbg from "./../../images/bg6.jpg";
+import "../../css/jobsave.css"
 import {
   Modal,
   Button,
@@ -48,6 +50,7 @@ import {
 } from "../../services/GetListService";
 var bnr2 = require("./../../images/banner/bnr1.jpg");
 var bnr = require("./../../images/background/bg3.jpg");
+var bnr3= require("../../images/background/bg5.jpg")
 function Jobmyresume(props) {
   const objSchool = {
     school: "",
@@ -736,12 +739,15 @@ function Jobmyresume(props) {
             </div>
           </Modal>
         </div>
-        <div className="content-block">
+        <div className="content-block"  style={{
+          backgroundImage: "url(" + bnr3 + ")",
+          backgroundSize: "75% 100%", 
+        }}>
           <div className="section-full browse-job content-inner-2">
             <div className="container">
               <div
                 id="resume_headline_bx"
-                className=" job-bx bg-white table-job-bx m-b30"
+                className=" job-bx bg-white table-job-bx m-b30" style={{border:"1px solid #000"}}
               >
                 <div className="d-flex">
                   <h5 className="m-b15 bold">Kinh nghiệm làm việc</h5>
@@ -751,7 +757,7 @@ function Jobmyresume(props) {
                     <>
                       {item?.isWorking ? (
                         <Form className="mb-3">
-                          <Card>
+                          <Card style={{border:"1px solid #000"}}>
                             <Card.Header>
                               <Card.Title className="header-cv" style={{maxHeight:"200px"}}>
                                 Thời gian làm việc
@@ -769,7 +775,7 @@ function Jobmyresume(props) {
                                     <FormControl 
                                       value={item.company}
                                       className="answer"
-                                      style={{ maxHeight: "38px" }} 
+                                      style={{ maxHeight: "38px"}} 
                                     />
                                   </InputGroup>
                                 </div>
@@ -1074,7 +1080,7 @@ function Jobmyresume(props) {
                 >
                   <Tab eventKey="working" title="Thêm nơi làm việc">
                     <Form className="mb-2" action="javascript:void(0);">
-                      <Card>
+                      <Card  style={{border:"1px solid #000"}}>
                         <Card.Header>
                           <div className="row">
                             <div className="col-12">
