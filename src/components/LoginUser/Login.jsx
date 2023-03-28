@@ -17,11 +17,7 @@ const Login = ({
 }) => {
   const schema = yup.object().shape({
     name: yup.string().required("Vui lòng nhập tài khoản"),
-    password: yup
-      .string()
-      .required("Vui lòng nhập mật khẩu")
-      .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
-      .max(20, "Mật khẩu không được quá 20 ký tự"),
+    password: yup.string().required("Vui lòng nhập mật khẩu"),
   });
   const {
     register,
@@ -41,7 +37,7 @@ const Login = ({
       <>
         {where === "company" && (
           <div>
-            <p>lorem lorem lorem lorem lorem lorem </p>
+            <h5>Chọn loại hình tuyển dụng </h5>
             <div className=' d-flex justify-content-start w-100 mb-4'>
               <div className='d-flex justify-content-center align-items-center mr-5'>
                 <input
@@ -81,22 +77,28 @@ const Login = ({
               />
             );
           })}
-          <div className=' d-flex justify-content-between w-100'>
+          <div
+            className=' d-flex justify-content-between w-100'
+            style={{ marginTop: "-20px" }}
+          >
             <div className='d-flex justify-content-center align-items-center'>
-              <input
+              {/* <input
                 className='checkbox-login mr-1'
                 type='checkbox'
                 checked={true}
                 // register={register}
               />
-              <span>Ghi nhớ</span>
-            </div>
-            <div>
-              <span>Quên mật khẩu ?</span>
+              <span>Ghi nhớ</span> */}
+              <div>
+                <span>Quên mật khẩu ?</span>
+              </div>
             </div>
           </div>
           <BigRoundedBtn type='submit' title='Đăng nhập' />
-          <div className=' d-flex justify-content-center w-100'>
+          <div
+            className=' d-flex justify-content-center w-100'
+            style={{ marginTop: "-50px" }}
+          >
             <div className='d-flex justify-content-center align-items-center'>
               {where === "company" ? (
                 <>

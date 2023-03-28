@@ -1,6 +1,6 @@
 .form-title {
   width: fit-content;
-  margin: 35px auto;
+  margin: 5px auto;
 }
 .form-control.login-input {
   line-height: 30px;
@@ -61,7 +61,8 @@ span a:hover {
   border: 2px solid var(--blue);
 }
 .checkbox-login {
-  width: fit-content;
+  width: 25px;
+  height: 25px;
 }
 
 .form-group .btn-login {

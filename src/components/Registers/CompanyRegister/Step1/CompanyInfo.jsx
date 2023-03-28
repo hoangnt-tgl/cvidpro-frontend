@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
+import { toast } from "react-hot-toast";
 const CompanyInfo = ({
   setInfoRegister1,
   setStep,
@@ -40,6 +40,8 @@ const CompanyInfo = ({
     register,
     handleSubmit,
     setValue,
+    setError,
+    clearErrors,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -47,8 +49,22 @@ const CompanyInfo = ({
   async function handleGetLegalCompanyInfo(e) {
     handleCheckInput(e);
     if (e.target.value.length < 10) return;
-    let companyData = await getCompanyInfo(e.target.value);
-    setValue("companyInfo", companyData);
+    try {
+      let companyData = await getCompanyInfo(e.target.value);
+      console.log(companyData);
+      setValue("companyInfo", companyData);
+      clearErrors("companyInfo");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "", {
+        style: {
+          right: "0px",
+          minWidth: "300px",
+          fontSize: "20px",
+          fontWeight: "500",
+        },
+      });
+      setError("companyInfo", "Không tìm thấy thông tin công ty");
+    }
   }
   async function onHandleSubmit(data) {
     setInfoRegister1(data);
@@ -111,6 +127,11 @@ const CompanyInfo = ({
           <div className='text-danger'>
             {errors?.taxCode?.message && <div>{errors.taxCode.message}</div>}
           </div>
+          <div className='text-danger'>
+            {errors?.companyInfo?.message && (
+              <div>{errors.companyInfo.message}</div>
+            )}
+          </div>
         </div>
         <div className='form-group'>
           <p>
@@ -157,7 +178,11 @@ const CompanyInfo = ({
           </div>
         </div>
         <div className='form-group text-right register-btn'>
-          <button type='submit' className='site-button dz-xs-flex m-r5 btn'>
+          <button
+            type='submit'
+            className='site-button dz-xs-flex m-r5 btn'
+            disabled={Object.keys(errors).length > 0}
+          >
             Tiếp tục <i className='fa fa-arrow-right' aria-hidden='true'></i>
           </button>
         </div>

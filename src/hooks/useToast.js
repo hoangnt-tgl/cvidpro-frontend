@@ -12,6 +12,8 @@ function toastPromise(promise, notifications) {
       style: {
         right: "0px",
         minWidth: "300px",
+        fontSize: "20px",
+        fontWeight: "500",
       },
     }
   );
