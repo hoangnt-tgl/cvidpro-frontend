@@ -10,10 +10,6 @@ const useScroll = () => {
     if (containerRef.current && navContainerRef.current) {
       let container = containerRef.current;
       let nav = navContainerRef.current;
-      //   const { scrollTop, scrollHeight, clientHeight } = navContainer;
-      //   const isBottom = scrollTop + clientHeight >= scrollHeight;
-      //   console.log("top", navContainer.getBoundingClientRect().top);
-      //   console.log(navContainer.getBoundingClientRect());
       console.log(container.getBoundingClientRect());
       if (
         -container.getBoundingClientRect().y >

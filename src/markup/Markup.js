@@ -54,6 +54,7 @@ import CompanyRegister from "./Pages/CompanyRegister1";
 import EmployeeRegister from "./Pages/EmployeeRegister1";
 import EmployeeLogin from "./Pages/EmployeeLogin1";
 import CompanyLogin from "./Pages/CompanyLogin1";
+import ComnapayRegisterBoth from "./Pages/CompanyRegisterBoth.jsx";
 import IndividualRegister from "./Pages/IndividualRegister.jsx";
 import Error404 from "./Pages/Error404";
 
@@ -73,15 +74,17 @@ const Markup = () => {
       <div className='page-wraper'>
         <Switch>
           <Route path='/' exact component={Homepage} />
-          <Route path='/company/register' exact component={CompanyRegister} />
+          {/* <Route path='/company/register' exact component={CompanyRegister} /> */}
           <Route path='/company/login' exact component={CompanyLogin} />
           <Route path='/employee/register' exact component={EmployeeRegister} />
           <Route path='/employee/login' exact component={EmployeeLogin} />
-          <Route
+          {/* <Route
             path='/company/register/individual'
             exact
             component={IndividualRegister}
-          />
+          /> */}
+          <Route path='/company/register' exact component={ComnapayRegisterBoth} />
+
           <Route
             path='/confirm/job-detail/:id'
             exact

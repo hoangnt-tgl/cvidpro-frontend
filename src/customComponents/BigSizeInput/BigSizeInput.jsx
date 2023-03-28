@@ -16,7 +16,7 @@ const BigSizeInput = ({
     <>
       <div
         className={
-          focus || getValues()["name"]
+          focus || getValues()[name]
             ? "form-group form-group-login focus"
             : "form-group form-group-login"
         }
@@ -27,7 +27,7 @@ const BigSizeInput = ({
         >
           {title}{" "}
         </p>
-        <div className="question-icon">
+        <div className='question-icon'>
           {" "}
           {description.isShow && (
             <QuestionMark

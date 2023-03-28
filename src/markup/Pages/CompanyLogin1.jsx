@@ -9,7 +9,10 @@ import LoginCompany from "../../components/LoginUser/Login";
 import RegisterLayout from "../../customComponents/RegisterLayout/RegisterLayout";
 import { loginCompany } from "../../constants/description";
 import Header from "../../components/Header/Header";
+import ForgetPass from "../../components/ModalForgetPass/ForgetPass";
+import { useState } from "react";
 function Login(props) {
+  const [forgetPass, setForgetPass] = useState(false);
   const [isIndividual, setIsIndividual] = React.useState(false);
   const inputFiled = [
     {
@@ -70,6 +73,7 @@ function Login(props) {
       <RegisterLayout isLoginPage={true}>
         <h1 className='form-title mx-auto'>Đăng nhập</h1>
         <LoginCompany
+          setForgetPass={setForgetPass}
           setIsIndividual={setIsIndividual}
           isIndividual={isIndividual}
           onLogin={onLogin}
@@ -77,6 +81,7 @@ function Login(props) {
           inputFiled={isIndividual ? inputFiledIn : inputFiled}
         />
       </RegisterLayout>
+      <ForgetPass openModal={forgetPass} setOpenModal={setForgetPass} />
     </>
   );
 }

@@ -153,7 +153,7 @@ const Level = ({
         </div>
         <div className='form-group'>
           <p>
-           Chuyên ngành <span className='asterisk'></span>
+            Chuyên ngành <span className='asterisk'></span>
           </p>
           <div className='select-style'>
             {" "}
@@ -166,6 +166,7 @@ const Level = ({
                   minInput={1}
                   placeholder='Chọn ngành'
                   options={optionsSelect.majors}
+                  isDisabled={getValues("level") ? false : true}
                   onChange={(value) => {
                     console.log(value);
                     setValue("major", value);

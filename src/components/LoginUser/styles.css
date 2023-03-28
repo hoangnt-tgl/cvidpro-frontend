@@ -1,6 +1,6 @@
 .form-title {
   width: fit-content;
-  margin: 35px auto;
+  margin: 5px auto;
 }
 .form-control.login-input {
   line-height: 30px;
@@ -61,7 +61,8 @@ span a:hover {
   border: 2px solid var(--blue);
 }
 .checkbox-login {
-  width: fit-content;
+  width: 25px;
+  height: 25px;
 }
 
 .form-group .btn-login {
@@ -73,6 +74,14 @@ span a:hover {
 }
 .form-group .btn-login:active {
   scale: 0.95;
+}
+.forget-pass {
+  color: #2e55fa;
+}
+.forget-pass:hover {
+  text-decoration: underline;
+  color: #2e55fa !important;
+  cursor: pointer;
 }
 @media (min-width: 350px) {
   .form-title {

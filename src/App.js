@@ -26,12 +26,17 @@ import CompanyRegister1 from "./markup/Pages/CompanyRegister1";
 import IndividualRegister from "./markup/Pages/IndividualRegister.jsx";
 // import ForgotPassword from "./markup/Pages/ForgotPassword";
 import { Toaster } from "react-hot-toast";
-
+import CompanyRegisterBoth from "./markup/Pages/CompanyRegisterBoth.jsx";
 const toastOptions = {
   // Define default options
   className: "",
   duration: 7000,
-  style: {},
+  style: {
+    right: "0px",
+    minWidth: "300px",
+    fontSize: "20px",
+    fontWeight: "500",
+  },
   // Default options for specific types
   success: {
     duration: 7000,
@@ -48,12 +53,14 @@ function App(props) {
       <Route path='/employee/login' exact component={EmployeeLogin} />
       <Route path='/company/login' exact component={CompanyLogin} />
       <Route path='/employee/register' exact component={EmployeeRegister1} />
-      <Route path='/company/register' exact component={CompanyRegister1} />
+      {/* <Route path='/company/register' exact component={CompanyRegister1} />
       <Route
         path='/company/register/individual'
         exact
         component={IndividualRegister}
-      />
+      /> */}
+      <Route path='/company/register' exact component={CompanyRegisterBoth} />
+
       <Route path='/confirm/job-detail/:id' exact component={JobDetailAdmin} />
       <Route path='/confirm/job-resume/:id' exact component={JobResumeAdmin} />
     </Switch>
@@ -75,7 +82,7 @@ function App(props) {
           <Index />
         </Suspense>
         <Toaster
-          position='top-right'
+          position='top-center'
           reverseOrder={false}
           gutter={8}
           containerClassName=''
@@ -101,7 +108,7 @@ function App(props) {
           {routes}
         </Suspense>
         <Toaster
-          position='top-right'
+          position='top-center'
           reverseOrder={false}
           gutter={8}
           containerClassName=''

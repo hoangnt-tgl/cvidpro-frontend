@@ -11,6 +11,7 @@
 .register-wrapper {
   color: var(--text-dark);
   font-weight: 600;
+  margin-top: 50px;
 }
 .form-container {
   margin: 0 auto;
@@ -142,6 +143,8 @@
   }
   .register-wrapper {
     width: 100%;
+    z-index: 999;
+    margin-top: 70px;
   }
   .header-regiser h1 {
     width: fit-content;
@@ -156,7 +159,7 @@
 }
 @media (min-width: 425px) {
   .register-wrapper .form-container {
-    padding: 2rem 2rem;
+    padding: 2rem 0rem;
   }
 }
 @media (min-width: 600px) {
@@ -166,10 +169,13 @@
   .wrapper-form {
     padding: 10px 10px;
   }
+  .register-wrapper {
+    margin-top: 80px;
+  }
 }
 @media (min-width: 768px) {
   .register-wrapper .form-container {
-    padding: 1rem 0.5rem;
+    padding: 2rem 0.5rem;
   }
   .register-img {
     display: block;
@@ -183,7 +189,7 @@
     padding: 0px 0px;
   }
 }
-@media (min-width: 950px) {
+@media (min-width: 900px) {
   .register-wrapper .form-container {
     padding: 2rem 1rem;
   }
@@ -194,9 +200,7 @@
     padding: 2rem 2rem;
     position: relative;
   }
-  .wrapper-form h3 {
-    width: auto;
-  }
+
   .register-wrapper {
     width: 100%;
   }

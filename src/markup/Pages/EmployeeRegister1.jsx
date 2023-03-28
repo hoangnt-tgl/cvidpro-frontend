@@ -18,7 +18,7 @@ function Register2(props) {
     useRegister(props.history);
   const { optionsSelect, fetchDistric, fetchWard, fetchSchoolAndMajor } =
     useGetOptions(true);
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [childStep, setChildStep] = useState(0);
   const [childStep1, setChildStep1] = useState(0);
   const [childStep2, setChildStep2] = useState(0);
@@ -32,7 +32,7 @@ function Register2(props) {
     <>
       <Header />
       <RegisterLayout>
-        <h3 className='form-title mt-5'>Đăng ký </h3>
+        <h1 className='form-title mt-5'>Đăng ký </h1>
         <Stepper
           step={childStep + childStep1 + childStep2}
           Step={step}

@@ -9,8 +9,10 @@ import {
 import LoginEmployee from "../../components/LoginUser/Login";
 import { loginEmployee } from "../../constants/description";
 import Header from "../../components/Header/Header";
+import ForgetPass from "../../components/ModalForgetPass/ForgetPass";
 
 function Login(props) {
+  const [forgetPass, setForgetPass] = useState(false);
   const inputFiled = [
     {
       register: "name",
@@ -49,11 +51,13 @@ function Login(props) {
       <RegisterLayout isLoginPage={true}>
         <h1 className='form-title mx-auto'>Đăng nhập</h1>
         <LoginEmployee
+          setForgetPass={setForgetPass}
           onLogin={onLogin}
           where='employee'
           inputFiled={inputFiled}
         />
       </RegisterLayout>
+      <ForgetPass openModal={forgetPass} setOpenModal={setForgetPass} />
     </>
   );
 }

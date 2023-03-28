@@ -33,9 +33,9 @@ function Register3(props) {
 
   return (
     <>
-      <Header />
-      <RegisterLayout>
-        <h3 className='form-title mt-5'>Đăng ký</h3>
+      {/* <Header /> */}
+      {/* <RegisterLayout> */}
+        {/* <h3 className='form-title mt-5'>Đăng ký</h3> */}
         <Stepper
           Step={step}
           totalStep={totalStep}
@@ -63,7 +63,7 @@ function Register3(props) {
             fetchWard={fetchWard}
           />
         </div>
-      </RegisterLayout>
+      {/* </RegisterLayout> */}
     </>
   );
 }
