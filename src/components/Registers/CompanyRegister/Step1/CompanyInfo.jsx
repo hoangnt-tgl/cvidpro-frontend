@@ -10,6 +10,7 @@ const CompanyInfo = ({
   fetchFieldOptions,
   getCompanyInfo,
   setChildStep,
+  setIsStep2,
 }) => {
   const checkStepRef = useRef({
     taxCode: false,
@@ -18,10 +19,10 @@ const CompanyInfo = ({
   });
   const schema = yup.object().shape({
     taxCode: yup
-      .number()
+      .string()
       .required("Vui lòng nhập mã số thuế")
-      .min(999999999, "Mã số thuế phải có ít nhất 10 ký tự")
-      .max(9999999999999, "Mã số thuế không được quá 13 ký tự")
+      .min(10, "Mã số thuế phải có ít nhất 10 ký tự")
+      .max(13, "Mã số thuế không được quá 13 ký tự")
       .typeError("Mã số thuế không hợp lệ"),
     companyInfo: yup.object().required("Vui lòng đợi lấy thông tin công ty"),
     password: yup
@@ -68,6 +69,7 @@ const CompanyInfo = ({
   }
   async function onHandleSubmit(data) {
     setInfoRegister1(data);
+    setIsStep2(true);
     setStep(2);
   }
   function handleCheckInput(e) {

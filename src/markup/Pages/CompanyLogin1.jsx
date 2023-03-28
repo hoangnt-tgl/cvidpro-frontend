@@ -70,16 +70,26 @@ function Login(props) {
   return (
     <>
       <Header />
+
       <RegisterLayout isLoginPage={true}>
-        <h1 className='form-title mx-auto'>Đăng nhập</h1>
-        <LoginCompany
-          setForgetPass={setForgetPass}
-          setIsIndividual={setIsIndividual}
-          isIndividual={isIndividual}
-          onLogin={onLogin}
-          where='company'
-          inputFiled={isIndividual ? inputFiledIn : inputFiled}
-        />
+        <div
+          style={{
+            height: "90vh",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <h1 className='form-title mx-auto'>Đăng nhập</h1>
+          <LoginCompany
+            setForgetPass={setForgetPass}
+            setIsIndividual={setIsIndividual}
+            isIndividual={isIndividual}
+            onLogin={onLogin}
+            where='company'
+            inputFiled={isIndividual ? inputFiledIn : inputFiled}
+          />
+        </div>
       </RegisterLayout>
       <ForgetPass openModal={forgetPass} setOpenModal={setForgetPass} />
     </>

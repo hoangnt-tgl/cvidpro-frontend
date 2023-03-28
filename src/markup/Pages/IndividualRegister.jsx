@@ -35,34 +35,35 @@ function Register3(props) {
     <>
       {/* <Header /> */}
       {/* <RegisterLayout> */}
-        {/* <h3 className='form-title mt-5'>Đăng ký</h3> */}
-        <Stepper
-          Step={step}
-          totalStep={totalStep}
-          step={childStep2 + childStep1}
-        />{" "}
-        <div className={step === 1 ? `appear` : `register-steps`}>
-          <FormRegister2
-            fetchFieldOptions={fetchFieldOptions}
-            setInfoRegister1={setInfoRegister1}
-            setChildStep1={setChildStep1}
-            optionsSelect={optionsSelect}
-            setStep={setStep}
-          />
-        </div>
-        <div className={step === 2 ? `appear` : `register-steps`}>
-          <FormRegister1
-            setChildStep2={setChildStep2}
-            setStep={setStep}
-            optionsSelect={optionsSelect}
-            getCompanyInfo={getCompanyInfo}
-            registerCompanyIn={registerCompanyIn}
-            infoRegister1={infoRegister1}
-            setInfoRegister2={setInfoRegister2}
-            fetchDistric={fetchDistric}
-            fetchWard={fetchWard}
-          />
-        </div>
+      {/* <h3 className='form-title mt-5'>Đăng ký</h3> */}
+      <Stepper
+        Step={step}
+        totalStep={totalStep}
+        step={childStep2 + childStep1}
+      />{" "}
+      <div className={step === 1 ? `appear` : `register-steps`}>
+        <FormRegister2
+          fetchFieldOptions={fetchFieldOptions}
+          setInfoRegister1={setInfoRegister1}
+          setChildStep1={setChildStep1}
+          optionsSelect={optionsSelect}
+          setStep={setStep}
+          setIsStep2={props.setIsStep2}
+        />
+      </div>
+      <div className={step === 2 ? `appear` : `register-steps`}>
+        <FormRegister1
+          setChildStep2={setChildStep2}
+          setStep={setStep}
+          optionsSelect={optionsSelect}
+          getCompanyInfo={getCompanyInfo}
+          registerCompanyIn={registerCompanyIn}
+          infoRegister1={infoRegister1}
+          setInfoRegister2={setInfoRegister2}
+          fetchDistric={fetchDistric}
+          fetchWard={fetchWard}
+        />
+      </div>
       {/* </RegisterLayout> */}
     </>
   );

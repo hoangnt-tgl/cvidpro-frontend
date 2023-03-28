@@ -85,6 +85,18 @@ const CompanyTaxInfo = ({
               render={({ field }) => (
                 <Select
                   {...field}
+                  styles={{
+                    singleValue: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: "black",
+                      fontWeight: "550",
+                    }),
+                    optionsSelect: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: "black",
+                      fontWeight: "550",
+                    }),
+                  }}
                   onChange={(value) => {
                     setValue("companyType", value);
                     if (checkStepRef.current.companyType === false) {
@@ -117,6 +129,18 @@ const CompanyTaxInfo = ({
               render={({ field }) => (
                 <Select
                   {...field}
+                  styles={{
+                    singleValue: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: "black",
+                      fontWeight: "550",
+                    }),
+                    optionsSelect: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: "black",
+                      fontWeight: "550",
+                    }),
+                  }}
                   onChange={(value) => {
                     setValue("field", value);
                     if (checkStepRef.current.field === false) {

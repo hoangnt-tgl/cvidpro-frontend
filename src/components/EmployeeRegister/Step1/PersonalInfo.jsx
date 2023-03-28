@@ -59,62 +59,62 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
   function handleCheckInput(e) {
     if (e.target.dataset.testid === "name") {
       if (e.target.value !== "" && !checkStepRef.current.name) {
-        setChildStep((prev) => prev + 1 / 3 / 8);
+        setChildStep((prev) => prev + 1 / 3 / 6);
         checkStepRef.current.name = true;
       }
       if (e.target.value === "" && checkStepRef.current.name) {
-        setChildStep((prev) => prev - 1 / 3 / 8);
+        setChildStep((prev) => prev - 1 / 3 / 6);
         checkStepRef.current.name = false;
       }
     }
     if (e.target.dataset.testid === "lastName") {
       if (e.target.value !== "" && !checkStepRef.current.lastName) {
-        setChildStep((prev) => prev + 1 / 3 / 8);
+        setChildStep((prev) => prev + 1 / 3 / 6);
         checkStepRef.current.lastName = true;
       }
       if (e.target.value === "" && checkStepRef.current.lastName) {
-        setChildStep((prev) => prev - 1 / 3 / 8);
+        setChildStep((prev) => prev - 1 / 3 / 6);
         checkStepRef.current.lastName = false;
       }
     }
     if (e.target.dataset.testid === "phone") {
       if (e.target.value !== "" && !checkStepRef.current.phone) {
-        setChildStep((prev) => prev + 1 / 3 / 8);
+        setChildStep((prev) => prev + 1 / 3 / 6);
         checkStepRef.current.phone = true;
       }
       if (e.target.value === "" && checkStepRef.current.phone) {
-        setChildStep((prev) => prev - 1 / 3 / 8);
+        setChildStep((prev) => prev - 1 / 3 / 6);
         checkStepRef.current.phone = false;
       }
     }
 
     if (e.target.dataset.testid === "email") {
       if (e.target.value !== "" && !checkStepRef.current.email) {
-        setChildStep((prev) => prev + 1 / 3 / 8);
+        setChildStep((prev) => prev + 1 / 3 / 6);
         checkStepRef.current.email = true;
       }
       if (e.target.value === "" && checkStepRef.current.email) {
-        setChildStep((prev) => prev - 1 / 3 / 8);
+        setChildStep((prev) => prev - 1 / 3 / 6);
         checkStepRef.current.email = false;
       }
     }
     if (e.target.dataset.testid === "password") {
       if (e.target.value !== "" && !checkStepRef.current.password) {
-        setChildStep((prev) => prev + 1 / 3 / 8);
+        setChildStep((prev) => prev + 1 / 3 / 6);
         checkStepRef.current.password = true;
       }
       if (e.target.value === "" && checkStepRef.current.password) {
-        setChildStep((prev) => prev - 1 / 3 / 8);
+        setChildStep((prev) => prev - 1 / 3 / 6);
         checkStepRef.current.password = false;
       }
     }
     if (e.target.dataset.testid === "confirmPassword") {
       if (e.target.value !== "" && !checkStepRef.current.confirmPassword) {
-        setChildStep((prev) => prev + 1 / 3 / 8);
+        setChildStep((prev) => prev + 1 / 3 / 6);
         checkStepRef.current.confirmPassword = true;
       }
       if (e.target.value === "" && checkStepRef.current.confirmPassword) {
-        setChildStep((prev) => prev - 1 / 3 / 8);
+        setChildStep((prev) => prev - 1 / 3 / 6);
         checkStepRef.current.confirmPassword = false;
       }
     }

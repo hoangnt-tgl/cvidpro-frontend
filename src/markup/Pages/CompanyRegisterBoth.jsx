@@ -6,41 +6,51 @@ import IndividualRegister from "./IndividualRegister";
 
 const CompanyRegisterBoth = () => {
   const [isIndividual, setIsIndividual] = React.useState(false);
+  const [isStep2, setIsStep2] = useState(false);
   return (
     <>
       {" "}
-      <Header />
+      {/* <Header /> */}
       <RegisterLayout>
-        <h2 className='form-title m-t0'>Đăng ký tuyển dụng</h2>
-        <div className='my-2'>
-          <h5>Chọn loại hình tuyển dụng </h5>
-          <div
-            className=' d-flex justify-content-start w-100'
-            style={{ gap: "20px" }}
-          >
-            <div className='d-flex justify-content-center align-items-center'>
-              <input
-                className='checkbox-login mr-1'
-                type='checkbox'
-                checked={!isIndividual && true}
-                onClick={() => setIsIndividual(false)}
-              />
-              <span>Doanh nghiệp</span>
+        <div className='font-size-14'>
+          <h4 className='form-title m-t0'>Đăng ký tuyển dụng</h4>
+          {!isStep2 && (
+            <div className='my-2 select-type-wrapper'>
+              <span>Loại hình tuyển dụng? </span>
+              <div
+                className=' d-flex justify-content-start w-70'
+                style={{ gap: "20px" }}
+              >
+                <div className='d-flex justify-content-center align-items-center'>
+                  <input
+                    className='checkbox-login mr-1'
+                    type='checkbox'
+                    checked={!isIndividual && true}
+                    onClick={() => setIsIndividual(false)}
+                  />
+                  <span>Doanh nghiệp</span>
+                </div>
+                <div className='d-flex justify-content-center align-items-center'>
+                  <input
+                    className='checkbox-login mr-1'
+                    type='checkbox'
+                    checked={isIndividual && true}
+                    onClick={() => setIsIndividual(true)}
+                  />
+                  <span>Cá nhân</span>
+                </div>
+              </div>
             </div>
-            <div className='d-flex justify-content-center align-items-center'>
-              <input
-                className='checkbox-login mr-1'
-                type='checkbox'
-                checked={isIndividual && true}
-                onClick={() => setIsIndividual(true)}
-              />
-              <span>Cá nhân</span>
-            </div>
+          )}
+
+          <div>
+            {" "}
+            {!isIndividual ? (
+              <CompanyRegister1 setIsStep2={setIsStep2} />
+            ) : (
+              <IndividualRegister setIsStep2={setIsStep2} />
+            )}
           </div>
-        </div>
-        <div>
-          {" "}
-          {!isIndividual ? <CompanyRegister1 /> : <IndividualRegister />}
         </div>
       </RegisterLayout>
     </>

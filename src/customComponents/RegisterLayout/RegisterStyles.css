@@ -1,6 +1,7 @@
 .register-container {
   background-color: white;
   height: 100vh;
+  /* font-size: 14px !important; */
 }
 .header-regiser {
   padding: 0rem 1rem;
@@ -11,7 +12,7 @@
 .register-wrapper {
   color: var(--text-dark);
   font-weight: 600;
-  margin-top: 50px;
+  /* margin-top: 50px; */
 }
 .form-container {
   margin: 0 auto;
@@ -131,6 +132,9 @@
 }
 
 @media (min-width: 350px) {
+  .font-size-14{
+    font-size: 14px !important;
+  }
   .register-wrapper .form-container {
     padding: 1rem 0rem;
   }
@@ -144,7 +148,7 @@
   .register-wrapper {
     width: 100%;
     z-index: 999;
-    margin-top: 70px;
+    /* margin-top: 70px; */
   }
   .header-regiser h1 {
     width: fit-content;
@@ -156,6 +160,13 @@
   .register-img-box {
     display: none;
   }
+  .select-type-wrapper {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
 }
 @media (min-width: 425px) {
   .register-wrapper .form-container {
@@ -170,7 +181,7 @@
     padding: 10px 10px;
   }
   .register-wrapper {
-    margin-top: 80px;
+    /* margin-top: 80px; */
   }
 }
 @media (min-width: 768px) {
@@ -191,13 +202,13 @@
 }
 @media (min-width: 900px) {
   .register-wrapper .form-container {
-    padding: 2rem 1rem;
+    padding: 2rem 0.5rem;
   }
 }
 @media (min-width: 1200px) {
   .register-wrapper .form-container {
     margin: 0 auto;
-    padding: 2rem 2rem;
+    padding: 2rem 0.5rem;
     position: relative;
   }
 

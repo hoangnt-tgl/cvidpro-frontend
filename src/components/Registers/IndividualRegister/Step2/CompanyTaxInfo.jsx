@@ -69,6 +69,18 @@ const CompanyTaxInfo = ({
               render={({ field }) => (
                 <Select
                   {...field}
+                  styles={{
+                    singleValue: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: "black",
+                      fontWeight: "550",
+                    }),
+                    optionsSelect: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: "black",
+                      fontWeight: "550",
+                    }),
+                  }}
                   onChange={(value) => {
                     setValue("field", value);
                     if (checkStepRef.current.field === false) {
@@ -130,8 +142,20 @@ const CompanyTaxInfo = ({
               name='district'
               control={control}
               render={({ field }) => (
-                <ReactSelectShowType
+                <Select
                   {...field}
+                  styles={{
+                    singleValue: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: "black",
+                      fontWeight: "550",
+                    }),
+                    optionsSelect: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: "black",
+                      fontWeight: "550",
+                    }),
+                  }}
                   placeholder='Chọn quận/huyện'
                   options={optionsSelect?.districts || []}
                   minInput={1}
@@ -162,8 +186,20 @@ const CompanyTaxInfo = ({
               name='ward'
               control={control}
               render={({ field }) => (
-                <ReactSelectShowType
+                <Select
                   {...field}
+                  styles={{
+                    singleValue: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: "black",
+                      fontWeight: "550",
+                    }),
+                    optionsSelect: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: "black",
+                      fontWeight: "550",
+                    }),
+                  }}
                   placeholder='Chọn phường/xã'
                   options={optionsSelect?.wards || []}
                   minInput={1}
