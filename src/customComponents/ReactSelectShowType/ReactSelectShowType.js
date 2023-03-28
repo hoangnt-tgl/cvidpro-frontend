@@ -8,6 +8,7 @@ const ReactSelectShowType = ({
   minInput,
   isMulti = false,
   onChange = () => {},
+  value = null,
 }) => {
   const filterOption = (candidate, input) => {
     return (
@@ -26,6 +27,7 @@ const ReactSelectShowType = ({
   return (
     <Select
       {...register}
+      value={value}
       isMulti={isMulti}
       closeMenuOnSelect={!isMulti}
       onChange={onChange}

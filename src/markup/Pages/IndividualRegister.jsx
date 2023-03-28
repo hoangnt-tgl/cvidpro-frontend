@@ -35,7 +35,7 @@ function Register3(props) {
     <>
       <Header />
       <RegisterLayout>
-        <h3 className='form-title mt-5'>Đăng ký cá nhân</h3>
+        <h3 className='form-title mt-5'>Đăng ký</h3>
         <Stepper
           Step={step}
           totalStep={totalStep}

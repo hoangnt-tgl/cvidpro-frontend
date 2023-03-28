@@ -18,9 +18,10 @@ const CompanyInfo = ({
   });
   const schema = yup.object().shape({
     taxCode: yup
-      .string()
+      .number()
       .required("Vui lòng nhập mã số thuế")
-      .min(10)
+      .min(999999999, "Mã số thuế phải có ít nhất 10 ký tự")
+      .max(9999999999999, "Mã số thuế không được quá 13 ký tự")
       .typeError("Mã số thuế không hợp lệ"),
     companyInfo: yup.object().required("Vui lòng đợi lấy thông tin công ty"),
     password: yup

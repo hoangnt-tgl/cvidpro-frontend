@@ -14,11 +14,11 @@ function Login(props) {
   const inputFiled = [
     {
       register: "name",
-      placeholder: "",
-      title: "Tên đăng nhập",
+      placeholder: "số điện thoại",
+      title: "Số CVID",
       type: "text",
       description: {
-        isShow: true,
+        isShow: false,
         content: loginEmployee.username,
       },
     },

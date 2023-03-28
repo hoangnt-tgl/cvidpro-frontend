@@ -40,24 +40,27 @@ const Login = ({
     <>
       <>
         {where === "company" && (
-          <div className=' d-flex justify-content-start w-100 mb-4'>
-            <div className='d-flex justify-content-center align-items-center mr-5'>
-              <input
-                className='checkbox-login mr-1'
-                type='checkbox'
-                checked={!isIndividual && true}
-                onClick={() => setIsIndividual(false)}
-              />
-              <span>Doanh nghiệp</span>
-            </div>
-            <div className='d-flex justify-content-center align-items-center'>
-              <input
-                className='checkbox-login mr-1'
-                type='checkbox'
-                checked={isIndividual && true}
-                onClick={() => setIsIndividual(true)}
-              />
-              <span>Cá nhân</span>
+          <div>
+            <p>lorem lorem lorem lorem lorem lorem </p>
+            <div className=' d-flex justify-content-start w-100 mb-4'>
+              <div className='d-flex justify-content-center align-items-center mr-5'>
+                <input
+                  className='checkbox-login mr-1'
+                  type='checkbox'
+                  checked={!isIndividual && true}
+                  onClick={() => setIsIndividual(false)}
+                />
+                <span>Doanh nghiệp</span>
+              </div>
+              <div className='d-flex justify-content-center align-items-center'>
+                <input
+                  className='checkbox-login mr-1'
+                  type='checkbox'
+                  checked={isIndividual && true}
+                  onClick={() => setIsIndividual(true)}
+                />
+                <span>Cá nhân</span>
+              </div>
             </div>
           </div>
         )}
@@ -99,17 +102,16 @@ const Login = ({
                 <>
                   {" "}
                   <span>
-                    Đăng ký tài khoản :{" "}
-                    <Link to='/company/register'>Doanh nghiệp</Link> -{" "}
-                    <Link to='/company/register/individual'>Cá nhân</Link>
+                    Chưa có tài khoản ?{" "}
+                    <Link to='/company/register'>Đăng ký</Link>
                   </span>
                 </>
               ) : (
                 <>
                   {" "}
                   <span>
-                    Đăng ký tài khoản :{" "}
-                    <Link to='/employee/register'>Cá nhân</Link>
+                    Chưa có tài khoản ?{" "}
+                    <Link to='/employee/register'>Đăng ký</Link>
                   </span>
                 </>
               )}

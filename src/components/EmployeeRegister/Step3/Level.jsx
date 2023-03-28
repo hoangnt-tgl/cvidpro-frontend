@@ -153,7 +153,7 @@ const Level = ({
         </div>
         <div className='form-group'>
           <p>
-            Ngành <span className='asterisk'></span>
+           Chuyên ngành <span className='asterisk'></span>
           </p>
           <div className='select-style'>
             {" "}

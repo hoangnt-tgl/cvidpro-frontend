@@ -11,8 +11,7 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
     lastName: false,
     name: false,
     phone: false,
-    birthday: false,
-    gender: false,
+  
     email: false,
     password: false,
     confirmPassword: false,
@@ -25,11 +24,7 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
     name: yup.string().required("Vui lòng nhập họ và lót"),
     lastName: yup.string().required("Vui lòng nhập tên "),
     phone: yup.string().required("Vui lòng nhập số điện thoại").length(10),
-    birthday: yup
-      .date()
-      .required("Vui lòng nhập ngày sinh")
-      .typeError("Vui lòng nhập ngày sinh"),
-    gender: yup.object().required("Vui lòng nhập giới tính"),
+
     email: yup
       .string()
       .required("Vui lòng nhập email")
@@ -92,16 +87,6 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
         checkStepRef.current.phone = false;
       }
     }
-    if (e.target.dataset.testid === "birthday") {
-      if (e.target.value !== "" && !checkStepRef.current.birthday) {
-        setChildStep((prev) => prev + 1 / 3 / 8);
-        checkStepRef.current.birthday = true;
-      }
-      if (e.target.value === "" && checkStepRef.current.birthday) {
-        setChildStep((prev) => prev - 1 / 3 / 8);
-        checkStepRef.current.birthday = false;
-      }
-    }
 
     if (e.target.dataset.testid === "email") {
       if (e.target.value !== "" && !checkStepRef.current.email) {
@@ -134,13 +119,7 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
       }
     }
   }
-  function handleCheckInputSelect(e) {
-    if (e !== null && !checkStepRef.current.gender) {
-      setChildStep((prev) => prev + 1 / 3 / 8);
-      checkStepRef.current.gender = true;
-      setValue("gender", e);
-    }
-  }
+
   return (
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
@@ -156,7 +135,7 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
                   ? "form-control small filled"
                   : "form-control small"
               }
-              placeholder='Họ và tên lót'
+              placeholder='Nhập họ và tên lót'
               {...register("name")}
               data-testid='name'
               onBlur={handleCheckInput}
@@ -182,7 +161,9 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
               onBlur={handleCheckInput}
             />
             <div className='text-danger'>
-              {errors?.lastName?.message && <div>{errors.lastName.message}</div>}
+              {errors?.lastName?.message && (
+                <div>{errors.lastName.message}</div>
+              )}
             </div>
           </div>
         </div>
@@ -206,51 +187,7 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
             {errors?.phone?.message && <div>{errors.phone.message}</div>}
           </div>
         </div>
-        <div className='form-group'>
-          <p>
-            Ngày sinh <span className='asterisk'></span>
-          </p>
-          <input
-            type='date'
-            className={
-              checkStepRef.current.birthday
-                ? "form-control small filled"
-                : "form-control small"
-            }
-            placeholder='Nhập ngày sinh'
-            {...register("birthday")}
-            data-testid='birthday'
-            onBlur={handleCheckInput}
-          />
-          <div className='text-danger'>
-            {errors.birthday?.message && <div>{errors.birthday.message}</div>}
-          </div>
-        </div>
-        <div className='form-group'>
-          <p>
-            Giới tính <span className='asterisk'></span>
-          </p>
-          <div className='select-style'>
-            {" "}
-            <Controller
-              name='gender'
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  onChange={(e) => handleCheckInputSelect(e)}
-                  placeholder='Chọn giới tính'
-                  options={genderOptions}
-                  className={checkStepRef.current.gender ? " filled" : ""}
-                />
-              )}
-            />
-          </div>
 
-          <div className='text-danger'>
-            {errors.gender?.message && <div>{errors.gender.message}</div>}
-          </div>
-        </div>
         <div className='form-group'>
           <p>
             Email <span className='asterisk'></span>

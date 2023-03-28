@@ -28,7 +28,7 @@ function Register2(props) {
     <>
       <Header />
       <RegisterLayout>
-        <h3 className='form-title m-t0'>Đăng ký doanh nghiệp</h3>
+        <h3 className='form-title m-t0'>Đăng ký tuyển dụng</h3>
         <Stepper
           Step={step}
           totalStep={totalStep}
@@ -56,6 +56,7 @@ function Register2(props) {
         </div>
         <div className={step === 3 ? `appear` : `register-steps`}>
           <FormRegister2
+            setStep={setStep}
             setChildStep2={setChildStep2}
             optionsSelect={optionsSelect}
             registerCompany={registerCompany}
