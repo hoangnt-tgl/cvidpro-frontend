@@ -97,13 +97,13 @@ const Login = ({
           <BigRoundedBtn type='submit' title='Đăng nhập' />
           <div
             className=' d-flex justify-content-center w-100'
-            style={{ marginTop: "-50px" }}
+            style={{ marginTop: "-50px", zIndex: 999 }}
           >
             <div className='d-flex justify-content-center align-items-center'>
               {where === "company" ? (
                 <>
                   {" "}
-                  <span>
+                  <span style={{ zIndex: 999 }}>
                     Chưa có tài khoản ?{" "}
                     <Link to='/company/register'>Đăng ký</Link>
                   </span>
@@ -111,7 +111,7 @@ const Login = ({
               ) : (
                 <>
                   {" "}
-                  <span>
+                  <span style={{ zIndex: 999 }}>
                     Chưa có tài khoản ?{" "}
                     <Link to='/employee/register'>Đăng ký</Link>
                   </span>
