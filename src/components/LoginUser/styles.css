@@ -75,6 +75,14 @@ span a:hover {
 .form-group .btn-login:active {
   scale: 0.95;
 }
+.forget-pass {
+  color: #2e55fa;
+}
+.forget-pass:hover {
+  text-decoration: underline;
+  color: #2e55fa !important;
+  cursor: pointer;
+}
 @media (min-width: 350px) {
   .form-title {
     font-weight: 500;

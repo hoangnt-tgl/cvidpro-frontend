@@ -1,0 +1,17 @@
+.wrapper-opt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+.btn-opt {
+  margin-bottom: 0px !important;
+  padding: 5px 0px;
+}
+.email-otp {
+  flex-grow: 1;
+}
+
+.filled {
+  background-color: var(--semiblue) !important;
+}

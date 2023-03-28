@@ -31,7 +31,12 @@ const toastOptions = {
   // Define default options
   className: "",
   duration: 7000,
-  style: {},
+  style: {
+    right: "0px",
+    minWidth: "300px",
+    fontSize: "20px",
+    fontWeight: "500",
+  },
   // Default options for specific types
   success: {
     duration: 7000,

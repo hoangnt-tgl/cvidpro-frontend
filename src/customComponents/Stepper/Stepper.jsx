@@ -35,7 +35,7 @@ const Stepper = ({ step, totalStep, Step }) => {
                         : "step step-completed"
                     }
                   >
-                    {Step > item.step && (
+                    {/* {Step > item.step && (
                       <span className='step-indicator'>
                         <svg
                           xmlns='http://www.w3.org/2000/svg'
@@ -52,7 +52,7 @@ const Stepper = ({ step, totalStep, Step }) => {
                           <polyline points='20 6 9 17 4 12' />
                         </svg>
                       </span>
-                    )}
+                    )} */}
                     {item.title}
                   </div>
                 );

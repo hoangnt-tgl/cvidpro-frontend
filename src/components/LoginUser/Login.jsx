@@ -14,6 +14,7 @@ const Login = ({
   inputFiled,
   setIsIndividual = () => {},
   isIndividual = false,
+  setForgetPass,
 }) => {
   const schema = yup.object().shape({
     name: yup.string().required("Vui lòng nhập tài khoản"),
@@ -82,15 +83,15 @@ const Login = ({
             style={{ marginTop: "-20px" }}
           >
             <div className='d-flex justify-content-center align-items-center'>
-              {/* <input
-                className='checkbox-login mr-1'
-                type='checkbox'
-                checked={true}
-                // register={register}
-              />
-              <span>Ghi nhớ</span> */}
               <div>
-                <span>Quên mật khẩu ?</span>
+                <span
+                  className='forget-pass'
+                  onClick={() => {
+                    setForgetPass(true);
+                  }}
+                >
+                  Quên mật khẩu ?
+                </span>
               </div>
             </div>
           </div>
