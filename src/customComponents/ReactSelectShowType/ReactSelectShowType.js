@@ -42,6 +42,16 @@ const ReactSelectShowType = ({
           color: "black",
           fontWeight: "550",
         }),
+        singleValue: (baseStyles, state) => ({
+          ...baseStyles,
+          color: "black",
+          fontWeight: "550",
+        }),
+        optionsSelect: (baseStyles, state) => ({
+          ...baseStyles,
+          color: "black",
+          fontWeight: "550",
+        }),
       }}
       isDisabled={isDisabled}
     />

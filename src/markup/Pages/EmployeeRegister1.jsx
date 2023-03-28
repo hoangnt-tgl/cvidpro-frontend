@@ -18,7 +18,7 @@ function Register2(props) {
     useRegister(props.history);
   const { optionsSelect, fetchDistric, fetchWard, fetchSchoolAndMajor } =
     useGetOptions(true);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const [childStep, setChildStep] = useState(0);
   const [childStep1, setChildStep1] = useState(0);
   const [childStep2, setChildStep2] = useState(0);
@@ -30,40 +30,42 @@ function Register2(props) {
   ];
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <RegisterLayout>
-        <h1 className='form-title mt-5'>Đăng ký </h1>
-        <Stepper
-          step={childStep + childStep1 + childStep2}
-          Step={step}
-          totalStep={totalStep}
-        />
-        <div className={step === 1 ? `appear` : `register-steps`}>
-          <FormRegister
-            setStep={setStep}
-            setInfoRegister1={setInfoRegister1}
-            setChildStep={setChildStep}
+        <div className='font-size-14'>
+          <h4 className='form-title'>Đăng ký </h4>
+          <Stepper
+            step={childStep + childStep1 + childStep2}
+            Step={step}
+            totalStep={totalStep}
           />
-        </div>
-        <div className={step === 2 ? ` appear` : `register-steps`}>
-          <FormRegister1
-            setStep={setStep}
-            optionsSelect={optionsSelect}
-            fetchDistric={fetchDistric}
-            fetchWard={fetchWard}
-            setInfoRegister2={setInfoRegister2}
-            setChildStep={setChildStep1}
-          />
-        </div>
-        <div className={step === 3 ? `appear` : `register-steps`}>
-          <FormRegister2
-            setStep={setStep}
-            setInfoRegister3={setInfoRegister3}
-            optionsSelect={optionsSelect}
-            fetchSchoolAndMajor={fetchSchoolAndMajor}
-            registerUser={registerUser}
-            setChildStep={setChildStep2}
-          />
+          <div className={step === 1 ? `appear` : `register-steps`}>
+            <FormRegister
+              setStep={setStep}
+              setInfoRegister1={setInfoRegister1}
+              setChildStep={setChildStep}
+            />
+          </div>
+          <div className={step === 2 ? ` appear` : `register-steps`}>
+            <FormRegister1
+              setStep={setStep}
+              optionsSelect={optionsSelect}
+              fetchDistric={fetchDistric}
+              fetchWard={fetchWard}
+              setInfoRegister2={setInfoRegister2}
+              setChildStep={setChildStep1}
+            />
+          </div>
+          <div className={step === 3 ? `appear` : `register-steps`}>
+            <FormRegister2
+              setStep={setStep}
+              setInfoRegister3={setInfoRegister3}
+              optionsSelect={optionsSelect}
+              fetchSchoolAndMajor={fetchSchoolAndMajor}
+              registerUser={registerUser}
+              setChildStep={setChildStep2}
+            />
+          </div>
         </div>
       </RegisterLayout>
     </>

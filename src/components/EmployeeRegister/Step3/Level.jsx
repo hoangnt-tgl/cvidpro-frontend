@@ -228,6 +228,7 @@ const Level = ({
                 ? "form-control filled"
                 : "form-control"
             }
+            id="something"
             placeholder='Nhập năm bắt đầu'
             data-testid='startYear'
             onChange={(e) => {

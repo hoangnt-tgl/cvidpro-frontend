@@ -140,8 +140,20 @@ const Address = ({
               name='district'
               control={control}
               render={({ field }) => (
-                <ReactSelectShowType
+                <Select
                   {...field}
+                  styles={{
+                    singleValue: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: "black",
+                      fontWeight: "550",
+                    }),
+                    optionsSelect: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: "black",
+                      fontWeight: "550",
+                    }),
+                  }}
                   value={
                     getValues("district")?.value ? getValues("district") : null
                   }
@@ -182,8 +194,20 @@ const Address = ({
               name='ward'
               control={control}
               render={({ field }) => (
-                <ReactSelectShowType
+                <Select
                   {...field}
+                  styles={{
+                    singleValue: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: "black",
+                      fontWeight: "550",
+                    }),
+                    optionsSelect: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: "black",
+                      fontWeight: "550",
+                    }),
+                  }}
                   value={getValues("ward")?.value ? getValues("ward") : null}
                   placeholder='Chọn phường/xã'
                   options={optionsSelect?.wards || []}
@@ -216,7 +240,7 @@ const Address = ({
                 ? "form-control filled"
                 : "form-control"
             }
-            placeholder='Nhập địa chỉ'
+            placeholder='Nhập số nhà, tên đường'
             {...register("address")}
             data-testid='address'
             onBlur={handleCheckInput}
@@ -256,6 +280,18 @@ const Address = ({
               control={control}
               render={({ field }) => (
                 <Select
+                  styles={{
+                    singleValue: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: "black",
+                      fontWeight: "550",
+                    }),
+                    optionsSelect: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: "black",
+                      fontWeight: "550",
+                    }),
+                  }}
                   {...field}
                   onChange={(e) => handleCheckInputSelect(e)}
                   placeholder='Chọn giới tính'

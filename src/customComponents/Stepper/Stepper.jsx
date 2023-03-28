@@ -29,7 +29,7 @@ const Stepper = ({ step, totalStep, Step }) => {
                   <div
                     className={
                       Step === item.step
-                        ? "step step-active"
+                        ? "step step-completed"
                         : Step < item.step
                         ? "step"
                         : "step step-completed"

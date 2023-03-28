@@ -9,6 +9,7 @@ const PresenterInfo = ({
   setStep,
   setInfoRegister1,
   fetchFieldOptions,
+  setIsStep2,
 }) => {
   const checkStepRef = useRef({
     name: false,
@@ -46,6 +47,7 @@ const PresenterInfo = ({
   });
   async function onHandleSubmit(data) {
     setInfoRegister1(data);
+    setIsStep2(true);
     await fetchFieldOptions();
     setStep(2);
   }

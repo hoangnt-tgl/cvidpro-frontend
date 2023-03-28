@@ -49,13 +49,22 @@ function Login(props) {
     <>
       <Header />
       <RegisterLayout isLoginPage={true}>
-        <h1 className='form-title mx-auto'>Đăng nhập</h1>
-        <LoginEmployee
-          setForgetPass={setForgetPass}
-          onLogin={onLogin}
-          where='employee'
-          inputFiled={inputFiled}
-        />
+        <div
+          style={{
+            height: "90vh",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <h1 className='form-title mx-auto'>Đăng nhập</h1>
+          <LoginEmployee
+            setForgetPass={setForgetPass}
+            onLogin={onLogin}
+            where='employee'
+            inputFiled={inputFiled}
+          />
+        </div>
       </RegisterLayout>
       <ForgetPass openModal={forgetPass} setOpenModal={setForgetPass} />
     </>
