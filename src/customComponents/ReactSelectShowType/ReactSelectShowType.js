@@ -8,6 +8,7 @@ const ReactSelectShowType = ({
   minInput,
   isMulti = false,
   onChange = () => {},
+  isDisabled = false,
   value = null,
 }) => {
   const filterOption = (candidate, input) => {
@@ -15,7 +16,7 @@ const ReactSelectShowType = ({
       // Min input length
       input.length >= minInput &&
       // Use Select's default filtering for string matching by creating filter
-      createFilter({})(candidate, input)
+      createFilter({ matchFrom: "start" })(candidate, input)
     );
   };
 
@@ -42,6 +43,7 @@ const ReactSelectShowType = ({
           fontWeight: "550",
         }),
       }}
+      isDisabled={isDisabled}
     />
   );
 };
