@@ -1,15 +1,18 @@
 .nav-container {
   background-color: white;
   transition: all ease-in-out 0.5s;
-  max-width: var(--breakpoint-xxl);
+  /* max-width: var(--breakpoint-xxl); */
+  width: 100%;
   padding: 0px 20px;
 }
 .stick.nav-container {
-  z-index: 999;
+  z-index: 99999;
+  background-color: transparent;
   position: fixed;
   left: 0;
   right: 0;
-  transition: all ease-in-out 0.5s;
+  transition: all ease-in-out 1s;
+  animation: move 1s ease-in-out forwards;
 }
 .nav-container .header-nav {
   margin: 0 auto;

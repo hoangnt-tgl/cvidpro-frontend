@@ -13,7 +13,7 @@ const CompanyRegisterBoth = () => {
       <RegisterLayout>
         <h3 className='form-title m-t0'>Đăng ký tuyển dụng</h3>
         <div className='my-2'>
-          <h5>Chọn loại hình tuyển dụng </h5>
+          <h1>Chọn loại hình tuyển dụng </h1>
           <div
             className=' d-flex justify-content-start w-100'
             style={{ gap: "20px" }}
