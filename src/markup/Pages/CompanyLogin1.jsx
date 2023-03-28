@@ -18,7 +18,7 @@ function Login(props) {
       title: "Mã số thuế",
       type: "text",
       description: {
-        isShow: true,
+        isShow: false,
         content: loginCompany.username,
       },
     },
@@ -40,7 +40,7 @@ function Login(props) {
       title: "Số điện thoại",
       type: "text",
       description: {
-        isShow: true,
+        isShow: false,
         content: loginCompany.username,
       },
     },

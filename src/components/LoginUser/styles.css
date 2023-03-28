@@ -10,7 +10,10 @@
   transition: border ease-in-out 0.5s;
   border: 2px solid #e1e6eb;
 }
-
+.form-control.login-input::placeholder {
+  opacity: 0;
+  transition: all 0.5s;
+}
 .form-group.form-group-login {
   position: relative;
   margin: 20px auto 40px auto;
@@ -35,12 +38,9 @@
   top: 50%;
   right: 5%;
 }
-/* .form-group.form-group-login.focus .question-icon {
-  transform: translateY(-110%) ;
-  left: 21%;
-  top: 0;
-  opacity: 0.8;
-} */
+.focus .form-control.login-input::placeholder {
+  opacity: 1;
+}
 .form-group.form-group-login.focus p {
   transform: translateY(-80%) scale(1.1);
   top: 0;

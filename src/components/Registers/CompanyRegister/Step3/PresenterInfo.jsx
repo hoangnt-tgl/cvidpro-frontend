@@ -101,7 +101,7 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
                   ? "form-control filled"
                   : "form-control"
               }
-              placeholder='Nhập họ và tên'
+              placeholder='Nhập họ và tên lót'
               {...register("name")}
               data-testid='name'
               onBlur={handleCheckInput}
@@ -121,7 +121,7 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
                   ? "form-control filled"
                   : "form-control"
               }
-              placeholder='Nhập họ và tên'
+              placeholder='Nhập tên'
               {...register("lastName")}
               data-testid='lastName'
               onBlur={handleCheckInput}
