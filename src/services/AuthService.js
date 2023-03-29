@@ -141,17 +141,30 @@ export function getOtpCompany(data) {
   };
   return axios.post(`${API_URL}company/forgot-password`, postData);
 }
+export function validateOtpCompany(data) {
+  const postData = {
+    ...data,
+  };
+  return axios.post(`${API_URL}company/check-otp`, postData);
+}
 export function resetPasswordCompany(data) {
   const postData = {
     ...data,
   };
   return axios.post(`${API_URL}company/reset-password`, postData);
 }
+
 export function getOtpEmployee(data) {
   const postData = {
     ...data,
   };
   return axios.post(`${API_URL}employee/forgot-password`, postData);
+}
+export function validateOtpEmployee(data) {
+  const postData = {
+    ...data,
+  };
+  return axios.post(`${API_URL}employee/check-otp`, postData);
 }
 export function resetPasswordEmployee(data) {
   const postData = {

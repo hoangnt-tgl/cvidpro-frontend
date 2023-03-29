@@ -5,6 +5,8 @@ import {
   resetPasswordCompany,
   getOtpEmployee,
   resetPasswordEmployee,
+  validateOtpCompany,
+  validateOtpEmployee,
 } from '../services/AuthService';
 
 const useResetPass = (isCompany) => {
@@ -18,6 +20,14 @@ const useResetPass = (isCompany) => {
       await getOtpEmployee({ email: email });
     }
   }
+  async function validateOtpFc(otp) {
+    setOtp(otp);
+    if (isCompany) {
+      await validateOtpCompany({ email, otp });
+    } else {
+      await validateOtpEmployee({ email, otp });
+    }
+  }
   async function resetPasswordFc(password) {
     if (isCompany) {
       await resetPasswordCompany({ email, otp, password });
@@ -25,7 +35,7 @@ const useResetPass = (isCompany) => {
       await resetPasswordEmployee({ email, otp, password });
     }
   }
-  return { getOtpFc, resetPasswordFc, setOtp };
+  return { getOtpFc, resetPasswordFc, setOtp, validateOtpFc };
 };
 
 export default useResetPass;
