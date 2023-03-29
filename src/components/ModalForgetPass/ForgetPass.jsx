@@ -1,12 +1,15 @@
-import React from "react";
-import { useState } from "react";
-import { Modal } from "react-bootstrap";
-import GetOtp from "./GetOtp";
-import GetPass from "./GetPass";
-import ValidateOtp from "./ValidateOtp";
-import "./styles.css";
-const ForgetPass = ({ openModal, setOpenModal }) => {
+import React from 'react';
+import { useState } from 'react';
+import { Modal } from 'react-bootstrap';
+import GetOtp from './GetOtp';
+import GetPass from './GetPass';
+import ValidateOtp from './ValidateOtp';
+import './styles.css';
+import useResetPass from '../../hooks/useResetPass';
+const ForgetPass = ({ isCompany, openModal, setOpenModal }) => {
+  const { getOtpFc, resetPasswordFc, setOtp } = useResetPass(isCompany);
   const [step, setStep] = useState(1);
+
   return (
     <>
       <Modal
@@ -21,7 +24,10 @@ const ForgetPass = ({ openModal, setOpenModal }) => {
               <button
                 type='button'
                 className='close'
-                onClick={() => setOpenModal(false)}
+                onClick={() => {
+                  setOpenModal(false);
+                  setStep(1);
+                }}
               >
                 <span aria-hidden='true'>&times;</span>
               </button>
@@ -29,14 +35,18 @@ const ForgetPass = ({ openModal, setOpenModal }) => {
             <div className='modal-body '>
               {step === 1 && (
                 <>
-                  {" "}
-                  <GetOtp setStep={setStep} />
-                  <ValidateOtp setStep={setStep} />
+                  {' '}
+                  <GetOtp setStep={setStep} getOtp={getOtpFc} />
+                  <ValidateOtp setStep={setStep} setOtp={setOtp} />
                 </>
               )}
               {step === 2 && (
                 <>
-                  <GetPass setOpenModal={setOpenModal} />
+                  <GetPass
+                    setStep={setStep}
+                    setOpenModal={setOpenModal}
+                    resetPasswordFc={resetPasswordFc}
+                  />
                 </>
               )}
             </div>

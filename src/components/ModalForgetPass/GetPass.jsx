@@ -1,10 +1,10 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { useRef } from "react";
-import { toast } from "react-hot-toast";
-const GetPass = ({ setOpenModal }) => {
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useRef } from 'react';
+import { toast } from 'react-hot-toast';
+const GetPass = ({ setOpenModal, resetPasswordFc, setStep }) => {
   const checkStepRef = useRef({
     password: false,
     confirmPassword: false,
@@ -13,15 +13,15 @@ const GetPass = ({ setOpenModal }) => {
     .object({
       password: yup
         .string()
-        .required("Vui lòng nhập mật khẩu")
-        .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
-        .max(20, "Mật khẩu không được quá 20 ký tự"),
+        .required('Vui lòng nhập mật khẩu')
+        .min(6, 'Mật khẩu phải có ít nhất 6 ký tự')
+        .max(20, 'Mật khẩu không được quá 20 ký tự'),
       confirmPassword: yup
         .string()
-        .required("Vui lòng nhập lại mật khẩu")
+        .required('Vui lòng nhập lại mật khẩu')
         .min(6)
         .max(20)
-        .oneOf([yup.ref("password")], "Mật khẩu không khớp"),
+        .oneOf([yup.ref('password')], 'Mật khẩu không khớp'),
     })
     .required();
 
@@ -36,27 +36,33 @@ const GetPass = ({ setOpenModal }) => {
     resolver: yupResolver(schema),
   });
   function handleCheckInput(e) {
-    if (e.target.dataset.testid === "password") {
-      if (e.target.value !== "" && !checkStepRef.current.password) {
+    if (e.target.dataset.testid === 'password') {
+      if (e.target.value !== '' && !checkStepRef.current.password) {
         checkStepRef.current.password = true;
       }
-      if (e.target.value === "" && checkStepRef.current.password) {
+      if (e.target.value === '' && checkStepRef.current.password) {
         checkStepRef.current.password = false;
       }
     }
-    if (e.target.dataset.testid === "confirmPassword") {
-      if (e.target.value !== "" && !checkStepRef.current.confirmPassword) {
+    if (e.target.dataset.testid === 'confirmPassword') {
+      if (e.target.value !== '' && !checkStepRef.current.confirmPassword) {
         checkStepRef.current.confirmPassword = true;
       }
-      if (e.target.value === "" && checkStepRef.current.confirmPassword) {
+      if (e.target.value === '' && checkStepRef.current.confirmPassword) {
         checkStepRef.current.confirmPassword = false;
       }
     }
   }
-  function handleOnSubmit() {
+  async function handleOnSubmit(data) {
     //function reset password
-    toast.success("Đổi mật khẩu thành công");
+    try {
+      await resetPasswordFc(data.password);
+      toast.success('Đổi mật khẩu thành công');
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
     setOpenModal(false);
+    setStep(1);
   }
   return (
     <>
@@ -68,14 +74,14 @@ const GetPass = ({ setOpenModal }) => {
           <input
             className={
               checkStepRef.current.password
-                ? "form-control filled"
-                : "form-control"
+                ? 'form-control filled'
+                : 'form-control'
             }
             type='password'
             placeholder='Nhập mật khẩu'
             minLength='6'
             data-testid='password'
-            {...register("password")}
+            {...register('password')}
             onBlur={handleCheckInput}
           />
           <div className='text-danger'>
@@ -89,14 +95,14 @@ const GetPass = ({ setOpenModal }) => {
           <input
             className={
               checkStepRef.current.confirmPassword
-                ? "form-control filled"
-                : "form-control"
+                ? 'form-control filled'
+                : 'form-control'
             }
             type='password'
             placeholder='Nhập lại mật khẩu'
             minLength='6'
             data-testid='confirmPassword'
-            {...register("confirmPassword")}
+            {...register('confirmPassword')}
             onBlur={handleCheckInput}
           />
           <div className='text-danger'>
