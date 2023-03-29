@@ -36,6 +36,7 @@ const toastOptions = {
     minWidth: "300px",
     fontSize: "20px",
     fontWeight: "500",
+    zIndex: "9999",
   },
   // Default options for specific types
   success: {

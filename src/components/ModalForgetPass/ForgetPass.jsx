@@ -7,7 +7,7 @@ import ValidateOtp from './ValidateOtp';
 import './styles.css';
 import useResetPass from '../../hooks/useResetPass';
 const ForgetPass = ({ isCompany, openModal, setOpenModal }) => {
-  const { getOtpFc, resetPasswordFc, setOtp } = useResetPass(isCompany);
+  const { getOtpFc, resetPasswordFc, validateOtpFc } = useResetPass(isCompany);
   const [step, setStep] = useState(1);
 
   return (
@@ -37,7 +37,10 @@ const ForgetPass = ({ isCompany, openModal, setOpenModal }) => {
                 <>
                   {' '}
                   <GetOtp setStep={setStep} getOtp={getOtpFc} />
-                  <ValidateOtp setStep={setStep} setOtp={setOtp} />
+                  <ValidateOtp
+                    setStep={setStep}
+                    validateOtpFc={validateOtpFc}
+                  />
                 </>
               )}
               {step === 2 && (
