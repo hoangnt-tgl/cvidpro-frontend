@@ -1070,16 +1070,18 @@ function Jobmyresume(props) {
                 })}
                 <h5 className="">
                   Kinh nghiệm đến hiện tại:{" "}
-                  {getExperience(userInformation.workExperience)}
+                  <span style={{color:"red"}}> {getExperience(userInformation.workExperience)}</span>
+                 
                 </h5>
                 <h5 className="text-center">Thêm kinh nghiệm làm việc mới</h5>
                 <Tabs
                   id="controlled-tab-example"
                   activeKey={tabKey}
                   onSelect={(k) => setTabKey(k)}
+                  
                 >
-                  <Tab eventKey="working" title="Thêm nơi làm việc">
-                    <Form className="mb-2" action="javascript:void(0);">
+                  <Tab eventKey="working" title="Thêm nơi làm việc" >
+                    <Form className="mb-2" action="javascript:void(0);" style={{borderColor:"#333333 #333333 #fff"}}>
                       <Card  style={{border:"1px solid #000"}}>
                         <Card.Header>
                           <div className="row">
@@ -1565,8 +1567,8 @@ function Jobmyresume(props) {
                   </Tab>
                   <Tab eventKey="notwork" title="Thêm thời gian không làm việc">
                     <Form className="mt-2" action="javascript:void(0);">
-                      <Card border="primary">
-                        <Card.Body>
+                      <Card style={{borderColor:"#333333 #333333 #fff"}}>
+                        <Card.Body >
                           <div className="row">
                             <div className="col-md-4 col-sm-12">
                               <InputGroup size="sm" className="mb-2">
@@ -1657,15 +1659,15 @@ function Jobmyresume(props) {
                   </Tab>
                 </Tabs>
 
-                <Accordion>
-                  <Card border="primary">
-                    <Card.Header className="d-flex w-100 py-1">
-                      <Nav.Item className="mr-auto h4 fw" as={Nav.Item}>
+                <Accordion className="pri">
+                  <Card border>
+                    <Card.Header className="d-flex w-100 py-1" style={{color:"black",fontWeight:"500"}}>
+                      <Nav.Item className="mr-auto h4 fw" style={{margin:"5px"}} as={Nav.Item}>
                         Tiêu chí và kết quả đánh giá
                       </Nav.Item>
                       <Nav.Item
                         className="align-self-center"
-                        style={{ width: "50px" }}
+                        style={{ width: "50px", fontWeight:"550", fontSize: "17.9px"}}
                       >
                         Điểm
                       </Nav.Item>
@@ -1673,12 +1675,13 @@ function Jobmyresume(props) {
                   </Card>
                   {questions.map((question, index) => {
                     return (
-                      <Card border="primary">
+                      <Card border>
                         <Card.Header className="d-flex w-100 py-1">
                           <Accordion.Toggle
                             as={Nav.Link}
                             eventKey={index + 1}
                             className="mr-auto"
+                            style={{color:"black"}}
                           >
                             {index + 1 + ". " + question.name}{" "}
                             <i className="fa fa-question-circle ms-0"></i>
@@ -1727,7 +1730,7 @@ function Jobmyresume(props) {
                   </button>
                 </div>
               </div>
-              <div id="education_bx" className="job-bx bg-white m-b30">
+              <div id="education_bx" className="job-bx bg-white m-b30" style={{border:"1px solid #000"}}>
                 <div className="d-flex">
                   <h5 className="m-b15">Quá trình học tập</h5>
                   <Link
@@ -1950,6 +1953,7 @@ function Jobmyresume(props) {
               <div
                 id="it_skills_bx"
                 className="job-bx table-job-bx bg-white m-b30"
+                style={{border:"1px solid #000"}}
               >
                 <div className="d-flex">
                   <h5 className="m-b15">Khóa đào tạo ngắn hạn</h5>
@@ -2122,7 +2126,7 @@ function Jobmyresume(props) {
                   </div>
                 </Modal>
               </div>
-              <div className="job-bx table-job-bx bg-white m-b30">
+              <div className="job-bx table-job-bx bg-white m-b30" style={{border:"1px solid #000"}}>
                 <div className="d-flex">
                   <h5 className="m-b15">Chứng chỉ ngoại ngữ</h5>
                   <Link
