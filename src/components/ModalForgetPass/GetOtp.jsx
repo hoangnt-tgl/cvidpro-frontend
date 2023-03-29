@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { useRef } from "react";
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useRef } from 'react';
+import { toast } from 'react-hot-toast';
 
-const Step1 = ({ setStep }) => {
+const Step1 = ({ getOtp }) => {
   const [isGet, setIsGet] = useState(false);
   const [time, setTime] = useState();
   const checkStepRef = useRef({
@@ -14,8 +15,8 @@ const Step1 = ({ setStep }) => {
     .object({
       email: yup
         .string()
-        .required("Vui lòng nhập email")
-        .email("Email không hợp lệ"),
+        .required('Vui lòng nhập email')
+        .email('Email không hợp lệ'),
     })
     .required();
 
@@ -30,27 +31,32 @@ const Step1 = ({ setStep }) => {
     resolver: yupResolver(schema),
   });
   function handleCheckInput(e) {
-    if (e.target.dataset.testid === "email") {
-      if (e.target.value !== "" && !checkStepRef.current.email) {
+    if (e.target.dataset.testid === 'email') {
+      if (e.target.value !== '' && !checkStepRef.current.email) {
         checkStepRef.current.email = true;
-        console.log("123");
+        console.log('123');
       }
-      if (e.target.value === "" && checkStepRef.current.email) {
+      if (e.target.value === '' && checkStepRef.current.email) {
         checkStepRef.current.email = false;
       }
     }
   }
-  function handleOnSubmit() {
+  async function handleOnSubmit(data) {
     //function get otp
-    setIsGet(true);
-    setTime(6);
-    new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, 6000);
-    }).then(() => {
-      setIsGet(false);
-    });
+    try {
+      await getOtp(data.email);
+      setIsGet(true);
+      setTime(6);
+      new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+        }, 6000);
+      }).then(() => {
+        setIsGet(false);
+      });
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   }
   useEffect(() => {
     // 01 : 00
@@ -62,7 +68,7 @@ const Step1 = ({ setStep }) => {
   }, [isGet, time]);
   return (
     <>
-      {" "}
+      {' '}
       <form onSubmit={handleSubmit(handleOnSubmit)}>
         <div className='form-group'>
           <p>
@@ -70,13 +76,13 @@ const Step1 = ({ setStep }) => {
           </p>
           <div className='wrapper-opt'>
             <div className='email-otp'>
-              {" "}
+              {' '}
               <input
-                {...register("email")}
+                {...register('email')}
                 className={
                   checkStepRef.current.email
-                    ? "form-control filled"
-                    : "form-control"
+                    ? 'form-control filled'
+                    : 'form-control'
                 }
                 placeholder='Nhập email'
                 data-testid='email'
