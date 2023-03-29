@@ -1,35 +1,35 @@
-import React from "react";
-import { connect, useDispatch } from "react-redux";
+import React from 'react';
+import { connect, useDispatch } from 'react-redux';
 import {
   loadingToggleAction,
   companyLoginAction,
-} from "../../store/actions/AuthActions";
+} from '../../store/actions/AuthActions';
 // image
-import LoginCompany from "../../components/LoginUser/Login";
-import RegisterLayout from "../../customComponents/RegisterLayout/RegisterLayout";
-import { loginCompany } from "../../constants/description";
-import Header from "../../components/Header/Header";
-import ForgetPass from "../../components/ModalForgetPass/ForgetPass";
-import { useState } from "react";
+import LoginCompany from '../../components/LoginUser/Login';
+import RegisterLayout from '../../customComponents/RegisterLayout/RegisterLayout';
+import { loginCompany } from '../../constants/description';
+import Header from '../../components/Header/Header';
+import ForgetPass from '../../components/ModalForgetPass/ForgetPass';
+import { useState } from 'react';
 function Login(props) {
   const [forgetPass, setForgetPass] = useState(false);
   const [isIndividual, setIsIndividual] = React.useState(false);
   const inputFiled = [
     {
-      register: "name",
-      placeholder: "",
-      title: "Mã số thuế",
-      type: "text",
+      register: 'name',
+      placeholder: '',
+      title: 'Mã số thuế',
+      type: 'text',
       description: {
         isShow: false,
         content: loginCompany.username,
       },
     },
     {
-      register: "password",
-      placeholder: "",
-      title: "Mật khẩu",
-      type: "password",
+      register: 'password',
+      placeholder: '',
+      title: 'Mật khẩu',
+      type: 'password',
       description: {
         isShow: false,
         content: loginCompany.username,
@@ -38,20 +38,20 @@ function Login(props) {
   ];
   const inputFiledIn = [
     {
-      register: "name",
-      placeholder: "",
-      title: "Số điện thoại",
-      type: "text",
+      register: 'name',
+      placeholder: '',
+      title: 'Số điện thoại',
+      type: 'text',
       description: {
         isShow: false,
         content: loginCompany.username,
       },
     },
     {
-      register: "password",
-      placeholder: "",
-      title: "Mật khẩu",
-      type: "password",
+      register: 'password',
+      placeholder: '',
+      title: 'Mật khẩu',
+      type: 'password',
       description: {
         isShow: false,
         content: loginCompany.username,
@@ -60,7 +60,7 @@ function Login(props) {
   ];
   const dispatch = useDispatch();
   function onLogin(data) {
-    console.log("companylogin", data);
+    console.log('companylogin', data);
     dispatch(loadingToggleAction(true));
     dispatch(
       companyLoginAction(data.name.trim(), data.password.trim(), props.history)
@@ -74,10 +74,10 @@ function Login(props) {
       <RegisterLayout isLoginPage={true}>
         <div
           style={{
-            height: "90vh",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
+            height: '90vh',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
           }}
         >
           <h1 className='form-title mx-auto'>Đăng nhập</h1>
@@ -91,7 +91,11 @@ function Login(props) {
           />
         </div>
       </RegisterLayout>
-      <ForgetPass openModal={forgetPass} setOpenModal={setForgetPass} />
+      <ForgetPass
+        openModal={forgetPass}
+        setOpenModal={setForgetPass}
+        isCompany={true}
+      />
     </>
   );
 }

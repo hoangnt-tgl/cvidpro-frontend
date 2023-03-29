@@ -1,34 +1,34 @@
-import React, { useState } from "react";
-import { connect, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import RegisterLayout from "../../customComponents/RegisterLayout/RegisterLayout";
+import React, { useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import RegisterLayout from '../../customComponents/RegisterLayout/RegisterLayout';
 import {
   loadingToggleAction,
   employeeLoginAction,
-} from "../../store/actions/AuthActions";
-import LoginEmployee from "../../components/LoginUser/Login";
-import { loginEmployee } from "../../constants/description";
-import Header from "../../components/Header/Header";
-import ForgetPass from "../../components/ModalForgetPass/ForgetPass";
+} from '../../store/actions/AuthActions';
+import LoginEmployee from '../../components/LoginUser/Login';
+import { loginEmployee } from '../../constants/description';
+import Header from '../../components/Header/Header';
+import ForgetPass from '../../components/ModalForgetPass/ForgetPass';
 
 function Login(props) {
   const [forgetPass, setForgetPass] = useState(false);
   const inputFiled = [
     {
-      register: "name",
-      placeholder: "số điện thoại",
-      title: "Số CVID",
-      type: "text",
+      register: 'name',
+      placeholder: 'số điện thoại',
+      title: 'Số CVID',
+      type: 'text',
       description: {
         isShow: false,
         content: loginEmployee.username,
       },
     },
     {
-      register: "password",
-      placeholder: "",
-      title: "Mật khẩu",
-      type: "password",
+      register: 'password',
+      placeholder: '',
+      title: 'Mật khẩu',
+      type: 'password',
       description: {
         isShow: false,
         content: loginEmployee.username,
@@ -38,7 +38,7 @@ function Login(props) {
   const dispatch = useDispatch();
 
   function onLogin(data) {
-    console.log("companylogin", data);
+    console.log('companylogin', data);
     dispatch(loadingToggleAction(true));
     dispatch(
       employeeLoginAction(data.name.trim(), data.password.trim(), props.history)
@@ -51,10 +51,10 @@ function Login(props) {
       <RegisterLayout isLoginPage={true}>
         <div
           style={{
-            height: "90vh",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
+            height: '90vh',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
           }}
         >
           <h1 className='form-title mx-auto'>Đăng nhập</h1>
@@ -66,7 +66,11 @@ function Login(props) {
           />
         </div>
       </RegisterLayout>
-      <ForgetPass openModal={forgetPass} setOpenModal={setForgetPass} />
+      <ForgetPass
+        openModal={forgetPass}
+        setOpenModal={setForgetPass}
+        isCompany={false}
+      />
     </>
   );
 }
