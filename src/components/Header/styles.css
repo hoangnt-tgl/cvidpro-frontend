@@ -1,8 +1,9 @@
 .nav-container {
   background-color: white;
   transition: all ease-in-out 0.5s;
-  /* max-width: var(--breakpoint-xxl); */
+
   width: 100%;
+
   padding: 0px 20px;
 }
 .stick.nav-container {
@@ -12,11 +13,13 @@
   left: 0;
   right: 0;
   transition: all ease-in-out 1s;
-  animation: move 1s ease-in-out forwards;
+  /* animation: move 1s ease-in-out forwards; */
 }
 .nav-container .header-nav {
   margin: 0 auto;
   padding: 40px 0px;
+  max-width: var(--breakpoint-xxl);
+  margin: auto;
 }
 
 @keyframes move {
@@ -41,7 +44,7 @@
     padding: 0px 40px;
   }
   .header-nav-logo-img {
-    width: 120px;
+    width: 200px;
     height: auto;
   }
 }

@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import Select from "react-select";
+import React, { useEffect, useRef, useState } from 'react';
+import Select from 'react-select';
 //hookform
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import DropDownSelect from '../../../../customComponents/DropDownSelect/DropDownSelect';
 
 const CompanyTaxInfo = ({
   infoRegister1,
@@ -19,16 +20,21 @@ const CompanyTaxInfo = ({
     businessLicense: false,
   });
   const schema = yup.object().shape({
-    companyType: yup.object().required("Vui lòng chọn loại hình công ty"),
-    field: yup.array().required("Vui lòng nhập lĩnh vực kinh doanh"),
-    mainIndustry: yup.string().required("Vui lòng nhập ngành nghề chính"),
-    businessLicense: yup.mixed().required("Vui lòng tải giấy phép kinh doanh"),
+    companyType: yup.object().required('Vui lòng chọn loại hình công ty'),
+    field: yup
+      .array()
+      .required('Vui lòng nhập lĩnh vực kinh doanh')
+      .typeError('Vui lòng nhập lĩnh vực kinh doanh'),
+    mainIndustry: yup.string().required('Vui lòng nhập ngành nghề chính'),
+    businessLicense: yup.mixed().required('Vui lòng tải giấy phép kinh doanh'),
   });
   const {
     register,
     handleSubmit,
     setValue,
     control,
+    clearErrors,
+    setError,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -40,7 +46,8 @@ const CompanyTaxInfo = ({
       reader.readAsDataURL(file);
       reader.onload = async () => {
         const base64 = reader.result;
-        setValue("businessLicense", base64);
+        setValue('businessLicense', base64);
+        clearErrors('businessLicense');
       };
       if (!checkStepRef.current.businessLicense) {
         setChildStep1((prev) => prev + 1 / 3 / 4);
@@ -55,12 +62,12 @@ const CompanyTaxInfo = ({
   }
 
   function handleCheckInput(e) {
-    if (e.target.dataset.testid === "mainIndustry") {
-      if (e.target.value !== "" && !checkStepRef.current.mainIndustry) {
+    if (e.target.dataset.testid === 'mainIndustry') {
+      if (e.target.value !== '' && !checkStepRef.current.mainIndustry) {
         setChildStep1((prev) => prev + 1 / 3 / 4);
         checkStepRef.current.mainIndustry = true;
       }
-      if (e.target.value === "" && checkStepRef.current.mainIndustry) {
+      if (e.target.value === '' && checkStepRef.current.mainIndustry) {
         setChildStep1((prev) => prev - 1 / 3 / 4);
         checkStepRef.current.mainIndustry = false;
       }
@@ -70,7 +77,9 @@ const CompanyTaxInfo = ({
     setInfoRegister2(data);
     setStep(3);
   }
-
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
   return (
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
@@ -88,17 +97,18 @@ const CompanyTaxInfo = ({
                   styles={{
                     singleValue: (baseStyles, state) => ({
                       ...baseStyles,
-                      color: "black",
-                      fontWeight: "550",
+                      color: 'black',
+                      fontWeight: '550',
                     }),
                     optionsSelect: (baseStyles, state) => ({
                       ...baseStyles,
-                      color: "black",
-                      fontWeight: "550",
+                      color: 'black',
+                      fontWeight: '550',
                     }),
                   }}
                   onChange={(value) => {
-                    setValue("companyType", value);
+                    setValue('companyType', value);
+                    clearErrors('companyType');
                     if (checkStepRef.current.companyType === false) {
                       setChildStep1((prev) => prev + 1 / 3 / 4);
                       checkStepRef.current.companyType = true;
@@ -106,7 +116,7 @@ const CompanyTaxInfo = ({
                   }}
                   placeholder='Chọn loại hình công ty'
                   options={optionsSelect.companyTypes}
-                  className={checkStepRef.current.companyType ? " filled" : ""}
+                  className={checkStepRef.current.companyType ? ' filled' : ''}
                 />
               )}
             />
@@ -122,8 +132,8 @@ const CompanyTaxInfo = ({
             Lĩnh vực hoạt động <span className='asterisk'></span>
           </p>
           <div className='select-style'>
-            {" "}
-            <Controller
+            {' '}
+            {/* <Controller
               name='field'
               control={control}
               render={({ field }) => (
@@ -132,17 +142,17 @@ const CompanyTaxInfo = ({
                   styles={{
                     singleValue: (baseStyles, state) => ({
                       ...baseStyles,
-                      color: "black",
-                      fontWeight: "550",
+                      color: 'black',
+                      fontWeight: '550',
                     }),
                     optionsSelect: (baseStyles, state) => ({
                       ...baseStyles,
-                      color: "black",
-                      fontWeight: "550",
+                      color: 'black',
+                      fontWeight: '550',
                     }),
                   }}
                   onChange={(value) => {
-                    setValue("field", value);
+                    setValue('field', value);
                     if (checkStepRef.current.field === false) {
                       setChildStep1((prev) => prev + 1 / 3 / 4);
                       checkStepRef.current.field = true;
@@ -152,10 +162,21 @@ const CompanyTaxInfo = ({
                   options={optionsSelect?.field}
                   isMulti={true}
                   closeMenuOnSelect={false}
-                  className={checkStepRef.current.field ? " filled" : ""}
+                  className={checkStepRef.current.field ? ' filled' : ''}
                 />
               )}
-            />
+            /> */}
+            <div className={checkStepRef.current.field ? ' filled' : ''}>
+              {' '}
+              <DropDownSelect
+                clearErrors={clearErrors}
+                setValueForm={setValue}
+                setChildStep1={setChildStep1}
+                checkStepRef={checkStepRef}
+                placeholder='Chọn lĩnh vực hoạt động'
+                options={optionsSelect?.field}
+              />
+            </div>
           </div>
 
           <div className='text-danger'>
@@ -188,11 +209,11 @@ const CompanyTaxInfo = ({
           <input
             className={
               checkStepRef.current.mainIndustry
-                ? "form-control filled"
-                : "form-control"
+                ? 'form-control filled'
+                : 'form-control'
             }
             placeholder='Nhập ngành nghề chính'
-            {...register("mainIndustry")}
+            {...register('mainIndustry')}
             data-testid='mainIndustry'
             onBlur={(e) => handleCheckInput(e)}
           />
@@ -210,8 +231,8 @@ const CompanyTaxInfo = ({
             type='file'
             className={
               checkStepRef.current.businessLicense
-                ? "form-control filled"
-                : "form-control"
+                ? 'form-control filled'
+                : 'form-control'
             }
             accept='image/*'
             onChange={uploadBusinessLicense}
@@ -236,7 +257,7 @@ const CompanyTaxInfo = ({
           <button
             type='submit'
             className='site-button dz-xs-flex m-r5 float-right btn btn-lg'
-            disabled={Object.keys(errors).length > 0}
+            // disabled={Object.keys(errors).length > 0}
           >
             Tiếp tục <i className='fa fa-arrow-right' aria-hidden='true'></i>
           </button>
