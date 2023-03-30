@@ -1,6 +1,6 @@
-import React from "react";
-import "./styles.css";
-const Stepper = ({ step, totalStep, Step }) => {
+import React from 'react';
+import './styles.css';
+const Stepper = ({ step, totalStep, Step, setStep }) => {
   let innwerWidth = window.innerWidth;
   function checkProgressPer() {
     return step * 100;
@@ -22,37 +22,22 @@ const Stepper = ({ step, totalStep, Step }) => {
         </div>
         {innwerWidth > 575 ? (
           <>
-            {" "}
+            {' '}
             <div className='steps-body'>
               {totalStep.map((item, index) => {
                 return (
                   <div
                     className={
                       Step === item.step
-                        ? "step step-completed"
+                        ? 'step step-completed'
                         : Step < item.step
-                        ? "step"
-                        : "step step-completed"
+                        ? 'step'
+                        : 'step step-completed'
                     }
+                    onClick={() => {
+                      if (Step > item.step) setStep(item.step);
+                    }}
                   >
-                    {/* {Step > item.step && (
-                      <span className='step-indicator'>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          width={24}
-                          height={24}
-                          viewBox='0 0 24 24'
-                          fill='none'
-                          stroke='currentColor'
-                          strokeWidth={2}
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          className='feather feather-check'
-                        >
-                          <polyline points='20 6 9 17 4 12' />
-                        </svg>
-                      </span>
-                    )} */}
                     {item.title}
                   </div>
                 );
@@ -61,38 +46,20 @@ const Stepper = ({ step, totalStep, Step }) => {
           </>
         ) : (
           <>
-            {" "}
+            {' '}
             <div className='steps-body'>
               {totalStep.map((item, index) => {
                 return (
                   <div
                     className={
-                      Step === item.step ? "step step-active" : "d-none"
+                      Step === item.step ? 'step step-active' : 'd-none'
                     }
                   >
-                    {Step > item.step && (
-                      <span className='step-indicator'>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          width={24}
-                          height={24}
-                          viewBox='0 0 24 24'
-                          fill='none'
-                          stroke='currentColor'
-                          strokeWidth={2}
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          className='feather feather-check'
-                        >
-                          <polyline points='20 6 9 17 4 12' />
-                        </svg>
-                      </span>
-                    )}
                     {item.title}
                   </div>
                 );
               })}
-            </div>{" "}
+            </div>{' '}
           </>
         )}
       </div>

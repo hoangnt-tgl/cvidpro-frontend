@@ -1,6 +1,6 @@
-import React from "react";
-import "../../../EmployeeRegister/RegisterStyles.css";
-import CompanyTaxInfo from "./CompanyTaxInfo";
+import React from 'react';
+import '../../../EmployeeRegister/RegisterStyles.css';
+import CompanyTaxInfo from './CompanyTaxInfo';
 const FormRegister1 = ({
   setStep,
   setInfoRegister2,
@@ -12,7 +12,7 @@ const FormRegister1 = ({
 }) => {
   return (
     <>
-      {" "}
+      {' '}
       <div className=''>
         <div className='body-register'>
           <CompanyTaxInfo

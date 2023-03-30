@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useRef } from 'react';
-import { toast } from 'react-hot-toast';
 const ValidateOtp = ({ setStep, validateOtpFc }) => {
   const [otpFail, setOtpFail] = useState(false);
   const checkStepRef = useRef({
@@ -44,9 +43,7 @@ const ValidateOtp = ({ setStep, validateOtpFc }) => {
       setOtpFail(true);
     }
   }
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
+
   return (
     <>
       {' '}

@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import RegisterLayout from "../../customComponents/RegisterLayout/RegisterLayout";
-import FormRegister from "../../components/Registers/CompanyRegister/Step1/FormRegister";
-import FormRegister1 from "../../components/Registers/CompanyRegister/Step2/FormRegister1";
-import useRegister from "../../hooks/useRegister";
-import useGetOptions from "../../hooks/useGetOptions";
-import Stepper from "../../customComponents/Stepper/Stepper";
-import FormRegister2 from "../../components/Registers/CompanyRegister/Step3/FormRegister2";
-import Header from "../../components/Header/Header";
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import RegisterLayout from '../../customComponents/RegisterLayout/RegisterLayout';
+import FormRegister from '../../components/Registers/CompanyRegister/Step1/FormRegister';
+import FormRegister1 from '../../components/Registers/CompanyRegister/Step2/FormRegister1';
+import useRegister from '../../hooks/useRegister';
+import useGetOptions from '../../hooks/useGetOptions';
+import Stepper from '../../customComponents/Stepper/Stepper';
+import FormRegister2 from '../../components/Registers/CompanyRegister/Step3/FormRegister2';
+import Header from '../../components/Header/Header';
 
 function Register2(props) {
   const { setInfoRegister1, setInfoRegister2, registerCompany, infoRegister1 } =
@@ -19,9 +19,9 @@ function Register2(props) {
   const [childStep1, setChildStep1] = useState(0);
   const [childStep2, setChildStep2] = useState(0);
   let totalStep = [
-    { step: 1, title: "Thông tin đăng nhập" },
-    { step: 2, title: "Thông tin doanh nghiệp" },
-    { step: 3, title: "Thông tin người đại diện" },
+    { step: 1, title: 'Thông tin đăng nhập' },
+    { step: 2, title: 'Thông tin doanh nghiệp' },
+    { step: 3, title: 'Thông tin người đại diện' },
   ];
 
   return (
@@ -30,6 +30,7 @@ function Register2(props) {
         Step={step}
         totalStep={totalStep}
         step={childStep + childStep1 + childStep2}
+        setStep={setStep}
       />
       <div className={step === 1 ? `appear` : `register-steps`}>
         <FormRegister
