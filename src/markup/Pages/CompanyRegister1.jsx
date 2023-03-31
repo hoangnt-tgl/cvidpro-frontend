@@ -40,6 +40,7 @@ function Register2(props) {
           getCompanyInfo={getCompanyInfo}
           fetchFieldOptions={fetchFieldOptions}
           setIsStep2={props.setIsStep2}
+          setOffSelect={props.setOffSelect}
         />
       </div>
       <div className={step === 2 ? `appear` : `register-steps`}>

@@ -11,6 +11,7 @@ const CompanyInfo = ({
   getCompanyInfo,
   setChildStep,
   setIsStep2,
+  setOffSelect,
 }) => {
   const checkStepRef = useRef({
     taxCode: false,
@@ -69,6 +70,7 @@ const CompanyInfo = ({
   }
   async function onHandleSubmit(data) {
     setInfoRegister1(data);
+    setOffSelect(true);
     setStep(2);
   }
   function handleCheckInput(e) {
@@ -141,11 +143,11 @@ const CompanyInfo = ({
           <div className='text-danger'>
             {errors?.taxCode?.message && <div>{errors.taxCode.message}</div>}
           </div>
-          <div className='text-danger'>
+          {/* <div className='text-danger'>
             {errors?.companyInfo?.message && (
               <div>{errors.companyInfo.message}</div>
             )}
-          </div>
+          </div> */}
         </div>
         <div className='form-group'>
           <p>
@@ -191,7 +193,7 @@ const CompanyInfo = ({
             )}
           </div>
         </div>
-        <div className='form-group text-right register-btn'>
+        <div className='form-group text-right register-btn justify-content-end'>
           <button
             type='submit'
             className='site-button dz-xs-flex m-r5 btn'

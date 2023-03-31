@@ -4,7 +4,7 @@
   margin: 20px auto;
   margin-bottom: 0px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 550;
 }
 .select-box {
   display: flex;
@@ -29,6 +29,7 @@
 }
 .input-box input {
   background-color: transparent;
+  font-weight: 550;
 }
 .select-box i {
   color: gray;
@@ -47,6 +48,7 @@
   z-index: 10;
   background-color: #fff;
   display: none;
+
 }
 .dropdown-box.show {
   display: block;
@@ -56,7 +58,8 @@
   display: flex;
   gap: 10px;
   user-select: none;
-  font-size: 15px;
+  font-size: 14px;
+  font-weight: 550;
 }
 .dropdown-custom .dropdown-item:hover {
   background-color: #deebff;

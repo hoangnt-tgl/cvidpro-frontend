@@ -1,5 +1,5 @@
-import React from "react";
-import PresenterInfo from "./PresenterInfo";
+import React from 'react';
+import PresenterInfo from './PresenterInfo';
 
 const FormRegister2 = ({
   setChildStep1,
@@ -9,6 +9,7 @@ const FormRegister2 = ({
   setInfoRegister1,
   fetchFieldOptions,
   setIsStep2,
+  setOffSelect,
 }) => {
   return (
     <div className=''>
@@ -21,6 +22,7 @@ const FormRegister2 = ({
           registerCompany={registerCompany}
           optionsSelect={optionsSelect}
           setIsStep2={setIsStep2}
+          setOffSelect={setOffSelect}
         />
       </div>
     </div>

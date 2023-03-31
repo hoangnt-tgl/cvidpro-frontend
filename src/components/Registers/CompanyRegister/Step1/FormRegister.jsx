@@ -1,6 +1,6 @@
-import React from "react";
-import CompanyInfo from "./CompanyInfo";
-import "../../../EmployeeRegister/RegisterStyles.css";
+import React from 'react';
+import CompanyInfo from './CompanyInfo';
+import '../../../EmployeeRegister/RegisterStyles.css';
 const FormRegister = ({
   setStep,
   setInfoRegister1,
@@ -8,10 +8,11 @@ const FormRegister = ({
   getCompanyInfo,
   setChildStep,
   setIsStep2,
+  setOffSelect,
 }) => {
   return (
     <>
-      {" "}
+      {' '}
       <div className=''>
         <div className='body-register'>
           <CompanyInfo
@@ -21,6 +22,7 @@ const FormRegister = ({
             getCompanyInfo={getCompanyInfo}
             setInfoRegister1={setInfoRegister1}
             setIsStep2={setIsStep2}
+            setOffSelect={setOffSelect}
           />
         </div>
       </div>

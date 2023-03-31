@@ -35,6 +35,7 @@ function Register2(props) {
         <div className='font-size-14'>
           <h4 className='form-title text-uppercase'>Đăng ký tìm việc</h4>
           <Stepper
+            setStep={setStep}
             step={childStep + childStep1 + childStep2}
             Step={step}
             totalStep={totalStep}
