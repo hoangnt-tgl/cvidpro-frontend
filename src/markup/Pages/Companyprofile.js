@@ -44,10 +44,7 @@ function Companyprofile(props) {
                             <label className="border-bottom w-100 pb-1 mb-3">
                               Tên công ty
                             </label>
-                            <p
-                              style={{ height: 38, lineHeight: '38px' }}
-                              className="mb-0"
-                            >
+                            <p style={{ minHeight: 38 }} className="mb-0">
                               {companyInfo.companyName}
                             </p>
                           </div>
@@ -57,10 +54,7 @@ function Companyprofile(props) {
                             <label className="border-bottom w-100 pb-1 mb-3">
                               Mã số thuế
                             </label>
-                            <p
-                              style={{ height: 38, lineHeight: '38px' }}
-                              className="mb-0"
-                            >
+                            <p style={{ minHeight: 38 }} className="mb-0">
                               {companyInfo.username}
                             </p>
                           </div>
@@ -70,10 +64,7 @@ function Companyprofile(props) {
                             <label className="border-bottom w-100 pb-1 mb-3">
                               Loại hình công ty
                             </label>
-                            <p
-                              style={{ height: 38, lineHeight: '38px' }}
-                              className="mb-0"
-                            >
+                            <p style={{ minHeight: 38 }} className="mb-0">
                               {companyInfo.companyType}
                             </p>
                           </div>
@@ -83,10 +74,7 @@ function Companyprofile(props) {
                             <label className="border-bottom w-100 pb-1 mb-3">
                               Nghành nghề chính
                             </label>
-                            <p
-                              style={{ height: 38, lineHeight: '38px' }}
-                              className="mb-0"
-                            >
+                            <p style={{ minHeight: 38 }} className="mb-0">
                               {companyInfo.mainIndustry}
                             </p>
                           </div>
@@ -106,10 +94,7 @@ function Companyprofile(props) {
                           <label className="border-bottom w-100 pb-1 mb-3">
                             Họ và tên
                           </label>
-                          <p
-                            style={{ height: 38, lineHeight: '38px' }}
-                            className="mb-0"
-                          >
+                          <p style={{ minHeight: 38 }} className="mb-0">
                             {companyInfo.name}
                           </p>
                         </div>
@@ -120,16 +105,16 @@ function Companyprofile(props) {
                             Phone
                           </label>
                           <div className="row align-items-center pr-3">
-                            <p className="col-9 mb-0 text-danger">
+                            <p className="col-lg-9 col-md-9 col-8 mb-0 text-danger">
                               Chưa xác thực
                             </p>
-                            <button className="col-3 btn btn-primary btn-md">
+                            <button className="col-lg-3 col-md-3 col-4 btn btn-primary btn-md">
                               Xác thực
                             </button>
                           </div>
                           {/* <div className="row align-items-center pr-3">
-                            <p className="col-9 mb-0">{companyInfo.phone}</p>
-                            <button className="col-3 btn btn-primary btn-md">
+                            <p className="col-lg-9 col-md-9 col-8 mb-0">{companyInfo.phone}</p>
+                            <button className="col-lg-3 col-md-3 col-4 btn btn-primary btn-md">
                               Cập nhật
                             </button>
                           </div> */}
@@ -141,16 +126,16 @@ function Companyprofile(props) {
                             Email
                           </label>
                           <div className="row align-items-center pr-3">
-                            <p className="col-9 mb-0 text-danger">
+                            <p className="col-lg-9 col-md-9 col-8 mb-0 text-danger">
                               Chưa xác thực
                             </p>
-                            <button className="col-3 btn btn-primary btn-md">
+                            <button className="col-lg-3 col-md-3 col-4 btn btn-primary btn-md">
                               Xác thực
                             </button>
                           </div>
                           {/* <div className="row align-items-center pr-3">
-                            <p className="col-9 mb-0">{companyInfo.email}</p>
-                            <button className="col-3 btn btn-primary btn-md">
+                            <p className="col-lg-9 col-md-9 col-8 mb-0">{companyInfo.email}</p>
+                            <button className="col-lg-3 col-md-3 col-4 btn btn-primary btn-md">
                               Cập nhật
                             </button>
                           </div> */}
@@ -161,10 +146,7 @@ function Companyprofile(props) {
                           <label className="border-bottom w-100 pb-1 mb-3">
                             Chức vụ
                           </label>
-                          <p
-                            style={{ height: 38, lineHeight: '38px' }}
-                            className="mb-0"
-                          >
+                          <p style={{ minHeight: 38 }} className="mb-0">
                             {companyInfo.position}
                           </p>
                         </div>
