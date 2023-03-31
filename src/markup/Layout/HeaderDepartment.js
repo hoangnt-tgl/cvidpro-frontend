@@ -98,11 +98,22 @@ class HeaderEmployee extends Component {
 
                     <li className="">
                       <Link to={"/company-manage-jobs"}>
-                        Vị trí tuyển dụng<i className="fa fa-chevron-down"></i>
+                        Tuyển dụng<i className="fa fa-chevron-down"></i>
                       </Link>
                       <ul className="sub-menu">
                         <li>
-                          <Link to={"/company-browse-candidates"} className="dez-page">
+                          <Link
+                            to={"/company-manage-jobs"}
+                            className="dez-page"
+                          >
+                            Vị trí tuyển dụng
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to={"/company-browse-candidates"}
+                            className="dez-page"
+                          >
                             Tìm ứng viên
                           </Link>
                         </li>
@@ -115,18 +126,12 @@ class HeaderEmployee extends Component {
                           </Link>
                         </li>
                         <li>
-                          <Link
-                            to={"#"}
-                            className="dez-page"
-                          >
+                          <Link to={"#"} className="dez-page">
                             Ứng viên đã ứng tuyển
                           </Link>
                         </li>
                         <li>
-                          <Link
-                            to={"#"}
-                            className="dez-page"
-                          >
+                          <Link to={"#"} className="dez-page">
                             Lịch phỏng vấn
                           </Link>
                         </li>

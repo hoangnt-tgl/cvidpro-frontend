@@ -4,19 +4,27 @@ import Select from "react-select";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
+import { useRef } from "react";
+// import '../RegisterStyles.css'
+const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
+  const checkStepRef = useRef({
+    lastName: false,
+    name: false,
+    phone: false,
+  
+    email: false,
+    password: false,
+    confirmPassword: false,
+  });
   const genderOptions = [
     { value: "Nam", label: "Nam" },
     { value: "Nữ", label: "Nữ" },
   ];
   const schema = yup.object().shape({
-    name: yup.string().required("Vui lòng nhập họ và tên"),
+    name: yup.string().required("Vui lòng nhập họ và lót"),
+    lastName: yup.string().required("Vui lòng nhập tên "),
     phone: yup.string().required("Vui lòng nhập số điện thoại").length(10),
-    birthday: yup
-      .date()
-      .required("Vui lòng nhập ngày sinh")
-      .typeError("Vui lòng nhập ngày sinh"),
-    gender: yup.object().required("Vui lòng nhập giới tính"),
+
     email: yup
       .string()
       .required("Vui lòng nhập email")
@@ -37,107 +45,204 @@ const PersonalInfo = ({ setStep, setInfoRegister1 }) => {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
   function onHandleSubmit(data) {
     setInfoRegister1(data);
-    // console.log(data);
-    // console.log(errors);
     if (Object.keys(errors).length === 0) {
       setStep(2);
     }
   }
+  function handleCheckInput(e) {
+    if (e.target.dataset.testid === "name") {
+      if (e.target.value !== "" && !checkStepRef.current.name) {
+        setChildStep((prev) => prev + 1 / 3 / 6);
+        checkStepRef.current.name = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.name) {
+        setChildStep((prev) => prev - 1 / 3 / 6);
+        checkStepRef.current.name = false;
+      }
+    }
+    if (e.target.dataset.testid === "lastName") {
+      if (e.target.value !== "" && !checkStepRef.current.lastName) {
+        setChildStep((prev) => prev + 1 / 3 / 6);
+        checkStepRef.current.lastName = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.lastName) {
+        setChildStep((prev) => prev - 1 / 3 / 6);
+        checkStepRef.current.lastName = false;
+      }
+    }
+    if (e.target.dataset.testid === "phone") {
+      if (e.target.value !== "" && !checkStepRef.current.phone) {
+        setChildStep((prev) => prev + 1 / 3 / 6);
+        checkStepRef.current.phone = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.phone) {
+        setChildStep((prev) => prev - 1 / 3 / 6);
+        checkStepRef.current.phone = false;
+      }
+    }
+
+    if (e.target.dataset.testid === "email") {
+      if (e.target.value !== "" && !checkStepRef.current.email) {
+        setChildStep((prev) => prev + 1 / 3 / 6);
+        checkStepRef.current.email = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.email) {
+        setChildStep((prev) => prev - 1 / 3 / 6);
+        checkStepRef.current.email = false;
+      }
+    }
+    if (e.target.dataset.testid === "password") {
+      if (e.target.value !== "" && !checkStepRef.current.password) {
+        setChildStep((prev) => prev + 1 / 3 / 6);
+        checkStepRef.current.password = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.password) {
+        setChildStep((prev) => prev - 1 / 3 / 6);
+        checkStepRef.current.password = false;
+      }
+    }
+    if (e.target.dataset.testid === "confirmPassword") {
+      if (e.target.value !== "" && !checkStepRef.current.confirmPassword) {
+        setChildStep((prev) => prev + 1 / 3 / 6);
+        checkStepRef.current.confirmPassword = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.confirmPassword) {
+        setChildStep((prev) => prev - 1 / 3 / 6);
+        checkStepRef.current.confirmPassword = false;
+      }
+    }
+  }
+
   return (
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
-        <div className='form-group'>
-          <p>Họ và tên</p>
-          <input
-            type='text'
-            className='form-control small'
-            placeholder='Nhập họ và tên'
-            {...register("name")}
-          />
-          <div className='text-danger'>
-            {errors?.name?.message && <div>{errors.name.message}</div>}
+        <div className='form-group d-flex justify-content-between'>
+          <div className='w-100 mr-5'>
+            <p>
+              Họ và tên lót <span className='asterisk'></span>
+            </p>
+            <input
+              type='text'
+              className={
+                checkStepRef.current.name
+                  ? "form-control small filled"
+                  : "form-control small"
+              }
+              placeholder='Nhập họ và tên lót'
+              {...register("name")}
+              data-testid='name'
+              onBlur={handleCheckInput}
+            />
+            <div className='text-danger'>
+              {errors?.name?.message && <div>{errors.name.message}</div>}
+            </div>
+          </div>
+          <div className='w-100'>
+            <p>
+              Tên <span className='asterisk'></span>
+            </p>
+            <input
+              type='text'
+              className={
+                checkStepRef.current.lastName
+                  ? "form-control small filled"
+                  : "form-control small"
+              }
+              placeholder='Tên'
+              {...register("lastName")}
+              data-testid='lastName'
+              onBlur={handleCheckInput}
+            />
+            <div className='text-danger'>
+              {errors?.lastName?.message && (
+                <div>{errors.lastName.message}</div>
+              )}
+            </div>
           </div>
         </div>
         <div className='form-group'>
-          <p>Số điện thoại</p>
+          <p>
+            Số điện thoại <span className='asterisk'></span>
+          </p>
           <input
             type='text'
-            className='form-control'
+            className={
+              checkStepRef.current.phone
+                ? "form-control small filled"
+                : "form-control small"
+            }
             placeholder='Nhập số điện thoại'
             {...register("phone")}
+            data-testid='phone'
+            onBlur={handleCheckInput}
           />
           <div className='text-danger'>
             {errors?.phone?.message && <div>{errors.phone.message}</div>}
           </div>
         </div>
-        <div className='form-group'>
-          <p>Ngày sinh</p>
-          <input
-            type='date'
-            className='form-control'
-            placeholder='Nhập ngày sinh'
-            {...register("birthday")}
-          />
-          <div className='text-danger'>
-            {errors.birthday?.message && <div>{errors.birthday.message}</div>}
-          </div>
-        </div>
-        <div className='form-group'>
-          <p>Giới tính</p>
-          <div className='select-style'>
-            {" "}
-            <Controller
-              name='gender'
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  placeholder='Chọn giới tính'
-                  options={genderOptions}
-                />
-              )}
-            />
-          </div>
 
-          <div className='text-danger'>
-            {errors.gender?.message && <div>{errors.gender.message}</div>}
-          </div>
-        </div>
         <div className='form-group'>
-          <p>Email</p>
+          <p>
+            Email <span className='asterisk'></span>
+          </p>
           <input
             type='email'
-            className='form-control'
+            className={
+              checkStepRef.current.email
+                ? "form-control small filled"
+                : "form-control small"
+            }
             placeholder='Nhập email'
             {...register("email")}
+            data-testid='email'
+            onBlur={handleCheckInput}
           />
           <div className='text-danger'>
             {errors.email?.message && <div>{errors.email.message}</div>}
           </div>
         </div>
         <div className='form-group'>
-          <p>Mật khẩu</p>
+          <p>
+            Mật khẩu <span className='asterisk'></span>
+          </p>
           <input
-            className='form-control'
+            className={
+              checkStepRef.current.password
+                ? "form-control small filled"
+                : "form-control small"
+            }
             placeholder='Nhập mật khẩu'
+            type='password'
             {...register("password")}
+            data-testid='password'
+            onBlur={handleCheckInput}
           />
           <div className='text-danger'>
             {errors.password?.message && <div>{errors.password.message}</div>}
           </div>
         </div>
         <div className='form-group'>
-          <p>Nhập lại mật khẩu</p>
+          <p>
+            Nhập lại mật khẩu <span className='asterisk'></span>
+          </p>
           <input
-            className='form-control'
+            className={
+              checkStepRef.current.confirmPassword
+                ? "form-control small filled"
+                : "form-control small"
+            }
+            type='password'
             placeholder='Nhập lại mật khẩu'
             {...register("confirmPassword")}
+            data-testid='confirmPassword'
+            onBlur={handleCheckInput}
           />
           <div className='text-danger'>
             {errors.confirmPassword?.message && (

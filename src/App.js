@@ -13,10 +13,8 @@ import "./plugins/slick/slick-theme.min.css";
 
 // import { ToastContainer } from 'react-toastify';
 import HomePage from "./markup/Pages/Homepage1";
-import EmployeeRegister from "./markup/Pages/EmployeeRegister";
-import CompanyRegister from "./markup/Pages/CompanyRegister";
-import EmployeeLogin from "./markup/Pages/EmployeeLogin";
-import CompanyLogin from "./markup/Pages/CompanyLogin";
+import EmployeeLogin from "./markup/Pages/EmployeeLogin1";
+import CompanyLogin from "./markup/Pages/CompanyLogin1.jsx";
 import JobDetailAdmin from "./markup/Pages/JobDetailAdmin";
 
 import CompanyManageJob from "./markup/Pages/CompanyManageJobs";
@@ -25,17 +23,24 @@ import CompanyBrowseCandidates from "./markup/Pages/CompanyBrowseCandidates";
 import JobResumeAdmin from "./markup/Pages/JobResumeAdmin";
 import EmployeeRegister1 from "./markup/Pages/EmployeeRegister1";
 import CompanyRegister1 from "./markup/Pages/CompanyRegister1";
+import IndividualRegister from "./markup/Pages/IndividualRegister.jsx";
 // import ForgotPassword from "./markup/Pages/ForgotPassword";
 import { Toaster } from "react-hot-toast";
-
+import CompanyRegisterBoth from "./markup/Pages/CompanyRegisterBoth.jsx";
 const toastOptions = {
   // Define default options
   className: "",
-  duration: 3000,
-  style: {},
+  duration: 7000,
+  style: {
+    right: "0px",
+    minWidth: "300px",
+    fontSize: "20px",
+    fontWeight: "500",
+    zIndex: "9999",
+  },
   // Default options for specific types
   success: {
-    duration: 5000,
+    duration: 7000,
     theme: {
       primary: "green",
       secondary: "black",
@@ -43,20 +48,20 @@ const toastOptions = {
   },
 };
 function App(props) {
-  const dispatch = useDispatch();
-  // useEffect(() => {
-  //     checkAutoLogin(dispatch, props.history);
-  // }, [dispatch, props.history]);
-
   let routes = (
     <Switch>
       <Route path='/' exact component={HomePage} />
       <Route path='/employee/login' exact component={EmployeeLogin} />
       <Route path='/company/login' exact component={CompanyLogin} />
-      {/* <Route path='/employee/register' exact component={EmployeeRegister} /> */}
       <Route path='/employee/register' exact component={EmployeeRegister1} />
-      <Route path='/company/register' exact component={CompanyRegister1} />
-      {/* <Route path='/company/register1' exact component={CompanyRegister1} /> */}
+      {/* <Route path='/company/register' exact component={CompanyRegister1} />
+      <Route
+        path='/company/register/individual'
+        exact
+        component={IndividualRegister}
+      /> */}
+      <Route path='/company/register' exact component={CompanyRegisterBoth} />
+
       <Route path='/confirm/job-detail/:id' exact component={JobDetailAdmin} />
       <Route path='/confirm/job-resume/:id' exact component={JobResumeAdmin} />
     </Switch>
@@ -78,7 +83,7 @@ function App(props) {
           <Index />
         </Suspense>
         <Toaster
-          position='top-right'
+          position='top-center'
           reverseOrder={false}
           gutter={8}
           containerClassName=''
@@ -104,7 +109,7 @@ function App(props) {
           {routes}
         </Suspense>
         <Toaster
-          position='top-right'
+          position='top-center'
           reverseOrder={false}
           gutter={8}
           containerClassName=''

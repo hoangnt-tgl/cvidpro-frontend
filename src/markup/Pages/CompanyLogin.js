@@ -196,4 +196,5 @@ const mapStateToProps = (state) => {
     showLoading: state.auth.showLoading,
   };
 };
-export default connect(mapStateToProps)(Login);
+// export default connect(mapStateToProps)(Login);
+export default Login;

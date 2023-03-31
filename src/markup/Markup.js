@@ -50,10 +50,12 @@ import Portfoliogrid2 from "./Pages/Portfoliogrid2";
 //import Loginpage2 from './Pages/Loginpage2';
 //import Loginpage3 from './Pages/Loginpage3';
 
-import CompanyRegister from "./Pages/CompanyRegister";
-import EmployeeRegister from "./Pages/EmployeeRegister";
-import EmployeeLogin from "./Pages/EmployeeLogin";
-import CompanyLogin from "./Pages/CompanyLogin";
+import CompanyRegister from "./Pages/CompanyRegister1";
+import EmployeeRegister from "./Pages/EmployeeRegister1";
+import EmployeeLogin from "./Pages/EmployeeLogin1";
+import CompanyLogin from "./Pages/CompanyLogin1";
+import ComnapayRegisterBoth from "./Pages/CompanyRegisterBoth.jsx";
+import IndividualRegister from "./Pages/IndividualRegister.jsx";
 import Error404 from "./Pages/Error404";
 
 import Contact from "./Pages/Contact";
@@ -71,24 +73,31 @@ const Markup = () => {
     <>
       <div className='page-wraper'>
         <Switch>
-          <Route path="/" exact component={Homepage} />
-          <Route path="/company/register" exact component={CompanyRegister} />
-          <Route path="/company/login" exact component={CompanyLogin} />
-          <Route path="/employee/register" exact component={EmployeeRegister} />
-          <Route path="/employee/login" exact component={EmployeeLogin} />
+          <Route path='/' exact component={Homepage} />
+          {/* <Route path='/company/register' exact component={CompanyRegister} /> */}
+          <Route path='/company/login' exact component={CompanyLogin} />
+          <Route path='/employee/register' exact component={EmployeeRegister} />
+          <Route path='/employee/login' exact component={EmployeeLogin} />
+          {/* <Route
+            path='/company/register/individual'
+            exact
+            component={IndividualRegister}
+          /> */}
+          <Route path='/company/register' exact component={ComnapayRegisterBoth} />
+
           <Route
-            path="/confirm/job-detail/:id"
+            path='/confirm/job-detail/:id'
             exact
             component={JobDetailAdmin}
           />
           <Route
-            path="/confirm/job-resume/:id"
+            path='/confirm/job-resume/:id'
             exact
             component={JobResumeAdmin}
           />
 
-          <Route path="/home" exact component={Homepage} />
-          <Route path="/index-2" exact component={Homepage2} />
+          <Route path='/home' exact component={Homepage} />
+          <Route path='/index-2' exact component={Homepage2} />
 
           <Route path='/jobs-profile' exact component={Jobprofile} />
           <Route path='/jobs-my-resume' exact component={Jobmyresume} />
@@ -103,7 +112,7 @@ const Markup = () => {
           />
           <Route path='/job-resume/:id' exact component={JobResume} />
 
-          <Route path="/company-profile" exact component={Companyprofile} />
+          <Route path='/company-profile' exact component={Companyprofile} />
           <Route
             path='/company-department'
             exact
@@ -147,7 +156,7 @@ const Markup = () => {
           />
 
           <Route
-            path="/company/job-detail/:id"
+            path='/company/job-detail/:id'
             exact
             component={JobDetailCompany}
           />
@@ -190,9 +199,9 @@ const Markup = () => {
             component={Categoryskilljobs}
           />
 
-          <Route path="/portfolio-grid-2" exact component={Portfoliogrid2} />
+          <Route path='/portfolio-grid-2' exact component={Portfoliogrid2} />
 
-          <Route path="/error-404" exact component={Error404} />
+          <Route path='/error-404' exact component={Error404} />
 
           <Route path='/contact' exact component={Contact} />
 
