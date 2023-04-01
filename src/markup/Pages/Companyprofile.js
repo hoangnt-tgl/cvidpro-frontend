@@ -27,14 +27,14 @@ function Companyprofile(props) {
       <Header2 />
       <div className="page-content bg-white">
         <div className="content-block">
-          <div className="section-full bg-white p-t50 p-b20">
+          <div className="section-full bg-white p-t50 p-b20 px-3">
             <div className="container">
               <div className="m-b30">
                 <div className="job-bx submit-resume row">
                   <div className="col-lg-6 col-md-12">
                     <div className="border-bottom clearfix mb-4">
                       <h5 className="font-weight-700 pull-left text-uppercase">
-                        Thông tin công ty
+                        Thông tin nhà tuyển dụng
                       </h5>
                     </div>
                     <form>
@@ -54,9 +54,12 @@ function Companyprofile(props) {
                             <label className="border-bottom w-100 pb-1 mb-3">
                               Mã số thuế
                             </label>
-                            <p style={{ minHeight: 38 }} className="mb-0">
-                              {companyInfo.username}
-                            </p>
+                            <div className="row align-items-center pr-3">
+                              <p className="col mb-0">{companyInfo.username}</p>
+                              <button className="btn btn-primary btn-md">
+                                Đổi mã số thuế
+                              </button>
+                            </div>
                           </div>
                         </div>
                         <div className="col-lg-12">
@@ -74,9 +77,14 @@ function Companyprofile(props) {
                             <label className="border-bottom w-100 pb-1 mb-3">
                               Nghành nghề chính
                             </label>
-                            <p style={{ minHeight: 38 }} className="mb-0">
-                              {companyInfo.mainIndustry}
-                            </p>
+                            <div className="row align-items-center pr-3">
+                              <p className="col mb-0">
+                                {companyInfo.mainIndustry}
+                              </p>
+                              <button className="btn btn-primary btn-md">
+                                Cập nhật
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -105,19 +113,14 @@ function Companyprofile(props) {
                             Phone
                           </label>
                           <div className="row align-items-center pr-3">
-                            <p className="col-lg-9 col-md-9 col-8 mb-0 text-danger">
+                            <p className="col mb-0">Chưa xác thực</p>
+                            <p className="col mb-0 text-danger">
                               Chưa xác thực
                             </p>
-                            <button className="col-lg-3 col-md-3 col-4 btn btn-primary btn-md">
+                            <button className="btn btn-primary btn-md">
                               Xác thực
                             </button>
                           </div>
-                          {/* <div className="row align-items-center pr-3">
-                            <p className="col-lg-9 col-md-9 col-8 mb-0">{companyInfo.phone}</p>
-                            <button className="col-lg-3 col-md-3 col-4 btn btn-primary btn-md">
-                              Cập nhật
-                            </button>
-                          </div> */}
                         </div>
                       </div>
                       <div className="col-lg-12">
@@ -126,19 +129,14 @@ function Companyprofile(props) {
                             Email
                           </label>
                           <div className="row align-items-center pr-3">
-                            <p className="col-lg-9 col-md-9 col-8 mb-0 text-danger">
+                            <p className="col mb-0">Chưa xác thực</p>
+                            <p className="col mb-0 text-danger">
                               Chưa xác thực
                             </p>
-                            <button className="col-lg-3 col-md-3 col-4 btn btn-primary btn-md">
+                            <button className="btn btn-primary btn-md">
                               Xác thực
                             </button>
                           </div>
-                          {/* <div className="row align-items-center pr-3">
-                            <p className="col-lg-9 col-md-9 col-8 mb-0">{companyInfo.email}</p>
-                            <button className="col-lg-3 col-md-3 col-4 btn btn-primary btn-md">
-                              Cập nhật
-                            </button>
-                          </div> */}
                         </div>
                       </div>
                       <div className="col-lg-12">
