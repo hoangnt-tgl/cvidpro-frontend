@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 //hookform
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { useRef } from "react";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useRef } from 'react';
 const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
   const checkStepRef = useRef({
     name: false,
@@ -13,15 +13,15 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
     email: false,
   });
   const schema = yup.object().shape({
-    name: yup.string().required("Vui lòng nhập họ và tên lót"),
-    lastName: yup.string().required("Vui lòng nhập tên"),
-    position: yup.string().required("Vui lòng nhập chức vụ"),
-    phone: yup.string().required("Vui lòng nhập số điện thoại").length(10),
+    name: yup.string().required('Vui lòng nhập họ và tên lót'),
+    lastName: yup.string().required('Vui lòng nhập tên'),
+    position: yup.string().required('Vui lòng nhập chức vụ'),
+    phone: yup.string().required('Vui lòng nhập số điện thoại').length(10),
     email: yup
       .string()
-      .required("Vui lòng nhập email")
-      .email("Email không hợp lệ"),
-    checked: yup.boolean().oneOf([true], "Vui lòng đồng ý điều khoản"),
+      .required('Vui lòng nhập email')
+      .email('Email không hợp lệ'),
+    checked: yup.boolean().oneOf([true], 'Vui lòng đồng ý điều khoản'),
   });
   const {
     register,
@@ -34,52 +34,52 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
     registerCompany(data);
   }
   function handleCheckInput(e) {
-    if (e.target.dataset.testid === "name") {
-      if (e.target.value !== "" && !checkStepRef.current.name) {
+    if (e.target.dataset.testid === 'name') {
+      if (e.target.value !== '' && !checkStepRef.current.name) {
         setChildStep2((prev) => prev + 1 / 3 / 5);
         checkStepRef.current.name = true;
       }
-      if (e.target.value === "" && checkStepRef.current.name) {
+      if (e.target.value === '' && checkStepRef.current.name) {
         setChildStep2((prev) => prev - 1 / 3 / 5);
         checkStepRef.current.name = false;
       }
     }
-    if (e.target.dataset.testid === "lastName") {
-      if (e.target.value !== "" && !checkStepRef.current.lastName) {
+    if (e.target.dataset.testid === 'lastName') {
+      if (e.target.value !== '' && !checkStepRef.current.lastName) {
         setChildStep2((prev) => prev + 1 / 3 / 5);
         checkStepRef.current.lastName = true;
       }
-      if (e.target.value === "" && checkStepRef.current.lastName) {
+      if (e.target.value === '' && checkStepRef.current.lastName) {
         setChildStep2((prev) => prev - 1 / 3 / 5);
         checkStepRef.current.lastName = false;
       }
     }
-    if (e.target.dataset.testid === "position") {
-      if (e.target.value !== "" && !checkStepRef.current.position) {
+    if (e.target.dataset.testid === 'position') {
+      if (e.target.value !== '' && !checkStepRef.current.position) {
         setChildStep2((prev) => prev + 1 / 3 / 5);
         checkStepRef.current.position = true;
       }
-      if (e.target.value === "" && checkStepRef.current.position) {
+      if (e.target.value === '' && checkStepRef.current.position) {
         setChildStep2((prev) => prev - 1 / 3 / 5);
         checkStepRef.current.position = false;
       }
     }
-    if (e.target.dataset.testid === "phone") {
-      if (e.target.value !== "" && !checkStepRef.current.phone) {
+    if (e.target.dataset.testid === 'phone') {
+      if (e.target.value !== '' && !checkStepRef.current.phone) {
         setChildStep2((prev) => prev + 1 / 3 / 5);
         checkStepRef.current.phone = true;
       }
-      if (e.target.value === "" && checkStepRef.current.phone) {
+      if (e.target.value === '' && checkStepRef.current.phone) {
         setChildStep2((prev) => prev - 1 / 3 / 5);
         checkStepRef.current.phone = false;
       }
     }
-    if (e.target.dataset.testid === "email") {
-      if (e.target.value !== "" && !checkStepRef.current.email) {
+    if (e.target.dataset.testid === 'email') {
+      if (e.target.value !== '' && !checkStepRef.current.email) {
         setChildStep2((prev) => prev + 1 / 3 / 5);
         checkStepRef.current.email = true;
       }
-      if (e.target.value === "" && checkStepRef.current.email) {
+      if (e.target.value === '' && checkStepRef.current.email) {
         setChildStep2((prev) => prev - 1 / 3 / 5);
         checkStepRef.current.email = false;
       }
@@ -88,21 +88,21 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
   return (
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
-        {" "}
+        {' '}
         <div className='form-group  d-flex justify-content-between'>
           <div className='w-100 mr-5'>
-            {" "}
+            {' '}
             <p>
               Họ và tên lót <span className='asterisk'></span>
             </p>
             <input
               className={
                 checkStepRef.current.name
-                  ? "form-control filled"
-                  : "form-control"
+                  ? 'form-control filled'
+                  : 'form-control'
               }
               placeholder='Nhập họ và tên lót'
-              {...register("name")}
+              {...register('name')}
               data-testid='name'
               onBlur={handleCheckInput}
             />
@@ -111,18 +111,18 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
             </div>
           </div>
           <div className='w-100'>
-            {" "}
+            {' '}
             <p>
               Tên <span className='asterisk'></span>
             </p>
             <input
               className={
                 checkStepRef.current.lastName
-                  ? "form-control filled"
-                  : "form-control"
+                  ? 'form-control filled'
+                  : 'form-control'
               }
               placeholder='Nhập tên'
-              {...register("lastName")}
+              {...register('lastName')}
               data-testid='lastName'
               onBlur={handleCheckInput}
             />
@@ -140,11 +140,11 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
           <input
             className={
               checkStepRef.current.position
-                ? "form-control filled"
-                : "form-control"
+                ? 'form-control filled'
+                : 'form-control'
             }
             placeholder='Nhập chức vụ'
-            {...register("position")}
+            {...register('position')}
             data-testid='position'
             onBlur={handleCheckInput}
           />
@@ -159,11 +159,11 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
           <input
             className={
               checkStepRef.current.phone
-                ? "form-control filled"
-                : "form-control"
+                ? 'form-control filled'
+                : 'form-control'
             }
             placeholder='Nhập số điện thoại'
-            {...register("phone")}
+            {...register('phone')}
             data-testid='phone'
             onBlur={handleCheckInput}
           />
@@ -179,11 +179,11 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
             type='email'
             className={
               checkStepRef.current.email
-                ? "form-control filled"
-                : "form-control"
+                ? 'form-control filled'
+                : 'form-control'
             }
             placeholder='Nhập email'
-            {...register("email")}
+            {...register('email')}
             data-testid='email'
             onBlur={handleCheckInput}
           />
@@ -192,12 +192,15 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
           </div>
         </div>
         <div className='form-group text-left'>
-          <span className='custom-control custom-checkbox'>
+          <span
+            className='custom-control custom-checkbox'
+            style={{ display: 'flex', alignItems: 'center' }}
+          >
             <input
               type='checkbox'
               className='custom-control-input'
               id='check1'
-              {...register("checked")}
+              {...register('checked')}
             />
             <label className='custom-control-label' htmlFor='check1'>
               Tôi đồng ý với các điều khoản và điều kiện

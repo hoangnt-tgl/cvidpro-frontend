@@ -1,12 +1,13 @@
-import React from "react";
-import ReactSelectShowType from "../../../customComponents/ReactSelectShowType/ReactSelectShowType";
+import React from 'react';
+import ReactSelectShowType from '../../../customComponents/ReactSelectShowType/ReactSelectShowType';
 //hookform
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { useRef } from "react";
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useRef } from 'react';
+import { selectStyle } from '../../../constants/common';
 // import '../RegisterStyles.css'
-import Select from "react-select";
+import Select from 'react-select';
 const Address = ({
   setStep,
   setInfoRegister2,
@@ -16,8 +17,8 @@ const Address = ({
   setChildStep,
 }) => {
   const genderOptions = [
-    { value: "Nam", label: "Nam" },
-    { value: "Nữ", label: "Nữ" },
+    { value: 'Nam', label: 'Nam' },
+    { value: 'Nữ', label: 'Nữ' },
   ];
   const checkStepRef = useRef({
     city: false,
@@ -28,15 +29,15 @@ const Address = ({
     gender: false,
   });
   const schema = yup.object().shape({
-    city: yup.object().required("Vui lòng chọn tỉnh/thành phố"),
-    district: yup.object().required("Vui lòng chọn quận/huyện"),
-    ward: yup.object().required("Vui lòng chọn phường/xã"),
-    address: yup.string().required("Vui lòng nhập địa chỉ"),
+    city: yup.object().required('Vui lòng chọn tỉnh/thành phố'),
+    district: yup.object().required('Vui lòng chọn quận/huyện'),
+    ward: yup.object().required('Vui lòng chọn phường/xã'),
+    address: yup.string().required('Vui lòng nhập địa chỉ'),
     birthday: yup
       .date()
-      .required("Vui lòng nhập ngày sinh")
-      .typeError("Vui lòng nhập ngày sinh"),
-    gender: yup.object().required("Vui lòng nhập giới tính"),
+      .required('Vui lòng nhập ngày sinh')
+      .typeError('Vui lòng nhập ngày sinh'),
+    gender: yup.object().required('Vui lòng nhập giới tính'),
   });
   const {
     register,
@@ -55,22 +56,22 @@ const Address = ({
     }
   }
   function handleCheckInput(e) {
-    if (e.target.dataset.testid === "address") {
-      if (e.target.value !== "" && !checkStepRef.current.address) {
+    if (e.target.dataset.testid === 'address') {
+      if (e.target.value !== '' && !checkStepRef.current.address) {
         setChildStep((prev) => prev + 1 / 3 / 6);
         checkStepRef.current.address = true;
       }
-      if (e.target.value === "" && checkStepRef.current.address) {
+      if (e.target.value === '' && checkStepRef.current.address) {
         setChildStep((prev) => prev - 1 / 3 / 6);
         checkStepRef.current.address = false;
       }
     }
-    if (e.target.dataset.testid === "birthday") {
-      if (e.target.value !== "" && !checkStepRef.current.birthday) {
+    if (e.target.dataset.testid === 'birthday') {
+      if (e.target.value !== '' && !checkStepRef.current.birthday) {
         setChildStep((prev) => prev + 1 / 3 / 6);
         checkStepRef.current.birthday = true;
       }
-      if (e.target.value === "" && checkStepRef.current.birthday) {
+      if (e.target.value === '' && checkStepRef.current.birthday) {
         setChildStep((prev) => prev - 1 / 3 / 6);
         checkStepRef.current.birthday = false;
       }
@@ -80,7 +81,7 @@ const Address = ({
     if (e !== null && !checkStepRef.current.gender) {
       setChildStep((prev) => prev + 1 / 3 / 6);
       checkStepRef.current.gender = true;
-      setValue("gender", e);
+      setValue('gender', e);
     }
   }
   return (
@@ -91,21 +92,21 @@ const Address = ({
             Tỉnh/thành phố <span className='asterisk'></span>
           </p>
           <div className='select-style'>
-            {" "}
+            {' '}
             <Controller
               name='city'
               control={control}
               render={({ field }) => (
                 <ReactSelectShowType
                   {...field}
-                  value={getValues("city")?.value ? getValues("city") : null}
+                  value={getValues('city')?.value ? getValues('city') : null}
                   placeholder='Chọn tỉnh/thành phố'
                   options={optionsSelect?.provinces}
                   minInput={1}
                   onChange={(value) => {
-                    setValue("ward", null);
-                    setValue("district", null);
-                    setValue("city", value);
+                    setValue('ward', null);
+                    setValue('district', null);
+                    setValue('city', value);
                     if (checkStepRef.current.city === false) {
                       setChildStep((prev) => prev + 1 / 3 / 6);
                       checkStepRef.current.city = true;
@@ -120,7 +121,7 @@ const Address = ({
                     }
                     fetchDistric(value?.value);
                   }}
-                  className={checkStepRef.current.city ? " filled" : ""}
+                  className={checkStepRef.current.city ? ' filled' : ''}
                 />
               )}
             />
@@ -135,35 +136,24 @@ const Address = ({
             Quận/huyện <span className='asterisk'></span>
           </p>
           <div className='select-style'>
-            {" "}
+            {' '}
             <Controller
               name='district'
               control={control}
               render={({ field }) => (
                 <Select
                   {...field}
-                  styles={{
-                    singleValue: (baseStyles, state) => ({
-                      ...baseStyles,
-                      color: "black",
-                      fontWeight: "550",
-                    }),
-                    optionsSelect: (baseStyles, state) => ({
-                      ...baseStyles,
-                      color: "black",
-                      fontWeight: "550",
-                    }),
-                  }}
+                  styles={selectStyle}
                   value={
-                    getValues("district")?.value ? getValues("district") : null
+                    getValues('district')?.value ? getValues('district') : null
                   }
                   placeholder='Chọn quận/huyện'
                   options={optionsSelect?.districts || []}
                   minInput={1}
                   onChange={(value) => {
-                    setValue("ward", null);
-                    setValue("district", value);
-                    let city = getValues("city").value;
+                    setValue('ward', null);
+                    setValue('district', value);
+                    let city = getValues('city').value;
                     if (checkStepRef.current.district === false) {
                       setChildStep((prev) => prev + 1 / 3 / 6);
                       checkStepRef.current.district = true;
@@ -174,7 +164,7 @@ const Address = ({
                     }
                     fetchWard(city, value?.value);
                   }}
-                  className={checkStepRef.current.district ? " filled" : ""}
+                  className={checkStepRef.current.district ? ' filled' : ''}
                 />
               )}
             />
@@ -189,37 +179,26 @@ const Address = ({
             Phường/xã <span className='asterisk'></span>
           </p>
           <div className='select-style'>
-            {" "}
+            {' '}
             <Controller
               name='ward'
               control={control}
               render={({ field }) => (
                 <Select
                   {...field}
-                  styles={{
-                    singleValue: (baseStyles, state) => ({
-                      ...baseStyles,
-                      color: "black",
-                      fontWeight: "550",
-                    }),
-                    optionsSelect: (baseStyles, state) => ({
-                      ...baseStyles,
-                      color: "black",
-                      fontWeight: "550",
-                    }),
-                  }}
-                  value={getValues("ward")?.value ? getValues("ward") : null}
+                  styles={selectStyle}
+                  value={getValues('ward')?.value ? getValues('ward') : null}
                   placeholder='Chọn phường/xã'
                   options={optionsSelect?.wards || []}
                   minInput={1}
                   onChange={(value) => {
-                    setValue("ward", value);
+                    setValue('ward', value);
                     if (value !== null && !checkStepRef.current.ward) {
                       setChildStep((prev) => prev + 1 / 3 / 6);
                       checkStepRef.current.ward = true;
                     }
                   }}
-                  className={checkStepRef.current.ward ? " filled" : ""}
+                  className={checkStepRef.current.ward ? ' filled' : ''}
                 />
               )}
             />
@@ -237,11 +216,11 @@ const Address = ({
             // className='form-control'
             className={
               checkStepRef.current.address
-                ? "form-control filled"
-                : "form-control"
+                ? 'form-control filled'
+                : 'form-control'
             }
             placeholder='Nhập số nhà, tên đường'
-            {...register("address")}
+            {...register('address')}
             data-testid='address'
             onBlur={handleCheckInput}
           />
@@ -257,11 +236,11 @@ const Address = ({
             type='date'
             className={
               checkStepRef.current.birthday
-                ? "form-control small filled"
-                : "form-control small"
+                ? 'form-control  filled'
+                : 'form-control '
             }
             placeholder='Nhập ngày sinh'
-            {...register("birthday")}
+            {...register('birthday')}
             data-testid='birthday'
             onBlur={handleCheckInput}
           />
@@ -274,29 +253,18 @@ const Address = ({
             Giới tính <span className='asterisk'></span>
           </p>
           <div className='select-style'>
-            {" "}
+            {' '}
             <Controller
               name='gender'
               control={control}
               render={({ field }) => (
                 <Select
-                  styles={{
-                    singleValue: (baseStyles, state) => ({
-                      ...baseStyles,
-                      color: "black",
-                      fontWeight: "550",
-                    }),
-                    optionsSelect: (baseStyles, state) => ({
-                      ...baseStyles,
-                      color: "black",
-                      fontWeight: "550",
-                    }),
-                  }}
+                  styles={selectStyle}
                   {...field}
                   onChange={(e) => handleCheckInputSelect(e)}
                   placeholder='Chọn giới tính'
                   options={genderOptions}
-                  className={checkStepRef.current.gender ? " filled" : ""}
+                  className={checkStepRef.current.gender ? ' filled' : ''}
                 />
               )}
             />
@@ -309,7 +277,7 @@ const Address = ({
         <div className='form-group text-right register-btn'>
           <button
             type='button'
-            className='site-button dz-xs-flex m-r5 '
+            className='site-button dz-xs-flex m-r5 btn'
             onClick={() => setStep((prev) => prev - 1)}
           >
             <i className='fa fa-arrow-left' aria-hidden='true'></i> Quay lại

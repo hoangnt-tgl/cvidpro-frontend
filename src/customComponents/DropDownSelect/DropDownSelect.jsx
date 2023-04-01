@@ -41,7 +41,7 @@ const DropDownSelect = ({
     if (value.length > 0) {
       setValueForm('field', value);
       if (checkStepRef.current.field === false) {
-        setChildStep1((prev) => prev + 1 / 3 / 4);
+        setChildStep1();
         checkStepRef.current.field = true;
       }
       clearErrors('field');
@@ -58,7 +58,7 @@ const DropDownSelect = ({
             setIsShow(!isShow);
           }}
         >
-          {value.length > 0 && (
+          {/* {value.length > 0 && (
             <div className='result-box'>
               {value.map((item, idx) => {
                 return idx === 0 ? (
@@ -72,7 +72,15 @@ const DropDownSelect = ({
                 );
               })}
             </div>
-          )}{' '}
+          )}{' '} */}
+          {value.length > 0 && (
+            <div className='result-box'>
+              <div className='result-item'>
+                {' '}
+                {value.map((item) => item.label).join(', ')}
+              </div>
+            </div>
+          )}
           <div className='input-box'>
             <input
               type='text'

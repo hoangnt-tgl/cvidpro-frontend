@@ -61,7 +61,7 @@
   /* position: absolute; */
   /* right: 0; */
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
   gap: 5px;
   position: relative;
   z-index: 0;

@@ -1,11 +1,12 @@
-import React from "react";
-import ReactSelectShowType from "../../../customComponents/ReactSelectShowType/ReactSelectShowType";
-import Select from "react-select";
+import React from 'react';
+import ReactSelectShowType from '../../../customComponents/ReactSelectShowType/ReactSelectShowType';
+import Select from 'react-select';
 //hookform
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { useRef } from "react";
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useRef } from 'react';
+import { selectStyle } from '../../../constants/common';
 const Level = ({
   setStep,
   fetchSchoolAndMajor,
@@ -23,22 +24,22 @@ const Level = ({
     endYear: false,
   });
   const schema = yup.object().shape({
-    level: yup.object().required("Vui lòng chọn trình độ"),
-    school: yup.object().required("Vui lòng chọn trường"),
-    major: yup.object().required("Vui lòng chọn ngành"),
-    jobTitle: yup.object().required("Vui lòng nhập chức danh"),
+    level: yup.object().required('Vui lòng chọn trình độ'),
+    school: yup.object().required('Vui lòng chọn trường'),
+    major: yup.object().required('Vui lòng chọn ngành'),
+    jobTitle: yup.object().required('Vui lòng nhập chức danh'),
     startYear: yup
       .date()
-      .required("Vui lòng chọn năm bắt đầu")
-      .typeError("Vui lòng chọn năm bắt đầu"),
+      .required('Vui lòng chọn năm bắt đầu')
+      .typeError('Vui lòng chọn năm bắt đầu'),
     endYear: yup
       .date()
-      .required("Vui lòng chọn năm kết thúc")
-      .typeError("Vui lòng chọn năm kết thúc"),
+      .required('Vui lòng chọn năm kết thúc')
+      .typeError('Vui lòng chọn năm kết thúc'),
     checkBox: yup
       .boolean()
-      .required("Vui lòng đồng ý")
-      .oneOf([true], "Vui lòng chọn"),
+      .required('Vui lòng đồng ý')
+      .oneOf([true], 'Vui lòng chọn'),
   });
   const {
     register,
@@ -61,22 +62,22 @@ const Level = ({
     }
   }
   function handleCheckInput(e) {
-    if (e.target.dataset.testid === "startYear") {
-      if (e.target.value !== "" && !checkStepRef.current.startYear) {
+    if (e.target.dataset.testid === 'startYear') {
+      if (e.target.value !== '' && !checkStepRef.current.startYear) {
         setChildStep((prev) => prev + 1 / 3 / 6);
         checkStepRef.current.startYear = true;
       }
-      if (e.target.value === "" && checkStepRef.current.startYear) {
+      if (e.target.value === '' && checkStepRef.current.startYear) {
         setChildStep((prev) => prev - 1 / 3 / 6);
         checkStepRef.current.startYear = false;
       }
     }
-    if (e.target.dataset.testid === "endYear") {
-      if (e.target.value !== "" && !checkStepRef.current.endYear) {
+    if (e.target.dataset.testid === 'endYear') {
+      if (e.target.value !== '' && !checkStepRef.current.endYear) {
         setChildStep((prev) => prev + 1 / 3 / 6);
         checkStepRef.current.endYear = true;
       }
-      if (e.target.value === "" && checkStepRef.current.endYear) {
+      if (e.target.value === '' && checkStepRef.current.endYear) {
         setChildStep((prev) => prev - 1 / 3 / 6);
         checkStepRef.current.endYear = false;
       }
@@ -90,25 +91,26 @@ const Level = ({
             Trình độ <span className='asterisk'></span>
           </p>
           <div className='select-style'>
-            {" "}
+            {' '}
             <Controller
               name='level'
               control={control}
               render={({ field }) => (
                 <Select
                   {...field}
+                  styles={selectStyle}
                   placeholder='Chọn trình độ'
                   options={optionsSelect.levels}
                   onChange={(value) => {
                     console.log(value);
-                    setValue("level", value);
+                    setValue('level', value);
                     if (checkStepRef.current.level === false) {
                       setChildStep((prev) => prev + 1 / 3 / 6);
                       checkStepRef.current.level = true;
                     }
                     fetchSchoolAndMajor(value?.value);
                   }}
-                  className={checkStepRef.current.level ? "filled" : ""}
+                  className={checkStepRef.current.level ? 'filled' : ''}
                 />
               )}
             />
@@ -123,7 +125,7 @@ const Level = ({
             Trường <span className='asterisk'></span>
           </p>
           <div className='select-style'>
-            {" "}
+            {' '}
             <Controller
               name='school'
               control={control}
@@ -135,13 +137,13 @@ const Level = ({
                   minInput={1}
                   onChange={(value) => {
                     console.log(value);
-                    setValue("school", value);
+                    setValue('school', value);
                     if (checkStepRef.current.school === false) {
                       setChildStep((prev) => prev + 1 / 3 / 6);
                       checkStepRef.current.school = true;
                     }
                   }}
-                  className={checkStepRef.current.school ? "filled" : ""}
+                  className={checkStepRef.current.school ? 'filled' : ''}
                 />
               )}
             />
@@ -156,7 +158,7 @@ const Level = ({
             Chuyên ngành <span className='asterisk'></span>
           </p>
           <div className='select-style'>
-            {" "}
+            {' '}
             <Controller
               name='major'
               control={control}
@@ -166,16 +168,16 @@ const Level = ({
                   minInput={1}
                   placeholder='Chọn ngành'
                   options={optionsSelect.majors}
-                  isDisabled={getValues("level") ? false : true}
+                  isDisabled={getValues('level') ? false : true}
                   onChange={(value) => {
                     console.log(value);
-                    setValue("major", value);
+                    setValue('major', value);
                     if (checkStepRef.current.major === false) {
                       setChildStep((prev) => prev + 1 / 3 / 6);
                       checkStepRef.current.major = true;
                     }
                   }}
-                  className={checkStepRef.current.major ? "filled" : ""}
+                  className={checkStepRef.current.major ? 'filled' : ''}
                 />
               )}
             />
@@ -189,7 +191,7 @@ const Level = ({
             Chức danh <span className='asterisk'></span>
           </p>
           <div className='select-style'>
-            {" "}
+            {' '}
             <Controller
               name='jobTitle'
               control={control}
@@ -201,13 +203,13 @@ const Level = ({
                   options={optionsSelect.jobTitles}
                   onChange={(value) => {
                     console.log(value);
-                    setValue("jobTitle", value);
+                    setValue('jobTitle', value);
                     if (checkStepRef.current.jobTitle === false) {
                       setChildStep((prev) => prev + 1 / 3 / 6);
                       checkStepRef.current.jobTitle = true;
                     }
                   }}
-                  className={checkStepRef.current.jobTitle ? "filled" : ""}
+                  className={checkStepRef.current.jobTitle ? 'filled' : ''}
                 />
               )}
             />
@@ -221,27 +223,27 @@ const Level = ({
             Năm bắt đầu <span className='asterisk'></span>
           </p>
           <input
-            {...register("startYear")}
+            {...register('startYear')}
             type='month'
             className={
               checkStepRef.current.startYear
-                ? "form-control filled"
-                : "form-control"
+                ? 'form-control filled'
+                : 'form-control'
             }
-            id="something"
+            id='something'
             placeholder='Nhập năm bắt đầu'
             data-testid='startYear'
             onChange={(e) => {
-              setValue("startYear", e.target.value);
-              console.log(getValues("endYear"));
+              setValue('startYear', e.target.value);
+              console.log(getValues('endYear'));
               handleCheckInput(e);
-              if (getValues("endYear") < getValues("startYear")) {
-                setError("endYear", {
-                  type: "manual",
-                  message: "Năm kết thúc phải lớn hơn năm bắt đầu",
+              if (getValues('endYear') < getValues('startYear')) {
+                setError('endYear', {
+                  type: 'manual',
+                  message: 'Năm kết thúc phải lớn hơn năm bắt đầu',
                 });
               }
-              clearErrors("endYear");
+              clearErrors('endYear');
             }}
           />
           <div className='text-danger'>
@@ -255,27 +257,27 @@ const Level = ({
             Năm kết thúc <span className='asterisk'></span>
           </p>
           <input
-            {...register("endYear")}
+            {...register('endYear')}
             type='month'
             className={
               checkStepRef.current.endYear
-                ? "form-control filled"
-                : "form-control"
+                ? 'form-control filled'
+                : 'form-control'
             }
             placeholder='Nhập năm kết thúc'
             data-testid='endYear'
             onChange={(e) => {
-              setValue("endYear", e.target.value);
-              console.log(getValues("endYear"));
+              setValue('endYear', e.target.value);
+              console.log(getValues('endYear'));
               handleCheckInput(e);
-              if (getValues("endYear") < getValues("startYear")) {
-                setError("endYear", {
-                  type: "manual",
-                  message: "Năm kết thúc phải lớn hơn năm bắt đầu",
+              if (getValues('endYear') < getValues('startYear')) {
+                setError('endYear', {
+                  type: 'manual',
+                  message: 'Năm kết thúc phải lớn hơn năm bắt đầu',
                 });
                 return;
               }
-              clearErrors("endYear");
+              clearErrors('endYear');
             }}
           />
           <div className='text-danger'>
@@ -283,12 +285,16 @@ const Level = ({
           </div>
         </div>
         <div className='form-group text-left'>
-          <span className='custom-control custom-checkbox'>
+          <span
+            className='custom-control custom-checkbox'
+            style={{ display: 'flex', alignItems: 'center' }}
+          >
             <input
-              {...register("checkBox")}
+              {...register('checkBox')}
               type='checkbox'
               className='custom-control-input'
               id='check1'
+              style={{ width: '25px', height: '25px' }}
             />
             <label className='custom-control-label' htmlFor='check1'>
               Tôi đồng ý với các điều khoản và điều kiện
@@ -301,7 +307,7 @@ const Level = ({
         <div className='form-group text-right register-btn'>
           <button
             type='button'
-            className='site-button dz-xs-flex m-r5 '
+            className='site-button dz-xs-flex m-r5 btn'
             onClick={() => {
               setStep((prev) => prev - 1);
             }}

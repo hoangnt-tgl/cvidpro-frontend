@@ -10,6 +10,7 @@ const PresenterInfo = ({
   setInfoRegister1,
   fetchFieldOptions,
   setIsStep2,
+  setOffSelect,
 }) => {
   const checkStepRef = useRef({
     name: false,
@@ -48,6 +49,7 @@ const PresenterInfo = ({
   async function onHandleSubmit(data) {
     setInfoRegister1(data);
     await fetchFieldOptions();
+    setOffSelect(true);
     setStep(2);
   }
   function handleCheckInput(e) {
@@ -276,7 +278,7 @@ const PresenterInfo = ({
           </div>
         </div>
         <div className='form-group '>
-          <div className='form-group text-right register-btn'>
+          <div className='form-group text-right register-btn justify-content-end'>
             <button type='submit' className='site-button dz-xs-flex m-r5 btn'>
               Tiếp tục <i className='fa fa-arrow-right' aria-hidden='true'></i>
             </button>

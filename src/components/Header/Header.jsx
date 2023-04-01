@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './styles.css';
-import logo from '../../images/logo/Logo_CVIDPRO_Blue.webp';
+import logo from '../../images/logo/logocvid.jpg';
 const Header = ({ isStick, navContainerRef }) => {
   const location = useLocation();
   const [currentPath, setCurrentPath] = useState();

@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import RegisterLayout from "../../customComponents/RegisterLayout/RegisterLayout";
-import FormRegister from "../../components/Registers/IndividualRegister/Step1/FormRegister";
-import FormRegister1 from "../../components/Registers/IndividualRegister/Step2/FormRegister1";
-import FormRegister2 from "../../components/Registers/IndividualRegister/Step3/FormRegister2";
-import useRegister from "../../hooks/useRegister";
-import useGetOptions from "../../hooks/useGetOptions";
-import Stepper from "../../customComponents/Stepper/Stepper";
-import Header from "../../components/Header/Header";
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import RegisterLayout from '../../customComponents/RegisterLayout/RegisterLayout';
+import FormRegister from '../../components/Registers/IndividualRegister/Step1/FormRegister';
+import FormRegister1 from '../../components/Registers/IndividualRegister/Step2/FormRegister1';
+import FormRegister2 from '../../components/Registers/IndividualRegister/Step3/FormRegister2';
+import useRegister from '../../hooks/useRegister';
+import useGetOptions from '../../hooks/useGetOptions';
+import Stepper from '../../customComponents/Stepper/Stepper';
+import Header from '../../components/Header/Header';
 
 function Register3(props) {
   const {
@@ -27,8 +27,8 @@ function Register3(props) {
   const [childStep2, setChildStep2] = useState(0);
   const [step, setStep] = useState(1);
   let totalStep = [
-    { step: 1, title: "Thông tin đăng nhập" },
-    { step: 2, title: "Thông tin cơ sở" },
+    { step: 1, title: 'Thông tin đăng nhập' },
+    { step: 2, title: 'Thông tin cơ sở' },
   ];
 
   return (
@@ -40,7 +40,8 @@ function Register3(props) {
         Step={step}
         totalStep={totalStep}
         step={childStep2 + childStep1}
-      />{" "}
+        setStep={setStep}
+      />{' '}
       <div className={step === 1 ? `appear` : `register-steps`}>
         <FormRegister2
           fetchFieldOptions={fetchFieldOptions}
@@ -49,6 +50,7 @@ function Register3(props) {
           optionsSelect={optionsSelect}
           setStep={setStep}
           setIsStep2={props.setIsStep2}
+          setOffSelect={props.setOffSelect}
         />
       </div>
       <div className={step === 2 ? `appear` : `register-steps`}>
