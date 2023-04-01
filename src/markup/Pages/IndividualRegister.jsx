@@ -25,7 +25,7 @@ function Register3(props) {
   } = useGetOptions(true);
   const [childStep1, setChildStep1] = useState(0);
   const [childStep2, setChildStep2] = useState(0);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   let totalStep = [
     { step: 1, title: 'Thông tin đăng nhập' },
     { step: 2, title: 'Thông tin cơ sở' },
