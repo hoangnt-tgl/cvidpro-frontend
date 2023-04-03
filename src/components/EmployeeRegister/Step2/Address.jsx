@@ -248,6 +248,7 @@ const Address = ({
               testId='birthday'
               placeholder='dd/mm/yyyy'
               dateFormat='dd/MM/yyyy'
+              showMonthYearPicker={false}
               handleOnChange={(date) => {
                 console.log(date);
                 console.log(

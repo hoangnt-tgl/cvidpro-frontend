@@ -8,6 +8,7 @@ const Datepicker = ({
   name,
   placeholder = 'mm/yyyy',
   dateFormat = 'MM/yyyy',
+  showMonthYearPicker = true,
 }) => {
   return (
     <DatePicker
@@ -18,9 +19,9 @@ const Datepicker = ({
         handleOnChange(date);
       }}
       placeholderText={placeholder}
-      timeInputLabel='Month:'
+      //   timeInputLabel='Month:'
       dateFormat={dateFormat}
-      showMonthYearPicker
+      showMonthYearPicker={showMonthYearPicker}
     />
   );
 };
