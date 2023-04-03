@@ -5,13 +5,23 @@ import Select from "react-select";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useRef } from "react";
 const Level = ({
   setStep,
   fetchSchoolAndMajor,
   setInfoRegister3,
   optionsSelect,
   registerUser,
+  setChildStep,
 }) => {
+  const checkStepRef = useRef({
+    level: false,
+    school: false,
+    major: false,
+    jobTitle: false,
+    startYear: false,
+    endYear: false,
+  });
   const schema = yup.object().shape({
     level: yup.object().required("Vui lòng chọn trình độ"),
     school: yup.object().required("Vui lòng chọn trường"),
@@ -50,11 +60,35 @@ const Level = ({
       registerUser(data);
     }
   }
+  function handleCheckInput(e) {
+    if (e.target.dataset.testid === "startYear") {
+      if (e.target.value !== "" && !checkStepRef.current.startYear) {
+        setChildStep((prev) => prev + 1 / 3 / 6);
+        checkStepRef.current.startYear = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.startYear) {
+        setChildStep((prev) => prev - 1 / 3 / 6);
+        checkStepRef.current.startYear = false;
+      }
+    }
+    if (e.target.dataset.testid === "endYear") {
+      if (e.target.value !== "" && !checkStepRef.current.endYear) {
+        setChildStep((prev) => prev + 1 / 3 / 6);
+        checkStepRef.current.endYear = true;
+      }
+      if (e.target.value === "" && checkStepRef.current.endYear) {
+        setChildStep((prev) => prev - 1 / 3 / 6);
+        checkStepRef.current.endYear = false;
+      }
+    }
+  }
   return (
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         <div className='form-group'>
-          <p>Trình độ</p>
+          <p>
+            Trình độ <span className='asterisk'></span>
+          </p>
           <div className='select-style'>
             {" "}
             <Controller
@@ -68,8 +102,13 @@ const Level = ({
                   onChange={(value) => {
                     console.log(value);
                     setValue("level", value);
+                    if (checkStepRef.current.level === false) {
+                      setChildStep((prev) => prev + 1 / 3 / 6);
+                      checkStepRef.current.level = true;
+                    }
                     fetchSchoolAndMajor(value?.value);
                   }}
+                  className={checkStepRef.current.level ? "filled" : ""}
                 />
               )}
             />
@@ -80,7 +119,9 @@ const Level = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Trường</p>
+          <p>
+            Trường <span className='asterisk'></span>
+          </p>
           <div className='select-style'>
             {" "}
             <Controller
@@ -92,6 +133,15 @@ const Level = ({
                   placeholder='Chọn trường'
                   options={optionsSelect.schools}
                   minInput={1}
+                  onChange={(value) => {
+                    console.log(value);
+                    setValue("school", value);
+                    if (checkStepRef.current.school === false) {
+                      setChildStep((prev) => prev + 1 / 3 / 6);
+                      checkStepRef.current.school = true;
+                    }
+                  }}
+                  className={checkStepRef.current.school ? "filled" : ""}
                 />
               )}
             />
@@ -102,7 +152,9 @@ const Level = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Ngành</p>
+          <p>
+            Chuyên ngành <span className='asterisk'></span>
+          </p>
           <div className='select-style'>
             {" "}
             <Controller
@@ -114,6 +166,16 @@ const Level = ({
                   minInput={1}
                   placeholder='Chọn ngành'
                   options={optionsSelect.majors}
+                  isDisabled={getValues("level") ? false : true}
+                  onChange={(value) => {
+                    console.log(value);
+                    setValue("major", value);
+                    if (checkStepRef.current.major === false) {
+                      setChildStep((prev) => prev + 1 / 3 / 6);
+                      checkStepRef.current.major = true;
+                    }
+                  }}
+                  className={checkStepRef.current.major ? "filled" : ""}
                 />
               )}
             />
@@ -123,7 +185,9 @@ const Level = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Chức danh</p>
+          <p>
+            Chức danh <span className='asterisk'></span>
+          </p>
           <div className='select-style'>
             {" "}
             <Controller
@@ -135,6 +199,15 @@ const Level = ({
                   minInput={1}
                   placeholder='Chọn chức danh'
                   options={optionsSelect.jobTitles}
+                  onChange={(value) => {
+                    console.log(value);
+                    setValue("jobTitle", value);
+                    if (checkStepRef.current.jobTitle === false) {
+                      setChildStep((prev) => prev + 1 / 3 / 6);
+                      checkStepRef.current.jobTitle = true;
+                    }
+                  }}
+                  className={checkStepRef.current.jobTitle ? "filled" : ""}
                 />
               )}
             />
@@ -144,15 +217,24 @@ const Level = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Năm bắt đầu</p>
+          <p>
+            Năm bắt đầu <span className='asterisk'></span>
+          </p>
           <input
             {...register("startYear")}
             type='month'
-            className='form-control'
+            className={
+              checkStepRef.current.startYear
+                ? "form-control filled"
+                : "form-control"
+            }
+            id="something"
             placeholder='Nhập năm bắt đầu'
+            data-testid='startYear'
             onChange={(e) => {
               setValue("startYear", e.target.value);
               console.log(getValues("endYear"));
+              handleCheckInput(e);
               if (getValues("endYear") < getValues("startYear")) {
                 setError("endYear", {
                   type: "manual",
@@ -169,15 +251,23 @@ const Level = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Năm kết thúc</p>
+          <p>
+            Năm kết thúc <span className='asterisk'></span>
+          </p>
           <input
             {...register("endYear")}
             type='month'
-            className='form-control'
+            className={
+              checkStepRef.current.endYear
+                ? "form-control filled"
+                : "form-control"
+            }
             placeholder='Nhập năm kết thúc'
+            data-testid='endYear'
             onChange={(e) => {
               setValue("endYear", e.target.value);
               console.log(getValues("endYear"));
+              handleCheckInput(e);
               if (getValues("endYear") < getValues("startYear")) {
                 setError("endYear", {
                   type: "manual",

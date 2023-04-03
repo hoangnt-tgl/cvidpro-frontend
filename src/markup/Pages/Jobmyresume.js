@@ -2129,18 +2129,254 @@ function Jobmyresume(props) {
               <div className="job-bx table-job-bx bg-white m-b30" style={{border:"1px solid #000"}}>
                 <div className="d-flex">
                   <h5 className="m-b15">Chứng chỉ ngoại ngữ</h5>
-                  <Link
-                    to={"#"}
-                    onClick={() => setShowLanguageCertification(true)}
-                    className="site-button add-btn button-sm"
-                  >
-                    <i className="fa fa-pencil m-r5"></i> Thêm
-                  </Link>
                 </div>
-                <p>
-                  Mention your employment details including your current and
-                  previous company work experience
-                </p>
+                <div className="row">
+                <div className="col-lg-6 col-md-6">
+                <InputGroup size="sm" className="mb-2">
+                  <InputGroup.Prepend
+                   style={{ maxHeight: "38px" }}
+                      >
+                    <InputGroup.Text className="title-cv">
+                      Ngoại ngữ
+                      </InputGroup.Text>
+                      </InputGroup.Prepend>
+                         <FormControl
+                          className="answer"
+                          placeholder="Tên Ngoại Ngữ"
+                          style={{ maxHeight: "38px",
+                                  maxWidth:"550px"}}
+                          />
+                      </InputGroup>
+                </div>
+                <div className="col-lg-6 col-md-6">
+                <InputGroup size="sm" className="mb-2">
+                  <InputGroup.Prepend
+                   style={{ maxHeight: "38px" }}
+                      >
+                    <InputGroup.Text className="title-cv">
+                      Tên chứng chỉ
+                      </InputGroup.Text>
+                      </InputGroup.Prepend>
+                         <FormControl
+                          className="answer"
+                          placeholder="Tên chứng chỉ"
+                          style={{ maxHeight: "38px",
+                                  maxWidth:"550px"}}
+                          />
+                      </InputGroup>
+                </div>
+                <div className="col-12">
+                  <InputGroup size="sm" className="mb-2">
+                  <InputGroup.Prepend
+                   style={{ maxHeight: "38px" }}
+                      >
+                    <InputGroup.Text className="title-cv">
+                    Đơn vị cấp chứng chỉ
+                      </InputGroup.Text>
+                      </InputGroup.Prepend>
+                         <FormControl
+                          className="answer"
+                          placeholder="Tên đơn vị cấp chứng chỉ"
+                          style={{ maxHeight: "38px"}}
+                          />
+                      </InputGroup>
+                </div>
+                <div className="col-12" >
+                  <InputGroup size="sm" className="mb-2">
+                    <InputGroup.Prepend
+                    style={{ maxHeight: "38px", }}
+                        >
+                        <InputGroup.Text className="title-cv" style={{width:"1053px"}}>
+                      KHUNG THAM CHIẾU CHÂU ÂU(CERT)
+                        </InputGroup.Text>
+                      </InputGroup.Prepend>
+                  </InputGroup>
+                </div>     
+                <div className="col-12">
+                  <InputGroup size="sm" className="mb-2">
+                    <InputGroup.Prepend
+                    style={{ maxHeight: "38px" }}
+                        >
+                      <InputGroup.Text className="title-cv">
+                        Trình độ
+                        </InputGroup.Text>
+                        </InputGroup.Prepend>
+                          <FormControl
+                            className="answer"
+                            placeholder="Trình độ ngoại ngữ"
+                            style={{ maxHeight: "38px",}}
+                            />
+                        </InputGroup>
+                </div>     
+                <div className="col-12" >
+                <InputGroup size="sm" className="mb-2">
+                  <InputGroup.Prepend
+                  style={{ maxHeight: "38px", }}
+                      >
+                      <InputGroup.Text className="title-cv" style={{width:"1053px"}}>
+                    KHUNG THAM CHIẾU NĂNG LỰC NGOẠI NGỮ 6 BẬC
+                      </InputGroup.Text>
+                    </InputGroup.Prepend>
+                </InputGroup>
+              </div>     
+              <div className="col-12">
+                <InputGroup size="sm" className="mb-2">
+                  <InputGroup.Prepend
+                  style={{ maxHeight: "38px" }}
+                      >
+                    <InputGroup.Text className="title-cv">
+                      Cấp bậc 
+                      </InputGroup.Text>
+                      </InputGroup.Prepend>
+                        <FormControl
+                          className="answer"
+                          placeholder="Cấp bậc ngoại ngữ"
+                          style={{ maxHeight: "38px",}}
+                          />
+                      </InputGroup>
+              </div> 
+              <div className="col-lg-6 col-md-6">
+              <InputGroup size="sm" className="mb-2">
+                <InputGroup.Prepend
+                  style={{ maxHeight: "38px" }}
+                >
+                  <InputGroup.Text>Ngày Test</InputGroup.Text>
+                </InputGroup.Prepend>
+                <FormControl
+                  type="month"
+                  className="answer"
+                  style={{ maxHeight: "38px" }}
+                  value={formatMonthInput(newNotWork.start)}
+                  onChange={(e) => {
+                    setNewNotWork({
+                      ...newNotWork,
+                      start: e.target.value,
+                    });
+                  }}
+                  disabled={
+                    userInformation.workExperience?.length > 0
+                      ? true
+                      : false
+                  }
+                />
+              </InputGroup>
+            </div>
+            <div className="col-lg-6 col-md-6">
+              <InputGroup size="sm" className="mb-2">
+                <InputGroup.Prepend
+                  style={{ maxHeight: "38px" }}
+                >
+                  <InputGroup.Text>Ngày Hết Hạn</InputGroup.Text>
+                </InputGroup.Prepend>
+                <FormControl
+                  type="month"
+                  className="answer"
+                  style={{ maxHeight: "38px" }}
+                  value={formatMonthInput(newNotWork.end)}
+                  onChange={(e) => {
+                    setNewNotWork({
+                      ...newNotWork,
+                      end: e.target.value,
+                    });
+                  }}
+                  disabled={
+                    newNotWork.isCurrent ||
+                    newNotWork.start === ""
+                  }
+                />
+              </InputGroup>
+            </div>  
+            <div className="col-12" >
+            <InputGroup size="sm" className="mb-2"  style={{ height: "38px", }}>
+              <InputGroup.Prepend>
+                  <InputGroup.Text className="title-cv" style={{width:"1053px"}}>
+                Upload hình ảnh chứng chỉ
+                  </InputGroup.Text>
+                </InputGroup.Prepend>
+            </InputGroup>
+            <input type="file" id="myFile" name="filename"/>
+            </div>
+            <div className="col-12" style={{ margin:"10px 0px"}} >
+            <InputGroup size="sm" className="mb-2"  style={{ height: "38px", }}>
+              <InputGroup.Prepend
+             
+                  >
+                  <InputGroup.Text className="title-cv" style={{width:"1053px"}}>
+                Thông tin bổ sung (vui lòng nâng cấp chính xác để bổ sung chất lượng CV)
+                  </InputGroup.Text>
+                </InputGroup.Prepend>
+            </InputGroup>
+            </div>  
+            <div className="col-lg-3 col-md-3">
+            <InputGroup size="sm" className="mb-2">
+              <InputGroup.Prepend
+               style={{ maxHeight: "38px" }}
+                  >
+                <InputGroup.Text className="title-cv">
+                  Nghe
+                  </InputGroup.Text>
+                  </InputGroup.Prepend>
+                     <FormControl
+                      className="answer"
+                      placeholder="Điểm Nghe"
+                      style={{ maxHeight: "38px",
+                              maxWidth:"550px"}}
+                      />
+                  </InputGroup>
+            </div>
+            <div className="col-lg-3 col-md-3">
+            <InputGroup size="sm" className="mb-2">
+              <InputGroup.Prepend
+               style={{ maxHeight: "38px" }}
+                  >
+                <InputGroup.Text className="title-cv">
+                  Nói
+                  </InputGroup.Text>
+                  </InputGroup.Prepend>
+                     <FormControl
+                      className="answer"
+                      placeholder="Điểm Nói"
+                      style={{ maxHeight: "38px",
+                              maxWidth:"550px"}}
+                      />
+                  </InputGroup>
+            </div> 
+            <div className="col-lg-3 col-md-3">
+            <InputGroup size="sm" className="mb-2">
+              <InputGroup.Prepend
+               style={{ maxHeight: "38px" }}
+                  >
+                <InputGroup.Text className="title-cv">
+                Đọc
+                  </InputGroup.Text>
+                  </InputGroup.Prepend>
+                     <FormControl
+                      className="answer"
+                      placeholder="Điểm đọc"
+                      style={{ maxHeight: "38px",
+                              maxWidth:"550px"}}
+                      />
+                  </InputGroup>
+            </div>
+            <div className="col-lg-3 col-md-3">
+            <InputGroup size="sm" className="mb-2">
+              <InputGroup.Prepend
+               style={{ maxHeight: "38px" }}
+                  >
+                <InputGroup.Text className="title-cv">
+                 Viết
+                  </InputGroup.Text>
+                  </InputGroup.Prepend>
+                     <FormControl
+                      className="answer"
+                      placeholder="Điểm viết"
+                      style={{ maxHeight: "38px",
+                              maxWidth:"550px"}}
+                      />
+                  </InputGroup>
+            </div> 
+            </div>
+              
                 <div className="row">
                   <div className="col-lg-12 col-md-12 col-sm-12">
                     {userInformation.shortTraining?.map((item, index) => {

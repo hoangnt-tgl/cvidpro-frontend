@@ -2126,7 +2126,7 @@ label {
 .form-control {
   border-color: #e1e6eb;
   box-shadow: none;
-  font-size: 14px !important;
+  font-size: var(--text-lg) !important;
   line-height: 20px;
   padding: 9px 15px;
 }
@@ -3528,7 +3528,7 @@ blockquote:before {
   .header-nav {
     clear: both;
     margin: 0 -15px;
-    border-bottom: 1px solid #e9e9e9;
+    /* border-bottom: 1px solid #e9e9e9; */
   }
   .header-nav .nav {
     float: none;
@@ -9736,7 +9736,7 @@ ul[class*="list-"] {
 .testimonial-10 .testimonial-position {
   text-transform: uppercase;
   font-family: "Montserrat", sans-serif;
-  color: #888q;
+  color: #888;
   font-size: 12px;
   font-style: inherit;
 }
@@ -9778,7 +9778,6 @@ ul[class*="list-"] {
 }
 
 /*== >Pricing table  ===*/
-
 .pricingtable-inner {
   text-align: center;
 }

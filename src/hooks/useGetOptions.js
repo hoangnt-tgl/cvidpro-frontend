@@ -9,6 +9,7 @@ import {
   getListMajorByLevel,
   getListProvince,
   getListSchools,
+  getListWard,
 } from "../services/GetListService";
 
 const useGetOptions = (isAll) => {
@@ -60,7 +61,7 @@ const useGetOptions = (isAll) => {
     });
   }
   function fetchWard(province, district) {
-    getListDistrict(province, district).then((res) => {
+    getListWard(province, district).then((res) => {
       setOpionsSelect((prev) => ({
         ...prev,
         wards: res.data.map((item) => ({ value: item, label: item })),
@@ -105,9 +106,7 @@ const useGetOptions = (isAll) => {
       fetchData();
     }
   }, []);
-  useEffect(() => {
-    console.log(optionsSelect);
-  }, [optionsSelect]);
+
   return {
     optionsSelect,
     fetchDistric,

@@ -1,7 +1,7 @@
-import axios from "axios";
-import swal from "sweetalert";
-import { loginConfirmedAction, logout } from "../store/actions/AuthActions";
-import { BASE_URL } from "../config";
+import axios from 'axios';
+import swal from 'sweetalert';
+import { loginConfirmedAction, logout } from '../store/actions/AuthActions';
+import { BASE_URL } from '../config';
 
 const API_URL = BASE_URL;
 
@@ -38,53 +38,65 @@ export function companyLogin(username, password) {
 export function formatError(errorResponse) {
   console.log(errorResponse);
   switch (errorResponse) {
-    case "EMAIL_EXISTS":
+    case 'EMAIL_EXISTS':
       //return 'Email already exists';
-      swal("Oops", "Email đã được sử dụng", "error");
+      swal('Oops', 'Email đã được sử dụng', 'error');
       break;
-    case "PHONE_EXISTS":
+    case 'PHONE_EXISTS':
       //return 'Phone already exists';
-      swal("Oops", "Số điện thoại đã được sử dụng ", "error");
+      swal('Oops', 'Số điện thoại đã được sử dụng ', 'error');
       break;
-    case "TAXCODE_EXISTS":
+    case 'TAXCODE_EXISTS':
       //return 'Taxcode already exists';
-      swal("Oops", "Mã số thuế đã được đăng kí", "error");
+      swal('Oops', 'Mã số thuế đã được đăng kí', 'error');
       break;
-    case "EMAIL_NOT_FOUND":
+    case 'EMAIL_NOT_FOUND':
       //return 'Email not found';
-      swal("Oops", "Email không được tìm thấy", "error", { button: "Try Again!" });
+      swal('Oops', 'Email không được tìm thấy', 'error', {
+        button: 'Try Again!',
+      });
       break;
-    case "PHONE_NOT_FOUND":
+    case 'PHONE_NOT_FOUND':
       //return 'Email not found';
-      swal("Oops", "Số điện thoại không được tìm thấy", "error", { button: "Try Again!" });
+      swal('Oops', 'Số điện thoại không được tìm thấy', 'error', {
+        button: 'Try Again!',
+      });
       break;
-    case "TAXCODE_NOT_FOUND":
+    case 'TAXCODE_NOT_FOUND':
       //return 'Taxcode not found';
-      swal("Oops", "Mã số thuế không được tìm thấy", "error", { button: "Try Again!" });
+      swal('Oops', 'Mã số thuế không được tìm thấy', 'error', {
+        button: 'Try Again!',
+      });
       break;
 
-    case "OTP_INVALID":
+    case 'OTP_INVALID':
       //return 'OTP Invalid';
-      swal("Oops", "OTP không đúng hoặc đã hết hạn", "error", { button: "Try Again!" });
+      swal('Oops', 'OTP không đúng hoặc đã hết hạn', 'error', {
+        button: 'Try Again!',
+      });
       break;
 
-    case "USER_NOT_FOUND":
+    case 'USER_NOT_FOUND':
       //return 'User not found';
-      swal("Oops", "Người dùng không được tìm thấy", "error", { button: "Try Again!" });
+      swal('Oops', 'Người dùng không được tìm thấy', 'error', {
+        button: 'Try Again!',
+      });
       break;
-    case "INVALID_PASSWORD":
+    case 'INVALID_PASSWORD':
       //return 'Invalid Password';
-      swal("Oops", "Mật khẩu không đúng", "error", { button: "Try Again!" });
+      swal('Oops', 'Mật khẩu không đúng', 'error', { button: 'Try Again!' });
       break;
-    case "USER_DISABLED":
-      return "User Disabled";
-    case "USER_NOT_CONFIRMED":
-        return "Tài khoản chưa được xác nhận";
-    case "SERVER_ERROR":
-      swal("Oops", "Lỗi server vui lòng thử lại", "error", { button: "Try Again!" });
+    case 'USER_DISABLED':
+      return 'User Disabled';
+    case 'USER_NOT_CONFIRMED':
+      return 'Tài khoản chưa được xác nhận';
+    case 'SERVER_ERROR':
+      swal('Oops', 'Lỗi server vui lòng thử lại', 'error', {
+        button: 'Try Again!',
+      });
       break;
     default:
-      return "";
+      return '';
   }
 }
 
@@ -92,7 +104,7 @@ export function saveTokenInLocalStorage(tokenDetails) {
   tokenDetails.expireDate = new Date(
     new Date().getTime() + tokenDetails.expiresIn * 1000
   );
-  localStorage.setItem("userDetails", JSON.stringify(tokenDetails));
+  localStorage.setItem('userDetails', JSON.stringify(tokenDetails));
 }
 
 export function runLogoutTimer(dispatch, timer, history) {
@@ -102,8 +114,8 @@ export function runLogoutTimer(dispatch, timer, history) {
 }
 
 export function checkAutoLogin(dispatch, history) {
-  const tokenDetailsString = localStorage.getItem("userDetails");
-  let tokenDetails = "";
+  const tokenDetailsString = localStorage.getItem('userDetails');
+  let tokenDetails = '';
   if (!tokenDetailsString) {
     dispatch(logout(history));
     return;
@@ -121,4 +133,42 @@ export function checkAutoLogin(dispatch, history) {
 
   const timer = expireDate.getTime() - todaysDate.getTime();
   runLogoutTimer(dispatch, timer, history);
+}
+
+export function getOtpCompany(data) {
+  const postData = {
+    ...data,
+  };
+  return axios.post(`${API_URL}company/forgot-password`, postData);
+}
+export function validateOtpCompany(data) {
+  const postData = {
+    ...data,
+  };
+  return axios.post(`${API_URL}company/check-otp`, postData);
+}
+export function resetPasswordCompany(data) {
+  const postData = {
+    ...data,
+  };
+  return axios.post(`${API_URL}company/reset-password`, postData);
+}
+
+export function getOtpEmployee(data) {
+  const postData = {
+    ...data,
+  };
+  return axios.post(`${API_URL}employee/forgot-password`, postData);
+}
+export function validateOtpEmployee(data) {
+  const postData = {
+    ...data,
+  };
+  return axios.post(`${API_URL}employee/check-otp`, postData);
+}
+export function resetPasswordEmployee(data) {
+  const postData = {
+    ...data,
+  };
+  return axios.post(`${API_URL}employee/reset-password`, postData);
 }

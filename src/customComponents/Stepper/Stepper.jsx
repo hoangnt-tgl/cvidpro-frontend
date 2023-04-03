@@ -1,65 +1,69 @@
-import React from "react";
-import "./styles.css";
-const Stepper = ({ step, totalStep }) => {
+import React from 'react';
+import './styles.css';
+const Stepper = ({ step, totalStep, Step, setStep }) => {
+  let innwerWidth = window.innerWidth;
   function checkProgressPer() {
-    return (step / totalStep?.length) * 100;
+    return step * 100;
   }
   return (
-    <>
-      <div>
-        <div className='mb-sm-3'>
-          <div className='steps'>
-            <div className='steps-header'>
-              <div className='progress'>
-                <div
-                  className='progress-bar'
-                  role='progressbar'
-                  style={{ width: `${checkProgressPer()}%` }}
-                  aria-valuenow={40}
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                />
-              </div>
-            </div>
+    <div className='my-sm-3'>
+      <div className='steps'>
+        <div className='steps-header'>
+          <div className='progress'>
+            <div
+              className='progress-bar'
+              role='progressbar'
+              style={{ width: `${checkProgressPer()}%` }}
+              aria-valuenow={40}
+              aria-valuemin={0}
+              aria-valuemax={100}
+            />
+          </div>
+        </div>
+        {innwerWidth > 575 ? (
+          <>
+            {' '}
             <div className='steps-body'>
               {totalStep.map((item, index) => {
                 return (
                   <div
                     className={
-                      step === item.step
-                        ? "step step-active"
-                        : step < item.step
-                        ? "step"
-                        : "step step-completed"
+                      Step === item.step
+                        ? 'step step-completed'
+                        : Step < item.step
+                        ? 'step'
+                        : 'step step-completed'
                     }
+                    onClick={() => {
+                      if (Step > item.step) setStep(item.step);
+                    }}
                   >
-                    {step > item.step && (
-                      <span className='step-indicator'>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          width={24}
-                          height={24}
-                          viewBox='0 0 24 24'
-                          fill='none'
-                          stroke='currentColor'
-                          strokeWidth={2}
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          className='feather feather-check'
-                        >
-                          <polyline points='20 6 9 17 4 12' />
-                        </svg>
-                      </span>
-                    )}
                     {item.title}
                   </div>
                 );
               })}
             </div>
-          </div>
-        </div>
+          </>
+        ) : (
+          <>
+            {' '}
+            <div className='steps-body'>
+              {totalStep.map((item, index) => {
+                return (
+                  <div
+                    className={
+                      Step === item.step ? 'step step-active' : 'd-none'
+                    }
+                  >
+                    {item.title}
+                  </div>
+                );
+              })}
+            </div>{' '}
+          </>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 

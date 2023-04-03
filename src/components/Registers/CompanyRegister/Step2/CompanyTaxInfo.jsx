@@ -1,79 +1,126 @@
-import React, { useEffect, useState } from "react";
-import ReactSelectShowType from "../../../../customComponents/ReactSelectShowType/ReactSelectShowType";
-import Select from "react-select";
+import React, { useEffect, useRef, useState } from 'react';
+import Select from 'react-select';
 //hookform
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import DropDownSelect from '../../../../customComponents/DropDownSelect/DropDownSelect';
 
 const CompanyTaxInfo = ({
+  infoRegister1,
   setStep,
   optionsSelect,
-  registerCompany,
-  getCompanyInfo,
+  setInfoRegister2,
+  setChildStep1,
 }) => {
-  let [trigger, setTrigger] = useState(false);
+  const checkStepRef = useRef({
+    companyType: false,
+    field: false,
+    mainIndustry: false,
+    businessLicense: false,
+  });
   const schema = yup.object().shape({
-    companyType: yup.object().required("Vui lòng chọn loại hình công ty"),
-    field: yup.array().required("Vui lòng nhập lĩnh vực kinh doanh"),
-    taxCode: yup.string().required("Vui lòng nhập mã số thuế"),
-    mainIndustry: yup.string().required("Vui lòng nhập ngành nghề chính"),
-    businessLicense: yup.mixed().required("Vui lòng tải giấy phép kinh doanh"),
-    checked: yup.boolean().oneOf([true], "Vui lòng đồng ý điều khoản"),
-    companyInfo: yup.object().required("Vui lòng đợi lấy thông tin công ty"),
+    companyType: yup.object().required('Vui lòng chọn loại hình công ty'),
+    field: yup
+      .array()
+      .required('Vui lòng nhập lĩnh vực kinh doanh')
+      .typeError('Vui lòng nhập lĩnh vực kinh doanh'),
+    mainIndustry: yup.string().required('Vui lòng nhập ngành nghề chính'),
+    businessLicense: yup.mixed().required('Vui lòng tải giấy phép kinh doanh'),
   });
   const {
     register,
     handleSubmit,
     setValue,
-    getValues,
     control,
+    clearErrors,
+    setError,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
   function uploadBusinessLicense(e) {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = async () => {
-      const base64 = reader.result;
-      setValue("businessLicense", base64);
-    };
-  }
-  function onHandleSubmit(data) {
-    console.log(data);
-    // console.log(errors);
-    if (Object.keys(errors).length === 0) {
-      registerCompany(data);
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = async () => {
+        const base64 = reader.result;
+        setValue('businessLicense', base64);
+        clearErrors('businessLicense');
+      };
+      if (!checkStepRef.current.businessLicense) {
+        setChildStep1((prev) => prev + 1 / 3 / 4);
+        checkStepRef.current.businessLicense = true;
+      }
+    } else {
+      if (checkStepRef.current.businessLicense) {
+        setChildStep1((prev) => prev - 1 / 3 / 4);
+        checkStepRef.current.businessLicense = false;
+      }
     }
   }
-  async function handleGetLegalCompanyInfo(e) {
-    if (e.target.value.length < 10) return;
-    console.log("chay");
-    let companyData = await getCompanyInfo(e.target.value);
-    setValue("companyInfo", companyData);
-    setTrigger(!trigger);
+
+  function handleCheckInput(e) {
+    if (e.target.dataset.testid === 'mainIndustry') {
+      if (e.target.value !== '' && !checkStepRef.current.mainIndustry) {
+        setChildStep1((prev) => prev + 1 / 3 / 4);
+        checkStepRef.current.mainIndustry = true;
+      }
+      if (e.target.value === '' && checkStepRef.current.mainIndustry) {
+        setChildStep1((prev) => prev - 1 / 3 / 4);
+        checkStepRef.current.mainIndustry = false;
+      }
+    }
+  }
+  function onHandleSubmit(data) {
+    setInfoRegister2(data);
+    setStep(3);
   }
   useEffect(() => {
-    console.log(getValues());
-  }, [trigger]);
+    console.log(errors);
+  }, [errors]);
   return (
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
-        <p>Thông tin công ty</p>{" "}
         <div className='form-group'>
-          <Controller
-            name='companyType'
-            control={control}
-            render={({ field }) => (
-              <Select
-                {...field}
-                placeholder='Chọn loại hình công ty'
-                options={optionsSelect.companyTypes}
-              />
-            )}
-          />
+          <p>
+            Loại hình công ty <span className='asterisk'></span>
+          </p>
+          <div className='select-style'>
+            <Controller
+              name='companyType'
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  styles={{
+                    singleValue: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: 'black',
+                      fontWeight: '550',
+                    }),
+                    optionsSelect: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: 'black',
+                      fontWeight: '550',
+                    }),
+                  }}
+                  onChange={(value) => {
+                    setValue('companyType', value);
+                    clearErrors('companyType');
+                    if (checkStepRef.current.companyType === false) {
+                      setChildStep1((prev) => prev + 1 / 3 / 4);
+                      checkStepRef.current.companyType = true;
+                    }
+                  }}
+                  placeholder='Chọn loại hình công ty'
+                  options={optionsSelect.companyTypes}
+                  className={checkStepRef.current.companyType ? ' filled' : ''}
+                />
+              )}
+            />
+          </div>
           <div className='text-danger'>
             {errors?.companyType?.message && (
               <div>{errors.companyType.message}</div>
@@ -81,55 +128,94 @@ const CompanyTaxInfo = ({
           </div>
         </div>
         <div className='form-group'>
-          <Controller
-            name='field'
-            control={control}
-            render={({ field }) => (
-              <ReactSelectShowType
-                {...field}
+          <p>
+            Lĩnh vực hoạt động <span className='asterisk'></span>
+          </p>
+          <div className='select-style'>
+            {' '}
+            {/* <Controller
+              name='field'
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  styles={{
+                    singleValue: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: 'black',
+                      fontWeight: '550',
+                    }),
+                    optionsSelect: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: 'black',
+                      fontWeight: '550',
+                    }),
+                  }}
+                  onChange={(value) => {
+                    setValue('field', value);
+                    if (checkStepRef.current.field === false) {
+                      setChildStep1((prev) => prev + 1 / 3 / 4);
+                      checkStepRef.current.field = true;
+                    }
+                  }}
+                  placeholder='Chọn lĩnh vực hoạt động'
+                  options={optionsSelect?.field}
+                  isMulti={true}
+                  closeMenuOnSelect={false}
+                  className={checkStepRef.current.field ? ' filled' : ''}
+                />
+              )}
+            /> */}
+            <div className={checkStepRef.current.field ? ' filled' : ''}>
+              {' '}
+              <DropDownSelect
+                clearErrors={clearErrors}
+                setValueForm={setValue}
+                setChildStep1={setChildStep1}
+                checkStepRef={checkStepRef}
                 placeholder='Chọn lĩnh vực hoạt động'
                 options={optionsSelect?.field}
-                minInput={1}
-                isMulti={true}
               />
-            )}
-          />
+            </div>
+          </div>
+
           <div className='text-danger'>
             {errors?.field?.message && <div>{errors.field.message}</div>}
           </div>
         </div>
-        <div className='form-group'>
-          <input
-            {...register("taxCode")}
-            onBlur={handleGetLegalCompanyInfo}
-            className='form-control'
-            placeholder='Nhập mã số thuế'
-          />
-          <div className='text-danger'>
-            {errors?.taxCode?.message && <div>{errors.taxCode.message}</div>}
-          </div>
-        </div>
-        {!errors?.taxCode?.message && (
+
+        {infoRegister1?.companyInfo?.companyName && (
           <>
             <div className='form-group'>
+              <p>Tên công ty </p>
               <input
-                value={getValues("companyInfo")?.companyName}
-                className='form-control'
+                value={infoRegister1?.companyInfo?.companyName}
+                className='form-control filled'
               />
             </div>
             <div className='form-group'>
+              <p>Địa chỉ</p>
               <input
-                value={getValues("companyInfo")?.address}
-                className='form-control'
+                value={infoRegister1?.companyInfo?.address}
+                className='form-control filled'
               />
             </div>
           </>
         )}
         <div className='form-group'>
+          <p>
+            Ngành nghề chính <span className='asterisk'></span>
+          </p>
           <input
-            className='form-control'
+            className={
+              checkStepRef.current.mainIndustry
+                ? 'form-control filled'
+                : 'form-control'
+            }
             placeholder='Nhập ngành nghề chính'
-            {...register("mainIndustry")}
+            {...register('mainIndustry')}
+            data-testid='mainIndustry'
+            onBlur={(e) => handleCheckInput(e)}
           />
           <div className='text-danger'>
             {errors?.mainIndustry?.message && (
@@ -138,9 +224,16 @@ const CompanyTaxInfo = ({
           </div>
         </div>
         <div className='form-group'>
+          <p>
+            Giấy phép kinh doanh <span className='asterisk'></span>
+          </p>
           <input
             type='file'
-            className='form-control'
+            className={
+              checkStepRef.current.businessLicense
+                ? 'form-control filled'
+                : 'form-control'
+            }
             accept='image/*'
             onChange={uploadBusinessLicense}
           />
@@ -148,22 +241,6 @@ const CompanyTaxInfo = ({
             {errors?.businessLicense?.message && (
               <div>{errors.businessLicense.message}</div>
             )}
-          </div>
-        </div>
-        <div className='form-group text-left'>
-          <span className='custom-control custom-checkbox'>
-            <input
-              type='checkbox'
-              className='custom-control-input'
-              id='check1'
-              {...register("checked")}
-            />
-            <label className='custom-control-label' htmlFor='check1'>
-              Tôi đồng ý với các điều khoản và điều kiện
-            </label>
-          </span>
-          <div className='text-danger'>
-            {errors?.checked?.message && <div>{errors.checked.message}</div>}
           </div>
         </div>
         {/* Next Step Button */}
@@ -180,9 +257,9 @@ const CompanyTaxInfo = ({
           <button
             type='submit'
             className='site-button dz-xs-flex m-r5 float-right btn btn-lg'
-            disabled={Object.keys(errors).length > 0}
+            // disabled={Object.keys(errors).length > 0}
           >
-            Đăng ký
+            Tiếp tục <i className='fa fa-arrow-right' aria-hidden='true'></i>
           </button>
         </div>
       </form>

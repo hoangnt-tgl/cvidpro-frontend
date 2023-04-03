@@ -1,6 +1,7 @@
 .register-container {
   background-color: white;
   height: 100vh;
+  /* font-size: 14px !important; */
 }
 .header-regiser {
   padding: 0rem 1rem;
@@ -11,6 +12,7 @@
 .register-wrapper {
   color: var(--text-dark);
   font-weight: 600;
+  /* margin-top: 50px; */
 }
 .form-container {
   margin: 0 auto;
@@ -20,7 +22,14 @@
 
 .select-style {
   font-weight: 400;
-  height: 40px;
+  min-height: 40px;
+}
+.select-style .css-b62m3t-container {
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px !important;
+}
+.filled .css-13cymwt-control {
+  background-color: var(--semiblue);
 }
 .register-steps {
   opacity: 0;
@@ -43,7 +52,7 @@
   position: relative;
 }
 .body-register p {
-  margin-bottom: 5px;
+  margin-bottom: 0.8rem;
 }
 .body-register input {
   border-radius: 5px;
@@ -61,8 +70,23 @@
 }
 .register-btn button {
   margin: 0px 0px;
+  transition: all ease-in-out 0.5s;
+}
+.register-btn button:active {
+  transform: scale(0.95);
 }
 
+.register-wrapper .filled.form-control {
+  background-color: var(--semiblue);
+}
+.asterisk {
+  color: red;
+}
+.asterisk::before {
+  content: "*";
+  color: red;
+  font-size: 18px;
+}
 @keyframes smoothAppear {
   0% {
     opacity: 0;
@@ -76,33 +100,42 @@
 @keyframes smoothImg {
   0% {
     opacity: 0;
-    background: url("../../images/background/bg6.jpg") no-repeat center
-      center/cover fixed;
-  }
-  25% {
-    opacity: 1;
+    left: -100%;
     background: url("../../images/background/bg6.jpg") no-repeat center
       center/cover fixed;
   }
   50% {
     opacity: 1;
+    left: 0%;
+    background: url("../../images/background/bg6.jpg") no-repeat center
+      center/cover fixed;
+  }
+  51% {
+    opacity: 1;
+    left: -100%;
     background: url("../../images/background/bg2.jpg") no-repeat center
       center/cover fixed;
   }
   100% {
     opacity: 1;
+    left: 0%;
     background: url("../../images/background/bg2.jpg") no-repeat center
       center/cover fixed;
   }
 }
 .register-img {
-  /* background: url("../../images/background/bg1.jpg") no-repeat center
-    center/cover fixed; */
-  animation: smoothImg 10s ease infinite forwards;
+  width: 100%;
+  height: 100%;
+  /* animation: smoothImg 10s ease infinite backwards; */
+  background: url("../../images/background/bg2.jpg") no-repeat center
+    center/cover fixed;
 }
 
 @media (min-width: 350px) {
-  .form-container {
+  .font-size-14{
+    font-size: 14px !important;
+  }
+  .register-wrapper .form-container {
     padding: 1rem 0rem;
   }
   .wrapper-form {
@@ -114,6 +147,8 @@
   }
   .register-wrapper {
     width: 100%;
+    z-index: 999;
+    /* margin-top: 70px; */
   }
   .header-regiser h1 {
     width: fit-content;
@@ -122,42 +157,61 @@
   .register-img {
     display: none;
   }
+  .register-img-box {
+    display: none;
+  }
+  .select-type-wrapper {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
 }
 @media (min-width: 425px) {
-  .form-container {
-    padding: 2rem 2rem;
+  .register-wrapper .form-container {
+    padding: 2rem 0rem;
   }
 }
 @media (min-width: 600px) {
-  .form-container {
+  .register-wrapper .form-container {
     padding: 2rem 3rem;
   }
   .wrapper-form {
     padding: 10px 10px;
   }
+  .register-wrapper {
+    /* margin-top: 80px; */
+  }
 }
 @media (min-width: 768px) {
-  .form-container {
-    padding: 1rem 2rem;
+  .register-wrapper .form-container {
+    padding: 2rem 0.5rem;
   }
   .register-img {
     display: block;
+    z-index: 9999;
+  }
+  .register-img-box {
+    display: block;
+    z-index: 9999;
   }
   .wrapper-form {
     padding: 0px 0px;
   }
 }
-@media (min-width: 950px) {
+@media (min-width: 900px) {
+  .register-wrapper .form-container {
+    padding: 2rem 0.5rem;
+  }
 }
 @media (min-width: 1200px) {
-  .form-container {
+  .register-wrapper .form-container {
     margin: 0 auto;
-    padding: 2rem 6rem;
+    padding: 2rem 0.5rem;
     position: relative;
   }
-  .wrapper-form h3 {
-    width: auto;
-  }
+
   .register-wrapper {
     width: 100%;
   }
