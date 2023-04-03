@@ -246,7 +246,7 @@ const Address = ({
               name='birthday'
               getValues={getValues}
               testId='birthday'
-              placeholder='mm/dd/yyyy'
+              placeholder='dd/mm/yyyy'
               dateFormat='dd/MM/yyyy'
               handleOnChange={(date) => {
                 console.log(date);
