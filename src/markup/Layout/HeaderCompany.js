@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { Modal } from 'react-bootstrap'
-import Logout from './Logout'
-
-var bnr3 = require('./../../images/background/bg3.jpg')
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { Modal } from "react-bootstrap";
+import Logout from "./Logout";
+import logo from './../../images/logo/logocvid.jpg';
+var bnr3 = require("./../../images/background/bg3.jpg");
 
 class HeaderEmployee extends Component {
   state = {
@@ -60,7 +60,7 @@ class HeaderEmployee extends Component {
                 <div className="logo-header mostion">
                   <Link to={'./'}>
                     <img
-                      src={require('./../../images/logo.png')}
+                      src={logo}
                       className="logo"
                       alt=""
                     />

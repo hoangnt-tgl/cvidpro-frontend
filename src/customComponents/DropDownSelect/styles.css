@@ -1,7 +1,7 @@
 .dropdown-custom {
   /* border: 2px solid red; */
   position: relative;
-  margin: 20px auto;
+  margin: 0px auto;
   margin-bottom: 0px;
   font-size: 14px;
   font-weight: 550;
@@ -48,7 +48,6 @@
   z-index: 10;
   background-color: #fff;
   display: none;
-
 }
 .dropdown-box.show {
   display: block;

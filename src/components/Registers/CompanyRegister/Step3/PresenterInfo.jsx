@@ -213,7 +213,7 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
         <div className='form-group '>
           <button
             type='button'
-            className='site-button dz-xs-flex m-r5 '
+            className='site-button dz-xs-flex m-r5 btn'
             onClick={() => {
               setStep((prev) => prev - 1);
             }}
@@ -222,7 +222,7 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
           </button>
           <button
             type='submit'
-            className='site-button dz-xs-flex m-r5 float-right btn btn-lg'
+            className='site-button dz-xs-flex m-r5 float-right btn'
             disabled={Object.keys(errors).length > 0}
           >
             Đăng ký

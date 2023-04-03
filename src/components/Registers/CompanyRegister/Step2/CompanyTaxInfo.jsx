@@ -6,7 +6,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import DropDownSelect from '../../../../customComponents/DropDownSelect/DropDownSelect';
 import { selectStyle } from '../../../../constants/common';
-
+//firebase
+import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { storage } from '../../../../config/firbase.js';
 const CompanyTaxInfo = ({
   infoRegister1,
   setStep,
@@ -43,13 +45,25 @@ const CompanyTaxInfo = ({
   function uploadBusinessLicense(e) {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = async () => {
-        const base64 = reader.result;
-        setValue('businessLicense', base64);
-        clearErrors('businessLicense');
-      };
+      const sotrageRef = ref(storage, `web/${file.name}`);
+      const uploadTask = uploadBytesResumable(sotrageRef, file);
+      uploadTask.on(
+        'state_changed',
+        () => {},
+        (error) => console.log('err ', error),
+        async () => {
+          let url = await getDownloadURL(uploadTask.snapshot.ref);
+          setValue('businessLicense', url);
+          clearErrors('businessLicense');
+        }
+      );
+      // const reader = new FileReader();
+      // reader.readAsDataURL(file);
+      // reader.onload = async () => {
+      //   const base64 = reader.result;
+      //   setValue('businessLicense', base64);
+      //   clearErrors('businessLicense');
+      // };
       if (!checkStepRef.current.businessLicense) {
         setChildStep1((prev) => prev + 1 / 3 / 4);
         checkStepRef.current.businessLicense = true;

@@ -73,6 +73,9 @@
   background-color: var(--semiblue);
   color: #212529 !important;
 }
+.filled .react-datepicker-wrapper input {
+  background-color: var(--semiblue);
+}
 .asterisk {
   color: red;
 }
@@ -80,6 +83,11 @@
   content: '*';
   color: red;
   font-size: 18px;
+}
+
+.fa-calendar-o:before {
+  font-size: 14px;
+ 
 }
 @keyframes smoothAppear {
   0% {

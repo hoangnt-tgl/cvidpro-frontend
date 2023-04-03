@@ -1,10 +1,10 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import {
   companySignupAction,
   employeeSignupAction,
   loadingToggleAction,
-} from "../store/actions/AuthActions";
+} from '../store/actions/AuthActions';
 
 const useRegister = (history) => {
   const dispatch = useDispatch();
@@ -14,12 +14,12 @@ const useRegister = (history) => {
   function registerUser(infoRegister3) {
     dispatch(loadingToggleAction(true));
     let data = {
-      name: infoRegister1.name + " " + infoRegister1.lastName,
+      name: infoRegister1.name + ' ' + infoRegister1.lastName,
       email: infoRegister1.email,
       password: infoRegister1.password,
       username: infoRegister1.phone,
       gender: infoRegister2.gender.value,
-      birthday: infoRegister2.birthday,
+      birthday: infoRegister2.birthday.toString(),
       address: infoRegister2.address,
       province: infoRegister2.city.value,
       district: infoRegister2.district.value,
@@ -28,8 +28,14 @@ const useRegister = (history) => {
       level: infoRegister3.level.value,
       major: infoRegister3.major.value,
       jobTitle: infoRegister3.jobTitle.value,
-      startYear: infoRegister3.startYear,
-      endYear: infoRegister3.endYear,
+      startYear:
+        infoRegister3.startYear.toString().split(' ')[1] +
+        ' ' +
+        infoRegister3.startYear.toString().split(' ')[3],
+      endYear:
+        infoRegister3.endYear.toString().split(' ')[1] +
+        ' ' +
+        infoRegister3.endYear.toString().split(' ')[3],
     };
     console.log(data);
     dispatch(employeeSignupAction(data, history));
@@ -38,7 +44,7 @@ const useRegister = (history) => {
     let data = {
       email: infoRegister3.email,
       password: infoRegister1.password,
-      name: infoRegister3.name + " " + infoRegister3.lastName,
+      name: infoRegister3.name + ' ' + infoRegister3.lastName,
       status: infoRegister1.companyInfo.status,
       position: infoRegister3.position,
       phone: infoRegister3.phone,
@@ -65,7 +71,7 @@ const useRegister = (history) => {
     let data = {
       email: infoRegister1.email,
       password: infoRegister1.password,
-      name: infoRegister1.name + " " + infoRegister1.lastName,
+      name: infoRegister1.name + ' ' + infoRegister1.lastName,
       phone: infoRegister1.phone,
       field: infoRegister2.field.map((item) => item.label),
       address: infoRegister2.address,

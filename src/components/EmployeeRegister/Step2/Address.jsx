@@ -8,6 +8,7 @@ import { useRef } from 'react';
 import { selectStyle } from '../../../constants/common';
 // import '../RegisterStyles.css'
 import Select from 'react-select';
+import Datepicker from '../../../customComponents/DatePickerMonth';
 const Address = ({
   setStep,
   setInfoRegister2,
@@ -45,6 +46,7 @@ const Address = ({
     setValue,
     getValues,
     control,
+    clearErrors,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -232,7 +234,35 @@ const Address = ({
           <p>
             Ngày sinh <span className='asterisk'></span>
           </p>
-          <input
+          <div
+            className={
+              checkStepRef.current.birthday
+                ? 'form-control filled d-flex'
+                : 'form-control d-flex'
+            }
+          >
+            <Datepicker
+              register={{ ...register('birthday') }}
+              name='birthday'
+              getValues={getValues}
+              testId='birthday'
+              placeholder='dd/mm/yyyy'
+              dateFormat='dd/MM/yyyy'
+              handleOnChange={(date) => {
+                console.log(date);
+                console.log(
+                  date.toString().split(' ')[1] + date.toString().split(' ')[3]
+                );
+                setValue('birthday', date);
+                let e = { target: { dataset: { testid: 'birthday' } } };
+                handleCheckInput(e);
+                clearErrors('birthday');
+              }}
+            />
+            <i class='fa fa-calendar-o calendar-icon' aria-hidden='true'></i>
+          </div>
+
+          {/* <input
             type='date'
             className={
               checkStepRef.current.birthday
@@ -243,7 +273,7 @@ const Address = ({
             {...register('birthday')}
             data-testid='birthday'
             onBlur={handleCheckInput}
-          />
+          /> */}
           <div className='text-danger'>
             {errors.birthday?.message && <div>{errors.birthday.message}</div>}
           </div>

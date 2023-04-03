@@ -7,6 +7,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useRef } from 'react';
 import { selectStyle } from '../../../constants/common';
+import DatePikcerMonth from '../../../customComponents/DatePickerMonth/index';
+import { useState } from 'react';
+import { useEffect } from 'react';
 const Level = ({
   setStep,
   fetchSchoolAndMajor,
@@ -83,6 +86,7 @@ const Level = ({
       }
     }
   }
+
   return (
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
@@ -222,30 +226,40 @@ const Level = ({
           <p>
             Năm bắt đầu <span className='asterisk'></span>
           </p>
-          <input
-            {...register('startYear')}
-            type='month'
+          <div
             className={
               checkStepRef.current.startYear
-                ? 'form-control filled'
-                : 'form-control'
+                ? 'form-control filled d-flex'
+                : 'form-control d-flex'
             }
-            id='something'
-            placeholder='Nhập năm bắt đầu'
-            data-testid='startYear'
-            onChange={(e) => {
-              setValue('startYear', e.target.value);
-              console.log(getValues('endYear'));
-              handleCheckInput(e);
-              if (getValues('endYear') < getValues('startYear')) {
-                setError('endYear', {
-                  type: 'manual',
-                  message: 'Năm kết thúc phải lớn hơn năm bắt đầu',
-                });
-              }
-              clearErrors('endYear');
-            }}
-          />
+          >
+            <DatePikcerMonth
+              register={{ ...register('startYear') }}
+              name='startYear'
+              getValues={getValues}
+              testId='startYear'
+              handleOnChange={(date) => {
+                console.log(date);
+                console.log(
+                  date.toString().split(' ')[1] + date.toString().split(' ')[3]
+                );
+                setValue('startYear', date);
+                let e = { target: { dataset: { testid: 'startYear' } } };
+                handleCheckInput(e);
+                if (
+                  new Date(getValues('endYear')).getTime() <
+                  new Date(getValues('startYear')).getTime()
+                ) {
+                  setError('endYear', {
+                    type: 'manual',
+                    message: 'Năm kết thúc phải lớn hơn năm bắt đầu',
+                  });
+                }
+              }}
+            />
+            <i class='fa fa-calendar-o calendar-icon' aria-hidden='true'></i>
+          </div>
+
           <div className='text-danger'>
             {errors?.startYear?.message && (
               <div>{errors.startYear.message}</div>
@@ -256,30 +270,38 @@ const Level = ({
           <p>
             Năm kết thúc <span className='asterisk'></span>
           </p>
-          <input
-            {...register('endYear')}
-            type='month'
+          <div
             className={
               checkStepRef.current.endYear
-                ? 'form-control filled'
-                : 'form-control'
+                ? 'form-control filled d-flex'
+                : 'form-control d-flex'
             }
-            placeholder='Nhập năm kết thúc'
-            data-testid='endYear'
-            onChange={(e) => {
-              setValue('endYear', e.target.value);
-              console.log(getValues('endYear'));
-              handleCheckInput(e);
-              if (getValues('endYear') < getValues('startYear')) {
-                setError('endYear', {
-                  type: 'manual',
-                  message: 'Năm kết thúc phải lớn hơn năm bắt đầu',
-                });
-                return;
-              }
-              clearErrors('endYear');
-            }}
-          />
+          >
+            <DatePikcerMonth
+              register={{ ...register('endYear') }}
+              name='endYear'
+              getValues={getValues}
+              testid='endYear'
+              handleOnChange={(date) => {
+                setValue('endYear', date);
+                let e = { target: { dataset: { testid: 'endYear' } } };
+                handleCheckInput(e);
+                if (
+                  new Date(getValues('endYear')).getTime() <
+                  new Date(getValues('startYear')).getTime()
+                ) {
+                  setError('endYear', {
+                    type: 'manual',
+                    message: 'Năm kết thúc phải lớn hơn năm bắt đầu',
+                  });
+                  return;
+                }
+                clearErrors('endYear');
+              }}
+            />
+            <i class='fa fa-calendar-o calendar-icon' aria-hidden='true'></i>
+          </div>
+
           <div className='text-danger'>
             {errors?.endYear?.message && <div>{errors.endYear.message}</div>}
           </div>
@@ -324,3 +346,57 @@ const Level = ({
 };
 
 export default Level;
+
+{
+  /* <input
+            {...register('startYear')}
+            type='month'
+            className={
+              checkStepRef.current.startYear
+                ? 'form-control filled'
+                : 'form-control'
+            }
+            id='something'
+            placeholder='Nhập năm bắt đầu'
+            data-testid='startYear'
+            onChange={(e) => {
+              setValue('startYear', e.target.value);
+              console.log(getValues('endYear'));
+              handleCheckInput(e);
+              if (getValues('endYear') < getValues('startYear')) {
+                setError('endYear', {
+                  type: 'manual',
+                  message: 'Năm kết thúc phải lớn hơn năm bắt đầu',
+                });
+              }
+              clearErrors('endYear');
+            }}
+          /> */
+}
+
+{
+  /* <input
+            {...register('endYear')}
+            type='month'
+            className={
+              checkStepRef.current.endYear
+                ? 'form-control filled'
+                : 'form-control'
+            }
+            placeholder='Nhập năm kết thúc'
+            data-testid='endYear'
+            onChange={(e) => {
+              setValue('endYear', e.target.value);
+              console.log(getValues('endYear'));
+              handleCheckInput(e);
+              if (getValues('endYear') < getValues('startYear')) {
+                setError('endYear', {
+                  type: 'manual',
+                  message: 'Năm kết thúc phải lớn hơn năm bắt đầu',
+                });
+                return;
+              }
+              clearErrors('endYear');
+            }}
+          /> */
+}
