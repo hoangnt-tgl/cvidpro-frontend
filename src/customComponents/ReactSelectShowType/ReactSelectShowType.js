@@ -13,9 +13,9 @@ const ReactSelectShowType = ({
   className = '',
 }) => {
   const filterOption = (candidate, input) => {
-    console.log('candidate', candidate);
-    console.log('input', input);
-    console.log(candidate.label.search(input));
+    // console.log('candidate', candidate);
+    // console.log('input', input);
+    // console.log(candidate.label.search(input));
     return (
       // Min input length
       input.length >= minInput &&
