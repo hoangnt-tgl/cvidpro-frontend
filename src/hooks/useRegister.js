@@ -28,14 +28,8 @@ const useRegister = (history) => {
       level: infoRegister3.level.value,
       major: infoRegister3.major.value,
       jobTitle: infoRegister3.jobTitle.value,
-      startYear:
-        infoRegister3.startYear.toString().split(' ')[1] +
-        ' ' +
-        infoRegister3.startYear.toString().split(' ')[3],
-      endYear:
-        infoRegister3.endYear.toString().split(' ')[1] +
-        ' ' +
-        infoRegister3.endYear.toString().split(' ')[3],
+      startYear: infoRegister3.startYear.toString(),
+      endYear: infoRegister3.endYear.toString(),
     };
     console.log(data);
     dispatch(employeeSignupAction(data, history));

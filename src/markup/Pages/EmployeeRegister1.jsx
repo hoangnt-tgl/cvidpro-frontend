@@ -9,8 +9,6 @@ import useRegister from '../../hooks/useRegister';
 import useGetOptions from '../../hooks/useGetOptions';
 import RegisterLayout from '../../customComponents/RegisterLayout/RegisterLayout';
 import Stepper from '../../customComponents/Stepper/Stepper';
-import { useEffect } from 'react';
-import Header from '../../components/Header/Header';
 
 function Register2(props) {
   //hookforms end

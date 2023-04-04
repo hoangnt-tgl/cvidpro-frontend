@@ -14,6 +14,10 @@ const GetPass = ({ setOpenModal, resetPasswordFc, setStep }) => {
       password: yup
         .string()
         .required('Vui lòng nhập mật khẩu')
+        .matches(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+          'Mật khẩu phải có ít nhất 8 ký tự, 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt'
+        )
         .min(6, 'Mật khẩu phải có ít nhất 6 ký tự')
         .max(20, 'Mật khẩu không được quá 20 ký tự'),
       confirmPassword: yup
@@ -79,13 +83,15 @@ const GetPass = ({ setOpenModal, resetPasswordFc, setStep }) => {
             }
             type='password'
             placeholder='Nhập mật khẩu'
-            minLength='6'
+            minLength='8'
             data-testid='password'
             {...register('password')}
             onBlur={handleCheckInput}
           />
           <div className='text-danger'>
-            {errors?.password?.message && <div>{errors.password.message}</div>}
+            {errors?.password?.message && (
+              <div className='font-size-14'>{errors.password.message}</div>
+            )}
           </div>
         </div>
         <div className='form-group'>
@@ -100,14 +106,16 @@ const GetPass = ({ setOpenModal, resetPasswordFc, setStep }) => {
             }
             type='password'
             placeholder='Nhập lại mật khẩu'
-            minLength='6'
+            minLength='8'
             data-testid='confirmPassword'
             {...register('confirmPassword')}
             onBlur={handleCheckInput}
           />
           <div className='text-danger'>
             {errors?.confirmPassword?.message && (
-              <div>{errors.confirmPassword.message}</div>
+              <div className='font-size-14'>
+                {errors.confirmPassword.message}
+              </div>
             )}
           </div>
         </div>

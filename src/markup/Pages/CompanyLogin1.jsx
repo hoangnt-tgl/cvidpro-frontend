@@ -91,11 +91,13 @@ function Login(props) {
           />
         </div>
       </RegisterLayout>
-      <ForgetPass
-        openModal={forgetPass}
-        setOpenModal={setForgetPass}
-        isCompany={true}
-      />
+      {forgetPass && (
+        <ForgetPass
+          openModal={forgetPass}
+          setOpenModal={setForgetPass}
+          isCompany={true}
+        />
+      )}
     </>
   );
 }

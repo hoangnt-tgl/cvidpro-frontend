@@ -7,7 +7,17 @@ import ValidateOtp from './ValidateOtp';
 import './styles.css';
 import useResetPass from '../../hooks/useResetPass';
 const ForgetPass = ({ isCompany, openModal, setOpenModal }) => {
-  const { getOtpFc, resetPasswordFc, validateOtpFc } = useResetPass(isCompany);
+  const {
+    getOtpFc,
+    resetPasswordFc,
+    validateOtpFc,
+    isGetOtp,
+    isMailExist,
+    setIsMailExist,
+    isOtpStillValid,
+    setIsGetOtp,
+    setIsOtpStillValid,
+  } = useResetPass(isCompany, 10000, 20000);
   const [step, setStep] = useState(1);
 
   return (
@@ -32,14 +42,24 @@ const ForgetPass = ({ isCompany, openModal, setOpenModal }) => {
                 <span aria-hidden='true'>&times;</span>
               </button>
             </div>
-            <div className='modal-body '>
+            <div className='modal-body otp-container'>
               {step === 1 && (
                 <>
                   {' '}
-                  <GetOtp setStep={setStep} getOtp={getOtpFc} />
+                  <GetOtp
+                    setStep={setStep}
+                    getOtp={getOtpFc}
+                    isGetOtp={isGetOtp}
+                    isMailExist={isMailExist}
+                    setIsMailExist={setIsMailExist}
+                    setIsGetOtp={setIsGetOtp}
+                  />
                   <ValidateOtp
+                    isOtpStillValid={isOtpStillValid}
                     setStep={setStep}
                     validateOtpFc={validateOtpFc}
+                    isGetOtp={isGetOtp}
+                    setIsOtpStillValid={setIsOtpStillValid}
                   />
                 </>
               )}
