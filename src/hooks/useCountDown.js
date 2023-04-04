@@ -34,7 +34,7 @@ const useCountDown = (time, trigger, setIsGetOtp) => {
   }, [duaration, trigger]);
 
   useEffect(() => {
-    console.log(duaration);
+    // console.log(duaration);
     // console.log(seconds);
   }, [duaration]);
   return { duaration, minutes, seconds };

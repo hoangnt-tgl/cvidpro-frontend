@@ -17,7 +17,9 @@ const useResetPass = (isCompany, duaration, duarationOtp) => {
   const [isMailExist, setIsMailExist] = useState('');
   const [isOtpStillValid, setIsOtpStillValid] = useState(false);
   const [isGetAgain, setIsGetAgain] = useState(false);
-
+  useEffect(() => {
+    console.log(isOtpStillValid);
+  }, [isOtpStillValid]);
   async function getOtpFc(email) {
     setEmail(email);
     if (isCompany) {
