@@ -8,8 +8,7 @@ import * as yup from 'yup';
 import { useRef } from 'react';
 import { selectStyle } from '../../../constants/common';
 import DatePikcerMonth from '../../../customComponents/DatePickerMonth/index';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import MuiDate from '../../../customComponents/MuiDatePicker/index';
 const Level = ({
   setStep,
   fetchSchoolAndMajor,
@@ -59,7 +58,6 @@ const Level = ({
   function onHandleSubmit(data) {
     setInfoRegister3(data);
     console.log(data);
-    // console.log(errors);
     if (Object.keys(errors).length === 0) {
       registerUser(data);
     }
@@ -106,7 +104,6 @@ const Level = ({
                   placeholder='Chọn trình độ'
                   options={optionsSelect.levels}
                   onChange={(value) => {
-                    console.log(value);
                     setValue('level', value);
                     if (checkStepRef.current.level === false) {
                       setChildStep((prev) => prev + 1 / 3 / 6);
@@ -140,7 +137,6 @@ const Level = ({
                   options={optionsSelect.schools}
                   minInput={1}
                   onChange={(value) => {
-                    console.log(value);
                     setValue('school', value);
                     if (checkStepRef.current.school === false) {
                       setChildStep((prev) => prev + 1 / 3 / 6);
@@ -174,7 +170,6 @@ const Level = ({
                   options={optionsSelect.majors}
                   isDisabled={getValues('level') ? false : true}
                   onChange={(value) => {
-                    console.log(value);
                     setValue('major', value);
                     if (checkStepRef.current.major === false) {
                       setChildStep((prev) => prev + 1 / 3 / 6);
@@ -206,7 +201,6 @@ const Level = ({
                   placeholder='Chọn chức danh'
                   options={optionsSelect.jobTitles}
                   onChange={(value) => {
-                    console.log(value);
                     setValue('jobTitle', value);
                     if (checkStepRef.current.jobTitle === false) {
                       setChildStep((prev) => prev + 1 / 3 / 6);
@@ -226,39 +220,25 @@ const Level = ({
           <p>
             Năm bắt đầu <span className='asterisk'></span>
           </p>
-          <div
-            className={
-              checkStepRef.current.startYear
-                ? 'form-control filled d-flex'
-                : 'form-control d-flex'
-            }
-          >
-            <DatePikcerMonth
-              register={{ ...register('startYear') }}
-              name='startYear'
-              getValues={getValues}
-              testId='startYear'
-              handleOnChange={(date) => {
-                console.log(date);
-                console.log(
-                  date.toString().split(' ')[1] + date.toString().split(' ')[3]
-                );
-                setValue('startYear', date);
-                let e = { target: { dataset: { testid: 'startYear' } } };
-                handleCheckInput(e);
-                if (
-                  new Date(getValues('endYear')).getTime() <
-                  new Date(getValues('startYear')).getTime()
-                ) {
-                  setError('endYear', {
-                    type: 'manual',
-                    message: 'Năm kết thúc phải lớn hơn năm bắt đầu',
-                  });
+          <Controller
+            name='startYear'
+            control={control}
+            render={({ field: { onChange } }) => (
+              <MuiDate
+                format={'MM-YYYY'}
+                className={
+                  checkStepRef.current.startYear
+                    ? 'form-control filled'
+                    : 'form-control '
                 }
-              }}
-            />
-            <i class='fa fa-calendar-o calendar-icon' aria-hidden='true'></i>
-          </div>
+                onChange={(date, validationError) => {
+                  let e = { target: { dataset: { testid: 'startYear' } } };
+                  handleCheckInput(e);
+                  onChange(date);
+                }}
+              />
+            )}
+          />
 
           <div className='text-danger'>
             {errors?.startYear?.message && (
@@ -270,37 +250,33 @@ const Level = ({
           <p>
             Năm kết thúc <span className='asterisk'></span>
           </p>
-          <div
-            className={
-              checkStepRef.current.endYear
-                ? 'form-control filled d-flex'
-                : 'form-control d-flex'
-            }
-          >
-            <DatePikcerMonth
-              register={{ ...register('endYear') }}
-              name='endYear'
-              getValues={getValues}
-              testid='endYear'
-              handleOnChange={(date) => {
-                setValue('endYear', date);
-                let e = { target: { dataset: { testid: 'endYear' } } };
-                handleCheckInput(e);
-                if (
-                  new Date(getValues('endYear')).getTime() <
-                  new Date(getValues('startYear')).getTime()
-                ) {
-                  setError('endYear', {
-                    type: 'manual',
-                    message: 'Năm kết thúc phải lớn hơn năm bắt đầu',
-                  });
-                  return;
+          <Controller
+            name='endYear'
+            control={control}
+            render={({ field: { onChange } }) => (
+              <MuiDate
+                format={'MM-YYYY'}
+                className={
+                  checkStepRef.current.endYear
+                    ? 'form-control filled'
+                    : 'form-control '
                 }
-                clearErrors('endYear');
-              }}
-            />
-            <i class='fa fa-calendar-o calendar-icon' aria-hidden='true'></i>
-          </div>
+                onChange={(date, validationError) => {
+                  let e = { target: { dataset: { testid: 'endYear' } } };
+                  handleCheckInput(e);
+                  onChange(date);
+                  if (getValues('endYear')._d > getValues('startYear')._d) {
+                    setError('endYear', {
+                      type: 'manual',
+                      message: 'Năm kết thúc phải lớn hơn năm bắt đầu',
+                    });
+                    return;
+                  }
+                  clearErrors('endYear');
+                }}
+              />
+            )}
+          />
 
           <div className='text-danger'>
             {errors?.endYear?.message && <div>{errors.endYear.message}</div>}

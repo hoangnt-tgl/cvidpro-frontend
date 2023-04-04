@@ -2124,7 +2124,7 @@ label {
   box-shadow: none;
   font-size: var(--text-lg) !important;
   line-height: 20px;
-  padding: 9px 15px;
+  padding: 9px 8px;
 }
 .form-control:focus {
   border-color: #e1e1e1;

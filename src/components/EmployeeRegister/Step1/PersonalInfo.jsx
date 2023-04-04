@@ -1,45 +1,49 @@
-import React from "react";
-import Select from "react-select";
+import React from 'react';
+import Select from 'react-select';
 //hookform
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { useRef } from "react";
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useRef } from 'react';
 // import '../RegisterStyles.css'
 const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
   const checkStepRef = useRef({
     lastName: false,
     name: false,
     phone: false,
-  
+
     email: false,
     password: false,
     confirmPassword: false,
   });
   const genderOptions = [
-    { value: "Nam", label: "Nam" },
-    { value: "Nữ", label: "Nữ" },
+    { value: 'Nam', label: 'Nam' },
+    { value: 'Nữ', label: 'Nữ' },
   ];
   const schema = yup.object().shape({
-    name: yup.string().required("Vui lòng nhập họ và lót"),
-    lastName: yup.string().required("Vui lòng nhập tên "),
-    phone: yup.string().required("Vui lòng nhập số điện thoại").length(10),
+    name: yup.string().required('Vui lòng nhập họ và lót'),
+    lastName: yup.string().required('Vui lòng nhập tên '),
+    phone: yup.string().required('Vui lòng nhập số điện thoại').length(10),
 
     email: yup
       .string()
-      .required("Vui lòng nhập email")
-      .email("Email không hợp lệ"),
+      .required('Vui lòng nhập email')
+      .email('Email không hợp lệ'),
     password: yup
       .string()
-      .required("Vui lòng nhập mật khẩu")
-      .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
-      .max(20, "Mật khẩu không được quá 20 ký tự"),
+      .required('Vui lòng nhập mật khẩu')
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        'Mật khẩu phải có ít nhất 8 ký tự, 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt'
+      )
+      .min(8, 'Mật khẩu phải có ít nhất 8 ký tự')
+      .max(20, 'Mật khẩu không được quá 20 ký tự'),
     confirmPassword: yup
       .string()
-      .required("Vui lòng nhập lại mật khẩu")
+      .required('Vui lòng nhập lại mật khẩu')
       .min(6)
       .max(20)
-      .oneOf([yup.ref("password")], "Mật khẩu không khớp"),
+      .oneOf([yup.ref('password')], 'Mật khẩu không khớp'),
   });
   const {
     register,
@@ -57,63 +61,63 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
     }
   }
   function handleCheckInput(e) {
-    if (e.target.dataset.testid === "name") {
-      if (e.target.value !== "" && !checkStepRef.current.name) {
+    if (e.target.dataset.testid === 'name') {
+      if (e.target.value !== '' && !checkStepRef.current.name) {
         setChildStep((prev) => prev + 1 / 3 / 6);
         checkStepRef.current.name = true;
       }
-      if (e.target.value === "" && checkStepRef.current.name) {
+      if (e.target.value === '' && checkStepRef.current.name) {
         setChildStep((prev) => prev - 1 / 3 / 6);
         checkStepRef.current.name = false;
       }
     }
-    if (e.target.dataset.testid === "lastName") {
-      if (e.target.value !== "" && !checkStepRef.current.lastName) {
+    if (e.target.dataset.testid === 'lastName') {
+      if (e.target.value !== '' && !checkStepRef.current.lastName) {
         setChildStep((prev) => prev + 1 / 3 / 6);
         checkStepRef.current.lastName = true;
       }
-      if (e.target.value === "" && checkStepRef.current.lastName) {
+      if (e.target.value === '' && checkStepRef.current.lastName) {
         setChildStep((prev) => prev - 1 / 3 / 6);
         checkStepRef.current.lastName = false;
       }
     }
-    if (e.target.dataset.testid === "phone") {
-      if (e.target.value !== "" && !checkStepRef.current.phone) {
+    if (e.target.dataset.testid === 'phone') {
+      if (e.target.value !== '' && !checkStepRef.current.phone) {
         setChildStep((prev) => prev + 1 / 3 / 6);
         checkStepRef.current.phone = true;
       }
-      if (e.target.value === "" && checkStepRef.current.phone) {
+      if (e.target.value === '' && checkStepRef.current.phone) {
         setChildStep((prev) => prev - 1 / 3 / 6);
         checkStepRef.current.phone = false;
       }
     }
 
-    if (e.target.dataset.testid === "email") {
-      if (e.target.value !== "" && !checkStepRef.current.email) {
+    if (e.target.dataset.testid === 'email') {
+      if (e.target.value !== '' && !checkStepRef.current.email) {
         setChildStep((prev) => prev + 1 / 3 / 6);
         checkStepRef.current.email = true;
       }
-      if (e.target.value === "" && checkStepRef.current.email) {
+      if (e.target.value === '' && checkStepRef.current.email) {
         setChildStep((prev) => prev - 1 / 3 / 6);
         checkStepRef.current.email = false;
       }
     }
-    if (e.target.dataset.testid === "password") {
-      if (e.target.value !== "" && !checkStepRef.current.password) {
+    if (e.target.dataset.testid === 'password') {
+      if (e.target.value !== '' && !checkStepRef.current.password) {
         setChildStep((prev) => prev + 1 / 3 / 6);
         checkStepRef.current.password = true;
       }
-      if (e.target.value === "" && checkStepRef.current.password) {
+      if (e.target.value === '' && checkStepRef.current.password) {
         setChildStep((prev) => prev - 1 / 3 / 6);
         checkStepRef.current.password = false;
       }
     }
-    if (e.target.dataset.testid === "confirmPassword") {
-      if (e.target.value !== "" && !checkStepRef.current.confirmPassword) {
+    if (e.target.dataset.testid === 'confirmPassword') {
+      if (e.target.value !== '' && !checkStepRef.current.confirmPassword) {
         setChildStep((prev) => prev + 1 / 3 / 6);
         checkStepRef.current.confirmPassword = true;
       }
-      if (e.target.value === "" && checkStepRef.current.confirmPassword) {
+      if (e.target.value === '' && checkStepRef.current.confirmPassword) {
         setChildStep((prev) => prev - 1 / 3 / 6);
         checkStepRef.current.confirmPassword = false;
       }
@@ -132,11 +136,11 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
               type='text'
               className={
                 checkStepRef.current.name
-                  ? "form-control small filled"
-                  : "form-control small"
+                  ? 'form-control small filled'
+                  : 'form-control small'
               }
               placeholder='Nhập họ và tên lót'
-              {...register("name")}
+              {...register('name')}
               data-testid='name'
               onBlur={handleCheckInput}
             />
@@ -152,11 +156,11 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
               type='text'
               className={
                 checkStepRef.current.lastName
-                  ? "form-control small filled"
-                  : "form-control small"
+                  ? 'form-control small filled'
+                  : 'form-control small'
               }
               placeholder='Tên'
-              {...register("lastName")}
+              {...register('lastName')}
               data-testid='lastName'
               onBlur={handleCheckInput}
             />
@@ -175,11 +179,11 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
             type='text'
             className={
               checkStepRef.current.phone
-                ? "form-control small filled"
-                : "form-control small"
+                ? 'form-control small filled'
+                : 'form-control small'
             }
             placeholder='Nhập số điện thoại'
-            {...register("phone")}
+            {...register('phone')}
             data-testid='phone'
             onBlur={handleCheckInput}
           />
@@ -196,11 +200,11 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
             type='email'
             className={
               checkStepRef.current.email
-                ? "form-control small filled"
-                : "form-control small"
+                ? 'form-control small filled'
+                : 'form-control small'
             }
             placeholder='Nhập email'
-            {...register("email")}
+            {...register('email')}
             data-testid='email'
             onBlur={handleCheckInput}
           />
@@ -215,12 +219,12 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
           <input
             className={
               checkStepRef.current.password
-                ? "form-control small filled"
-                : "form-control small"
+                ? 'form-control small filled'
+                : 'form-control small'
             }
             placeholder='Nhập mật khẩu'
             type='password'
-            {...register("password")}
+            {...register('password')}
             data-testid='password'
             onBlur={handleCheckInput}
           />
@@ -235,12 +239,12 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
           <input
             className={
               checkStepRef.current.confirmPassword
-                ? "form-control small filled"
-                : "form-control small"
+                ? 'form-control small filled'
+                : 'form-control small'
             }
             type='password'
             placeholder='Nhập lại mật khẩu'
-            {...register("confirmPassword")}
+            {...register('confirmPassword')}
             data-testid='confirmPassword'
             onBlur={handleCheckInput}
           />

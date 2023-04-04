@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useRef } from 'react';
-import { toast } from 'react-hot-toast';
 
-const Step1 = ({ getOtp }) => {
-  const [isGet, setIsGet] = useState(false);
-  const [time, setTime] = useState();
+import useCountDown from '../../hooks/useCountDown';
+
+const Step1 = ({ getOtp, isGetOtp, isMailExist, setIsMailExist }) => {
+  const { minutes, seconds } = useCountDown(10, isGetOtp);
   const checkStepRef = useRef({
     email: false,
   });
@@ -26,6 +26,7 @@ const Step1 = ({ getOtp }) => {
     setValue,
     setError,
     clearErrors,
+    getValues,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
@@ -34,7 +35,6 @@ const Step1 = ({ getOtp }) => {
     if (e.target.dataset.testid === 'email') {
       if (e.target.value !== '' && !checkStepRef.current.email) {
         checkStepRef.current.email = true;
-        console.log('123');
       }
       if (e.target.value === '' && checkStepRef.current.email) {
         checkStepRef.current.email = false;
@@ -43,29 +43,9 @@ const Step1 = ({ getOtp }) => {
   }
   async function handleOnSubmit(data) {
     //function get otp
-    try {
-      await getOtp(data.email);
-      setIsGet(true);
-      setTime(6);
-      new Promise((resolve) => {
-        setTimeout(() => {
-          resolve();
-        }, 6000);
-      }).then(() => {
-        setIsGet(false);
-      });
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
+    await getOtp(data.email);
   }
-  useEffect(() => {
-    // 01 : 00
-    let timer;
-    if (isGet) {
-      timer = time > 0 && setInterval(() => setTime(time - 1), 1000);
-    }
-    return () => clearInterval(timer);
-  }, [isGet, time]);
+
   return (
     <>
       {' '}
@@ -86,6 +66,11 @@ const Step1 = ({ getOtp }) => {
                 }
                 placeholder='Nhập email'
                 data-testid='email'
+                onChange={(e) => {
+                  console.log('123');
+                  setValue('email', e.target.value);
+                  setIsMailExist('');
+                }}
                 onBlur={handleCheckInput}
               />
             </div>
@@ -93,15 +78,31 @@ const Step1 = ({ getOtp }) => {
               <button
                 type='submit'
                 className='site-button dz-xs-flex m-r5 btn'
-                disabled={isGet}
+                disabled={isGetOtp}
               >
-                {isGet ? <>{time}</> : <>Lấy mã OTP</>}
+                {isGetOtp ? (
+                  <>
+                    {minutes} : {seconds}
+                  </>
+                ) : (
+                  <>Lấy mã OTP</>
+                )}
               </button>
             </div>
           </div>
           <div className='text-danger'>
-            {errors?.email?.message && <div>{errors.email.message}</div>}
+            {errors?.email?.message && (
+              <div className='font-size-14'>{errors.email.message}</div>
+            )}
           </div>
+          <div className='text-danger'>
+            {getValues('email') && isMailExist && (
+              <div className='font-size-14'>
+                <span className='asterisk'></span> {isMailExist}
+              </div>
+            )}
+          </div>
+          <div>{isGetOtp && <p>Vui lòng kiểm tra mail để nhận mã OTP</p>}</div>
         </div>
       </form>
     </>

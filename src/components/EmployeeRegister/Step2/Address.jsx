@@ -9,6 +9,7 @@ import { selectStyle } from '../../../constants/common';
 // import '../RegisterStyles.css'
 import Select from 'react-select';
 import Datepicker from '../../../customComponents/DatePickerMonth';
+import MuiDate from '../../../customComponents/MuiDatePicker';
 const Address = ({
   setStep,
   setInfoRegister2,
@@ -52,6 +53,7 @@ const Address = ({
     resolver: yupResolver(schema),
   });
   function onHandleSubmit(data) {
+    console.log(data);
     setInfoRegister2(data);
     if (Object.keys(errors).length === 0) {
       setStep(3);
@@ -234,51 +236,31 @@ const Address = ({
           <p>
             Ngày sinh <span className='asterisk'></span>
           </p>
-          <div
-            className={
-              checkStepRef.current.birthday
-                ? 'form-control filled d-flex'
-                : 'form-control d-flex'
-            }
-          >
-            <Datepicker
-              register={{ ...register('birthday') }}
-              name='birthday'
-              getValues={getValues}
-              testId='birthday'
-              placeholder='dd/mm/yyyy'
-              dateFormat='dd/MM/yyyy'
-              showMonthYearPicker={false}
-              handleOnChange={(date) => {
-                console.log(date);
-                console.log(
-                  date.toString().split(' ')[1] + date.toString().split(' ')[3]
-                );
-                setValue('birthday', date);
-                let e = { target: { dataset: { testid: 'birthday' } } };
-                handleCheckInput(e);
-                clearErrors('birthday');
-              }}
-            />
-            <i class='fa fa-calendar-o calendar-icon' aria-hidden='true'></i>
-          </div>
+          <Controller
+            name='birthday'
+            control={control}
+            render={({ field: { onChange } }) => (
+              <MuiDate
+                format={'DD-MM-YYYY'}
+                className={
+                  checkStepRef.current.birthday
+                    ? 'form-control filled'
+                    : 'form-control '
+                }
+                onChange={(date, validationError) => {
+                  let e = { target: { dataset: { testid: 'birthday' } } };
+                  handleCheckInput(e);
+                  onChange(date);
+                }}
+              />
+            )}
+          />
 
-          {/* <input
-            type='date'
-            className={
-              checkStepRef.current.birthday
-                ? 'form-control  filled'
-                : 'form-control '
-            }
-            placeholder='Nhập ngày sinh'
-            {...register('birthday')}
-            data-testid='birthday'
-            onBlur={handleCheckInput}
-          /> */}
           <div className='text-danger'>
             {errors.birthday?.message && <div>{errors.birthday.message}</div>}
           </div>
         </div>
+
         <div className='form-group'>
           <p>
             Giới tính <span className='asterisk'></span>

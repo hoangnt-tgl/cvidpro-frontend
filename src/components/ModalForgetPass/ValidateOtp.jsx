@@ -3,7 +3,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useRef } from 'react';
-const ValidateOtp = ({ setStep, validateOtpFc }) => {
+import useCountDown from '../../hooks/useCountDown';
+const ValidateOtp = ({ setStep, validateOtpFc, isOtpStillValid, isGetOtp }) => {
+  const { minutes, seconds } = useCountDown(20, isOtpStillValid);
   const [otpFail, setOtpFail] = useState(false);
   const checkStepRef = useRef({
     otp: false,
@@ -57,16 +59,27 @@ const ValidateOtp = ({ setStep, validateOtpFc }) => {
             className={
               checkStepRef.current.otp ? 'form-control filled' : 'form-control'
             }
-            placeholder='Nhập otp'
+            placeholder='Nhập OTP'
             data-testid='otp'
             onBlur={handleCheckInput}
+            disabled={!isOtpStillValid}
           />
+          {isOtpStillValid && (
+            <>
+              <p>
+                Mã OTP có hiệu lực trong {minutes} : {seconds}
+              </p>
+            </>
+          )}
           <div className='text-danger'>
             {errors?.otp?.message && <div>{errors.otp.message}</div>}
           </div>
           {otpFail && (
             <div className='text-danger'>
-              <div>Mã OTP không đúng</div>
+              <div className='font-size-14'>
+                {' '}
+                <span className='asterisk'></span>Mã OTP không đúng
+              </div>
             </div>
           )}
         </div>
