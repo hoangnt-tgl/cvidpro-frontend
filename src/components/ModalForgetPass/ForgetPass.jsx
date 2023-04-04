@@ -16,7 +16,7 @@ const ForgetPass = ({ isCompany, openModal, setOpenModal }) => {
     setIsMailExist,
     isOtpStillValid,
   } = useResetPass(isCompany, 10000, 20000);
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
 
   return (
     <>

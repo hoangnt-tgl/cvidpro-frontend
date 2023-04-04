@@ -54,16 +54,22 @@ const ValidateOtp = ({ setStep, validateOtpFc, isOtpStillValid, isGetOtp }) => {
           <p>
             Mã OTP <span className='asterisk'></span>
           </p>
-          <input
-            {...register('otp')}
-            className={
-              checkStepRef.current.otp ? 'form-control filled' : 'form-control'
-            }
-            placeholder='Nhập OTP'
-            data-testid='otp'
-            onBlur={handleCheckInput}
-            disabled={!isOtpStillValid}
-          />
+          <div style={{ padding: '0.5px 0px' }}>
+            {' '}
+            <input
+              {...register('otp')}
+              className={
+                checkStepRef.current.otp
+                  ? 'form-control filled'
+                  : 'form-control'
+              }
+              placeholder='Nhập OTP'
+              data-testid='otp'
+              onBlur={handleCheckInput}
+              disabled={!isOtpStillValid}
+            />
+          </div>
+
           {isOtpStillValid && (
             <>
               <p>
