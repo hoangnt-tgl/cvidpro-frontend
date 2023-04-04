@@ -231,7 +231,7 @@ const CompanyTaxInfo = ({
                 ? 'form-control filled'
                 : 'form-control'
             }
-            placeholder='Nhập địa chỉ'
+            placeholder='Nhập số nhà, tên đường'
             {...register('address')}
             data-testid='address'
             onBlur={handleCheckInput}
