@@ -262,123 +262,125 @@ function Register2(props) {
   }
 
   return (
-    <div className='page-wraper'>
-      <div className='browse-job login-style3'>
-        <div className='bg-img-fix' style={{ backgroundImage: `url(${bnr})` }}>
-          <div className='row mx-0'>
-            <div className='col-xl-4 col-lg-5 col-md-6 col-sm-12 bg-white z-index2 relative p-a0 content-scroll skew-section left-bottom'>
-              <div className='login-form style-2'>
-                <div className='logo-header text-center p-tb30'>
+    <div className="page-wraper">
+      <div className="browse-job login-style3">
+        <div className="bg-img-fix" style={{ backgroundImage: `url(${bnr})` }}>
+          <div className="row mx-0">
+            <div className="col-xl-4 col-lg-5 col-md-6 col-sm-12 bg-white z-index2 relative p-a0 content-scroll skew-section left-bottom">
+              <div className="login-form style-2">
+                <div className="logo-header text-center p-tb30">
                   <Link to={"./"}>
                     <h1 className='m-b0'>CVIDPRO</h1>
                   </Link>
                 </div>
-                <div className='clearfix'></div>
-                <div className='tab-content nav p-b30 tab'>
-                  <div id='login' className='tab-pane active'>
+                <div className="clearfix"></div>
+                <div className="tab-content nav p-b30 tab">
+                  <div id="login" className="tab-pane active">
                     {props.errorMessage && (
-                      <div className=''>{props.errorMessage}</div>
+                      <div className="">{props.errorMessage}</div>
                     )}
                     {props.successMessage && (
-                      <div className=''>{props.successMessage}</div>
+                      <div className="">{props.successMessage}</div>
                     )}
-                    <form className=' dez-form p-b30 mx-4' onSubmit={onSignUp}>
-                      <h3 className='form-title m-t0'>
+                    <form className=" dez-form p-b30 mx-4" onSubmit={onSignUp}>
+                      <h3 className="form-title m-t0">
                         Đăng ký người tìm việc
                       </h3>
-                      <div className='dez-separator-outer m-b5'>
-                        <div className='dez-separator bg-primary style-liner'></div>
+                      <div className="dez-separator-outer m-b5">
+                        <div className="dez-separator bg-primary style-liner"></div>
                       </div>
                       <p>Vui lòng nhập chính xác thông tin</p>
                       {step === 1 && (
                         <>
-                          <div className='form-group'>
+                          <div className="form-group">
                             <input
                               value={name}
                               onChange={(e) => setName(e.target.value)}
-                              className='form-control small'
-                              placeholder='Nhập họ và tên'
+                              className="form-control small"
+                              placeholder="Nhập họ và tên"
                             />
-                            <div className='text-danger'>
+                            <div className="text-danger">
                               {errors.name && <div>{errors.name}</div>}
                             </div>
                           </div>
-                          <div className='form-group'>
+                          <div className="form-group">
                             <input
                               value={username}
-                              text='text'
+                              text="text"
                               onChange={(e) => setUsername(e.target.value)}
-                              className='form-control'
-                              placeholder='Nhập số điện thoại'
+                              className="form-control"
+                              placeholder="Nhập số điện thoại"
                             />
-                            <div className='text-danger'>
+                            <div className="text-danger">
                               {errors.username && <div>{errors.username}</div>}
                             </div>
                           </div>
-                          <div className='form-group'>
+                          <div className="form-group">
                             <input
-                              type='date'
+                              type="date"
                               value={birthday}
                               onChange={(e) => setBirthday(e.target.value)}
-                              className='form-control'
-                              placeholder='Nhập ngày sinh'
+                              className="form-control"
+                              placeholder="Nhập ngày sinh"
                             />
-                            <div className='text-danger'>
+                            <div className="text-danger">
                               {errors.birthday && <div>{errors.birthday}</div>}
                             </div>
                           </div>
-                          <div className='form-group'>
+                          <div className="form-group">
                             <Select
-                              placeholder='Chọn giới tính'
+                              placeholder="Chọn giới tính"
                               onChange={(e) => setGender(e.label)}
                               options={genderOptions}
                             />
-                            <div className='text-danger'>
+                            <div className="text-danger">
                               {errors.gender && <div>{errors.gender}</div>}
                             </div>
                           </div>
-                          <div className='form-group'>
+                          <div className="form-group">
                             <input
                               value={email}
-                              type='email'
+                              type="email"
                               onChange={(e) => setEmail(e.target.value)}
-                              className='form-control'
-                              placeholder='Nhập email'
+                              className="form-control"
+                              placeholder="Nhập email"
                             />
-                            <div className='text-danger'>
+                            <div className="text-danger">
                               {errors.email && <div>{errors.email}</div>}
                             </div>
                           </div>
-                          <div className='form-group'>
+                          <div className="form-group">
                             <input
+                              type="password"
                               value={password}
-                              className='form-control'
+                              className="form-control"
                               onChange={(e) => setPassword(e.target.value)}
-                              placeholder='Nhập mật khẩu'
+                              placeholder="Nhập mật khẩu"
                             />
-                            <div className='text-danger'>
+                            <div className="text-danger">
                               {errors.password && <div>{errors.password}</div>}
                             </div>
                           </div>
-                          <div className='form-group'>
+                          <div className="form-group">
                             <input
+                              type="password"
                               value={confirmPassword}
-                              className='form-control'
+                              className="form-control"
                               onChange={(e) =>
                                 setConfirmPassword(e.target.value)
                               }
-                              placeholder='Nhập lại mật khẩu'
+                              placeholder="Nhập lại mật khẩu"
                             />
-                            <div className='text-danger'>
+                            <div className="text-danger">
                               {errors.confirmPassword && (
                                 <div>{errors.confirmPassword}</div>
                               )}
                             </div>
                           </div>
-                          <div className='form-group text-right'>
+                          <div className="form-group text-right">
                             <button
-                              type='button'
-                              className='site-button dz-xs-flex m-r5 btn'
+                              type="button"
+                              className="site-button dz-xs-flex m-r5 btn"
                               disabled={
                                 !name ||
                                 !username ||
@@ -392,8 +394,8 @@ function Register2(props) {
                             >
                               Tiếp tục{" "}
                               <i
-                                className='fa fa-arrow-right'
-                                aria-hidden='true'
+                                className="fa fa-arrow-right"
+                                aria-hidden="true"
                               ></i>
                             </button>
                           </div>
@@ -401,42 +403,42 @@ function Register2(props) {
                       )}
                       {step === 2 && (
                         <>
-                          <div className='form-group'>
+                          <div className="form-group">
                             {/* <Select
                               placeholder='Chọn tỉnh/thành phố'
                               onChange={(e) => setProvince(e.label)}
                               options={provinces}
                             /> */}
                             <ReactSelectShowType
-                              placeholder='Chọn tỉnh/thành phố'
+                              placeholder="Chọn tỉnh/thành phố"
                               onChange={(e) => setProvince(e.label)}
                               options={provinces}
                               minInput={1}
                             />
-                            <div className='text-danger'>
+                            <div className="text-danger">
                               {errors.province && <div>{errors.province}</div>}
                             </div>
                           </div>
-                          <div className='form-group'>
+                          <div className="form-group">
                             {/* <Select
                               placeholder='Chọn quận/huyện'
                               onChange={(e) => setDistrict(e.label)}
                               options={districts}
                             /> */}
                             <ReactSelectShowType
-                              placeholder='Chọn quận/huyện'
+                              placeholder="Chọn quận/huyện"
                               onChange={(e) => setDistrict(e.label)}
                               options={districts}
                               minInput={1}
                             />
-                            <div className='text-danger'>
+                            <div className="text-danger">
                               {errors.district && <div>{errors.district}</div>}
                             </div>
                           </div>
 
-                          <div className='form-group'>
+                          <div className="form-group">
                             <ReactSelectShowType
-                              placeholder='Chọn phường/xã'
+                              placeholder="Chọn phường/xã"
                               onChange={(e) => setWard(e.label)}
                               options={wards}
                               minInput={1}
@@ -447,37 +449,37 @@ function Register2(props) {
                               onChange={(e) => setWard(e.label)}
                               options={wards}
                             /> */}
-                            <div className='text-danger'>
+                            <div className="text-danger">
                               {errors.ward && <div>{errors.ward}</div>}
                             </div>
                           </div>
 
-                          <div className='form-group'>
+                          <div className="form-group">
                             <input
                               value={address}
                               onChange={(e) => setAddress(e.target.value)}
-                              className='form-control'
-                              placeholder='Nhập địa chỉ'
+                              className="form-control"
+                              placeholder="Nhập địa chỉ"
                             />
-                            <div className='text-danger'>
+                            <div className="text-danger">
                               {errors.address && <div>{errors.address}</div>}
                             </div>
                           </div>
-                          <div className='form-group text-right'>
+                          <div className="form-group text-right">
                             <button
-                              type='button'
-                              className='site-button dz-xs-flex m-r5 '
-                              onClick={() => setStep(2)}
+                              type="button"
+                              className="site-button dz-xs-flex m-r5 "
+                              onClick={() => setStep(1)}
                             >
                               <i
-                                className='fa fa-arrow-left'
-                                aria-hidden='true'
+                                className="fa fa-arrow-left"
+                                aria-hidden="true"
                               ></i>{" "}
                               Quay lại
                             </button>
                             <button
-                              type='button'
-                              className='site-button dz-xs-flex m-r5 btn'
+                              type="button"
+                              className="site-button dz-xs-flex m-r5 btn"
                               disabled={
                                 !province || !district || !ward || !address
                               }
@@ -485,8 +487,8 @@ function Register2(props) {
                             >
                               Tiếp tục{" "}
                               <i
-                                className='fa fa-arrow-right'
-                                aria-hidden='true'
+                                className="fa fa-arrow-right"
+                                aria-hidden="true"
                               ></i>
                             </button>
                           </div>
@@ -494,19 +496,19 @@ function Register2(props) {
                       )}
                       {step === 3 && (
                         <>
-                          <div className='form-group'>
+                          <div className="form-group">
                             <Select
-                              placeholder='Chọn trình độ'
+                              placeholder="Chọn trình độ"
                               onChange={(e) => setLevel(e.label)}
                               options={levels}
                             />
-                            <div className='text-danger'>
+                            <div className="text-danger">
                               {errors.level && <div>{errors.level}</div>}
                             </div>
                           </div>
-                          <div className='form-group'>
+                          <div className="form-group">
                             <ReactSelectShowType
-                              placeholder='Chọn trường'
+                              placeholder="Chọn trường"
                               onChange={(e) => setSchool(e.label)}
                               options={schools}
                               minInput={1}
@@ -516,15 +518,15 @@ function Register2(props) {
                               onChange={(e) => setSchool(e.label)}
                               options={schools}
                             /> */}
-                            <div className='text-danger'>
+                            <div className="text-danger">
                               {errors.school && <div>{errors.school}</div>}
                             </div>
                           </div>
 
-                          <div className='form-group'>
+                          <div className="form-group">
                             <ReactSelectShowType
                               minInput={1}
-                              placeholder='Chọn ngành'
+                              placeholder="Chọn ngành"
                               onChange={(e) => setMajor(e.label)}
                               options={majors}
                             />
@@ -533,14 +535,14 @@ function Register2(props) {
                               onChange={(e) => setMajor(e.label)}
                               options={majors}
                             /> */}
-                            <div className='text-danger'>
+                            <div className="text-danger">
                               {errors.major && <div>{errors.major}</div>}
                             </div>
                           </div>
-                          <div className='form-group'>
+                          <div className="form-group">
                             <ReactSelectShowType
                               minInput={1}
-                              placeholder='Chọn chức danh'
+                              placeholder="Chọn chức danh"
                               onChange={(e) => setJobTitle(e.label)}
                               options={jobTitles}
                             />
@@ -549,69 +551,69 @@ function Register2(props) {
                               onChange={(e) => setJobTitle(e.label)}
                               options={jobTitles}
                             /> */}
-                            <div className='text-danger'>
+                            <div className="text-danger">
                               {errors.jobTitle && <div>{errors.jobTitle}</div>}
                             </div>
                           </div>
-                          <div className='form-group'>
+                          <div className="form-group">
                             <input
-                              type='month'
+                              type="month"
                               value={startYear}
                               onChange={(e) => setStartYear(e.target.value)}
-                              className='form-control'
-                              placeholder='Nhập năm bắt đầu'
+                              className="form-control"
+                              placeholder="Nhập năm bắt đầu"
                             />
-                            <div className='text-danger'>
+                            <div className="text-danger">
                               {errors.startYear && (
                                 <div>{errors.startYear}</div>
                               )}
                             </div>
                           </div>
-                          <div className='form-group'>
+                          <div className="form-group">
                             <input
-                              type='month'
+                              type="month"
                               value={endYear}
                               onChange={(e) => setEndYear(e.target.value)}
-                              className='form-control'
-                              placeholder='Nhập năm kết thúc'
+                              className="form-control"
+                              placeholder="Nhập năm kết thúc"
                             />
-                            <div className='text-danger'>
+                            <div className="text-danger">
                               {errors.endYear && <div>{errors.endYear}</div>}
                             </div>
                           </div>
 
-                          <div className='form-group text-left'>
-                            <span className='custom-control custom-checkbox'>
+                          <div className="form-group text-left">
+                            <span className="custom-control custom-checkbox">
                               <input
-                                type='checkbox'
-                                className='custom-control-input'
-                                id='check1'
+                                type="checkbox"
+                                className="custom-control-input"
+                                id="check1"
                                 checked={isAgree}
                                 onChange={(e) => setIsAgree(e.target.checked)}
                               />
                               <label
-                                className='custom-control-label'
-                                htmlFor='check1'
+                                className="custom-control-label"
+                                htmlFor="check1"
                               >
                                 Tôi đồng ý với các điều khoản và điều kiện
                               </label>
                             </span>
                           </div>
-                          <div className='form-group text-right'>
+                          <div className="form-group text-right">
                             <button
-                              type='button'
-                              className='site-button dz-xs-flex m-r5 '
+                              type="button"
+                              className="site-button dz-xs-flex m-r5 "
                               onClick={() => setStep(2)}
                             >
                               <i
-                                className='fa fa-arrow-left'
-                                aria-hidden='true'
+                                className="fa fa-arrow-left"
+                                aria-hidden="true"
                               ></i>{" "}
                               Quay lại
                             </button>
                             <button
-                              type='submit'
-                              className='site-button dz-xs-flex m-r5 btn'
+                              type="submit"
+                              className="site-button dz-xs-flex m-r5 btn"
                               disabled={
                                 !isAgree ||
                                 !level ||
@@ -628,37 +630,37 @@ function Register2(props) {
                         </>
                       )}
 
-                      <div className='dz-social clearfix d-none'>
-                        <h5 className='form-title m-t5 pull-left'>
+                      <div className="dz-social clearfix d-none">
+                        <h5 className="form-title m-t5 pull-left">
                           Sign In With
                         </h5>
-                        <ul className='dez-social-icon dez-border pull-right dez-social-icon-lg text-white'>
+                        <ul className="dez-social-icon dez-border pull-right dez-social-icon-lg text-white">
                           <li>
                             <Link
                               to={""}
-                              className='fa fa-facebook  fb-btn mr-1'
-                              target='bank'
+                              className="fa fa-facebook  fb-btn mr-1"
+                              target="bank"
                             ></Link>
                           </li>
                           <li>
                             <Link
                               to={""}
-                              className='fa fa-twitter  tw-btn mr-1'
-                              target='bank'
+                              className="fa fa-twitter  tw-btn mr-1"
+                              target="bank"
                             ></Link>
                           </li>
                           <li>
                             <Link
                               to={""}
-                              className='fa fa-linkedin link-btn mr-1'
-                              target='bank'
+                              className="fa fa-linkedin link-btn mr-1"
+                              target="bank"
                             ></Link>
                           </li>
                           <li>
                             <Link
                               to={""}
-                              className='fa fa-google-plus  gplus-btn'
-                              target='bank'
+                              className="fa fa-google-plus  gplus-btn"
+                              target="bank"
                             ></Link>
                           </li>
                         </ul>
@@ -671,7 +673,7 @@ function Register2(props) {
                     <span>
                       {" "}
                       © Copyright by{" "}
-                      <i className='fa fa-heart m-lr5 text-red heart'></i>
+                      <i className="fa fa-heart m-lr5 text-red heart"></i>
                       <Link to={""}>CVIDPRO </Link> All rights reserved.
                     </span>
                   </div>

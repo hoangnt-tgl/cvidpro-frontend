@@ -10,6 +10,7 @@ import {
   employeeSignUp,
   companySignUp,
 } from "../../services/AuthService";
+import swal from "sweetalert";
 
 export const SIGNUP_CONFIRMED_ACTION = "[signup action] confirmed signup";
 export const SIGNUP_FAILED_ACTION = "[signup action] failed signup";
@@ -23,7 +24,13 @@ export function employeeSignupAction(data, history) {
     let signupApi = employeeSignUp(data)
       .then((response) => {
         dispatch(confirmedSignupAction({}));
-        history.push("/employee/login");
+        swal({
+          title: "Đăng kí thành công",
+          text: "Vui lòng kiểm tra email để kích hoạt tài khoản",
+          icon: "success",
+          button: "OK",
+        });
+        // history.push("/employee/login");
       })
       // .catch((error) => {
       //   const errorMessage = formatError(error.response.data.message || "");
@@ -96,7 +103,6 @@ export function logout(history) {
     "/company/login",
     "/employee/register",
     "/company/register",
-    "/register-2",
   ];
   toast.success(logoutNoti);
   if (
@@ -105,7 +111,7 @@ export function logout(history) {
     history.location.pathname &&
     accessHref.indexOf(history.location.pathname) === -1
   ) {
-    history.push("/login");
+    history.push("/");
   }
   return {
     type: LOGOUT_ACTION,

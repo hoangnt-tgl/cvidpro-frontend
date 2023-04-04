@@ -13,7 +13,7 @@ function Jobsalert(props) {
   useEffect(() => {
     window.scrollTo(0, 0);
     async function fetchData() {
-      gẹtApplyJobForEmployee("company").then((res) => {
+      gẹtApplyJobForEmployee("employee").then((res) => {
         setJobList(res.data);
         setIsLoading(false);
       });

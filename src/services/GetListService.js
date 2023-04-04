@@ -59,3 +59,11 @@ export const getListEnvironment = async () => {
 export const getListQuestion = async () => {
   return axiosInstance.get(`question/getall`).then((res) => res.data);
 }
+
+export const getListLanguage = async () => {
+  return axiosInstance.get(`language/get-list-language`).then((res) => res.data);
+}
+
+export const getCertificateByLanguage = async (language) => {
+  return axiosInstance.get(`language/certificate/${language}`).then((res) => res.data);
+}

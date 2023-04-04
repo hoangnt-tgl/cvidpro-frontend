@@ -6,6 +6,7 @@ import PageTitle from "../Layout/PageTitle";
 import { gẹtJobDetail } from "../../services/CompanyApi";
 import { Accordion, Card, Button, Nav, Form, Container } from "react-bootstrap";
 import { getListQuestion } from "../../services/GetListService";
+import "../../css/layout.css"
 
 var bnr = require("./../../images/banner/bnr1.jpg");
 
@@ -63,20 +64,25 @@ function Jobdetail() {
                             <li>
                               <i className="ti-money"></i>
                               <strong className="font-weight-700 text-black">
-                                Mức lương
+                                Mức lương 
                               </strong>{" "}
                               Lương thỏa thuận
                             </li>
                             <li>
                               <i className="ti-shield"></i>
                               <strong className="font-weight-700 text-black">
-                                Kinh nghiệm
+                                Kinh nghiệm làm việc
                               </strong>
                               {job?.experience}
                             </li>
                           </ul>
                         </div>
                       </div>
+                       <div>
+                       <h5 className="font-weight-3400">Mô tả </h5>
+                        <div className="dez-divider divider-2px bg-gray-dark mb-4 mt-0"></div>
+                       </div>
+
                     </div>
                   </div>
                 </div>
@@ -112,8 +118,8 @@ function Jobdetail() {
                       software like Aldus PageMaker including versions of Lorem
                       Ipsum. */}
                     </p>
-                    <h5 className="font-weight-600">Mô tả công việc</h5>
-                    <div className="dez-divider divider-2px bg-gray-dark mb-4 mt-0"></div>
+                    
+
                     <p
                       dangerouslySetInnerHTML={{ __html: job?.description }}
                     ></p>
@@ -144,6 +150,7 @@ function Jobdetail() {
           </div>
         </div>
         <Container className="mt-4">
+        <div className="tieuchi">
         <Accordion>
           <Card border="primary">
             <Card.Header className="d-flex w-100 py-1">
@@ -157,7 +164,7 @@ function Jobdetail() {
           </Card>
           {questions.map((question, index) => {
             return (
-              <Card border="primary">
+              <Card border="primary" className="tieuchi2">
                 <Card.Header className="d-flex w-100 py-1">
                   <Accordion.Toggle
                     as={Nav.Link}
@@ -184,6 +191,8 @@ function Jobdetail() {
             );
           })}
         </Accordion>
+        </div>
+        
       </Container>
       </div>
       

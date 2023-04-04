@@ -1,0 +1,26 @@
+.tieuchi{
+background: yellow;    
+height: 500px;    
+width: 500px;    
+border: solid 1px red;    
+padding: 30px;
+}
+.tieuchi2{
+    background: yellow;    
+    height: 55px;    
+    width: 500px;    
+    border: solid 1px red;    
+    padding: 4px;
+    }
+.score-progcess{
+    text-align: left; 
+    margin-right: 120px;
+}
+.progress-bar {
+  height: 1000000000000px;
+}
+
+Card.Title{
+    font-weight: 50000 ;
+    font-size: 5000px;
+}
