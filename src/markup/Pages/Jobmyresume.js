@@ -488,16 +488,19 @@ function Jobmyresume(props) {
                       <div className="progress-info">
                         Điểm CV:
                       </div>
+                      <div>
                       <div className="score">  
                         <span className="score-progcess" style={{marginLeft:`${userInformation.points*10}%`}}>{userInformation.points}</span>
                       </div>
-                      <div className="progress" >
+                      <div className="progress" style={{margin:"0 0 5px 0", height: " 8px"}} >
                         <div
                           className="progress-bar bg-primary"  
                           style={{ width: userInformation.points * 10 + "%" }}
                           role="progressbar"
                         ></div>
                       </div>
+                      </div>
+                      
                     </div>
                   </div>
                 </div>
@@ -743,14 +746,14 @@ function Jobmyresume(props) {
           backgroundImage: "url(" + bnr3 + ")",
           backgroundSize: "75% 100%", 
         }}>
-          <div className="section-full browse-job content-inner-2">
+          <div className="section-full browse-job content-inner-2" style={{paddingTop: "35px"}}>
             <div className="container">
               <div
                 id="resume_headline_bx"
                 className=" job-bx bg-white table-job-bx m-b30" style={{border:"1px solid #000"}}
               >
-                <div className="d-flex">
-                  <h5 className="m-b15 bold">Kinh nghiệm làm việc</h5>
+                <div className="text-center">
+                  <h5 className="m-b15 bold" style={{fontWeight:"700", fontSize: "25"}}>KINH NGHIỆM LÀM VIỆC</h5>
                 </div>
                 {userInformation.workExperience?.map((item, index1) => {
                   return (
@@ -1068,12 +1071,12 @@ function Jobmyresume(props) {
                     </>
                   );
                 })}
-                <h5 className="">
+                <h5 style={{fontWeight:"700"}}>
                   Kinh nghiệm đến hiện tại:{" "}
                   <span style={{color:"red"}}> {getExperience(userInformation.workExperience)}</span>
                  
                 </h5>
-                <h5 className="text-center">Thêm kinh nghiệm làm việc mới</h5>
+                <h5 className="text-center" style={{fontWeight:"700", fontSize: "25"}}>THÊM KINH NGHIỆM LÀM VIỆC MỚI</h5>
                 <Tabs
                   id="controlled-tab-example"
                   activeKey={tabKey}
