@@ -265,7 +265,10 @@ const Level = ({
                   let e = { target: { dataset: { testid: 'endYear' } } };
                   handleCheckInput(e);
                   onChange(date);
-                  if (getValues('endYear')._d > getValues('startYear')._d) {
+                  if (
+                    new Date(getValues('startYear')._d).getTime() >
+                    new Date(getValues('endYear')._d).getTime()
+                  ) {
                     setError('endYear', {
                       type: 'manual',
                       message: 'Năm kết thúc phải lớn hơn năm bắt đầu',
