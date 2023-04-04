@@ -47,16 +47,25 @@ const useResetPass = (isCompany, duaration, duarationOtp) => {
       }
     } else {
       try {
+        if (isGetAgain) {
+          setIsOtpStillValid(false);
+        }
         await getOtpEmployee({ email: email });
         setIsGetOtp(true);
-        new Promise((resolve) => {
-          setTimeout(() => {
-            resolve();
-          }, duaration);
-        }).then(() => {
-          setIsGetOtp(false);
-        });
-      } catch (error) {}
+        setIsGetAgain(true);
+        setIsOtpStillValid(true);
+        // new Promise((resolve) => {
+        //   setTimeout(() => {
+        //     resolve();
+        //   }, duaration);
+        // }).then(() => {
+        //   setIsGetOtp(false);
+        // });
+      } catch (error) {
+        if (error.response.data.message.toLowerCase() === 'không tìm thấy') {
+          setIsMailExist(error.response.data.message);
+        }
+      }
     }
   }
   async function validateOtpFc(otp) {
