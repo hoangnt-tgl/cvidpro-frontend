@@ -25,9 +25,9 @@ const useResetPass = (isCompany, duaration, duarationOtp) => {
         if (isGetAgain) {
           setIsOtpStillValid(false);
         }
-        await getOtpCompany({ email: email });
         setIsGetOtp(true);
         setIsGetAgain(true);
+        await getOtpCompany({ email: email });
         setIsOtpStillValid(true);
       } catch (error) {
         if (error.response.data.message.toLowerCase() === 'không tìm thấy') {
