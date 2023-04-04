@@ -101,7 +101,7 @@ function App(props) {
   } else {
     return (
       <div className='vh-100'>
-        <LocalizationProvider>
+        <LocalizationProvider dateAdapter={AdapterMoment}>
           <Suspense
             fallback={
               <div id='preloader'>
