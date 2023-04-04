@@ -16,21 +16,30 @@ const useResetPass = (isCompany, duaration, duarationOtp) => {
   const [otp, setOtp] = useState();
   const [isMailExist, setIsMailExist] = useState('');
   const [isOtpStillValid, setIsOtpStillValid] = useState(false);
-
+  const [isGetAgain, setIsGetAgain] = useState(false);
+  // useEffect(() => {
+  //   if (isGetOtp) {
+  //     setIsOtpStillValid(true);
+  //   }
+  // }, [isGetOtp]);
   async function getOtpFc(email) {
     setEmail(email);
     if (isCompany) {
       try {
+        if (isGetAgain) {
+          setIsOtpStillValid(false);
+        }
         await getOtpCompany({ email: email });
         setIsGetOtp(true);
+        setIsGetAgain(true);
         setIsOtpStillValid(true);
-        new Promise((resolve) => {
-          setTimeout(() => {
-            resolve();
-          }, duaration);
-        }).then(() => {
-          setIsGetOtp(false);
-        });
+        // new Promise((resolve) => {
+        //   setTimeout(() => {
+        //     resolve();
+        //   }, duaration);
+        // }).then(() => {
+        //   setIsGetOtp(false);
+        // });
       } catch (error) {
         if (error.response.data.message.toLowerCase() === 'không tìm thấy') {
           setIsMailExist(error.response.data.message);
@@ -65,17 +74,17 @@ const useResetPass = (isCompany, duaration, duarationOtp) => {
       await resetPasswordEmployee({ email, otp, password });
     }
   }
-  useEffect(() => {
-    if (isGetOtp) {
-      new Promise((resolve) => {
-        setTimeout(() => {
-          resolve();
-        }, duarationOtp);
-      }).then(() => {
-        setIsOtpStillValid(false);
-      });
-    }
-  }, [isGetOtp]);
+  // useEffect(() => {
+  //   if (isGetOtp) {
+  //     new Promise((resolve) => {
+  //       setTimeout(() => {
+  //         resolve();
+  //       }, duarationOtp);
+  //     }).then(() => {
+  //       setIsOtpStillValid(false);
+  //     });
+  //   }
+  // }, [isGetOtp]);
   return {
     getOtpFc,
     resetPasswordFc,
@@ -85,6 +94,8 @@ const useResetPass = (isCompany, duaration, duarationOtp) => {
     isMailExist,
     setIsMailExist,
     isOtpStillValid,
+    setIsGetOtp,
+    setIsOtpStillValid,
   };
 };
 

@@ -6,8 +6,14 @@ import { useRef } from 'react';
 
 import useCountDown from '../../hooks/useCountDown';
 
-const Step1 = ({ getOtp, isGetOtp, isMailExist, setIsMailExist }) => {
-  const { minutes, seconds } = useCountDown(10, isGetOtp);
+const Step1 = ({
+  getOtp,
+  isGetOtp,
+  isMailExist,
+  setIsMailExist,
+  setIsGetOtp,
+}) => {
+  const { minutes, seconds } = useCountDown(10, isGetOtp, setIsGetOtp);
   const checkStepRef = useRef({
     email: false,
   });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 
-const useCountDown = (time, trigger) => {
+const useCountDown = (time, trigger, setIsGetOtp) => {
   const [duaration, setDuration] = React.useState(time);
   const [minutes, setMinutes] = React.useState();
   const [seconds, setSeconds] = React.useState();
@@ -18,6 +18,7 @@ const useCountDown = (time, trigger) => {
       } else setSeconds(Math.floor(duaration % 60).toString());
     } else {
       setSeconds('00');
+      setIsGetOtp(false);
     }
   }
   useEffect(() => {

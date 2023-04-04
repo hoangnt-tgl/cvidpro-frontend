@@ -4,8 +4,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useRef } from 'react';
 import useCountDown from '../../hooks/useCountDown';
-const ValidateOtp = ({ setStep, validateOtpFc, isOtpStillValid, isGetOtp }) => {
-  const { minutes, seconds } = useCountDown(20, isOtpStillValid);
+const ValidateOtp = ({
+  setStep,
+  validateOtpFc,
+  isOtpStillValid,
+  setIsOtpStillValid,
+}) => {
+  const { minutes, seconds } = useCountDown(
+    20,
+    isOtpStillValid,
+    setIsOtpStillValid
+  );
   const [otpFail, setOtpFail] = useState(false);
   const checkStepRef = useRef({
     otp: false,

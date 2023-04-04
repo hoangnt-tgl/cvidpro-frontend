@@ -15,6 +15,8 @@ const ForgetPass = ({ isCompany, openModal, setOpenModal }) => {
     isMailExist,
     setIsMailExist,
     isOtpStillValid,
+    setIsGetOtp,
+    setIsOtpStillValid,
   } = useResetPass(isCompany, 10000, 20000);
   const [step, setStep] = useState(1);
 
@@ -50,12 +52,14 @@ const ForgetPass = ({ isCompany, openModal, setOpenModal }) => {
                     isGetOtp={isGetOtp}
                     isMailExist={isMailExist}
                     setIsMailExist={setIsMailExist}
+                    setIsGetOtp={setIsGetOtp}
                   />
                   <ValidateOtp
                     isOtpStillValid={isOtpStillValid}
                     setStep={setStep}
                     validateOtpFc={validateOtpFc}
                     isGetOtp={isGetOtp}
+                    setIsOtpStillValid={setIsOtpStillValid}
                   />
                 </>
               )}
