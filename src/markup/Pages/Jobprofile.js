@@ -30,7 +30,7 @@ function Jobprofile(props) {
       <Header2 />
       <div className="page-content bg-white">
         <div className="content-block">
-          <div className="section-full bg-white browse-job p-t50 p-b20">
+          <div className="section-full bg-white browse-job p-t50 p-b20 px-3">
             <div className="container">
               <div className="m-b30">
                 <div className="job-bx submit-resume row">
@@ -148,19 +148,30 @@ function Jobprofile(props) {
                             Số điện thoại
                           </label>
                           <div className="row align-items-center pr-3">
-                            <p className="col-lg-9 col-md-9 col-8 mb-0 text-danger">
-                              Chưa xác thực
-                            </p>
-                            <button className="col-lg-3 col-md-3 col-4 btn btn-primary btn-md">
-                              Xác thực
-                            </button>
+                            <p className="col mb-0">0123456789</p>
+                            <div className="row align-items-center pr-3">
+                              <p className="col mb-0 text-danger font-20">
+                                <i
+                                  class="fa fa-times-circle"
+                                  aria-hidden="true"
+                                ></i>
+                              </p>
+                              <button className="btn btn-primary btn-md">
+                                Xác thực
+                              </button>
+                            </div>
+                            {/* <div className="row align-items-center pr-3">
+                              <p className="col mb-0 text-success font-20">
+                                <i
+                                  class="fa fa-check-circle"
+                                  aria-hidden="true"
+                                ></i>
+                              </p>
+                              <button className="btn btn-primary btn-md">
+                                Cập nhật
+                              </button>
+                            </div> */}
                           </div>
-                          {/* <div className="row align-items-center pr-3">
-                            <p className="col-lg-9 col-md-9 col-8 mb-0">{userInformation.phone}</p>
-                            <button className="col-lg-3 col-md-3 col-4 btn btn-primary btn-md">
-                              Cập nhật
-                            </button>
-                          </div> */}
                         </div>
                       </div>
                       <div className="col-lg-12">
@@ -169,19 +180,30 @@ function Jobprofile(props) {
                             Email
                           </label>
                           <div className="row align-items-center pr-3">
-                            <p className="col-lg-9 col-md-9 col-8 mb-0 text-danger">
-                              Chưa xác thực
-                            </p>
-                            <button className="col-lg-3 col-md-3 col-4 btn btn-primary btn-md">
-                              Xác thực
-                            </button>
+                            <p className="col mb-0">user123@gmail.com</p>
+                            <div className="row align-items-center pr-3">
+                              <p className="col mb-0 text-danger font-20">
+                                <i
+                                  class="fa fa-times-circle"
+                                  aria-hidden="true"
+                                ></i>
+                              </p>
+                              <button className="btn btn-primary btn-md">
+                                Xác thực
+                              </button>
+                            </div>
+                            {/* <div className="row align-items-center pr-3">
+                              <p className="col mb-0 text-success font-20">
+                                <i
+                                  class="fa fa-check-circle"
+                                  aria-hidden="true"
+                                ></i>
+                              </p>
+                              <button className="btn btn-primary btn-md">
+                                Cập nhật
+                              </button>
+                            </div> */}
                           </div>
-                          {/* <div className="row align-items-center pr-3">
-                            <p className="col-lg-9 col-md-9 col-8 mb-0">{userInformation.email}</p>
-                            <button className="col-lg-3 col-md-3 col-4 btn btn-primary btn-md">
-                              Cập nhật
-                            </button>
-                          </div> */}
                         </div>
                       </div>
                       <div className="col-lg-12">

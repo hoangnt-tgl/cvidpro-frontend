@@ -103,21 +103,28 @@ class HeaderEmployee extends Component {
                     </li>
                     <li>
                       <Link to={'#'} className="dez-page">
-                        Ứng viên
+                        Quản lý tuyển dụng
                       </Link>
                     </li>
                     <li>
-                      <Link to={'/company-profile'} className="dez-page">
-                        Thông tin công ty
+                      <Link to={'#'}>
+                        Quản lý tài khoản <i className="fa fa-chevron-down"></i>
                       </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to={'/company-change-password'}
-                        className="dez-page"
-                      >
-                        Thay đổi mật khẩu
-                      </Link>
+                      <ul className="sub-menu">
+                        <li>
+                          <Link to={'/company-profile'} className="dez-page">
+                            Thông tin tài khoản
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to={'/company-change-password'}
+                            className="dez-page"
+                          >
+                            Thay đổi mật khẩu
+                          </Link>
+                        </li>
+                      </ul>
                     </li>
                   </ul>
                 </div>

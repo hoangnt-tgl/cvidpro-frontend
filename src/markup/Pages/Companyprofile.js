@@ -113,13 +113,29 @@ function Companyprofile(props) {
                             Phone
                           </label>
                           <div className="row align-items-center pr-3">
-                            <p className="col mb-0">Chưa xác thực</p>
-                            <p className="col mb-0 text-danger">
-                              Chưa xác thực
-                            </p>
-                            <button className="btn btn-primary btn-md">
-                              Xác thực
-                            </button>
+                            <p className="col mb-0">0123456789</p>
+                            <div className="row align-items-center pr-3">
+                              <p className="col mb-0 text-danger font-20">
+                                <i
+                                  class="fa fa-times-circle"
+                                  aria-hidden="true"
+                                ></i>
+                              </p>
+                              <button className="btn btn-primary btn-md">
+                                Xác thực
+                              </button>
+                            </div>
+                            {/* <div className="row align-items-center pr-3">
+                              <p className="col mb-0 text-success font-20">
+                                <i
+                                  class="fa fa-check-circle"
+                                  aria-hidden="true"
+                                ></i>
+                              </p>
+                              <button className="btn btn-primary btn-md">
+                                Cập nhật
+                              </button>
+                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -129,13 +145,29 @@ function Companyprofile(props) {
                             Email
                           </label>
                           <div className="row align-items-center pr-3">
-                            <p className="col mb-0">Chưa xác thực</p>
-                            <p className="col mb-0 text-danger">
-                              Chưa xác thực
-                            </p>
-                            <button className="btn btn-primary btn-md">
-                              Xác thực
-                            </button>
+                            <p className="col mb-0">user123@gmail.com</p>
+                            <div className="row align-items-center pr-3">
+                              <p className="col mb-0 text-danger font-20">
+                                <i
+                                  class="fa fa-times-circle"
+                                  aria-hidden="true"
+                                ></i>
+                              </p>
+                              <button className="btn btn-primary btn-md">
+                                Xác thực
+                              </button>
+                            </div>
+                            {/* <div className="row align-items-center pr-3">
+                              <p className="col mb-0 text-success font-20">
+                                <i
+                                  class="fa fa-check-circle"
+                                  aria-hidden="true"
+                                ></i>
+                              </p>
+                              <button className="btn btn-primary btn-md">
+                                Cập nhật
+                              </button>
+                            </div> */}
                           </div>
                         </div>
                       </div>
