@@ -248,7 +248,7 @@ const Index = ({
                   <div className='col-lg-12 col-md-6'>
                     <div className='form-group'>
                       <p>
-                        Giấy phép kinh doanh <span className='asterisk'></span>
+                        Ảnh chứng chỉ <span className='asterisk'></span>
                       </p>
                       <input
                         type='file'
@@ -354,12 +354,6 @@ const Index = ({
                   type='submit'
                   className='site-button btn'
                   form='addShortTraining'
-                  // disabled={
-                  //   !newShortTraining.certificate ||
-                  //   !newShortTraining.organizer ||
-                  //   !newShortTraining.start ||
-                  //   !newShortTraining.end
-                  // }
                 >
                   Save
                 </button>
@@ -373,96 +367,3 @@ const Index = ({
 };
 
 export default Index;
-
-{
-  /* <div className='col-lg-12 col-md-6'>
-                    <div className='form-group'>
-                      <label>Tên chứng chỉ</label>
-                      <Form.Control
-                        placeholder='Nhập tên chứng chỉ'
-                        value={newShortTraining.certificate}
-                        onChange={(e) => {
-                          setNewShortTraining({
-                            ...newShortTraining,
-                            certificate: e.target.value,
-                          });
-                        }}
-                        required
-                      ></Form.Control>
-                    </div>
-                  </div>
-                  <div className='col-lg-12 col-md-12'>
-                    <div className='form-group'>
-                      <label>Đơn vị tổ chức</label>
-                      <input
-                        className='form-control'
-                        placeholder='Nhập đơn vị tổ chức'
-                        value={newShortTraining.organizer}
-                        onChange={(e) => {
-                          setNewShortTraining({
-                            ...newShortTraining,
-                            organizer: e.target.value,
-                          });
-                        }}
-                        required
-                      />
-                    </div>
-                  </div> */
-}
-
-// {inputField.map((item, index) => {
-//   return (
-//     <div className='col-lg-12 col-md-6'  key={index}>
-//        <NormalInput name={item.register}
-//        title={item.title}
-//        placeholder={item.placeholder}
-//        type={item.type}
-//        register={{...register(item.register)}}
-//        errors={errors}
-//        />
-//    </div>
-//        )
-//  }
-//  {timeFiled.map((item, index) => {
-//   return (
-//     <div className='col-lg-6 col-md-6' key={index}>
-//       <div className='form-group'>
-//         <p>{item.title}</p>
-//         <Controller
-//       name={item.register}
-//       control={control}
-//       render={({ field: { onChange } }) => (
-//         <MuiDatePicker
-//           value={getValues(item.register)}
-//           format={'MM-YYYY'}
-//           className={
-//             checkStepRef.current.endYear
-//               ? 'form-control filled'
-//               : 'form-control '
-//           }
-//           onChange={(date, validationError) => {
-//             let e = {
-//               target: { dataset: { testid: item.register } },
-//             };
-//             handleCheckInput(e);
-//             onChange(date);
-//             if (
-//               new Date(getValues('startYear')._d).getTime() >
-//               new Date(getValues('endYear')._d).getTime()
-//             ) {
-//               setError('endYear', {
-//                 type: 'manual',
-//                 message:
-//                   'Năm kết thúc phải lớn hơn năm bắt đầu',
-//               });
-//               return;
-//             }
-//             clearErrors('endYear');
-//           }}
-//         />
-//       )}
-//     />
-
-//       </div>
-//   </div>
-//   ))}
