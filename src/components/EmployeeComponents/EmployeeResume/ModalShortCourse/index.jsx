@@ -92,11 +92,11 @@ const Index = ({
   const timeFiled = [
     {
       register: 'startYear',
-      title: 'Ngày bắt đầu',
+      title: 'Thời gian cấp chứng chỉ',
     },
     {
       register: 'endYear',
-      title: 'Ngày kết thúc',
+      title: 'Thời hạn chứng chỉ',
     },
   ];
   function handleCheckInput(e) {
