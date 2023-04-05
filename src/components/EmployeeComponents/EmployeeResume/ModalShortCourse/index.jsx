@@ -168,9 +168,17 @@ const Index = ({
         () => {},
         (error) => console.log('err ', error),
         async () => {
-          let url = await getDownloadURL(uploadTask.snapshot.ref);
-          setValue('degree', url);
-          clearErrors('degree');
+          try {
+            let url = await getDownloadURL(uploadTask.snapshot.ref);
+            setValue('degree', url);
+            clearErrors('degree');
+          } catch (error) {
+            console.log('error ', error);
+            setError('degree', {
+              type: 'manual',
+              message: 'Vui lòng chọn lại hình chứng chỉ',
+            });
+          }
         }
       );
 
@@ -195,6 +203,24 @@ const Index = ({
       degree: data.degree,
     };
     handleAddShortTraining(dataShortCourse);
+    reset({
+      startYear: '',
+      endYear: '',
+      organization: '',
+      content: '',
+      place: '',
+      duaration: '',
+      degree: '',
+    });
+    checkStepRef.current = {
+      startYear: false,
+      endYear: false,
+      organization: false,
+      content: false,
+      place: false,
+      duaration: false,
+      degree: false,
+    };
   }
   useEffect(() => {
     console.log(errors);
