@@ -5,7 +5,7 @@ import Footer from "../Layout/Footer";
 import { Modal } from "react-bootstrap";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import TableResume from "../../components/CompanyMangeResume/TableResume/TableResume";
+import TableResume from "../../components/CompanyComponents/CompanyMangeResume/TableResume/TableResume";
 import useGetTableAssessData from "../../hooks/useGetTableAssessData";
 const managerBlog = [
   {

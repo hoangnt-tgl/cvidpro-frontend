@@ -1,11 +1,16 @@
 import React from 'react';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import './styles.css';
-const index = ({ className, format, onChange }) => {
+const index = ({ className, format, onChange, value }) => {
   return (
     <>
       {' '}
-      <DatePicker onChange={onChange} className={className} format={format} />
+      <DatePicker
+        value={value}
+        onChange={onChange}
+        className={className}
+        format={format}
+      />
     </>
   );
 };

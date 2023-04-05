@@ -5,11 +5,11 @@ import {
   companyLoginAction,
 } from '../../store/actions/AuthActions';
 // image
-import LoginCompany from '../../components/LoginUser/Login';
-import RegisterLayout from '../../customComponents/RegisterLayout/RegisterLayout';
+import LoginCompany from '../../components/ComAndEm/LoginUser/Login';
+import RegisterLayout from '../../components/Layout/RegisterLayout/RegisterLayout'; 
 import { loginCompany } from '../../constants/description';
-import Header from '../../components/Header/Header';
-import ForgetPass from '../../components/ModalForgetPass/ForgetPass';
+import Header from '../../components/Layout/Header/Header';
+import ForgetPass from '../../components/ComAndEm/ModalForgetPass/ForgetPass';
 import { useState } from 'react';
 function Login(props) {
   const [forgetPass, setForgetPass] = useState(false);

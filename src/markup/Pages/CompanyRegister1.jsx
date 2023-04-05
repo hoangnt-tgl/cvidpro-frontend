@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import RegisterLayout from '../../customComponents/RegisterLayout/RegisterLayout';
 import FormRegister from '../../components/Registers/CompanyRegister/Step1/FormRegister';
 import FormRegister1 from '../../components/Registers/CompanyRegister/Step2/FormRegister1';
 import useRegister from '../../hooks/useRegister';
 import useGetOptions from '../../hooks/useGetOptions';
 import Stepper from '../../customComponents/Stepper/Stepper';
 import FormRegister2 from '../../components/Registers/CompanyRegister/Step3/FormRegister2';
-import Header from '../../components/Header/Header';
+
 
 function Register2(props) {
   const { setInfoRegister1, setInfoRegister2, registerCompany, infoRegister1 } =

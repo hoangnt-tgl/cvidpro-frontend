@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import Header from '../../components/Header/Header';
-import RegisterLayout from '../../customComponents/RegisterLayout/RegisterLayout';
+import RegisterLayout from '../../components/Layout/RegisterLayout/RegisterLayout';
 import CompanyRegister1 from './CompanyRegister1';
 import IndividualRegister from './IndividualRegister';
 

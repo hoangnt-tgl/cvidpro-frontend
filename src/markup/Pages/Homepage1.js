@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Header from "./../Layout/Header";
-import NewHeader from "../../components/Header/Header.jsx";
+
+import NewHeader from "../../components/Layout/Header/Header.jsx";
 import Footer from "./../Layout/Footer";
 import CountUp from "react-countup";
 import IndexBanner from "./../Element/IndexBanner";
