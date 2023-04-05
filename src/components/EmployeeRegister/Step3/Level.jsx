@@ -237,14 +237,6 @@ const Level = ({
                   onChange(date);
 
                   if (getValues('endYear')) {
-                    console.log(
-                      'start',
-                      new Date(getValues('startYear')._d).getTime()
-                    );
-                    console.log(
-                      'end',
-                      new Date(getValues('endYear')._d).getTime()
-                    );
                     if (
                       new Date(getValues('startYear')._d).getTime() >
                       new Date(getValues('endYear')._d).getTime()
