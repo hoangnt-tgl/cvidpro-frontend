@@ -488,7 +488,7 @@ function Jobmyresume(props) {
                       <div className="progress-info">
                         Điểm CV:
                       </div>
-                      <div>
+                      <div style={{border:"2px double #fff"}}>
                       <div className="score">  
                         <span className="score-progcess" style={{marginLeft:`${userInformation.points*10}%`}}>{userInformation.points}</span>
                       </div>
@@ -1081,9 +1081,9 @@ function Jobmyresume(props) {
                   id="controlled-tab-example"
                   activeKey={tabKey}
                   onSelect={(k) => setTabKey(k)}
-                  
+  
                 >
-                  <Tab eventKey="working" title="Thêm nơi làm việc" >
+                  <Tab eventKey="working" title="Thêm nơi làm việc" className="tab-job-pri" >
                     <Form className="mb-2" action="javascript:void(0);" style={{borderColor:"#333333 #333333 #fff"}}>
                       <Card  style={{border:"1px solid #000"}}>
                         <Card.Header>

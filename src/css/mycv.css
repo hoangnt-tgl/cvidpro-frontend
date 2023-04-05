@@ -21,3 +21,6 @@
  .exp-work{
     text-align: center;
  }
+ .nav-link.active{
+    border-color: #000 #000 #fff !important;
+ }
