@@ -54,7 +54,7 @@ const CompanyRegisterBoth = () => {
                     type='checkbox'
                     // checked={isIndividual && true}
                     // onClick={() => setIsIndividual(true)}
-                    disabled={isStep2 ? true : false}
+                    disabled={true}
                   />
                   <span>Hiệp hội, tổ chức</span>
                 </div>

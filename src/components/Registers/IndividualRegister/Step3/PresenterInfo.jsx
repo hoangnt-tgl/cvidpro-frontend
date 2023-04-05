@@ -30,12 +30,16 @@ const PresenterInfo = ({
     password: yup
       .string()
       .required('Vui lòng nhập mật khẩu')
-      .min(6, 'Mật khẩu phải có ít nhất 6 ký tự')
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        'Mật khẩu phải có ít nhất 8 ký tự, 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt'
+      )
+      .min(8, 'Mật khẩu phải có ít nhất 6 ký tự')
       .max(20, 'Mật khẩu không được quá 20 ký tự'),
     confirmPassword: yup
       .string()
       .required('Vui lòng nhập lại mật khẩu')
-      .min(6)
+      .min(8)
       .max(20)
       .oneOf([yup.ref('password')], 'Mật khẩu không khớp'),
   });
@@ -44,6 +48,7 @@ const PresenterInfo = ({
     handleSubmit,
     formState: { errors },
   } = useForm({
+    mode: 'onChange',
     resolver: yupResolver(schema),
   });
   async function onHandleSubmit(data) {

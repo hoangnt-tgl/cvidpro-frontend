@@ -41,7 +41,7 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
     confirmPassword: yup
       .string()
       .required('Vui lòng nhập lại mật khẩu')
-      .min(6)
+      .min(8)
       .max(20)
       .oneOf([yup.ref('password')], 'Mật khẩu không khớp'),
   });
@@ -53,6 +53,7 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    mode: 'onChange',
   });
   function onHandleSubmit(data) {
     setInfoRegister1(data);
@@ -123,7 +124,7 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
       }
     }
   }
-
+  // const { onChange, onBlur, name, ref } = register('password');
   return (
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
@@ -225,6 +226,7 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
             placeholder='Nhập mật khẩu'
             type='password'
             {...register('password')}
+            // onChange={onChange}
             data-testid='password'
             onBlur={handleCheckInput}
           />
