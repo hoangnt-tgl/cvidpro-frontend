@@ -484,15 +484,15 @@ function Jobmyresume(props) {
                         <i className="ti-email"></i> {userInformation.email}
                       </li>
                     </ul>
-                    <div className="progress-box m-t10">
-                      <div className="progress-info">
+                    <div className="progress-box m-t10" style={{border:"2px double #fff"}}>
+                      <div className="progress-info" style={{borderBottom:"2px double #fff"}}>
                         Điểm CV:
                       </div>
-                      <div style={{border:"2px double #fff"}}>
+                      <div >
                       <div className="score">  
                         <span className="score-progcess" style={{marginLeft:`${userInformation.points*10}%`}}>{userInformation.points}</span>
                       </div>
-                      <div className="progress" style={{margin:"0 0 5px 0", height: " 8px"}} >
+                      <div className="progress" style={{margin:"0 0 8px 0", height: " 8px"}} >
                         <div
                           className="progress-bar bg-primary"  
                           style={{ width: userInformation.points * 10 + "%" }}
@@ -762,7 +762,7 @@ function Jobmyresume(props) {
                         <Form className="mb-3">
                           <Card style={{border:"1px solid #000"}}>
                             <Card.Header>
-                              <Card.Title className="header-cv" style={{maxHeight:"200px"}}>
+                              <Card.Title className="header-cv header-job" style={{maxHeight:"200px"}}>
                                 Thời gian làm việc
                               </Card.Title>
                               <div className="row">
@@ -841,7 +841,7 @@ function Jobmyresume(props) {
                               </div>
                             </Card.Header>
                             <Card.Body>
-                              <Card.Title className="header-cv">
+                              <Card.Title className="header-cv header-job">
                                 Quá trình làm việc
                               </Card.Title>
                               {item.process.map((element, index2) => {
@@ -1189,7 +1189,7 @@ function Jobmyresume(props) {
                           </div>
                         </Card.Header>
                         <Card.Body>
-                          <Card.Title className="header-cv">
+                          <Card.Title className="header-cv header-job">
                             Quá trình làm việc
                           </Card.Title>
                           {newWork.process.map((element, index2) => {

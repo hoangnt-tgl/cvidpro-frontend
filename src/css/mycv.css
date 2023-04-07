@@ -2,6 +2,7 @@
     text-align: center;
     font-weight: 600 !important;
     background-color:#efeded !important;
+    color: #000 !important;
 }
 .answer{
     font-weight: 550 !important;
@@ -16,6 +17,10 @@
  .header-sec{
     font-weight: 500 !important;
     margin: 10pxv !important;
+    color: black !important;
+ }
+ .header-job{
+    font-weight: 600 !important;
     color: black !important;
  }
  .exp-work{
