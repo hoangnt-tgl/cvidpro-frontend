@@ -25,6 +25,9 @@ function Jobprofile(props) {
     fetchData()
   }, [reload])
 
+  const yearStart = userInformation.startYear
+  console.log(yearStart)
+
   return (
     <>
       <Header2 />
@@ -65,6 +68,26 @@ function Jobprofile(props) {
                         <div className="col-lg-12">
                           <div className="form-group">
                             <label className="border-bottom w-100 pb-1 mb-3">
+                              Ngày sinh
+                            </label>
+                            <p style={{ minHeight: 38 }} className="mb-0">
+                              {userInformation.birthday}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="col-lg-12">
+                          <div className="form-group">
+                            <label className="border-bottom w-100 pb-1 mb-3">
+                              Giới tính
+                            </label>
+                            <p style={{ minHeight: 38 }} className="mb-0">
+                              {userInformation.gender}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="col-lg-12">
+                          <div className="form-group">
+                            <label className="border-bottom w-100 pb-1 mb-3">
                               Nghề nghiệp
                             </label>
                             <p style={{ minHeight: 38 }} className="mb-0">
@@ -75,34 +98,35 @@ function Jobprofile(props) {
                         <div className="col-lg-12">
                           <div className="form-group">
                             <label className="border-bottom w-100 pb-1 mb-3">
-                              Ngôn ngữ
+                              Học vấn
                             </label>
                             <p style={{ minHeight: 38 }} className="mb-0">
-                              Chưa cập nhật
+                              {userInformation.school}
                             </p>
                           </div>
                         </div>
                         <div className="col-lg-12">
                           <div className="form-group">
                             <label className="border-bottom w-100 pb-1 mb-3">
-                              Tuổi
+                              Tốt nghiệp
                             </label>
                             <p style={{ minHeight: 38 }} className="mb-0">
-                              Chưa cập nhật
+                              {userInformation.startYear} -{' '}
+                              {userInformation.endYear}
                             </p>
                           </div>
                         </div>
                         <div className="col-lg-12">
                           <div className="form-group">
                             <label className="border-bottom w-100 pb-1 mb-3">
-                              Mức lương gần đây
+                              Trình độ
                             </label>
                             <p style={{ minHeight: 38 }} className="mb-0">
-                              Chưa cập nhật
+                              {userInformation.level}
                             </p>
                           </div>
                         </div>
-                        <div className="col-lg-12">
+                        {/* <div className="col-lg-12">
                           <div className="form-group">
                             <label className="border-bottom w-100 pb-1 mb-3">
                               Mức lương mong muốn
@@ -121,7 +145,7 @@ function Jobprofile(props) {
                               Chưa cập nhật
                             </p>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                     </form>
                   </div>
@@ -148,7 +172,7 @@ function Jobprofile(props) {
                             Số điện thoại
                           </label>
                           <div className="row align-items-center pr-3">
-                            <p className="col mb-0">0123456789</p>
+                            <p className="col mb-0">{userInformation.phone}</p>
                             <div className="row align-items-center pr-3">
                               <p className="col mb-0 text-danger font-20">
                                 <i
@@ -180,7 +204,7 @@ function Jobprofile(props) {
                             Email
                           </label>
                           <div className="row align-items-center pr-3">
-                            <p className="col mb-0">user123@gmail.com</p>
+                            <p className="col mb-0">{userInformation.email}</p>
                             <div className="row align-items-center pr-3">
                               <p className="col mb-0 text-danger font-20">
                                 <i
@@ -212,20 +236,23 @@ function Jobprofile(props) {
                             Địa chỉ
                           </label>
                           <p style={{ minHeight: 38 }} className="mb-0">
-                            {userInformation.address}
+                            {userInformation.address}, phường{' '}
+                            {userInformation.ward}, huyện{' '}
+                            {userInformation.district}, tỉnh{' '}
+                            {userInformation.province}
                           </p>
                         </div>
                       </div>
-                      <div className="col-lg-12">
+                      {/* <div className="col-lg-12">
                         <div className="form-group">
                           <label className="border-bottom w-100 pb-1 mb-3">
-                            Thành phố
+                            Tỉnh
                           </label>
                           <p style={{ minHeight: 38 }} className="mb-0">
-                            Chưa cập nhật
+                            {userInformation.province}
                           </p>
                         </div>
-                      </div>
+                      </div> */}
                       <div className="col-lg-12">
                         <div className="form-group">
                           <label className="border-bottom w-100 pb-1 mb-3">
