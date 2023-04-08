@@ -37,7 +37,9 @@ const ModalPayment = () => {
               return (
                 <div
                   className={
-                    idx === 0 ? 'choose-method bg-white' : 'choose-method'
+                    idx === paymentMethods
+                      ? 'choose-method bg-white'
+                      : 'choose-method'
                   }
                   key={idx}
                   onClick={() => {
