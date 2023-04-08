@@ -1,89 +1,76 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 
-import Homepage from "./Pages/Homepage1";
-import Homepage2 from "./Pages/Homepage2";
+import Homepage from './Pages/Homepage1';
+import Homepage2 from './Pages/Homepage2';
 
-import Jobprofile from "./Pages/Jobprofile";
-import Jobmyresume from "./Pages/Jobmyresume";
-import Jobsappliedjob from "./Pages/Jobsappliedjob";
-import Jobsalert from "./Pages/Jobsalert";
-import Jobsavedjobs from "./Pages/Jobsavedjobs";
-import Jobcvmanager from "./Pages/Jobcvmanager";
-import Changepasswordpage from "./Pages/Changepasswordpage";
-import JobResume from "./Pages/JobResume";
-import JobResumeAdmin from "./Pages/JobResumeAdmin";
+import Jobprofile from './Pages/Jobprofile';
+import Jobmyresume from './Pages/Jobmyresume';
+import Jobsappliedjob from './Pages/Jobsappliedjob';
+import Jobsalert from './Pages/Jobsalert';
+import Jobsavedjobs from './Pages/Jobsavedjobs';
+import Jobcvmanager from './Pages/Jobcvmanager';
+import Changepasswordpage from './Pages/Changepasswordpage';
+import JobResume from './Pages/JobResume';
+import JobResumeAdmin from './Pages/JobResumeAdmin';
 
-import Companyprofile from "./Pages/Companyprofile";
-import CompanyDepartment from "./Pages/CompanyDepartment";
-import CompanyChangePwd from "./Pages/CompanyChangePwd";
-import Companyresume from "./Pages/Companyresume";
-import Componypostjobs from "./Pages/Componypostjobs";
-import Companymanage from "./Pages/Companymanage";
-import Companytransactions from "./Pages/Companytransactions";
-import Browsecandidates from "./Pages/Browsecandidates";
-import CompanyManageJobs from "./Pages/CompanyManageJobs";
-import CompanyManageResume from "./Pages/CompanyManageResume";
-import CompanyBrowseCandidates from "./Pages/CompanyBrowseCandidates";
-
-import Aboutus from "./Pages/Aboutus";
-import JobDetailCompany from "./Pages/JobDetailCompany";
-import JobDetailEmployee from "./Pages/JobDetailEmployee";
-import JobDetailAdmin from "./Pages/JobDetailAdmin";
-import Companies from "./Pages/Companies";
-import Freejobalerts from "./Pages/Freejobalerts";
-import Browsejoblist from "./Pages/Browsejoblist";
-import Browsejobgrid from "./Pages/Browsejobgrid";
-import Browsejobfilterlist from "./Pages/Browsejobfilterlist";
-import Browsejobfiltergrid from "./Pages/Browsejobfiltergrid";
-
-import Categoryalljob from "./Pages/Categoryalljob";
-import Categorycompanyjob from "./Pages/Categorycompanyjob";
-import Categorydesignationsjob from "./Pages/Categorydesignationsjob";
-import Categoryjobs from "./Pages/Categoryjobs";
-import Categorylocationjobs from "./Pages/Categorylocationjobs";
-import Categoryskilljobs from "./Pages/Categoryskilljobs";
-
-import Portfoliogrid2 from "./Pages/Portfoliogrid2";
-
-//import Loginpage1 from './Pages/Loginpage1';
-//import Loginpage2 from './Pages/Loginpage2';
-//import Loginpage3 from './Pages/Loginpage3';
-
-import CompanyRegister from "./Pages/CompanyRegister1";
-import EmployeeRegister from "./Pages/EmployeeRegister1";
-import EmployeeLogin from "./Pages/EmployeeLogin1";
-import CompanyLogin from "./Pages/CompanyLogin1";
-import ComnapayRegisterBoth from "./Pages/CompanyRegisterBoth.jsx";
-import IndividualRegister from "./Pages/IndividualRegister.jsx";
-import Error404 from "./Pages/Error404";
-
-import Contact from "./Pages/Contact";
-
-import Blogclassic from "./Pages/Blogclassic";
-import Blogclassicsidebar from "./Pages/Blogclassicsidebar";
-import Blogdetailgrid from "./Pages/Blogdetailgrid";
-import Blogdetailgridsidebar from "./Pages/Blogdetailgridsidebar";
-import Blogleftimg from "./Pages/Blogleftimg";
-import Blogdetail from "./Pages/Blogdetail";
-import ScrollToTop from "./Element/ScrollToTop";
-
+import Companyprofile from './Pages/Companyprofile';
+import CompanyDepartment from './Pages/CompanyDepartment';
+import CompanyChangePwd from './Pages/CompanyChangePwd';
+import Companyresume from './Pages/Companyresume';
+import Componypostjobs from './Pages/Componypostjobs';
+import Companymanage from './Pages/Companymanage';
+import Companytransactions from './Pages/Companytransactions';
+import Browsecandidates from './Pages/Browsecandidates';
+import CompanyManageJobs from './Pages/CompanyManageJobs';
+import CompanyManageResume from './Pages/CompanyManageResume';
+import CompanyBrowseCandidates from './Pages/CompanyBrowseCandidates';
+import Aboutus from './Pages/Aboutus';
+import JobDetailCompany from './Pages/JobDetailCompany';
+import JobDetailEmployee from './Pages/JobDetailEmployee';
+import JobDetailAdmin from './Pages/JobDetailAdmin';
+import Companies from './Pages/Companies';
+import Freejobalerts from './Pages/Freejobalerts';
+import Browsejoblist from './Pages/Browsejoblist';
+import Browsejobgrid from './Pages/Browsejobgrid';
+import Browsejobfilterlist from './Pages/Browsejobfilterlist';
+import Browsejobfiltergrid from './Pages/Browsejobfiltergrid';
+import Categoryalljob from './Pages/Categoryalljob';
+import Categorycompanyjob from './Pages/Categorycompanyjob';
+import Categorydesignationsjob from './Pages/Categorydesignationsjob';
+import Categoryjobs from './Pages/Categoryjobs';
+import Categorylocationjobs from './Pages/Categorylocationjobs';
+import Categoryskilljobs from './Pages/Categoryskilljobs';
+import Portfoliogrid2 from './Pages/Portfoliogrid2';
+import EmployeeRegister from './Pages/EmployeeRegister1';
+import EmployeeLogin from './Pages/EmployeeLogin1';
+import CompanyLogin from './Pages/CompanyLogin1';
+import ComnapayRegisterBoth from './Pages/CompanyRegisterBoth.jsx';
+import Error404 from './Pages/Error404';
+import Contact from './Pages/Contact';
+import Blogclassic from './Pages/Blogclassic';
+import Blogclassicsidebar from './Pages/Blogclassicsidebar';
+import Blogdetailgrid from './Pages/Blogdetailgrid';
+import Blogdetailgridsidebar from './Pages/Blogdetailgridsidebar';
+import Blogleftimg from './Pages/Blogleftimg';
+import Blogdetail from './Pages/Blogdetail';
+import ScrollToTop from './Element/ScrollToTop';
+import ModalPayment from '../components/ComAndEm/PaymentMethod';
 const Markup = () => {
   return (
     <>
       <div className='page-wraper'>
         <Switch>
           <Route path='/' exact component={Homepage} />
-          {/* <Route path='/company/register' exact component={CompanyRegister} /> */}
           <Route path='/company/login' exact component={CompanyLogin} />
           <Route path='/employee/register' exact component={EmployeeRegister} />
           <Route path='/employee/login' exact component={EmployeeLogin} />
-          {/* <Route
-            path='/company/register/individual'
+
+          <Route
+            path='/company/register'
             exact
-            component={IndividualRegister}
-          /> */}
-          <Route path='/company/register' exact component={ComnapayRegisterBoth} />
+            component={ComnapayRegisterBoth}
+          />
 
           <Route
             path='/confirm/job-detail/:id'
@@ -219,6 +206,8 @@ const Markup = () => {
           />
           <Route path='/blog-left-img' exact component={Blogleftimg} />
           <Route path='/blog-details' exact component={Blogdetail} />
+          <Route path='/payment' exact component={ModalPayment} />
+
         </Switch>
       </div>
       <ScrollToTop />
