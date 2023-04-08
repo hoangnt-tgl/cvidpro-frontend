@@ -52,6 +52,26 @@ function Companyprofile(props) {
                         <div className="col-lg-12">
                           <div className="form-group">
                             <label className="border-bottom w-100 pb-1 mb-3">
+                              Địa chỉ
+                            </label>
+                            <p style={{ minHeight: 38 }} className="mb-0">
+                              {companyInfo.address}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="col-lg-12">
+                          <div className="form-group">
+                            <label className="border-bottom w-100 pb-1 mb-3">
+                              Hotline
+                            </label>
+                            <p style={{ minHeight: 38 }} className="mb-0">
+                              {companyInfo.companyPhone}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="col-lg-12">
+                          <div className="form-group">
+                            <label className="border-bottom w-100 pb-1 mb-3">
                               Mã số thuế
                             </label>
                             <div className="row align-items-center pr-3">
@@ -113,7 +133,7 @@ function Companyprofile(props) {
                             Phone
                           </label>
                           <div className="row align-items-center pr-3">
-                            <p className="col mb-0">0123456789</p>
+                            <p className="col mb-0">{companyInfo.phone}</p>
                             <div className="row align-items-center pr-3">
                               <p className="col mb-0 text-danger font-20">
                                 <i
@@ -145,7 +165,7 @@ function Companyprofile(props) {
                             Email
                           </label>
                           <div className="row align-items-center pr-3">
-                            <p className="col mb-0">user123@gmail.com</p>
+                            <p className="col mb-0">{companyInfo.email}</p>
                             <div className="row align-items-center pr-3">
                               <p className="col mb-0 text-danger font-20">
                                 <i
