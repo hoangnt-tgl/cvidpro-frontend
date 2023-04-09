@@ -118,6 +118,7 @@
 :root {
   --text-dark: #212529;
   --text-gray: #6f6f6f;
+  --border-blue: #2e55fa;
 }
 body,
 html {

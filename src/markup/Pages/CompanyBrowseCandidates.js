@@ -7,8 +7,8 @@ import { Form, FormControl } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
 import CompanySidebar from "../Element/DepartmentSidebar";
 import useLookingCandidates from "../../hooks/useLookingCandidates";
-import FormSearch from "../../components/CompanyBrowseCandidates/FormSearch/FormSearch";
-import CardCandidates from "../../components/CompanyBrowseCandidates/CardCandidates/CardCandidates";
+import FormSearch from "../../components/CompanyComponents/CompanyBrowseCandidates/FormSearch/FormSearch";
+import CardCandidates from "../../components/CompanyComponents/CompanyBrowseCandidates/CardCandidates/CardCandidates.jsx";
 const managerBlog = [
   {
     id: 1,

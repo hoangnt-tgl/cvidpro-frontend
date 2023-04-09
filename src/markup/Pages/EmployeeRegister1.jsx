@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import FormRegister from '../../components/EmployeeRegister/Step1/FormRegister';
-import FormRegister1 from '../../components/EmployeeRegister/Step2/FormRegister1';
-import '../../components/EmployeeRegister/RegisterStyles.css';
-import FormRegister2 from '../../components/EmployeeRegister/Step3/FormRegister2';
+import FormRegister from '../../components/Registers/EmployeeRegister/Step1/FormRegister';
+import FormRegister1 from '../../components/Registers/EmployeeRegister/Step2/FormRegister1';
+import '../../components/Registers/EmployeeRegister/RegisterStyles.css';
+import FormRegister2 from '../../components/Registers/EmployeeRegister/Step3/FormRegister2';
 import useRegister from '../../hooks/useRegister';
 import useGetOptions from '../../hooks/useGetOptions';
-import RegisterLayout from '../../customComponents/RegisterLayout/RegisterLayout';
+import RegisterLayout from '../../components/Layout/RegisterLayout/RegisterLayout';
 import Stepper from '../../customComponents/Stepper/Stepper';
 
 function Register2(props) {
@@ -16,7 +16,7 @@ function Register2(props) {
     useRegister(props.history);
   const { optionsSelect, fetchDistric, fetchWard, fetchSchoolAndMajor } =
     useGetOptions(true);
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
   const [childStep, setChildStep] = useState(0);
   const [childStep1, setChildStep1] = useState(0);
   const [childStep2, setChildStep2] = useState(0);
