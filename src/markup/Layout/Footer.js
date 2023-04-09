@@ -12,33 +12,20 @@ function Footer() {
                 <img
                   src={require('./../../images/logo-white.png')}
                   width="180"
-                  className="m-b15"
+                  className="m-b30"
                   alt=""
                 />
-                <p className="text-capitalize m-b20">
-                  - ĐƠN VỊ QUẢN LÝ VÀ VẬN HÀNH:
+                <p
+                  className="text-capitalize m-b10 font-weight-bold font-16"
+                  style={{ color: '#fff' }}
+                >
+                  CÔNG TY CỔ PHẦN BERMUDA
                 </p>
-                <p className="text-capitalize m-b20">CÔNG TY CỔ PHẦN BERMUDA</p>
-                <p className="text-capitalize m-b20">
+                <p className="text-capitalize m-b10">
                   Địa chỉ: 33 đường S9, Phường Tây Thạnh, Quận Tân Phú, TpHCM,
                   Việt Nam
                 </p>
-                <p className="text-capitalize m-b20">MST: 00000000</p>
-                <p className="text-capitalize m-b20">Số điện thoại: 19001033</p>
-                <p className="text-capitalize m-b20">- CHỨNG NHẬN: </p>
-                <p className="text-capitalize m-b20">
-                  Giấy phép đăng ký kinh doanh: GĐKKD số
-                </p>
-                <p className="text-capitalize m-b20">
-                  Giấy phép kinh doanh thương mại điện tử: Giấy phép số
-                </p>
-                <p className="text-capitalize m-b20">
-                  Thông báo với Bộ Công Thương: Đã thông báo
-                </p>
-                {/* <p className="text-capitalize m-b20">- THÔNG TIN LIÊN HỆ:</p>
-                <p className="text-capitalize m-b20">Liên hệ: </p>
-                <p className="text-capitalize m-b20">Số hotline: </p>
-                <p className="text-capitalize m-b20">Email: </p> */}
+                <p className="text-capitalize m-b30">Hotline: 19001033</p>
                 <div className="subscribe-form m-b20">
                   <form
                     className="dzSubscribe"
