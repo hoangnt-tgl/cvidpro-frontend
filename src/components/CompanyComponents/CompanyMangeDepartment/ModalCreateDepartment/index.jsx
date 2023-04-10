@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import NormalInput from '../../../../customComponents/NormalInput/Index.jsx';
+
 const Index = ({ addDepartment, setAddDepartment, handleAddDepartment }) => {
   const [trigger, setTrigger] = useState(true);
   const checkStepRef = useRef({
@@ -45,6 +46,7 @@ const Index = ({ addDepartment, setAddDepartment, handleAddDepartment }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -77,9 +79,23 @@ const Index = ({ addDepartment, setAddDepartment, handleAddDepartment }) => {
 
     setTrigger(!trigger);
   }
-  function handleOnSubmit(data) {
+  async function handleOnSubmit(data) {
     console.log(data);
-    handleAddDepartment(data);
+    try {
+      await handleAddDepartment(data);
+      reset({
+        departmentName: '',
+        managerName: '',
+        managerEmail: '',
+      });
+      checkStepRef.current = {
+        departmentName: false,
+        managerName: false,
+        managerEmail: false,
+      };
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <Modal

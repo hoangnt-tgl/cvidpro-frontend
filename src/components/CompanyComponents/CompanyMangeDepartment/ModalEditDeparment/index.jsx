@@ -87,9 +87,14 @@ const Index = ({
 
     setTrigger(!trigger);
   }
-  function handleOnSubmit(data) {
+  async function handleOnSubmit(data) {
     console.log(data);
-    handleEditDepartment(data);
+    await handleEditDepartment(data);
+    checkStepRef.current = {
+      departmentName: false,
+      managerName: false,
+      managerEmail: false,
+    };
   }
   return (
     <Modal
