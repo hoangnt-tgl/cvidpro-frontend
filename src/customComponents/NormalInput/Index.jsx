@@ -9,8 +9,7 @@ const Index = ({
   type,
   isFilled,
   onBlur,
-  accept,
-  onChange,
+  defaultValue,
 }) => {
   return (
     <>
@@ -25,6 +24,8 @@ const Index = ({
           placeholder={placeholder}
           data-testid={name}
           onBlur={onBlur}
+          name={name}
+          defaultValue={defaultValue}
         />
         <div className='text-danger'>
           {errors[name]?.message && <div>{errors[name].message}</div>}

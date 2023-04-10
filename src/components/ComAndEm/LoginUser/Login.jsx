@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 //hookform
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import "./styles.css";
-import BigSizeInput from "../../../customComponents/BigSizeInput/BigSizeInput";
-import BigRoundedBtn from "../../../customComponents/BigRoundedBtn/BigRoundedBtn";
-import { Link } from "react-router-dom";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import './styles.css';
+import BigSizeInput from '../../../customComponents/BigSizeInput/BigSizeInput';
+import BigRoundedBtn from '../../../customComponents/BigRoundedBtn/BigRoundedBtn';
+import { Link } from 'react-router-dom';
 
 const Login = ({
   onLogin,
@@ -17,8 +17,8 @@ const Login = ({
   setForgetPass,
 }) => {
   const schema = yup.object().shape({
-    name: yup.string().required("Vui lòng nhập tài khoản"),
-    password: yup.string().required("Vui lòng nhập mật khẩu"),
+    name: yup.string().required('Vui lòng nhập tài khoản'),
+    password: yup.string().required('Vui lòng nhập mật khẩu'),
   });
   const {
     register,
@@ -36,11 +36,14 @@ const Login = ({
   return (
     <>
       <>
-        {where === "company" && (
-          <div>
-            <h5>Chọn loại hình tuyển dụng </h5>
-            <div className=' d-flex justify-content-start w-100 mb-4'>
-              <div className='d-flex justify-content-center align-items-center mr-5'>
+        {where === 'company' && (
+          <div className='my-2 select-type-wrapper'>
+            <span>Loại hình tuyển dụng</span>
+            <div
+              className=' d-flex justify-content-startw-70 flex-wrap'
+              style={{ gap: '20px' }}
+            >
+              <div className='d-flex justify-content-center align-items-center'>
                 <input
                   className='checkbox-login mr-1'
                   type='checkbox'
@@ -56,7 +59,15 @@ const Login = ({
                   checked={isIndividual && true}
                   onClick={() => setIsIndividual(true)}
                 />
-                <span>Cá nhân</span>
+                <span>Kinh doanh cá thể</span>
+              </div>
+              <div className='d-flex justify-content-center align-items-center'>
+                <input
+                  className='checkbox-login mr-1'
+                  type='checkbox'
+                  disabled={true}
+                />
+                <span>Hiệp hội, tổ chức</span>
               </div>
             </div>
           </div>
@@ -80,7 +91,7 @@ const Login = ({
           })}
           <div
             className=' d-flex justify-content-between w-100'
-            style={{ marginTop: "-20px" }}
+            style={{ marginTop: '-20px' }}
           >
             <div className='d-flex justify-content-center align-items-center'>
               <div>
@@ -98,22 +109,22 @@ const Login = ({
           <BigRoundedBtn type='submit' title='Đăng nhập' />
           <div
             className=' d-flex justify-content-center w-100'
-            style={{ marginTop: "-50px", zIndex: 999 }}
+            style={{ marginTop: '-50px', zIndex: 999 }}
           >
             <div className='d-flex justify-content-center align-items-center'>
-              {where === "company" ? (
+              {where === 'company' ? (
                 <>
-                  {" "}
+                  {' '}
                   <span style={{ zIndex: 999 }}>
-                    Chưa có tài khoản ?{" "}
+                    Chưa có tài khoản ?{' '}
                     <Link to='/company/register'>Đăng ký</Link>
                   </span>
                 </>
               ) : (
                 <>
-                  {" "}
+                  {' '}
                   <span style={{ zIndex: 999 }}>
-                    Chưa có tài khoản ?{" "}
+                    Chưa có tài khoản ?{' '}
                     <Link to='/employee/register'>Đăng ký</Link>
                   </span>
                 </>

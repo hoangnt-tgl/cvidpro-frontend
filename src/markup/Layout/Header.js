@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import Logout from './Logout';
 
-import logo2 from './../../images/logo/logocvid.jpg';
+import logo2 from './../../images/logo/logocvid2.jpg';
 var bnr3 = require('./../../images/background/bg3.jpg');
 
 class Header extends Component {

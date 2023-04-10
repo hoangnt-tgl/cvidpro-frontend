@@ -9,9 +9,7 @@ const CompanyRegisterBoth = () => {
   const [isStep2, setIsStep2] = useState(false);
   const [isStep2In, setIsStep2In] = useState(false);
   const [offSelect, setOffSelect] = useState(false);
-  useEffect(() => {
-    console.log(isStep2);
-  }, [isStep2]);
+
   return (
     <>
       {' '}

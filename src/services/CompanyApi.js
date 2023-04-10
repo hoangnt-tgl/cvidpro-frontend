@@ -1,5 +1,5 @@
-import axiosInstance from "../services/AxiosInstance";
-import { formatError } from "../services/AuthService";
+import axiosInstance from '../services/AxiosInstance';
+import { formatError } from '../services/AuthService';
 
 export const getInfoCompany = async (mst) => {
   return await axiosInstance
@@ -24,12 +24,15 @@ export const getMyCompany = async (history) => {
     .then((res) => res.data)
     .catch((error) => {
       console.log(error);
-      history.push("/company/login");
+      history.push('/company/login');
     });
 };
 
 export const createDepartment = async (data) => {
   return axiosInstance.post(`department/create`, data).then((res) => res.data);
+};
+export const editDepartment = async (data) => {
+  return axiosInstance.post(`department/edit`, data).then((res) => res.data);
 };
 
 export const getCountCompany = async () => {
@@ -38,7 +41,7 @@ export const getCountCompany = async () => {
     .then((res) => res.data)
     .catch((error) => {
       console.log(error);
-      formatError(error.response?.data?.message || "");
+      formatError(error.response?.data?.message || '');
     });
 };
 
@@ -48,7 +51,7 @@ export const getDepartmentByKey = async (key) => {
     .then((res) => res.data)
     .catch((error) => {
       console.log(error);
-      formatError(error.response?.data?.message || "");
+      formatError(error.response?.data?.message || '');
     });
 };
 
@@ -58,7 +61,7 @@ export const deleteJobForDepartment = async (key, idJob) => {
     .then((res) => res.data)
     .catch((error) => {
       console.log(error);
-      formatError(error.response?.data?.message || "");
+      formatError(error.response?.data?.message || '');
     });
 };
 
@@ -68,6 +71,6 @@ export const gẹtJobDetail = async (idJob) => {
     .then((res) => res.data)
     .catch((error) => {
       console.log(error);
-      formatError(error.response?.data?.message || "");
+      formatError(error.response?.data?.message || '');
     });
 };

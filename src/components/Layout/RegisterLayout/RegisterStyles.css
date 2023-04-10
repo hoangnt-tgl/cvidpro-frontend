@@ -135,8 +135,8 @@
 @media (min-width: 350px) {
   .font-size-14 {
     font-size: 14px !important;
-    font-weight: 550;
-    color: var(--text-dark);
+    font-weight: 550 !important;
+    color: var(--text-dark) !important;
   }
   .font-size-14 input {
     font-size: 14px !important;
