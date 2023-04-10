@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Modal } from "react-bootstrap";
-import Logout from "./Logout";
-import logo from './../../images/logo/logocvid2.jpg';
-var bnr3 = require("./../../images/background/bg3.jpg");
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import { Modal } from 'react-bootstrap'
+import Logout from './Logout'
+import logo from './../../images/logo/logocvid.jpg'
+var bnr3 = require('./../../images/background/bg3.jpg')
 
 class HeaderEmployee extends Component {
   state = {
@@ -59,11 +59,7 @@ class HeaderEmployee extends Component {
               <div className="container clearfix">
                 <div className="logo-header mostion">
                   <Link to={'./'}>
-                    <img
-                      src={logo}
-                      className="logo"
-                      alt=""
-                    />
+                    <img src={logo} className="logo" alt="" />
                   </Link>
                 </div>
 
@@ -92,10 +88,6 @@ class HeaderEmployee extends Component {
                   id="navbarNavDropdown"
                 >
                   <ul className="nav navbar-nav">
-                    <li className="active-">
-                      <Link to={'#'}>Trang liên kết</Link>
-                    </li>
-
                     <li>
                       <Link to={'#'}>
                         Quản lý việc làm <i className="fa fa-chevron-down"></i>
