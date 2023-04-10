@@ -29,6 +29,7 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
     handleSubmit,
     setError,
     clearErrors,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -95,6 +96,7 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
         message: 'Số điện thoại không hợp lệ',
       });
     } else {
+      setValue('phone', e.target.value);
       clearErrors('phone');
     }
   }

@@ -135,6 +135,7 @@ const PersonalInfo = ({ setStep, setInfoRegister1, setChildStep }) => {
         message: 'Số điện thoại không hợp lệ',
       });
     } else {
+      setValue('phone', e.target.value);
       clearErrors('phone');
     }
   }
