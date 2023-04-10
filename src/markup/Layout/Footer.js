@@ -7,7 +7,7 @@ function Footer() {
       <div className="footer-top">
         <div className="container" style={{ maxWidth: '1560px' }}>
           <div className="row">
-            <div className="col-xl-5 col-lg-4 col-md-12 col-sm-12">
+            <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12">
               <div className="widget">
                 <img
                   src={require('./../../images/logo-white.png')}
@@ -15,18 +15,8 @@ function Footer() {
                   className="m-b30"
                   alt=""
                 />
-                <p
-                  className="text-capitalize m-b10 font-weight-bold font-16"
-                  style={{ color: '#fff' }}
-                >
-                  CÔNG TY CỔ PHẦN BERMUDA
-                </p>
-                <p className="text-capitalize m-b10">
-                  Địa chỉ: 33 đường S9, Phường Tây Thạnh, Quận Tân Phú, TpHCM,
-                  Việt Nam
-                </p>
-                <p className="text-capitalize m-b30">Hotline: 19001033</p>
-                <div className="subscribe-form m-b20">
+
+                {/* <div className="subscribe-form m-b20">
                   <form
                     className="dzSubscribe"
                     action="script/mailchamp.php"
@@ -53,7 +43,7 @@ function Footer() {
                       </span>
                     </div>
                   </form>
-                </div>
+                </div> */}
                 <ul className="list-inline m-a0">
                   <li>
                     <Link
@@ -95,70 +85,63 @@ function Footer() {
                 </ul>
               </div>
             </div>
-            <div className="col-xl-5 col-lg-5 col-md-8 col-sm-8 col-12">
+            <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12">
               <div className="widget border-0">
-                <h5 className="m-b30 text-white">Frequently Asked Questions</h5>
-                <ul className="list-2 list-line">
+                <h6 className="m-b15 text-white font-weight-bold">
+                  ERMUDA CORP
+                </h6>
+                <ul className="list-2 w10 list-line">
                   <li>
-                    <Link to={''}>Privacy & Seurty</Link>
+                    <Link to={''}>Về chúng tôi</Link>
                   </li>
                   <li>
-                    <Link to={''}>Terms of Serice</Link>
+                    <Link to={''}>Chính sách</Link>
                   </li>
                   <li>
-                    <Link to={''}>Communications</Link>
+                    <Link to={''}>Điều khoản</Link>
                   </li>
                   <li>
-                    <Link to={''}>Referral Terms</Link>
-                  </li>
-                  <li>
-                    <Link to={''}>Lending Licnses</Link>
-                  </li>
-                  <li>
-                    <Link to={''}>Support</Link>
-                  </li>
-                  <li>
-                    <Link to={''}>How It Works</Link>
-                  </li>
-                  <li>
-                    <Link to={''}>For Employers</Link>
-                  </li>
-                  <li>
-                    <Link to={''}>Underwriting</Link>
-                  </li>
-                  <li>
-                    <Link to={''}>Contact Us</Link>
-                  </li>
-                  <li>
-                    <Link to={''}>Lending Licnses</Link>
-                  </li>
-                  <li>
-                    <Link to={''}>Support</Link>
+                    <Link to={''}>Liên hệ</Link>
                   </li>
                 </ul>
               </div>
             </div>
-            <div className="col-xl-2 col-lg-3 col-md-4 col-sm-4 col-12">
+
+            <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12">
               <div className="widget border-0">
-                <h5 className="m-b30 text-white">Find Jobs</h5>
+                <h6 className="m-b15 text-white font-weight-bold">
+                  Dành cho ứng viên
+                </h6>
                 <ul className="list-2 w10 list-line">
                   <li>
-                    <Link to={''}>US Jobs</Link>
+                    <Link to={''}>Việc Làm</Link>
                   </li>
                   <li>
-                    <Link to={''}>Canada Jobs</Link>
+                    <Link to={''}>Công ty</Link>
                   </li>
                   <li>
-                    <Link to={''}>UK Jobs</Link>
+                    <Link to={''}>Cẩm nang việc làm</Link>
                   </li>
                   <li>
                     <Link to={''}>Emplois en Fnce</Link>
                   </li>
                   <li>
-                    <Link to={''}>Jobs in Deuts</Link>
+                    <Link to={''}>Mẫu CV</Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12">
+              <div className="widget border-0">
+                <h6 className="m-b15 text-white font-weight-bold">
+                  Dành cho nhà tuyển dụng
+                </h6>
+                <ul className="list-2 w10 list-line">
+                  <li>
+                    <Link to={''}>Dịch vụ nhân sự</Link>
                   </li>
                   <li>
-                    <Link to={''}>Vacatures China</Link>
+                    <Link to={''}>Cẩm nang tuyển dụng</Link>
                   </li>
                 </ul>
               </div>
@@ -168,16 +151,36 @@ function Footer() {
       </div>
 
       <div className="footer-bottom">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12 text-center">
-              <span>
+        <div className="row">
+          <div className="col-lg-12">
+            {/* <span>
                 {' '}
                 © Copyright by{' '}
                 <i className="fa fa-heart m-lr5 text-red heart"></i>
                 <Link to={''}>DexignZone </Link> All rights reserved.
-              </span>
-            </div>
+              </span> */}
+            <p
+              className="text-capitalize m-b10 font-weight-bold font-16"
+              style={{ color: '#fff' }}
+            >
+              CÔNG TY CỔ PHẦN BERMUDA
+            </p>
+            <p className="text-capitalize m-b10">
+              Địa chỉ: 33 đường S9, Phường Tây Thạnh, Quận Tân Phú, TpHCM, Việt
+              Nam
+            </p>
+            <p className="text-capitalize m-b10">
+              Hotline: 19001033 - Email: bermudacorp@gmail.com
+            </p>
+            <p className="text-capitalize m-b10">
+              Giấy phép đăng ký kinh doanh: GĐKKD số
+            </p>
+            <p className="text-capitalize m-b10">
+              Giấy phép kinh doanh thương mại điện tử: Giấy phép số
+            </p>
+            <p className="text-capitalize m-b0">
+              Thông báo với Bộ Công Thương: Đã thông báo
+            </p>
           </div>
         </div>
       </div>
