@@ -1,0 +1,34 @@
+.wrapper-opt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+.btn-opt {
+  margin-bottom: 5px !important;
+  /* padding: 5px 0px; */
+  display: flex;
+  justify-content: center;
+}
+.email-otp {
+  flex-grow: 1;
+}
+
+.filled {
+  background-color: var(--semiblue) !important;
+}
+
+.otp-container p {
+  font-size: 14px;
+  font-weight: 550;
+  color: var(--text-dark);
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+.otp-container input {
+  font-size: 14px !important;
+  font-weight: 550;
+  color: var(--text-dark);
+  margin-bottom: 10px;
+  margin-top: 5px;
+}

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import RegisterLayout from '../../customComponents/RegisterLayout/RegisterLayout';
+import RegisterLayout from '../../../src/components/Layout/RegisterLayout/RegisterLayout';
 import {
   loadingToggleAction,
   employeeLoginAction,
 } from '../../store/actions/AuthActions';
-import LoginEmployee from '../../components/LoginUser/Login';
+import LoginEmployee from '../../components/ComAndEm/LoginUser/Login';
 import { loginEmployee } from '../../constants/description';
-import Header from '../../components/Header/Header';
-import ForgetPass from '../../components/ModalForgetPass/ForgetPass';
+import Header from '../../components/Layout/Header/Header';
+import ForgetPass from '../../components/ComAndEm/ModalForgetPass/ForgetPass';
 
 function Login(props) {
   const [forgetPass, setForgetPass] = useState(false);

@@ -1,0 +1,240 @@
+.register-container {
+  background-color: white;
+  height: 100vh;
+  /* font-size: 14px !important; */
+}
+.header-regiser {
+  padding: 0rem 1rem;
+}
+.header-regiser h1 {
+  color: black;
+}
+.register-wrapper {
+  color: var(--text-dark);
+  font-weight: 600;
+}
+.form-container {
+  margin: 0 auto;
+  padding: 2rem 6rem;
+  position: relative;
+}
+
+.select-style {
+  font-weight: 400;
+  min-height: 40px;
+}
+.select-style .css-b62m3t-container {
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px !important;
+}
+.filled .css-13cymwt-control {
+  background-color: var(--semiblue);
+}
+.register-steps {
+  opacity: 0;
+  display: none;
+}
+.appear {
+  animation: smoothAppear 1s ease-in-out forwards;
+  transition: all 0.5s ease-in-out;
+}
+.header-register {
+  height: 15%;
+}
+.header-register h3 {
+}
+.body-register {
+  height: 70%;
+  position: relative;
+}
+.body-register p {
+  margin-bottom: 0.8rem;
+}
+.body-register input {
+  border-radius: 5px;
+}
+.body-register .form-group {
+  margin-bottom: 1rem;
+}
+.register-btn {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+}
+.register-btn button {
+  margin: 0px 0px;
+  transition: all ease-in-out 0.5s;
+}
+.register-btn button:active {
+  transform: scale(0.95);
+}
+
+.register-wrapper .filled.form-control {
+  background-color: var(--semiblue);
+  color: #212529 !important;
+}
+.filled .react-datepicker-wrapper input {
+  background-color: var(--semiblue);
+}
+.asterisk {
+  color: red;
+}
+.asterisk::before {
+  content: '*';
+  color: red;
+  font-size: 18px;
+}
+
+.fa-calendar-o:before {
+  font-size: 14px;
+}
+@keyframes smoothAppear {
+  0% {
+    opacity: 0;
+    display: none;
+  }
+  100% {
+    opacity: 1;
+    display: block;
+  }
+}
+@keyframes smoothImg {
+  0% {
+    opacity: 0;
+    left: -100%;
+    background: url('../../../images/background/bg6.jpg') no-repeat center
+      center/cover fixed;
+  }
+  50% {
+    opacity: 1;
+    left: 0%;
+    background: url('../../../images/background/bg6.jpg') no-repeat center
+      center/cover fixed;
+  }
+  51% {
+    opacity: 1;
+    left: -100%;
+    background: url('../../../images/background/bg2.jpg') no-repeat center
+      center/cover fixed;
+  }
+  100% {
+    opacity: 1;
+    left: 0%;
+    background: url('../../../images/background/bg2.jpg') no-repeat center
+      center/cover fixed;
+  }
+}
+.register-img {
+  width: 100%;
+  height: 100%;
+  /* animation: smoothImg 10s ease infinite backwards; */
+  background: url('../../../images/background/bg2.jpg') no-repeat center
+    center/cover fixed;
+}
+
+@media (min-width: 350px) {
+  .font-size-14 {
+    font-size: 14px !important;
+    font-weight: 550 !important;
+    color: var(--text-dark) !important;
+  }
+  .font-size-14 input {
+    font-size: 14px !important;
+    font-weight: 550;
+    color: var(--text-dark);
+  }
+  .font-size-14 p {
+    margin-bottom: 5px;
+  }
+  .register-wrapper .form-container {
+    padding: 1rem 0rem;
+  }
+  .wrapper-form {
+    padding: 0px 0px;
+  }
+  .wrapper-form h3 {
+    width: fit-content;
+    margin: 0 auto;
+  }
+  .register-wrapper {
+    width: 100%;
+    z-index: 999;
+    /* margin-top: 70px; */
+  }
+  .header-regiser h1 {
+    width: fit-content;
+    margin: 0 auto;
+  }
+  .register-img {
+    display: none;
+  }
+  .register-img-box {
+    display: none;
+  }
+  .select-type-wrapper {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}
+@media (min-width: 425px) {
+  .register-wrapper .form-container {
+    padding: 2rem 0rem;
+  }
+}
+@media (min-width: 600px) {
+  .register-wrapper .form-container {
+    padding: 2rem 3rem;
+  }
+  .wrapper-form {
+    padding: 10px 10px;
+  }
+  .register-wrapper {
+    /* margin-top: 80px; */
+  }
+}
+@media (min-width: 768px) {
+  .register-wrapper .form-container {
+    padding: 2rem 0.5rem;
+  }
+  .register-img {
+    display: block;
+    z-index: 9999;
+  }
+  .register-img-box {
+    display: block;
+    z-index: 9999;
+  }
+  .wrapper-form {
+    padding: 0px 0px;
+  }
+}
+@media (min-width: 900px) {
+  .register-wrapper .form-container {
+    padding: 2rem 0.5rem;
+  }
+}
+@media (min-width: 1200px) {
+  .register-wrapper .form-container {
+    margin: 0 auto;
+    padding: 2rem 0.5rem;
+    position: relative;
+  }
+
+  .register-wrapper {
+    width: 100%;
+  }
+  .header-regiser h1 {
+    width: auto;
+  }
+  .wrapper-form {
+    padding: 10px 20px;
+  }
+}
+@media (min-width: 1440px) {
+}
+@media (min-width: 1900px) {
+}
+@media (min-width: 2000px) {
+}

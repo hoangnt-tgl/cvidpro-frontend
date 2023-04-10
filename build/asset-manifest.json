@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.776768ea.chunk.css",
-    "main.js": "/static/js/main.8e2ccc2c.chunk.js",
-    "main.js.map": "/static/js/main.8e2ccc2c.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.f32bbc1e.js",
-    "runtime-main.js.map": "/static/js/runtime-main.f32bbc1e.js.map",
+    "main.css": "/static/css/main.bf33b40b.chunk.css",
+    "main.js": "/static/js/main.40a70a6a.chunk.js",
+    "main.js.map": "/static/js/main.40a70a6a.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.1059e38a.js",
+    "runtime-main.js.map": "/static/js/runtime-main.1059e38a.js.map",
     "static/css/2.1577803a.chunk.css": "/static/css/2.1577803a.chunk.css",
-    "static/js/2.d2111f64.chunk.js": "/static/js/2.d2111f64.chunk.js",
-    "static/js/2.d2111f64.chunk.js.map": "/static/js/2.d2111f64.chunk.js.map",
-    "static/js/3.484e3073.chunk.js": "/static/js/3.484e3073.chunk.js",
-    "static/js/3.484e3073.chunk.js.map": "/static/js/3.484e3073.chunk.js.map",
+    "static/js/2.889e1b6c.chunk.js": "/static/js/2.889e1b6c.chunk.js",
+    "static/js/2.889e1b6c.chunk.js.map": "/static/js/2.889e1b6c.chunk.js.map",
+    "static/js/3.0e5a8cbe.chunk.js": "/static/js/3.0e5a8cbe.chunk.js",
+    "static/js/3.0e5a8cbe.chunk.js.map": "/static/js/3.0e5a8cbe.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.cb81485e73b7abbb4dd95421937f00e5.js": "/precache-manifest.cb81485e73b7abbb4dd95421937f00e5.js",
+    "precache-manifest.a1bc7f678267d83d847d13ae452fc9e7.js": "/precache-manifest.a1bc7f678267d83d847d13ae452fc9e7.js",
     "service-worker.js": "/service-worker.js",
     "static/css/2.1577803a.chunk.css.map": "/static/css/2.1577803a.chunk.css.map",
-    "static/css/main.776768ea.chunk.css.map": "/static/css/main.776768ea.chunk.css.map",
-    "static/js/2.d2111f64.chunk.js.LICENSE.txt": "/static/js/2.d2111f64.chunk.js.LICENSE.txt",
-    "static/js/main.8e2ccc2c.chunk.js.LICENSE.txt": "/static/js/main.8e2ccc2c.chunk.js.LICENSE.txt",
-    "static/media/Logo_CVIDPRO_Blue.webp": "/static/media/Logo_CVIDPRO_Blue.f34e7474.webp",
+    "static/css/main.bf33b40b.chunk.css.map": "/static/css/main.bf33b40b.chunk.css.map",
+    "static/js/2.889e1b6c.chunk.js.LICENSE.txt": "/static/js/2.889e1b6c.chunk.js.LICENSE.txt",
+    "static/js/main.40a70a6a.chunk.js.LICENSE.txt": "/static/js/main.40a70a6a.chunk.js.LICENSE.txt",
+    "static/media/atm-card.png": "/static/media/atm-card.9a4ee0e1.png",
     "static/media/RegisterStyles.css": "/static/media/bg2.b6e866af.jpg",
     "static/media/bg3.jpg": "/static/media/bg3.96150655.jpg",
     "static/media/bg4.jpg": "/static/media/bg4.572b2579.jpg",
@@ -51,10 +51,10 @@
     "static/media/thum4.jpg": "/static/media/thum4.4814b339.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.f32bbc1e.js",
+    "static/js/runtime-main.1059e38a.js",
     "static/css/2.1577803a.chunk.css",
-    "static/js/2.d2111f64.chunk.js",
-    "static/css/main.776768ea.chunk.css",
-    "static/js/main.8e2ccc2c.chunk.js"
+    "static/js/2.889e1b6c.chunk.js",
+    "static/css/main.bf33b40b.chunk.css",
+    "static/js/main.40a70a6a.chunk.js"
   ]
 }

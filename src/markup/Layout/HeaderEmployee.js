@@ -1,53 +1,53 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Modal } from "react-bootstrap";
-import Logout from "./Logout";
-
-var bnr3 = require("./../../images/background/bg3.jpg");
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import { Modal } from 'react-bootstrap'
+import Logout from './Logout'
+import logo from './../../images/logo/logocvid.jpg'
+var bnr3 = require('./../../images/background/bg3.jpg')
 
 class HeaderEmployee extends Component {
   state = {
     // initial state
     show: false,
-  };
+  }
 
   handleClose = () => {
-    this.setState({ show: false });
-  };
+    this.setState({ show: false })
+  }
   handleShow = () => {
-    this.setState({ show: true });
-  };
+    this.setState({ show: true })
+  }
   componentDidMount() {
     // sidebar open/close
 
-    var Navicon = document.querySelector(".navicon");
-    var sidebarmenu = document.querySelector(".myNavbar ");
+    var Navicon = document.querySelector('.navicon')
+    var sidebarmenu = document.querySelector('.myNavbar ')
 
     function toggleFunc() {
-      sidebarmenu.classList.toggle("show");
+      sidebarmenu.classList.toggle('show')
       //   Navicon.classList.toggle('open');
     }
-    Navicon.addEventListener("click", toggleFunc);
+    Navicon.addEventListener('click', toggleFunc)
 
     // Sidenav li open close
     var navUl = [].slice.call(
-      document.querySelectorAll(".navbar-nav > li > a, .sub-menu > li > a")
-    );
+      document.querySelectorAll('.navbar-nav > li > a, .sub-menu > li > a'),
+    )
     for (var y = 0; y < navUl.length; y++) {
-      navUl[y].addEventListener("click", function () {
-        checkLi(this);
-      });
+      navUl[y].addEventListener('click', function () {
+        checkLi(this)
+      })
     }
 
     function checkLi(current) {
       current.parentElement.parentElement
-        .querySelectorAll("li")
+        .querySelectorAll('li')
         .forEach((el) =>
-          current.parentElement !== el ? el.classList.remove("open") : ""
-        );
+          current.parentElement !== el ? el.classList.remove('open') : '',
+        )
       setTimeout(() => {
-        current.parentElement.classList.toggle("open");
-      }, 100);
+        current.parentElement.classList.toggle('open')
+      }, 100)
     }
   }
   render() {
@@ -58,12 +58,8 @@ class HeaderEmployee extends Component {
             <div className="main-bar clearfix">
               <div className="container clearfix">
                 <div className="logo-header mostion">
-                  <Link to={"./"}>
-                    <img
-                      src={require("./../../images/logo.png")}
-                      className="logo"
-                      alt=""
-                    />
+                  <Link to={'./'}>
+                    <img src={logo} className="logo" alt="" />
                   </Link>
                 </div>
 
@@ -88,54 +84,50 @@ class HeaderEmployee extends Component {
                 </div>
 
                 <div
-                  className="header-nav navbar-collapse collapse myNavbar justify-content-start"
+                  className="header-nav navbar-collapse collapse myNavbar justify-content-end"
                   id="navbarNavDropdown"
                 >
                   <ul className="nav navbar-nav">
-                    <li className="active-">
-                      <Link to={"#"}>Trang chủ</Link>
-                    </li>
-
                     <li>
-                      <Link to={"#"}>
-                        Việc làm <i className="fa fa-chevron-down"></i>
+                      <Link to={'#'}>
+                        Quản lý việc làm <i className="fa fa-chevron-down"></i>
                       </Link>
                       <ul className="sub-menu">
                         <li>
-                          <Link to={"/jobs-saved-jobs"} className="dez-page">
+                          <Link to={'/jobs-saved-jobs'} className="dez-page">
                             Tìm việc
                           </Link>
                         </li>
                         <li>
-                          <Link to={"/jobs-applied-job"} className="dez-page">
+                          <Link to={'/jobs-applied-job'} className="dez-page">
                             Việc đã chọn
                           </Link>
                         </li>
                         <li>
-                          <Link to={"/jobs-alerts"} className="dez-page">
+                          <Link to={'/jobs-alerts'} className="dez-page">
                             Lời mời
                           </Link>
                         </li>
                         <li>
-                          <Link to={"#"} className="dez-page">
+                          <Link to={'#'} className="dez-page">
                             Lịch phỏng vấn
                           </Link>
                         </li>
                       </ul>
                     </li>
                     <li>
-                      <Link to={"#"}>
-                        Tài khoản <i className="fa fa-chevron-down"></i>
+                      <Link to={'#'}>
+                        Quản lý tài khoản <i className="fa fa-chevron-down"></i>
                       </Link>
                       <ul className="sub-menu">
                         <li>
-                          <Link to={"/jobs-profile"} className="dez-page">
+                          <Link to={'/jobs-profile'} className="dez-page">
                             Thông tin cá nhân
                           </Link>
                         </li>
                         <li>
                           <Link
-                            to={"/jobs-my-resume"}
+                            to={'/jobs-my-resume'}
                             target="blank"
                             className="dez-page"
                           >
@@ -144,7 +136,7 @@ class HeaderEmployee extends Component {
                         </li>
                         <li>
                           <Link
-                            to={"/jobs-change-password"}
+                            to={'/jobs-change-password'}
                             className="dez-page"
                           >
                             Thay đổi mật khẩu
@@ -178,9 +170,9 @@ class HeaderEmployee extends Component {
                 <div
                   className="col-lg-6 col-md-6 overlay-primary-dark d-flex p-a0"
                   style={{
-                    backgroundImage: "url(" + bnr3 + ")",
-                    backgroundPosition: "center",
-                    backgroundSize: "cover",
+                    backgroundImage: 'url(' + bnr3 + ')',
+                    backgroundPosition: 'center',
+                    backgroundSize: 'cover',
                   }}
                 >
                   <div className="form-info text-white align-self-center">
@@ -191,27 +183,27 @@ class HeaderEmployee extends Component {
                     </p>
                     <ul className="list-inline m-a0">
                       <li>
-                        <Link to={"#"} className="m-r10 text-white">
+                        <Link to={'#'} className="m-r10 text-white">
                           <i className="fa fa-facebook"></i>
                         </Link>
                       </li>
                       <li>
-                        <Link to={"#"} className="m-r10 text-white">
+                        <Link to={'#'} className="m-r10 text-white">
                           <i className="fa fa-google-plus"></i>
                         </Link>
                       </li>
                       <li>
-                        <Link to={"#"} className="m-r10 text-white">
+                        <Link to={'#'} className="m-r10 text-white">
                           <i className="fa fa-linkedin"></i>
                         </Link>
                       </li>
                       <li>
-                        <Link to={"#"} className="m-r10 text-white">
+                        <Link to={'#'} className="m-r10 text-white">
                           <i className="fa fa-instagram"></i>
                         </Link>
                       </li>
                       <li>
-                        <Link to={"#"} className="m-r10 text-white">
+                        <Link to={'#'} className="m-r10 text-white">
                           <i className="fa fa-twitter"></i>
                         </Link>
                       </li>
@@ -241,7 +233,7 @@ class HeaderEmployee extends Component {
                           type="button"
                           className="btn-primary site-button btn-block"
                         >
-                          Submit{" "}
+                          Submit{' '}
                         </button>
                       </div>
                     </form>
@@ -253,8 +245,8 @@ class HeaderEmployee extends Component {
         </Modal>
         {/*  Model END */}
       </>
-    );
+    )
   }
 }
 
-export default HeaderEmployee;
+export default HeaderEmployee

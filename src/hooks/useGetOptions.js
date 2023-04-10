@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { getInfoCompany } from "../services/CompanyApi";
+import React, { useState, useEffect } from 'react';
+import { getInfoCompany } from '../services/CompanyApi';
 import {
+  getAllListMajor,
   getListCompanyType,
   getListDistrict,
   getListIndustry,
@@ -10,10 +11,37 @@ import {
   getListProvince,
   getListSchools,
   getListWard,
-} from "../services/GetListService";
+} from '../services/GetListService';
 
-const useGetOptions = (isAll) => {
+const useGetOptions = (isAll, isLevelData) => {
   const [optionsSelect, setOpionsSelect] = useState({});
+
+  async function fetchDataLevel() {
+    let levels = await getListLevel().then((res) => {
+      return res.data;
+    });
+    setOpionsSelect((prev) => ({
+      ...prev,
+      levels: levels.map((item) => ({ value: item, label: item })),
+    }));
+    let schools = await getListSchools().then((res) => {
+      return res.data;
+    });
+    setOpionsSelect((prev) => ({
+      ...prev,
+      schools: schools.map((item) => ({
+        value: item._id,
+        label: item.name,
+      })),
+    }));
+    let allMajors = await getAllListMajor().then((res) => {
+      return res.data;
+    });
+    setOpionsSelect((prev) => ({
+      ...prev,
+      allMajors: allMajors.map((item) => ({ value: item, label: item })),
+    }));
+  }
   async function fetchData() {
     let levels = await getListLevel().then((res) => {
       return res.data;
@@ -106,7 +134,11 @@ const useGetOptions = (isAll) => {
       fetchData();
     }
   }, []);
-
+  useEffect(() => {
+    if (isLevelData) {
+      fetchDataLevel();
+    }
+  }, []);
   return {
     optionsSelect,
     fetchDistric,

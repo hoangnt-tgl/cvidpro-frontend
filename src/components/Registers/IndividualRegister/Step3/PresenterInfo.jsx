@@ -4,12 +4,14 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useRef } from 'react';
+import { validatePhoneVn } from '../../../../helperFC/Function';
 const PresenterInfo = ({
   setChildStep1,
   setStep,
   setInfoRegister1,
   fetchFieldOptions,
   setIsStep2,
+  setOffSelect,
 }) => {
   const checkStepRef = useRef({
     name: false,
@@ -29,25 +31,33 @@ const PresenterInfo = ({
     password: yup
       .string()
       .required('Vui lòng nhập mật khẩu')
-      .min(6, 'Mật khẩu phải có ít nhất 6 ký tự')
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        'Mật khẩu phải có ít nhất 8 ký tự, 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt'
+      )
+      .min(8, 'Mật khẩu phải có ít nhất 6 ký tự')
       .max(20, 'Mật khẩu không được quá 20 ký tự'),
     confirmPassword: yup
       .string()
       .required('Vui lòng nhập lại mật khẩu')
-      .min(6)
+      .min(8)
       .max(20)
       .oneOf([yup.ref('password')], 'Mật khẩu không khớp'),
   });
   const {
     register,
     handleSubmit,
+    setError,
+    clearErrors,
     formState: { errors },
   } = useForm({
+    mode: 'onChange',
     resolver: yupResolver(schema),
   });
   async function onHandleSubmit(data) {
     setInfoRegister1(data);
     await fetchFieldOptions();
+    setOffSelect(true);
     setStep(2);
   }
   function handleCheckInput(e) {
@@ -144,6 +154,16 @@ const PresenterInfo = ({
       setIsStep2(false);
     }
   }
+  function handleCheckPhone(e) {
+    if (!validatePhoneVn(e)) {
+      setError('phone', {
+        type: 'manual',
+        message: 'Số điện thoại không hợp lệ',
+      });
+    } else {
+      clearErrors('phone');
+    }
+  }
   return (
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
@@ -206,6 +226,7 @@ const PresenterInfo = ({
             {...register('phone')}
             data-testid='phone'
             onBlur={handleCheckInput}
+            onChange={handleCheckPhone}
           />
           <div className='text-danger'>
             {errors?.phone?.message && <div>{errors.phone.message}</div>}
@@ -276,7 +297,7 @@ const PresenterInfo = ({
           </div>
         </div>
         <div className='form-group '>
-          <div className='form-group text-right register-btn'>
+          <div className='form-group text-right register-btn justify-content-end'>
             <button type='submit' className='site-button dz-xs-flex m-r5 btn'>
               Tiếp tục <i className='fa fa-arrow-right' aria-hidden='true'></i>
             </button>
