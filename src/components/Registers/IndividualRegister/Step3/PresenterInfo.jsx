@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useRef } from 'react';
+import { validatePhoneVn } from '../../../../helperFC/Function';
 const PresenterInfo = ({
   setChildStep1,
   setStep,
@@ -46,6 +47,8 @@ const PresenterInfo = ({
   const {
     register,
     handleSubmit,
+    setError,
+    clearErrors,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -151,6 +154,16 @@ const PresenterInfo = ({
       setIsStep2(false);
     }
   }
+  function handleCheckPhone(e) {
+    if (!validatePhoneVn(e)) {
+      setError('phone', {
+        type: 'manual',
+        message: 'Số điện thoại không hợp lệ',
+      });
+    } else {
+      clearErrors('phone');
+    }
+  }
   return (
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
@@ -213,6 +226,7 @@ const PresenterInfo = ({
             {...register('phone')}
             data-testid='phone'
             onBlur={handleCheckInput}
+            onChange={handleCheckPhone}
           />
           <div className='text-danger'>
             {errors?.phone?.message && <div>{errors.phone.message}</div>}

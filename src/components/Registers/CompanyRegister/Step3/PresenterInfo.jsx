@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useRef } from 'react';
+import { validatePhoneVn } from '../../../../helperFC/Function';
 const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
   const checkStepRef = useRef({
     name: false,
@@ -26,6 +27,8 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
   const {
     register,
     handleSubmit,
+    setError,
+    clearErrors,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -83,6 +86,16 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
         setChildStep2((prev) => prev - 1 / 3 / 5);
         checkStepRef.current.email = false;
       }
+    }
+  }
+  function handleCheckPhone(e) {
+    if (!validatePhoneVn(e)) {
+      setError('phone', {
+        type: 'manual',
+        message: 'Số điện thoại không hợp lệ',
+      });
+    } else {
+      clearErrors('phone');
     }
   }
   return (
@@ -166,6 +179,7 @@ const PresenterInfo = ({ setChildStep2, setStep, registerCompany }) => {
             {...register('phone')}
             data-testid='phone'
             onBlur={handleCheckInput}
+            onChange={handleCheckPhone}
           />
           <div className='text-danger'>
             {errors?.phone?.message && <div>{errors.phone.message}</div>}
