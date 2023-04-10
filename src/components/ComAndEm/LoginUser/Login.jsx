@@ -37,7 +37,7 @@ const Login = ({
     <>
       <>
         {where === 'company' && (
-          <div className='my-2 select-type-wrapper'>
+          <div className='my-3 select-type-wrapper'>
             <span>Loại hình tuyển dụng</span>
             <div
               className=' d-flex justify-content-startw-70 flex-wrap'
