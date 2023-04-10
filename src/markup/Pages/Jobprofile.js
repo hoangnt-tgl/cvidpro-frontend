@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import Header2 from './../Layout/HeaderEmployee'
-import Footer from './../Layout/Footer'
-import Profilesidebar from './../Element/Profilesidebar'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import Header2 from './../Layout/HeaderEmployee';
+import Footer from './../Layout/Footer';
+import Profilesidebar from './../Element/Profilesidebar';
 import {
   getMyResume,
   addSchool,
@@ -13,115 +13,117 @@ import {
   deleteShortTraining,
   addWorkExperience,
   deleteWorkExperience,
-} from '../../services/EmployeeApi'
+} from '../../services/EmployeeApi';
+import { formatDate } from '../../helperFC/Function';
 function Jobprofile(props) {
-  const [userInformation, setUserInformation] = useState({})
-  const [reload, setReload] = useState(false)
+  const [userInformation, setUserInformation] = useState({});
+  const [reload, setReload] = useState(false);
   useEffect(() => {
     async function fetchData() {
-      const response = await getMyResume(props.history)
-      setUserInformation(response)
+      const response = await getMyResume(props.history);
+      console.log(response);
+      setUserInformation(response);
     }
-    fetchData()
-  }, [reload])
+    fetchData();
+  }, [reload]);
 
-  const yearStart = userInformation.startYear
-  console.log(yearStart)
+  const yearStart = userInformation.startYear;
+  //format date
 
   return (
     <>
       <Header2 />
-      <div className="page-content bg-white">
-        <div className="content-block">
-          <div className="section-full bg-white browse-job p-t50 p-b20 px-3">
-            <div className="container">
-              <div className="m-b30">
-                <div className="job-bx submit-resume row">
-                  <div className="col-lg-6 col-md-12">
+      <div className='page-content bg-white'>
+        <div className='content-block'>
+          <div className='section-full bg-white browse-job p-t50 p-b20 px-3'>
+            <div className='container'>
+              <div className='m-b30'>
+                <div className='job-bx submit-resume row'>
+                  <div className='col-lg-6 col-md-12'>
                     <div
-                      className="border-bottom clearfix m-0 mb-4 row align-items-center"
+                      className='border-bottom clearfix m-0 mb-4 row align-items-center'
                       style={{ paddingBottom: 10.5 }}
                     >
-                      <h5 className="font-weight-700 pull-left text-uppercase mb-0">
+                      <h5 className='font-weight-700 pull-left text-uppercase mb-0'>
                         Thông tin cá nhân
                       </h5>
                       <div style={{ cursor: 'pointer', marginLeft: 16 }}>
                         <i
-                          class="fa fa-pencil-square-o"
+                          class='fa fa-pencil-square-o'
                           style={{ fontSize: 20, color: '#0275d8' }}
-                          aria-hidden="true"
+                          aria-hidden='true'
                         ></i>
                       </div>
                     </div>
                     <form>
-                      <div className="row m-b30">
-                        <div className="col-lg-12">
-                          <div className="form-group">
-                            <label className="border-bottom w-100 pb-1 mb-3">
+                      <div className='row m-b30'>
+                        <div className='col-lg-12'>
+                          <div className='form-group'>
+                            <label className='border-bottom w-100 pb-1 mb-3'>
                               Họ và tên
                             </label>
-                            <p style={{ minHeight: 38 }} className="mb-0">
+                            <p style={{ minHeight: 38 }} className='mb-0'>
                               {userInformation.name}
                             </p>
                           </div>
                         </div>
-                        <div className="col-lg-12">
-                          <div className="form-group">
-                            <label className="border-bottom w-100 pb-1 mb-3">
+                        <div className='col-lg-12'>
+                          <div className='form-group'>
+                            <label className='border-bottom w-100 pb-1 mb-3'>
                               Ngày sinh
                             </label>
-                            <p style={{ minHeight: 38 }} className="mb-0">
-                              {userInformation.birthday}
+                            <p style={{ minHeight: 38 }} className='mb-0'>
+                              {formatDate(userInformation.birthday)}
                             </p>
                           </div>
                         </div>
-                        <div className="col-lg-12">
-                          <div className="form-group">
-                            <label className="border-bottom w-100 pb-1 mb-3">
+                        <div className='col-lg-12'>
+                          <div className='form-group'>
+                            <label className='border-bottom w-100 pb-1 mb-3'>
                               Giới tính
                             </label>
-                            <p style={{ minHeight: 38 }} className="mb-0">
+                            <p style={{ minHeight: 38 }} className='mb-0'>
                               {userInformation.gender}
                             </p>
                           </div>
                         </div>
-                        <div className="col-lg-12">
-                          <div className="form-group">
-                            <label className="border-bottom w-100 pb-1 mb-3">
+                        <div className='col-lg-12'>
+                          <div className='form-group'>
+                            <label className='border-bottom w-100 pb-1 mb-3'>
                               Nghề nghiệp
                             </label>
-                            <p style={{ minHeight: 38 }} className="mb-0">
+                            <p style={{ minHeight: 38 }} className='mb-0'>
                               {userInformation.jobTitle}
                             </p>
                           </div>
                         </div>
-                        <div className="col-lg-12">
-                          <div className="form-group">
-                            <label className="border-bottom w-100 pb-1 mb-3">
+                        <div className='col-lg-12'>
+                          <div className='form-group'>
+                            <label className='border-bottom w-100 pb-1 mb-3'>
                               Học vấn
                             </label>
-                            <p style={{ minHeight: 38 }} className="mb-0">
+                            <p style={{ minHeight: 38 }} className='mb-0'>
                               {userInformation.school}
                             </p>
                           </div>
                         </div>
-                        <div className="col-lg-12">
-                          <div className="form-group">
-                            <label className="border-bottom w-100 pb-1 mb-3">
+                        <div className='col-lg-12'>
+                          <div className='form-group'>
+                            <label className='border-bottom w-100 pb-1 mb-3'>
                               Tốt nghiệp
                             </label>
-                            <p style={{ minHeight: 38 }} className="mb-0">
-                              {userInformation.startYear} -{' '}
-                              {userInformation.endYear}
+                            <p style={{ minHeight: 38 }} className='mb-0'>
+                              {formatDate(userInformation.startYear)} -{' '}
+                              {formatDate(userInformation.endYear)}
                             </p>
                           </div>
                         </div>
-                        <div className="col-lg-12">
-                          <div className="form-group">
-                            <label className="border-bottom w-100 pb-1 mb-3">
+                        <div className='col-lg-12'>
+                          <div className='form-group'>
+                            <label className='border-bottom w-100 pb-1 mb-3'>
                               Trình độ
                             </label>
-                            <p style={{ minHeight: 38 }} className="mb-0">
+                            <p style={{ minHeight: 38 }} className='mb-0'>
                               {userInformation.level}
                             </p>
                           </div>
@@ -149,93 +151,101 @@ function Jobprofile(props) {
                       </div>
                     </form>
                   </div>
-                  <div className="col-lg-6 col-md-12">
-                    <div className="border-bottom clearfix mb-4">
-                      <h5 className="font-weight-700 pull-left text-uppercase">
+                  <div className='col-lg-6 col-md-12'>
+                    <div className='border-bottom clearfix mb-4'>
+                      <h5 className='font-weight-700 pull-left text-uppercase'>
                         Thông tin liên hệ
                       </h5>
                     </div>
-                    <div className="row m-b30">
-                      <div className="col-lg-12">
-                        <div className="form-group">
-                          <label className="border-bottom w-100 pb-1 mb-3">
+                    <div className='row m-b30'>
+                      <div className='col-lg-12'>
+                        <div className='form-group'>
+                          <label className='border-bottom w-100 pb-1 mb-3'>
                             Họ và tên
                           </label>
-                          <p style={{ minHeight: 38 }} className="mb-0">
+                          <p style={{ minHeight: 38 }} className='mb-0'>
                             {userInformation.name}
                           </p>
                         </div>
                       </div>
-                      <div className="col-lg-12">
-                        <div className="form-group">
-                          <label className="border-bottom w-100 pb-1 mb-3">
+                      <div className='col-lg-12'>
+                        <div className='form-group'>
+                          <label className='border-bottom w-100 pb-1 mb-3'>
                             Số điện thoại
                           </label>
-                          <div className="row align-items-center pr-3">
-                            <p className="col mb-0">{userInformation.phone}</p>
-                            <div className="row align-items-center pr-3">
-                              <p className="col mb-0 text-danger font-20">
-                                <i
-                                  class="fa fa-times-circle"
-                                  aria-hidden="true"
-                                ></i>
-                              </p>
-                              <button className="btn btn-primary btn-md">
-                                Xác thực
-                              </button>
-                            </div>
-                            {/* <div className="row align-items-center pr-3">
-                              <p className="col mb-0 text-success font-20">
-                                <i
-                                  class="fa fa-check-circle"
-                                  aria-hidden="true"
-                                ></i>
-                              </p>
-                              <button className="btn btn-primary btn-md">
-                                Cập nhật
-                              </button>
-                            </div> */}
+                          <div className='row align-items-center pr-3'>
+                            <p className='col mb-0'>
+                              {userInformation.username}
+                            </p>
+                            {userInformation.confirmPhone ? (
+                              <div className='row align-items-center pr-3'>
+                                <p className='col mb-0 text-success font-20'>
+                                  <i
+                                    class='fa fa-check-circle'
+                                    aria-hidden='true'
+                                  ></i>
+                                </p>
+                                <button className='btn btn-primary btn-md'>
+                                  Cập nhật
+                                </button>
+                              </div>
+                            ) : (
+                              <div className='row align-items-center pr-3'>
+                                <p className='col mb-0 text-danger font-20'>
+                                  <i
+                                    class='fa fa-times-circle'
+                                    aria-hidden='true'
+                                  ></i>
+                                </p>
+                                <button className='btn btn-primary btn-md'>
+                                  Xác thực
+                                </button>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
-                      <div className="col-lg-12">
-                        <div className="form-group">
-                          <label className="border-bottom w-100 pb-1 mb-3">
+                      <div className='col-lg-12'>
+                        <div className='form-group'>
+                          <label className='border-bottom w-100 pb-1 mb-3'>
                             Email
                           </label>
-                          <div className="row align-items-center pr-3">
-                            <p className="col mb-0">{userInformation.email}</p>
-                            <div className="row align-items-center pr-3">
-                              <p className="col mb-0 text-danger font-20">
-                                <i
-                                  class="fa fa-times-circle"
-                                  aria-hidden="true"
-                                ></i>
-                              </p>
-                              <button className="btn btn-primary btn-md">
-                                Xác thực
-                              </button>
-                            </div>
-                            {/* <div className="row align-items-center pr-3">
-                              <p className="col mb-0 text-success font-20">
-                                <i
-                                  class="fa fa-check-circle"
-                                  aria-hidden="true"
-                                ></i>
-                              </p>
-                              <button className="btn btn-primary btn-md">
-                                Cập nhật
-                              </button>
-                            </div> */}
+                          <div className='row align-items-center pr-3'>
+                            <p className='col mb-0'>{userInformation.email}</p>
+                            {userInformation.confirmEmail ? (
+                              <div className='row align-items-center pr-3'>
+                                <p className='col mb-0 text-success font-20'>
+                                  <i
+                                    class='fa fa-check-circle'
+                                    aria-hidden='true'
+                                  ></i>
+                                </p>
+                                <button className='btn btn-primary btn-md'>
+                                  Cập nhật
+                                </button>
+                              </div>
+                            ) : (
+                              <div className='row align-items-center pr-3'>
+                                <p className='col mb-0 text-danger font-20'>
+                                  <i
+                                    class='fa fa-times-circle'
+                                    aria-hidden='true'
+                                  ></i>
+                                </p>
+                                <button className='btn btn-primary btn-md'>
+                                  Xác thực
+                                </button>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
-                      <div className="col-lg-12">
-                        <div className="form-group">
-                          <label className="border-bottom w-100 pb-1 mb-3">
+                      <div className='col-lg-12'>
+                        <div className='form-group'>
+                          <label className='border-bottom w-100 pb-1 mb-3'>
                             Địa chỉ
                           </label>
-                          <p style={{ minHeight: 38 }} className="mb-0">
+                          <p style={{ minHeight: 38 }} className='mb-0'>
                             {userInformation.address}, phường{' '}
                             {userInformation.ward}, huyện{' '}
                             {userInformation.district}, tỉnh{' '}
@@ -253,12 +263,12 @@ function Jobprofile(props) {
                           </p>
                         </div>
                       </div> */}
-                      <div className="col-lg-12">
-                        <div className="form-group">
-                          <label className="border-bottom w-100 pb-1 mb-3">
+                      <div className='col-lg-12'>
+                        <div className='form-group'>
+                          <label className='border-bottom w-100 pb-1 mb-3'>
                             Postcode
                           </label>
-                          <p style={{ minHeight: 38 }} className="mb-0">
+                          <p style={{ minHeight: 38 }} className='mb-0'>
                             11223344
                           </p>
                         </div>
@@ -273,6 +283,6 @@ function Jobprofile(props) {
       </div>
       <Footer />
     </>
-  )
+  );
 }
-export default Jobprofile
+export default Jobprofile;

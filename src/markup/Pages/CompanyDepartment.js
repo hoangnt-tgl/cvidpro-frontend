@@ -10,6 +10,8 @@ import {
 } from '../../services/CompanyApi';
 import { getListDepartment } from '../../services/DepartmentApi';
 import ModalEditDeparment from '../../components/CompanyComponents/CompanyMangeDepartment/ModalEditDeparment/index.jsx';
+import ModalCreateDepartment from '../../components/CompanyComponents/CompanyMangeDepartment/ModalCreateDepartment/index.jsx';
+
 import { toast } from 'react-hot-toast';
 function CompanyDepartment(props) {
   const [companyInfo, setCompanyInfo] = useState({});
@@ -31,10 +33,15 @@ function CompanyDepartment(props) {
     setCompany(true);
   }
 
-  async function handleAddDepartment() {
-    await createDepartment({ ...newDepartment, companyId: companyInfo._id });
-    setAddDepartment(false);
-    setReload(true);
+  async function handleAddDepartment(data) {
+    try {
+      await createDepartment({ ...data, companyId: companyInfo._id });
+      setAddDepartment(false);
+      setReload(true);
+      toast.success('Thêm phòng ban thành công');
+    } catch (error) {
+      toast.error('Vui lòng thử lại');
+    }
   }
   async function handleEditDepartment(data) {
     try {
@@ -163,146 +170,11 @@ function CompanyDepartment(props) {
                   </table>
 
                   {/* Modal tạo phòng ban */}
-                  <Modal
-                    show={addDepartment}
-                    onHide={setAddDepartment}
-                    className='modal fade modal-bx-info'
-                  >
-                    <div className='modal-dialog my-0 w-100' role='document'>
-                      <div className='modal-content'>
-                        <div className='modal-header'>
-                          <div className='logo-img'>
-                            <img
-                              alt=''
-                              src={require('./../../images/logo/icon2.png')}
-                            />
-                          </div>
-                          <h5 className='modal-title'>Tạo phòng ban</h5>
-                          <button
-                            type='button'
-                            className='close'
-                            onClick={() => setAddDepartment(false)}
-                          >
-                            <span aria-hidden='true'>&times;</span>
-                          </button>
-                        </div>
-                        <div className='modal-body'>
-                          <div className='form-group'>
-                            <label>Tên phòng ban</label>
-                            <input
-                              className='form-control'
-                              placeholder='Nhập tên phòng ban'
-                              value={newDepartment.departmentName}
-                              onChange={(e) => {
-                                setNewDepartment({
-                                  ...newDepartment,
-                                  departmentName: e.target.value,
-                                });
-                              }}
-                              required
-                            />
-                          </div>
-                          <div className='form-group'>
-                            <label>Người quản lí</label>
-                            <input
-                              type='text'
-                              className='form-control'
-                              placeholder='Nhập tên người quản lí'
-                              value={newDepartment.managerName}
-                              onChange={(e) => {
-                                setNewDepartment({
-                                  ...newDepartment,
-                                  managerName: e.target.value,
-                                });
-                              }}
-                            />
-                          </div>
-                          <div className='form-group'>
-                            <label>Email</label>
-                            <input
-                              type='email'
-                              className='form-control'
-                              placeholder='Nhập email'
-                              value={newDepartment.managerEmail}
-                              onChange={(e) => {
-                                setNewDepartment({
-                                  ...newDepartment,
-                                  managerEmail: e.target.value,
-                                });
-                              }}
-                            />
-                          </div>
-                        </div>
-                        <div className='modal-footer'>
-                          <button
-                            type='button'
-                            className='btn btn-primary'
-                            onClick={handleAddDepartment}
-                            disabled={newDepartment.departmentName === ''}
-                          >
-                            Lưu
-                          </button>
-                          <button
-                            type='button'
-                            className='btn btn-secondary'
-                            onClick={() => setAddDepartment(false)}
-                          >
-                            Hủy
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </Modal>
-
-                  {/* <Modal
-                    show={company}
-                    onHide={setCompany}
-                    className='modal fade modal-bx-info'
-                  >
-                    <div className='modal-dialog m-0' role='document'>
-                      <div className='modal-content'>
-                        <div className='modal-header'>
-                          <div className='logo-img'>
-                            <img
-                              alt=''
-                              src={require('./../../images/logo/icon2.png')}
-                            />
-                          </div>
-                          <h5 className='modal-title'>
-                            {selectedDepartment.departmentName}
-                          </h5>
-                          <button
-                            type='button'
-                            className='close'
-                            onClick={() => setCompany(false)}
-                          >
-                            <span aria-hidden='true'>&times;</span>
-                          </button>
-                        </div>
-                        <div className='modal-body w-100'>
-                          <ul>
-                            <li>
-                              <strong>Người quản lí</strong>
-                              <p> {selectedDepartment.managerName} </p>
-                            </li>
-                            <li>
-                              <strong>Email</strong>
-                              <p>{selectedDepartment.managerEmail}</p>
-                            </li>
-                          </ul>
-                        </div>
-                        <div className='modal-footer'>
-                          <button
-                            type='button'
-                            className='btn btn-secondary'
-                            onClick={() => setCompany(false)}
-                          >
-                            Close
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </Modal> */}
+                  <ModalCreateDepartment
+                    addDepartment={addDepartment}
+                    setAddDepartment={setAddDepartment}
+                    handleAddDepartment={handleAddDepartment}
+                  />
                   {/* Modal edit phòng ban */}
                   <ModalEditDeparment
                     editDepartment={company}

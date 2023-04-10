@@ -1,16 +1,10 @@
-import React, { useMemo, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import NormalInput from '../../../../customComponents/NormalInput/Index.jsx';
-
-const Index = ({
-  editDepartment,
-  setEditDepartment,
-  preloadValue,
-  handleEditDepartment,
-}) => {
+const Index = ({ addDepartment, setAddDepartment, handleAddDepartment }) => {
   const [trigger, setTrigger] = useState(true);
   const checkStepRef = useRef({
     departmentName: false,
@@ -54,10 +48,6 @@ const Index = ({
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: useMemo(() => {
-      if (!preloadValue.departmentName) return;
-      return preloadValue;
-    }, [preloadValue]),
   });
   function handleCheckInput(e) {
     if (e.target.dataset.testid === 'departmentName') {
@@ -89,12 +79,12 @@ const Index = ({
   }
   function handleOnSubmit(data) {
     console.log(data);
-    handleEditDepartment(data);
+    handleAddDepartment(data);
   }
   return (
     <Modal
-      show={editDepartment}
-      onHide={setEditDepartment}
+      show={addDepartment}
+      onHide={setAddDepartment}
       className='modal fade modal-bx-info'
     >
       <form onSubmit={handleSubmit(handleOnSubmit)}>
@@ -107,11 +97,11 @@ const Index = ({
                   src={require('../../../../images/logo/icon2.png')}
                 />
               </div>
-              <h5 className='modal-title'>Chỉnh sửa phòng ban</h5>
+              <h5 className='modal-title'>Tạo phòng ban</h5>
               <button
                 type='button'
                 className='close'
-                onClick={() => setEditDepartment(false)}
+                onClick={() => setAddDepartment(false)}
               >
                 <span aria-hidden='true'>&times;</span>
               </button>
@@ -131,7 +121,6 @@ const Index = ({
                       register={{ ...register(item.register) }}
                       errors={errors}
                       onBlur={handleCheckInput}
-                      defaultValue={preloadValue[item.register]}
                     />
                   </>
                 );
@@ -144,7 +133,7 @@ const Index = ({
               <button
                 type='button'
                 className='btn btn-secondary'
-                onClick={() => setEditDepartment(false)}
+                onClick={() => setAddDepartment(false)}
               >
                 Hủy
               </button>
