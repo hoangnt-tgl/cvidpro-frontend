@@ -1,10 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
-import Select from "react-select";
+import React, { useEffect, useRef, useState } from 'react';
+import Select from 'react-select';
 //hookform
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import ReactSelectShowType from "../../../../customComponents/ReactSelectShowType/ReactSelectShowType";
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import ReactSelectShowType from '../../../../customComponents/ReactSelectShowType/ReactSelectShowType';
+import DropDownSelect from '../../../../customComponents/DropDownSelect/DropDownSelect';
+import { selectStyle } from '../../../../constants/common';
 
 const CompanyTaxInfo = ({
   setStep,
@@ -22,11 +24,11 @@ const CompanyTaxInfo = ({
     address: false,
   });
   const schema = yup.object().shape({
-    field: yup.array().required("Vui lòng nhập lĩnh vực kinh doanh"),
-    city: yup.object().required("Vui lòng chọn tỉnh/thành phố"),
-    district: yup.object().required("Vui lòng chọn quận/huyện"),
-    ward: yup.object().required("Vui lòng chọn phường/xã"),
-    address: yup.string().required("Vui lòng nhập địa chỉ"),
+    field: yup.array().required('Vui lòng nhập lĩnh vực kinh doanh'),
+    city: yup.object().required('Vui lòng chọn tỉnh/thành phố'),
+    district: yup.object().required('Vui lòng chọn quận/huyện'),
+    ward: yup.object().required('Vui lòng chọn phường/xã'),
+    address: yup.string().required('Vui lòng nhập địa chỉ'),
   });
   const {
     register,
@@ -34,18 +36,19 @@ const CompanyTaxInfo = ({
     setValue,
     control,
     getValues,
+    clearErrors,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   function handleCheckInput(e) {
-    if (e.target.dataset.testid === "address") {
-      if (e.target.value !== "" && !checkStepRef.current.address) {
+    if (e.target.dataset.testid === 'address') {
+      if (e.target.value !== '' && !checkStepRef.current.address) {
         setChildStep1((prev) => prev + 1 / 2 / 5);
         checkStepRef.current.address = true;
       }
-      if (e.target.value === "" && checkStepRef.current.address) {
+      if (e.target.value === '' && checkStepRef.current.address) {
         setChildStep1((prev) => prev - 1 / 2 / 5);
         checkStepRef.current.address = false;
       }
@@ -55,15 +58,19 @@ const CompanyTaxInfo = ({
     console.log(data);
     registerCompanyIn(data);
   }
-
+  function setChild() {
+    setChildStep1((prev) => prev + 1 / 2 / 5);
+  }
   return (
     <>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         <div className='form-group'>
-          <p>Lĩnh vực hoạt động</p>
+          <p>
+            Lĩnh vực hoạt động <span className='asterisk'></span>
+          </p>
           <div className='select-style'>
-            {" "}
-            <Controller
+            {' '}
+            {/* <Controller
               name='field'
               control={control}
               render={({ field }) => (
@@ -72,17 +79,17 @@ const CompanyTaxInfo = ({
                   styles={{
                     singleValue: (baseStyles, state) => ({
                       ...baseStyles,
-                      color: "black",
-                      fontWeight: "550",
+                      color: 'black',
+                      fontWeight: '550',
                     }),
                     optionsSelect: (baseStyles, state) => ({
                       ...baseStyles,
-                      color: "black",
-                      fontWeight: "550",
+                      color: 'black',
+                      fontWeight: '550',
                     }),
                   }}
                   onChange={(value) => {
-                    setValue("field", value);
+                    setValue('field', value);
                     if (checkStepRef.current.field === false) {
                       setChildStep1((prev) => prev + 1 / 2 / 5);
                       checkStepRef.current.field = true;
@@ -92,10 +99,20 @@ const CompanyTaxInfo = ({
                   placeholder='Chọn lĩnh vực hoạt động'
                   options={optionsSelect?.field}
                   isMulti={true}
-                  className={checkStepRef.current.field ? " filled" : ""}
+                  className={checkStepRef.current.field ? ' filled' : ''}
                 />
               )}
-            />
+            /> */}
+            <div className={checkStepRef.current.field ? ' filled' : ''}>
+              <DropDownSelect
+                clearErrors={clearErrors}
+                setValueForm={setValue}
+                setChildStep1={setChild}
+                checkStepRef={checkStepRef}
+                placeholder='Chọn lĩnh vực hoạt động'
+                options={optionsSelect?.field}
+              />
+            </div>
           </div>
 
           <div className='text-danger'>
@@ -104,9 +121,11 @@ const CompanyTaxInfo = ({
         </div>
 
         <div className='form-group'>
-          <p>Tỉnh/thành phố</p>
+          <p>
+            Tỉnh/thành phố <span className='asterisk'></span>
+          </p>
           <div className='select-style'>
-            {" "}
+            {' '}
             <Controller
               name='city'
               control={control}
@@ -117,14 +136,14 @@ const CompanyTaxInfo = ({
                   options={optionsSelect?.provinces}
                   minInput={1}
                   onChange={(value) => {
-                    setValue("city", value);
+                    setValue('city', value);
                     if (checkStepRef.current.city === false) {
                       setChildStep1((prev) => prev + 1 / 2 / 5);
                       checkStepRef.current.city = true;
                     }
                     fetchDistric(value?.value);
                   }}
-                  className={checkStepRef.current.city ? " filled" : ""}
+                  className={checkStepRef.current.city ? ' filled' : ''}
                 />
               )}
             />
@@ -135,40 +154,31 @@ const CompanyTaxInfo = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Quận/huyện</p>
+          <p>
+            Quận/huyện <span className='asterisk'></span>
+          </p>
           <div className='select-style'>
-            {" "}
+            {' '}
             <Controller
               name='district'
               control={control}
               render={({ field }) => (
                 <Select
                   {...field}
-                  styles={{
-                    singleValue: (baseStyles, state) => ({
-                      ...baseStyles,
-                      color: "black",
-                      fontWeight: "550",
-                    }),
-                    optionsSelect: (baseStyles, state) => ({
-                      ...baseStyles,
-                      color: "black",
-                      fontWeight: "550",
-                    }),
-                  }}
+                  styles={selectStyle}
                   placeholder='Chọn quận/huyện'
                   options={optionsSelect?.districts || []}
                   minInput={1}
                   onChange={(value) => {
-                    setValue("district", value);
-                    let city = getValues("city").value;
+                    setValue('district', value);
+                    let city = getValues('city').value;
                     if (checkStepRef.current.district === false) {
                       setChildStep1((prev) => prev + 1 / 2 / 5);
                       checkStepRef.current.district = true;
                     }
                     fetchWard(city, value?.value);
                   }}
-                  className={checkStepRef.current.district ? " filled" : ""}
+                  className={checkStepRef.current.district ? ' filled' : ''}
                 />
               )}
             />
@@ -179,38 +189,29 @@ const CompanyTaxInfo = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Phường/xã</p>
+          <p>
+            Phường/xã <span className='asterisk'></span>
+          </p>
           <div className='select-style'>
-            {" "}
+            {' '}
             <Controller
               name='ward'
               control={control}
               render={({ field }) => (
                 <Select
                   {...field}
-                  styles={{
-                    singleValue: (baseStyles, state) => ({
-                      ...baseStyles,
-                      color: "black",
-                      fontWeight: "550",
-                    }),
-                    optionsSelect: (baseStyles, state) => ({
-                      ...baseStyles,
-                      color: "black",
-                      fontWeight: "550",
-                    }),
-                  }}
+                  styles={selectStyle}
                   placeholder='Chọn phường/xã'
                   options={optionsSelect?.wards || []}
                   minInput={1}
                   onChange={(value) => {
-                    setValue("ward", value);
+                    setValue('ward', value);
                     if (value !== null && !checkStepRef.current.ward) {
                       setChildStep1((prev) => prev + 1 / 2 / 5);
                       checkStepRef.current.ward = true;
                     }
                   }}
-                  className={checkStepRef.current.ward ? " filled" : ""}
+                  className={checkStepRef.current.ward ? ' filled' : ''}
                 />
               )}
             />
@@ -221,15 +222,17 @@ const CompanyTaxInfo = ({
           </div>
         </div>
         <div className='form-group'>
-          <p>Địa chỉ</p>
+          <p>
+            Địa chỉ <span className='asterisk'></span>
+          </p>
           <input
             className={
               checkStepRef.current.address
-                ? "form-control filled"
-                : "form-control"
+                ? 'form-control filled'
+                : 'form-control'
             }
-            placeholder='Nhập địa chỉ'
-            {...register("address")}
+            placeholder='Nhập số nhà, tên đường'
+            {...register('address')}
             data-testid='address'
             onBlur={handleCheckInput}
           />
@@ -238,10 +241,10 @@ const CompanyTaxInfo = ({
           </div>
         </div>
         {/* Next Step Button */}
-        <div className='form-group '>
+        <div className='form-group register-btn'>
           <button
             type='button'
-            className='site-button dz-xs-flex m-r5 '
+            className='site-button dz-xs-flex m-r5 btn '
             onClick={() => {
               setStep((prev) => prev - 1);
             }}
@@ -250,7 +253,7 @@ const CompanyTaxInfo = ({
           </button>
           <button
             type='submit'
-            className='site-button dz-xs-flex m-r5 float-right btn btn-lg'
+            className='site-button dz-xs-flex m-r5 float-right btn'
             disabled={Object.keys(errors).length > 0}
           >
             Đăng ký

@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import FormBookInterView from "../components/CompanyMangeResume/FormBookInterview/FormBookInterView";
+import FormBookInterView from "../components/CompanyComponents/CompanyMangeResume/FormBookInterview/FormBookInterView";
 import { getCandidateForDepartment } from "../services/DepartmentApi";
 
 const useGetTableAssessData = () => {

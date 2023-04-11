@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../EmployeeRegister/RegisterStyles.css';
+import '../../../Registers/EmployeeRegister/RegisterStyles.css';
 import CompanyTaxInfo from './CompanyTaxInfo';
 const FormRegister1 = ({
   setStep,

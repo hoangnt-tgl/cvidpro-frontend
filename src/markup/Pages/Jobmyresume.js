@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import Header from "../Layout/Header";
-import Footer from "../Layout/Footer";
-import swal from "sweetalert";
-import loginbg from "./../../images/bg6.jpg";
-import "../../css/jobsave.css"
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import Header from '../Layout/Header';
+import Footer from '../Layout/Footer';
+import swal from 'sweetalert';
 import {
   Modal,
   Button,
@@ -17,9 +15,9 @@ import {
   Col,
   Tabs,
   Tab,
-} from "react-bootstrap";
-import "../../css/mycv.css"
-import Select from "react-select";
+} from 'react-bootstrap';
+import '../../css/mycv.css';
+import Select from 'react-select';
 import {
   getMyResume,
   addSchool,
@@ -31,14 +29,14 @@ import {
   addWorkExperience,
   deleteWorkExperience,
   updatePoint,
-} from "../../services/EmployeeApi";
+} from '../../services/EmployeeApi';
 import {
   getSortTime,
   formatTimeInput,
   getMonthYear,
   formatMonthInput,
-} from "../../services/TimeService";
-import Listingsidebar from "../Element/Listingsidebar";
+} from '../../services/TimeService';
+import Listingsidebar from '../Element/Listingsidebar';
 import {
   getListLevel,
   getListSchools,
@@ -48,78 +46,83 @@ import {
   getListLanguage,
   getCertificateByLanguage,
 } from "../../services/GetListService";
-var bnr2 = require("./../../images/banner/bnr1.jpg");
-var bnr = require("./../../images/background/bg3.jpg");
+import useGetOptions from '../../hooks/useGetOptions';
+import ModalLearningProcess from '../../components/EmployeeComponents/EmployeeResume/ModalLearningProcess/index.jsx';
+import ModalShortCourse from '../../components/EmployeeComponents/EmployeeResume/ModalShortCourse/index.jsx';
+var bnr2 = require('./../../images/banner/bnr1.jpg');
+var bnr = require('./../../images/background/bg3.jpg');
 var bnr3= require("../../images/background/bg5.jpg")
 function Jobmyresume(props) {
   const objSchool = {
-    school: "",
-    major: "",
-    level: "",
-    start: "",
-    end: "",
-    jobTitle: "",
+    school: '',
+    major: '',
+    level: '',
+    start: '',
+    end: '',
+    jobTitle: '',
   };
   const objShortTraining = {
-    start: "",
-    end: "",
-    organization: "",
-    certificate: "",
+    start: '',
+    end: '',
+    organization: '',
+    certificate: '',
   };
   const objWork = {
-    company: "",
-    address: "",
+    company: '',
+    address: '',
     process: [],
-    start: "",
-    end: "",
-    leaving: "",
+    start: '',
+    end: '',
+    leaving: '',
     isWorking: true,
     isCurrent: false,
   };
   const objProcess = {
-    jobTitle: "",
-    from: "",
-    to: "",
+    jobTitle: '',
+    from: '',
+    to: '',
     isCurrent: false,
-    major: "",
-    address: "",
-    result: "",
-    workDescription: "",
+    major: '',
+    address: '',
+    result: '',
+    workDescription: '',
   };
   const objNotWork = {
-    start: "",
-    end: "",
+    start: '',
+    end: '',
     process: [],
     isWorking: false,
     isCurrent: false,
   };
 
   const languageCertificate = {
-    language: "",
-    name: "",
-    startTime: "",
-    endTime: "",
-    point: "",
-    organizer: "",
+    language: '',
+    name: '',
+    startTime: '',
+    endTime: '',
+    point: '',
+    organizer: '',
   };
 
   // option lý do nghỉ việc
   const listLeaving = [
-    { value: "Nghỉ theo mong muốn", label: "Nghỉ theo mong muốn" },
-    { value: "Nghỉ theo yêu cầu", label: "Nghỉ theo yêu cầu" },
-    { value: "Tự nghỉ", label: "Tự nghỉ" },
+    { value: 'Nghỉ theo mong muốn', label: 'Nghỉ theo mong muốn' },
+    { value: 'Nghỉ theo yêu cầu', label: 'Nghỉ theo yêu cầu' },
+    { value: 'Tự nghỉ', label: 'Tự nghỉ' },
   ];
 
   const resultOption = [
-    { value: "Trên mức đề ra", label: "Trên mức đề ra" },
-    { value: "Đạt mức đề ra", label: "Đạt mức đề ra" },
-    { value: "Dưới mức đề ra", label: "Dưới mức đề ra" },
+    { value: 'Trên mức đề ra', label: 'Trên mức đề ra' },
+    { value: 'Đạt mức đề ra', label: 'Đạt mức đề ra' },
+    { value: 'Dưới mức đề ra', label: 'Dưới mức đề ra' },
   ];
 
   const getValueSelect = (value) => {
-    return value ? { label: value, value: value } : "";
+    return value ? { label: value, value: value } : '';
   };
-
+  // Mr Tom wrote this
+  const { optionsSelect } = useGetOptions(false, true);
+  // end
   const [userInformation, setUserInformation] = useState({});
   const [reload, setReload] = useState(false);
   const [levels, setLevels] = useState([]);
@@ -135,7 +138,7 @@ function Jobmyresume(props) {
   const [newWork, setNewWork] = useState(objWork);
   const [newNotWork, setNewNotWork] = useState(objNotWork);
   const [newProcess, setNewProcess] = useState(objProcess);
-  const [tabKey, setTabKey] = useState("working");
+  const [tabKey, setTabKey] = useState('working');
 
   const [newShortTraining, setNewShortTraining] = useState(objShortTraining);
   const [newLanguageCertificate, setNewLanguageCertificate] =
@@ -153,7 +156,7 @@ function Jobmyresume(props) {
   const [otherSkill, setOtherSkill] = useState(false);
 
   const [countDown, setCountDown] = useState(60);
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState('');
   useEffect(() => {
     async function fetchData() {
       getListLevel().then((res) => {
@@ -256,9 +259,8 @@ function Jobmyresume(props) {
     });
   };
 
-  const handleAddSchool = async () => {
-    await addSchool(userInformation._id, newSchool);
-    setNewSchool(objSchool);
+  const handleAddSchool = async (data) => {
+    await addSchool(userInformation._id, data);
     setEducation(false);
     setReload(!reload);
   };
@@ -267,11 +269,10 @@ function Jobmyresume(props) {
     setReload(!reload);
   };
 
-  const handleAddShortTraining = async () => {
-    console.log(newShortTraining);
-    await addShortTraining(userInformation._id, newShortTraining);
+  const handleAddShortTraining = async (data) => {
+    await addShortTraining(userInformation._id, data);
     setShowShortTraining(false);
-    setNewShortTraining(objShortTraining);
+    // setNewShortTraining(objShortTraining);
     setReload(!reload);
   };
   const handleDeleteShortTraining = async (id) => {
@@ -290,7 +291,7 @@ function Jobmyresume(props) {
       !newProcess.address ||
       (!newProcess.isCurrent && !newProcess.result)
     ) {
-      swal("Alert!", "Vui lòng nhập đầy đủ thông tin", "error");
+      swal('Alert!', 'Vui lòng nhập đầy đủ thông tin', 'error');
       return;
     }
     let listProcess = newWork.process;
@@ -298,7 +299,7 @@ function Jobmyresume(props) {
       newWork.process.length > 0 &&
       newWork.process[newWork.process.length - 1].isCurrent === true
     ) {
-      swal("Alert!", "Thời gian đã đến hiện tại", "error");
+      swal('Alert!', 'Thời gian đã đến hiện tại', 'error');
     }
     listProcess.push(newProcess);
     setNewWork({ ...newWork, process: listProcess });
@@ -316,7 +317,7 @@ function Jobmyresume(props) {
           userInformation.workExperience.length - 1
         ];
       if (lastWork.isCurrent === true) {
-        swal("Alert!", "Thời gian nhập đã đến thời điểm hiện tại", "error");
+        swal('Alert!', 'Thời gian nhập đã đến thời điểm hiện tại', 'error');
         return;
       }
     }
@@ -326,7 +327,7 @@ function Jobmyresume(props) {
       newWork.process.length === 0 ||
       (!newWork.leaving && !newWork.isCurrent)
     ) {
-      swal("Alert!", "Vui lòng nhập đầy đủ thông tin", "error");
+      swal('Alert!', 'Vui lòng nhập đầy đủ thông tin', 'error');
       return;
     }
     console.log(newWork);
@@ -355,12 +356,12 @@ function Jobmyresume(props) {
           userInformation.workExperience.length - 1
         ];
       if (lastWork.isCurrent === true) {
-        swal("Alert!", "Thời gian nhập đã đến thời điểm hiện tại", "error");
+        swal('Alert!', 'Thời gian nhập đã đến thời điểm hiện tại', 'error');
         return;
       }
     }
     if (!newNotWork.start || (!newNotWork.end && !newNotWork.isCurrent)) {
-      swal("Alert!", "Vui lòng nhập đầy đủ thông tin", "error");
+      swal('Alert!', 'Vui lòng nhập đầy đủ thông tin', 'error');
       return;
     }
     setUserInformation({
@@ -380,7 +381,7 @@ function Jobmyresume(props) {
     let year = 0;
     let month = 0;
     if (!workExperience) {
-      return "Chưa có kinh nghiệm";
+      return 'Chưa có kinh nghiệm';
     }
     workExperience.forEach((company) => {
       company.process.forEach((process) => {
@@ -407,81 +408,81 @@ function Jobmyresume(props) {
   return (
     <>
       {/* <Header /> */}
-      <div className="page-content">
+      <div className='page-content'>
         <div
-          className="overlay-black-dark profile-edit p-t50 p-b20"
-          style={{ backgroundImage: "url(" + bnr + ")" }}
+          className='overlay-black-dark profile-edit p-t50 p-b20'
+          style={{ backgroundImage: 'url(' + bnr + ')' }}
         >
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-8 col-md-7 candidate-info">
-                <div className="candidate-detail">
-                  <div className="canditate-des text-center">
-                    <Link to={"#"}>
-                      <img alt="" src={`${userInformation.avatar}`} />
+          <div className='container'>
+            <div className='row'>
+              <div className='col-lg-8 col-md-7 candidate-info'>
+                <div className='candidate-detail'>
+                  <div className='canditate-des text-center'>
+                    <Link to={'#'}>
+                      <img alt='' src={`${userInformation.avatar}`} />
                     </Link>
                     <div
-                      className="upload-link"
-                      title="update"
-                      data-toggle="tooltip"
-                      data-placement="right"
+                      className='upload-link'
+                      title='update'
+                      data-toggle='tooltip'
+                      data-placement='right'
                     >
                       <input
-                        type="file"
-                        className="update-flie"
-                        accept="image/*"
+                        type='file'
+                        className='update-flie'
+                        accept='image/*'
                         onChange={uploadAvatar}
                       />
-                      <i className="fa fa-camera"></i>
+                      <i className='fa fa-camera'></i>
                     </div>
                   </div>
-                  <div className="text-white browse-job text-left">
-                    <h4 className="m-b0">
+                  <div className='text-white browse-job text-left'>
+                    <h4 className='m-b0'>
                       {userInformation?.name}
                       <Link
-                        to={"#"}
+                        to={'#'}
                         onClick={() => setBasicDetails(true)}
-                        className="m-l15 font-16 text-white"
+                        className='m-l15 font-16 text-white'
                       >
-                        <i className="fa fa-pencil"></i>
+                        <i className='fa fa-pencil'></i>
                       </Link>
                     </h4>
-                    <p className="m-b15">{userInformation.jobTitle}</p>
-                    <ul className="clearfix">
+                    <p className='m-b15'>{userInformation.jobTitle}</p>
+                    <ul className='clearfix'>
                       <li>
-                        <i className="ti-calendar"></i>{" "}
+                        <i className='ti-calendar'></i>{' '}
                         {getSortTime(userInformation.birthday)}
                       </li>
                       <li>
-                        <i className="ti-user"></i> {userInformation.gender}
+                        <i className='ti-user'></i> {userInformation.gender}
                       </li>
                       <li>
-                        <i className="ti-mobile"></i> {userInformation.username}
+                        <i className='ti-mobile'></i> {userInformation.username}
                       </li>
                       <li>
-                        <i className="ti-agenda"></i> {userInformation.level}
+                        <i className='ti-agenda'></i> {userInformation.level}
                       </li>
-                      <li className="w-100">
-                        <i className="ti-briefcase"></i>{" "}
+                      <li className='w-100'>
+                        <i className='ti-briefcase'></i>{' '}
                         {userInformation.school}
                       </li>
                       <br />
-                      <li className="w-100">
-                        <i className="ti-id-badge"></i> {userInformation.major}
+                      <li className='w-100'>
+                        <i className='ti-id-badge'></i> {userInformation.major}
                       </li>
                       <br />
-                      <li className="w-100">
-                        <i className="ti-location-pin"></i>{" "}
+                      <li className='w-100'>
+                        <i className='ti-location-pin'></i>{' '}
                         {userInformation.address +
-                          ", " +
+                          ', ' +
                           userInformation.ward +
-                          ", " +
+                          ', ' +
                           userInformation.district +
-                          ", " +
+                          ', ' +
                           userInformation.province}
                       </li>
-                      <li className="w-100">
-                        <i className="ti-email"></i> {userInformation.email}
+                      <li className='w-100'>
+                        <i className='ti-email'></i> {userInformation.email}
                       </li>
                     </ul>
                     <div className="progress-box m-t10" style={{border:"2px double #fff"}}>
@@ -494,9 +495,9 @@ function Jobmyresume(props) {
                       </div>
                       <div className="progress" style={{margin:"0 0 8px 0", height: " 8px"}} >
                         <div
-                          className="progress-bar bg-primary"  
-                          style={{ width: userInformation.points * 10 + "%" }}
-                          role="progressbar"
+                          className='progress-bar bg-primary'
+                          style={{ width: userInformation.points * 10 + '%' }}
+                          role='progressbar'
                         ></div>
                       </div>
                       </div>
@@ -505,17 +506,17 @@ function Jobmyresume(props) {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-4 col-md-5">
-                <Link to={"#"}>
-                  <div className="pending-info text-white p-a25">
+              <div className='col-lg-4 col-md-5'>
+                <Link to={'#'}>
+                  <div className='pending-info text-white p-a25'>
                     <h5>Trạng thái CVID</h5>
-                    <ul className="list-check secondry">
+                    <ul className='list-check secondry'>
                       {userInformation.confirmEmail && (
                         <li>Đã xác thực E-mail</li>
                       )}
                       {userInformation.confirmPhone ? (
                         <>
-                          {" "}
+                          {' '}
                           <li>Đã xác thực số điện thoại</li>
                           {userInformation.confirm1?.confirmed === -1 ? (
                             <li>CV không được duyệt</li>
@@ -537,7 +538,7 @@ function Jobmyresume(props) {
             </div>
           </div>
           <Modal
-            className="modal fade browse-job modal-bx-info editor"
+            className='modal fade browse-job modal-bx-info editor'
             show={showModalConfirmPhone}
             onHide={() => setShowModalConfirmPhone(false)}
           >
@@ -545,48 +546,48 @@ function Jobmyresume(props) {
               <Modal.Title>Xác thực số điện thoại</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <div className="form-group">
-                <label htmlFor="phone">Số điện thoại</label>
+              <div className='form-group'>
+                <label htmlFor='phone'>Số điện thoại</label>
                 <input
-                  type="text"
-                  className="form-control"
-                  id="phone"
-                  placeholder="Nhập số điện thoại"
+                  type='text'
+                  className='form-control'
+                  id='phone'
+                  placeholder='Nhập số điện thoại'
                   value={userInformation.username}
                   disabled
                 />
               </div>
-              <div className="input-group mb-3">
+              <div className='input-group mb-3'>
                 <input
-                  type="number"
-                  className="form-control"
-                  placeholder="Nhập mã xác thực"
+                  type='number'
+                  className='form-control'
+                  placeholder='Nhập mã xác thực'
                   aria-label="Recipient's username"
-                  aria-describedby="basic-addon2"
+                  aria-describedby='basic-addon2'
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
                 />
-                <div className="input-group-append">
+                <div className='input-group-append'>
                   <button
-                    className="btn btn-outline-secondary"
-                    type="button"
+                    className='btn btn-outline-secondary'
+                    type='button'
                     onClick={handleSendOTP}
                     disabled={countDown !== 0}
                   >
-                    {countDown === 0 ? "Gửi lại" : "00 : " + countDown}
+                    {countDown === 0 ? 'Gửi lại' : '00 : ' + countDown}
                   </button>
                 </div>
               </div>
             </Modal.Body>
             <Modal.Footer>
               <Button
-                variant="secondary"
+                variant='secondary'
                 onClick={() => setShowModalConfirmPhone(false)}
               >
                 Đóng
               </Button>
               <Button
-                variant="primary"
+                variant='primary'
                 disabled={otp.length !== 6}
                 onClick={handleConfirmPhone}
               >
@@ -595,35 +596,35 @@ function Jobmyresume(props) {
             </Modal.Footer>
           </Modal>
           <Modal
-            className="modal fade browse-job modal-bx-info editor"
+            className='modal fade browse-job modal-bx-info editor'
             show={basicdetails}
             onHide={setBasicDetails}
           >
-            <div className="modal-dialog my-0" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="ProfilenameModalLongTitle">
+            <div className='modal-dialog my-0' role='document'>
+              <div className='modal-content'>
+                <div className='modal-header'>
+                  <h5 className='modal-title' id='ProfilenameModalLongTitle'>
                     Thông tin cơ bản
                   </h5>
                   <button
-                    type="button"
-                    className="close"
+                    type='button'
+                    className='close'
                     onClick={() => setBasicDetails(false)}
                   >
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden='true'>&times;</span>
                   </button>
                 </div>
-                <div className="modal-body">
+                <div className='modal-body'>
                   <form>
-                    <div className="row">
-                      <div className="col-lg-12 col-md-12">
-                        <div className="form-group">
+                    <div className='row'>
+                      <div className='col-lg-12 col-md-12'>
+                        <div className='form-group'>
                           <label>Họ và tên</label>
                           <input
-                            type="text"
+                            type='text'
                             value={userInformation.name}
-                            className="form-control"
-                            placeholder="Nhập họ và tên"
+                            className='form-control'
+                            placeholder='Nhập họ và tên'
                             onChange={(e) => {
                               setUserInformation({
                                 ...userInformation,
@@ -633,46 +634,46 @@ function Jobmyresume(props) {
                           />
                         </div>
                       </div>
-                      <div className="col-lg-12 col-md-12">
-                        <div className="form-group">
-                          <label className="m-b0">Giới tính</label>
-                          <div className="row">
-                            <div className="col-lg-6 col-md-6 col-sm-6 col-6">
+                      <div className='col-lg-12 col-md-12'>
+                        <div className='form-group'>
+                          <label className='m-b0'>Giới tính</label>
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6 col-sm-6 col-6'>
                               <div
-                                className="custom-control custom-radio"
+                                className='custom-control custom-radio'
                                 onClick={() => {
                                   setUserInformation({
                                     ...userInformation,
-                                    gender: "Nam",
+                                    gender: 'Nam',
                                   });
                                 }}
                               >
                                 <input
-                                  type="radio"
-                                  className="custom-control-input"
-                                  checked={userInformation.gender === "Nam"}
+                                  type='radio'
+                                  className='custom-control-input'
+                                  checked={userInformation.gender === 'Nam'}
                                 />
-                                <label className="custom-control-label">
+                                <label className='custom-control-label'>
                                   Nam
                                 </label>
                               </div>
                             </div>
-                            <div className="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div className='col-lg-6 col-md-6 col-sm-6 col-6'>
                               <div
-                                className="custom-control custom-radio"
+                                className='custom-control custom-radio'
                                 onClick={() => {
                                   setUserInformation({
                                     ...userInformation,
-                                    gender: "Nữ",
+                                    gender: 'Nữ',
                                   });
                                 }}
                               >
                                 <input
-                                  type="radio"
-                                  className="custom-control-input"
-                                  checked={userInformation.gender === "Nữ"}
+                                  type='radio'
+                                  className='custom-control-input'
+                                  checked={userInformation.gender === 'Nữ'}
                                 />
-                                <label className="custom-control-label">
+                                <label className='custom-control-label'>
                                   Nữ
                                 </label>
                               </div>
@@ -680,14 +681,14 @@ function Jobmyresume(props) {
                           </div>
                         </div>
                       </div>
-                      <div className="col-lg-12 col-md-12">
-                        <div className="form-group">
+                      <div className='col-lg-12 col-md-12'>
+                        <div className='form-group'>
                           <label>Số điện thoại</label>
                           <input
-                            type="text"
+                            type='text'
                             value={userInformation.username}
-                            className="form-control"
-                            placeholder="Nhập số điện thoại"
+                            className='form-control'
+                            placeholder='Nhập số điện thoại'
                             onChange={(e) => {
                               setUserInformation({
                                 ...userInformation,
@@ -697,14 +698,14 @@ function Jobmyresume(props) {
                           />
                         </div>
                       </div>
-                      <div className="col-lg-12 col-md-12">
-                        <div className="form-group">
+                      <div className='col-lg-12 col-md-12'>
+                        <div className='form-group'>
                           <label>Ngày sinh</label>
                           <input
-                            type="date"
+                            type='date'
                             value={formatTimeInput(userInformation.birthday)}
-                            className="form-control"
-                            placeholder="YYYY-MM-DD"
+                            className='form-control'
+                            placeholder='YYYY-MM-DD'
                             onChange={(e) => {
                               setUserInformation({
                                 ...userInformation,
@@ -714,27 +715,27 @@ function Jobmyresume(props) {
                           />
                         </div>
                       </div>
-                      <div className="col-lg-12 col-md-12">
-                        <div className="form-group">
+                      <div className='col-lg-12 col-md-12'>
+                        <div className='form-group'>
                           <label>Email Address</label>
-                          <h6 className="m-a0 font-14">
+                          <h6 className='m-a0 font-14'>
                             {userInformation.email}
                           </h6>
-                          <Link to={"#"}>Change Email Address</Link>
+                          <Link to={'#'}>Change Email Address</Link>
                         </div>
                       </div>
                     </div>
                   </form>
                 </div>
-                <div className="modal-footer">
+                <div className='modal-footer'>
                   <button
-                    type="button"
-                    className="site-button"
+                    type='button'
+                    className='site-button'
                     onClick={() => setBasicDetails(false)}
                   >
                     Cancel
                   </button>
-                  <button type="button" className="site-button">
+                  <button type='button' className='site-button'>
                     Save
                   </button>
                 </div>
@@ -765,75 +766,81 @@ function Jobmyresume(props) {
                               <Card.Title className="header-cv header-job" style={{maxHeight:"200px"}}>
                                 Thời gian làm việc
                               </Card.Title>
-                              <div className="row">
-                                <div className="col-12" >
-                                  <InputGroup size="sm" className="mb-2">
+                              <div className='row'>
+                                <div className='col-12'>
+                                  <InputGroup size='sm' className='mb-2'>
                                     <InputGroup.Prepend
-                                      style={{ maxHeight: "50px" }}
+                                      style={{ maxHeight: '50px' }}
                                     >
-                                      <InputGroup.Text className="title-cv">
+                                      <InputGroup.Text className='title-cv'>
                                         Nơi làm việc
                                       </InputGroup.Text>
                                     </InputGroup.Prepend>
-                                    <FormControl 
+                                    <FormControl
                                       value={item.company}
                                       className="answer"
                                       style={{ maxHeight: "38px"}} 
                                     />
                                   </InputGroup>
                                 </div>
-                                <div className="col-md-4 col-sm-12">
-                                  <InputGroup size="sm" className="mb-2">
+                                <div className='col-md-4 col-sm-12'>
+                                  <InputGroup size='sm' className='mb-2'>
                                     <InputGroup.Prepend
-                                      style={{ maxHeight: "38px" }}
+                                      style={{ maxHeight: '38px' }}
                                     >
-                                      <InputGroup.Text className="title-cv">Từ</InputGroup.Text>
+                                      <InputGroup.Text className='title-cv'>
+                                        Từ
+                                      </InputGroup.Text>
                                     </InputGroup.Prepend>
                                     <FormControl
-                                      className="answer"
+                                      className='answer'
                                       value={formatMonthInput(item.start)}
-                                      style={{ maxHeight: "38px" }}
-                                      type="month"
+                                      style={{ maxHeight: '38px' }}
+                                      type='month'
                                     />
                                   </InputGroup>
                                 </div>
-                                <div className="col-md-4 col-sm-12">
-                                  <InputGroup size="sm">
+                                <div className='col-md-4 col-sm-12'>
+                                  <InputGroup size='sm'>
                                     <InputGroup.Prepend
-                                      style={{ maxHeight: "38px" }}
+                                      style={{ maxHeight: '38px' }}
                                     >
-                                      <InputGroup.Text className="title-cv">Đến</InputGroup.Text>
+                                      <InputGroup.Text className='title-cv'>
+                                        Đến
+                                      </InputGroup.Text>
                                     </InputGroup.Prepend>
                                     <FormControl
-                                      className="answer"
-                                      style={{ maxHeight: "38px" }}
-                                      type="month"
+                                      className='answer'
+                                      style={{ maxHeight: '38px' }}
+                                      type='month'
                                       value={formatMonthInput(item.end)}
                                     />
                                   </InputGroup>
                                 </div>
-                                <div className="col-md-4 col-sm-12">
+                                <div className='col-md-4 col-sm-12'>
                                   <Form.Group
-                                    controlId="formBasicCheckbox"
-                                    className="my-2"
+                                    controlId='formBasicCheckbox'
+                                    className='my-2'
                                   >
                                     <Form.Check
-                                      type="checkbox"
-                                      label="Hiện tại"
+                                      type='checkbox'
+                                      label='Hiện tại'
                                       checked={item.isCurrent}
                                     />
                                   </Form.Group>
                                 </div>
-                                <div className="col-12">
-                                  <InputGroup size="sm">
+                                <div className='col-12'>
+                                  <InputGroup size='sm'>
                                     <InputGroup.Prepend
-                                      style={{ maxHeight: "38px" }}
+                                      style={{ maxHeight: '38px' }}
                                     >
-                                      <InputGroup.Text className="title-cv">Địa chỉ</InputGroup.Text>
+                                      <InputGroup.Text className='title-cv'>
+                                        Địa chỉ
+                                      </InputGroup.Text>
                                     </InputGroup.Prepend>
                                     <FormControl
-                                      className="answer"
-                                      style={{ maxHeight: "38px" }}
+                                      className='answer'
+                                      style={{ maxHeight: '38px' }}
                                       value={item.address}
                                     />
                                   </InputGroup>
@@ -847,84 +854,84 @@ function Jobmyresume(props) {
                               {item.process.map((element, index2) => {
                                 return (
                                   <>
-                                    <div className="row ">
-                                      <div className="col-md-4 col-sm-12">
-                                        <InputGroup size="sm" className="mb-2">
+                                    <div className='row '>
+                                      <div className='col-md-4 col-sm-12'>
+                                        <InputGroup size='sm' className='mb-2'>
                                           <InputGroup.Prepend
-                                            style={{ maxHeight: "38px" }}
+                                            style={{ maxHeight: '38px' }}
                                           >
-                                            <InputGroup.Text className="title-cv">
+                                            <InputGroup.Text className='title-cv'>
                                               Từ
                                             </InputGroup.Text>
                                           </InputGroup.Prepend>
                                           <FormControl
-                                            className="answer"
-                                            style={{ maxHeight: "38px" }}
-                                            type="month"
+                                            className='answer'
+                                            style={{ maxHeight: '38px' }}
+                                            type='month'
                                             value={formatMonthInput(
                                               element.from
                                             )}
                                           />
                                         </InputGroup>
                                       </div>
-                                      <div className="col-md-4 col-sm-12">
-                                        <InputGroup size="sm">
+                                      <div className='col-md-4 col-sm-12'>
+                                        <InputGroup size='sm'>
                                           <InputGroup.Prepend
-                                            style={{ maxHeight: "38px" }}
+                                            style={{ maxHeight: '38px' }}
                                           >
-                                            <InputGroup.Text className="title-cv">
+                                            <InputGroup.Text className='title-cv'>
                                               Đến
                                             </InputGroup.Text>
                                           </InputGroup.Prepend>
                                           <FormControl
-                                            className="answer"
-                                            style={{ maxHeight: "38px" }}
-                                            type="month"
+                                            className='answer'
+                                            style={{ maxHeight: '38px' }}
+                                            type='month'
                                             value={formatMonthInput(element.to)}
                                           />
                                         </InputGroup>
                                       </div>
-                                      <div className="col-md-4 col-sm-12">
+                                      <div className='col-md-4 col-sm-12'>
                                         <Form.Group
-                                          controlId="formBasicCheckbox"
-                                          className="my-2"
+                                          controlId='formBasicCheckbox'
+                                          className='my-2'
                                         >
                                           <Form.Check
-                                            type="checkbox"
-                                            label="Hiện tại"
+                                            type='checkbox'
+                                            label='Hiện tại'
                                             checked={element.isCurrent}
                                           />
                                         </Form.Group>
                                       </div>
-                                      <div className="col-12">
-                                        <InputGroup size="sm" className="mb-2">
+                                      <div className='col-12'>
+                                        <InputGroup size='sm' className='mb-2'>
                                           <InputGroup.Prepend
-                                            style={{ maxHeight: "38px" }}
+                                            style={{ maxHeight: '38px' }}
                                           >
-                                            <InputGroup.Text className="title-cv">
+                                            <InputGroup.Text className='title-cv'>
                                               Công việc
                                             </InputGroup.Text>
                                           </InputGroup.Prepend>
                                           <FormControl
-                                            className="answer"
-                                            style={{ maxHeight: "38px" }}
+                                            className='answer'
+                                            style={{ maxHeight: '38px' }}
                                             value={element.workDescription}
                                           />
                                         </InputGroup>
                                       </div>
-                                      <div className="col-12">
-                                        <InputGroup size="sm" className="mb-2">
+                                      <div className='col-12'>
+                                        <InputGroup size='sm' className='mb-2'>
                                           <InputGroup.Prepend
-                                            style={{ maxHeight: "38px" }}
+                                            style={{ maxHeight: '38px' }}
                                           >
-                                            <InputGroup.Text className="title-cv">
+                                            <InputGroup.Text className='title-cv'>
                                               Chuyên nghành
                                             </InputGroup.Text>
                                           </InputGroup.Prepend>
                                           <FormControl
                                             as={Select}
-                                            size="sm"
-                                            className="answer"
+                                            size='sm'
+                                            className='answer'
                                             options={majors}
                                             value={getValueSelect(
                                               element.major
@@ -932,19 +939,19 @@ function Jobmyresume(props) {
                                           />
                                         </InputGroup>
                                       </div>
-                                      <div className="col-12">
-                                        <InputGroup size="sm" className="mb-2">
+                                      <div className='col-12'>
+                                        <InputGroup size='sm' className='mb-2'>
                                           <InputGroup.Prepend
-                                            style={{ maxHeight: "38px" }}
+                                            style={{ maxHeight: '38px' }}
                                           >
-                                            <InputGroup.Text className="title-cv">
+                                            <InputGroup.Text className='title-cv'>
                                               Chức danh công việc
                                             </InputGroup.Text>
                                           </InputGroup.Prepend>
                                           <FormControl
                                             as={Select}
-                                            size="sm"
-                                            className="answer"
+                                            size='sm'
+                                            className='answer'
                                             options={jobTitleOption}
                                             value={getValueSelect(
                                               element.jobTitle
@@ -952,35 +959,35 @@ function Jobmyresume(props) {
                                           />
                                         </InputGroup>
                                       </div>
-                                      <div className="col-12">
-                                        <InputGroup size="sm" className="mb-2">
+                                      <div className='col-12'>
+                                        <InputGroup size='sm' className='mb-2'>
                                           <InputGroup.Prepend
-                                            style={{ maxHeight: "38px" }}
+                                            style={{ maxHeight: '38px' }}
                                           >
-                                            <InputGroup.Text className="title-cv">
+                                            <InputGroup.Text className='title-cv'>
                                               Địa chỉ
                                             </InputGroup.Text>
                                           </InputGroup.Prepend>
                                           <FormControl
-                                            className="answer"
-                                            style={{ maxHeight: "38px" }}
+                                            className='answer'
+                                            style={{ maxHeight: '38px' }}
                                             value={element.address}
                                           />
                                         </InputGroup>
                                       </div>
-                                      <div className="col-12">
-                                        <InputGroup size="sm" className="mb-2">
+                                      <div className='col-12'>
+                                        <InputGroup size='sm' className='mb-2'>
                                           <InputGroup.Prepend
-                                            style={{ maxHeight: "38px" }}
+                                            style={{ maxHeight: '38px' }}
                                           >
-                                            <InputGroup.Text className="title-cv">
+                                            <InputGroup.Text className='title-cv'>
                                               Kết quả
                                             </InputGroup.Text>
                                           </InputGroup.Prepend>
                                           <FormControl
                                             as={Select}
-                                            size="sm"
-                                            className="answer"
+                                            size='sm'
+                                            className='answer'
                                             options={resultOption}
                                             value={getValueSelect(
                                               element.result
@@ -994,17 +1001,19 @@ function Jobmyresume(props) {
                               })}
                             </Card.Body>
                             <Card.Footer>
-                              <InputGroup size="sm">
+                              <InputGroup size='sm'>
                                 <InputGroup.Prepend
-                                  style={{ maxHeight: "38px" }}
+                                  style={{ maxHeight: '38px' }}
                                 >
-                                  <InputGroup.Text className="title-cv">Nghỉ việc</InputGroup.Text>
+                                  <InputGroup.Text className='title-cv'>
+                                    Nghỉ việc
+                                  </InputGroup.Text>
                                 </InputGroup.Prepend>
 
                                 <FormControl
                                   as={Select}
-                                  size="sm"
-                                  className="answer"
+                                  size='sm'
+                                  className='answer'
                                   options={listLeaving}
                                   value={getValueSelect(item.leaving)}
                                 ></FormControl>
@@ -1013,56 +1022,59 @@ function Jobmyresume(props) {
                           </Card>
                         </Form>
                       ) : (
-                        <Form className="mb-3">
+                        <Form className='mb-3'>
                           <Card>
                             <Card.Header>
-                              <Card.Title className="text-center">
+                              <Card.Title className='text-center'>
                                 Thời gian không làm việc
                               </Card.Title>
-                              <div className="row">
-                                <div className="col-md-4 col-sm-12">
-                                  <InputGroup size="sm" className="mb-2">
+                              <div className='row'>
+                                <div className='col-md-4 col-sm-12'>
+                                  <InputGroup size='sm' className='mb-2'>
                                     <InputGroup.Prepend
-                                      style={{ maxHeight: "38px" }}
+                                      style={{ maxHeight: '38px' }}
                                     >
-                                      <InputGroup.Text className="title-cv">Từ</InputGroup.Text>
+                                      <InputGroup.Text className='title-cv'>
+                                        Từ
+                                      </InputGroup.Text>
                                     </InputGroup.Prepend>
                                     <FormControl
-                                      className="answer"
+                                      className='answer'
                                       value={formatMonthInput(item.start)}
-                                      style={{ maxHeight: "38px" }}
-                                      type="month"
+                                      style={{ maxHeight: '38px' }}
+                                      type='month'
                                     />
                                   </InputGroup>
                                 </div>
-                                <div className="col-md-4 col-sm-12">
-                                  <InputGroup size="sm">
+                                <div className='col-md-4 col-sm-12'>
+                                  <InputGroup size='sm'>
                                     <InputGroup.Prepend
-                                      style={{ maxHeight: "38px" }}
+                                      style={{ maxHeight: '38px' }}
                                     >
-                                      <InputGroup.Text className="title-cv">Đến</InputGroup.Text>
+                                      <InputGroup.Text className='title-cv'>
+                                        Đến
+                                      </InputGroup.Text>
                                     </InputGroup.Prepend>
                                     <FormControl
-                                      className="answer"
-                                      style={{ maxHeight: "38px" }}
-                                      type="month"
+                                      className='answer'
+                                      style={{ maxHeight: '38px' }}
+                                      type='month'
                                       value={formatMonthInput(item.end)}
                                     />
                                   </InputGroup>
                                 </div>
-                                <div className="col-md-4 col-sm-12">
+                                <div className='col-md-4 col-sm-12'>
                                   <Form.Group
-                                    controlId="formBasicCheckbox"
-                                    className="my-2"
+                                    controlId='formBasicCheckbox'
+                                    className='my-2'
                                   >
                                     <Form.Check
-                                      type="checkbox"
-                                      label="Hiện tại"
+                                      type='checkbox'
+                                      label='Hiện tại'
                                       checked={item.isCurrent}
                                     />
                                   </Form.Group>
                                 </div>
-                             
                               </div>
                             </Card.Header>
                           </Card>
@@ -1078,7 +1090,7 @@ function Jobmyresume(props) {
                 </h5>
                 <h5 className="text-center" style={{fontWeight:"700", fontSize: "25"}}>THÊM KINH NGHIỆM LÀM VIỆC MỚI</h5>
                 <Tabs
-                  id="controlled-tab-example"
+                  id='controlled-tab-example'
                   activeKey={tabKey}
                   onSelect={(k) => setTabKey(k)}
   
@@ -1087,20 +1099,20 @@ function Jobmyresume(props) {
                     <Form className="mb-2" action="javascript:void(0);" style={{borderColor:"#333333 #333333 #fff"}}>
                       <Card  style={{border:"1px solid #000"}}>
                         <Card.Header>
-                          <div className="row">
-                            <div className="col-12">
-                              <InputGroup size="sm" className="mb-2">
+                          <div className='row'>
+                            <div className='col-12'>
+                              <InputGroup size='sm' className='mb-2'>
                                 <InputGroup.Prepend
-                                  style={{ maxHeight: "38px" }}
+                                  style={{ maxHeight: '38px' }}
                                 >
-                                  <InputGroup.Text className="title-cv">
+                                  <InputGroup.Text className='title-cv'>
                                     Nơi làm việc
                                   </InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
                                   value={newWork.company}
-                                  className="answer"
-                                  style={{ maxHeight: "38px" }}
+                                  className='answer'
+                                  style={{ maxHeight: '38px' }}
                                   onChange={(e) => {
                                     setNewWork({
                                       ...newWork,
@@ -1110,35 +1122,39 @@ function Jobmyresume(props) {
                                 />
                               </InputGroup>
                             </div>
-                            <div className="col-md-4 col-sm-12">
-                              <InputGroup size="sm" className="mb-2">
+                            <div className='col-md-4 col-sm-12'>
+                              <InputGroup size='sm' className='mb-2'>
                                 <InputGroup.Prepend
-                                  style={{ maxHeight: "38px" }}
+                                  style={{ maxHeight: '38px' }}
                                 >
-                                  <InputGroup.Text className="title-cv">Từ</InputGroup.Text>
+                                  <InputGroup.Text className='title-cv'>
+                                    Từ
+                                  </InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                  className="answer"
+                                  className='answer'
                                   value={formatMonthInput(
                                     newWork.process[0]?.from
                                   )}
-                                  style={{ maxHeight: "38px" }}
-                                  type="month"
+                                  style={{ maxHeight: '38px' }}
+                                  type='month'
                                   disabled={true}
                                 />
                               </InputGroup>
                             </div>
-                            <div className="col-md-4 col-sm-12">
-                              <InputGroup size="sm">
+                            <div className='col-md-4 col-sm-12'>
+                              <InputGroup size='sm'>
                                 <InputGroup.Prepend
-                                  style={{ maxHeight: "38px" }}
+                                  style={{ maxHeight: '38px' }}
                                 >
-                                  <InputGroup.Text className="title-cv">Đến</InputGroup.Text>
+                                  <InputGroup.Text className='title-cv'>
+                                    Đến
+                                  </InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                  className="answer"
-                                  style={{ maxHeight: "38px" }}
-                                  type="month"
+                                  className='answer'
+                                  style={{ maxHeight: '38px' }}
+                                  type='month'
                                   value={formatMonthInput(
                                     newWork.process[newWork.process.length - 1]
                                       ?.to
@@ -1147,14 +1163,14 @@ function Jobmyresume(props) {
                                 />
                               </InputGroup>
                             </div>
-                            <div className="col-md-4 col-sm-12">
+                            <div className='col-md-4 col-sm-12'>
                               <Form.Group
-                                controlId="formBasicCheckbox"
-                                className="my-2"
+                                controlId='formBasicCheckbox'
+                                className='my-2'
                               >
                                 <Form.Check
-                                  type="checkbox"
-                                  label="Hiện tại"
+                                  type='checkbox'
+                                  label='Hiện tại'
                                   checked={
                                     newWork.process.length > 0 &&
                                     newWork.process[newWork.process.length - 1]
@@ -1166,16 +1182,18 @@ function Jobmyresume(props) {
                                 />
                               </Form.Group>
                             </div>
-                            <div className="col-12">
-                              <InputGroup size="sm">
+                            <div className='col-12'>
+                              <InputGroup size='sm'>
                                 <InputGroup.Prepend
-                                  style={{ maxHeight: "38px" }}
+                                  style={{ maxHeight: '38px' }}
                                 >
-                                  <InputGroup.Text className="title-cv">Địa chỉ</InputGroup.Text>
+                                  <InputGroup.Text className='title-cv'>
+                                    Địa chỉ
+                                  </InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                  className="answer"
-                                  style={{ maxHeight: "38px" }}
+                                  className='answer'
+                                  style={{ maxHeight: '38px' }}
                                   value={newWork.address}
                                   onChange={(e) => {
                                     setNewWork({
@@ -1195,45 +1213,49 @@ function Jobmyresume(props) {
                           {newWork.process.map((element, index2) => {
                             return (
                               <>
-                                <div className="row mt-3">
-                                  <div className="col-md-4 col-sm-12">
-                                    <InputGroup size="sm" className="mb-2">
+                                <div className='row mt-3'>
+                                  <div className='col-md-4 col-sm-12'>
+                                    <InputGroup size='sm' className='mb-2'>
                                       <InputGroup.Prepend
-                                        style={{ maxHeight: "38px" }}
+                                        style={{ maxHeight: '38px' }}
                                       >
-                                        <InputGroup.Text className="title-cv">Từ</InputGroup.Text>
+                                        <InputGroup.Text className='title-cv'>
+                                          Từ
+                                        </InputGroup.Text>
                                       </InputGroup.Prepend>
                                       <FormControl
-                                        className="answer"
-                                        style={{ maxHeight: "38px" }}
-                                        type="month"
+                                        className='answer'
+                                        style={{ maxHeight: '38px' }}
+                                        type='month'
                                         value={formatMonthInput(element.from)}
                                       />
                                     </InputGroup>
                                   </div>
-                                  <div className="col-md-4 col-sm-12">
-                                    <InputGroup size="sm">
+                                  <div className='col-md-4 col-sm-12'>
+                                    <InputGroup size='sm'>
                                       <InputGroup.Prepend
-                                        style={{ maxHeight: "38px" }}
+                                        style={{ maxHeight: '38px' }}
                                       >
-                                        <InputGroup.Text className="title-cv">Đến</InputGroup.Text>
+                                        <InputGroup.Text className='title-cv'>
+                                          Đến
+                                        </InputGroup.Text>
                                       </InputGroup.Prepend>
                                       <FormControl
-                                        className="answer"
-                                        style={{ maxHeight: "38px" }}
-                                        type="month"
+                                        className='answer'
+                                        style={{ maxHeight: '38px' }}
+                                        type='month'
                                         value={formatMonthInput(element.to)}
                                       />
                                     </InputGroup>
                                   </div>
-                                  <div className="col-md-4 col-sm-12">
+                                  <div className='col-md-4 col-sm-12'>
                                     <Form.Group
-                                      controlId="formBasicCheckbox"
-                                      className="my-2"
+                                      controlId='formBasicCheckbox'
+                                      className='my-2'
                                     >
                                       <Form.Check
-                                        type="checkbox"
-                                        label="Hiện tại"
+                                        type='checkbox'
+                                        label='Hiện tại'
                                         checked={element.isCurrent}
                                         onChange={(e) => {
                                           let temp = newWork.process;
@@ -1247,109 +1269,111 @@ function Jobmyresume(props) {
                                       />
                                     </Form.Group>
                                   </div>
-                                  <div className="col-12">
-                                    <InputGroup size="sm" className="mb-2">
+                                  <div className='col-12'>
+                                    <InputGroup size='sm' className='mb-2'>
                                       <InputGroup.Prepend
-                                        style={{ maxHeight: "38px" }}
+                                        style={{ maxHeight: '38px' }}
                                       >
-                                        <InputGroup.Text className="title-cv">
+                                        <InputGroup.Text className='title-cv'>
                                           Công việc
                                         </InputGroup.Text>
                                       </InputGroup.Prepend>
                                       <FormControl
-                                        className="answer"
-                                        style={{ maxHeight: "38px" }}
+                                        className='answer'
+                                        style={{ maxHeight: '38px' }}
                                         value={element.workDescription}
                                       />
                                     </InputGroup>
                                   </div>
-                                  <div className="col-12">
-                                    <InputGroup size="sm" className="mb-2">
+                                  <div className='col-12'>
+                                    <InputGroup size='sm' className='mb-2'>
                                       <InputGroup.Prepend
-                                        style={{ maxHeight: "38px" }}
+                                        style={{ maxHeight: '38px' }}
                                       >
-                                        <InputGroup.Text className="title-cv">
+                                        <InputGroup.Text className='title-cv'>
                                           Chuyên nghành
                                         </InputGroup.Text>
                                       </InputGroup.Prepend>
                                       <FormControl
                                         as={Select}
-                                        size="sm"
-                                        className="answer"
+                                        size='sm'
+                                        className='answer'
                                         options={majors}
                                         value={getValueSelect(element.major)}
                                       />
                                     </InputGroup>
                                   </div>
-                                  <div className="col-12">
-                                    <InputGroup size="sm" className="mb-2">
+                                  <div className='col-12'>
+                                    <InputGroup size='sm' className='mb-2'>
                                       <InputGroup.Prepend
-                                        style={{ maxHeight: "38px" }}
+                                        style={{ maxHeight: '38px' }}
                                       >
-                                        <InputGroup.Text className="title-cv">
+                                        <InputGroup.Text className='title-cv'>
                                           Chức danh công việc
                                         </InputGroup.Text>
                                       </InputGroup.Prepend>
                                       <FormControl
                                         as={Select}
-                                        size="sm"
-                                        className="answer"
+                                        size='sm'
+                                        className='answer'
                                         options={jobTitleOption}
                                         value={getValueSelect(element.jobTitle)}
                                       />
                                     </InputGroup>
                                   </div>
-                                  <div className="col-12">
-                                    <InputGroup size="sm" className="mb-2">
+                                  <div className='col-12'>
+                                    <InputGroup size='sm' className='mb-2'>
                                       <InputGroup.Prepend
-                                        style={{ maxHeight: "38px" }}
+                                        style={{ maxHeight: '38px' }}
                                       >
-                                        <InputGroup.Text className="title-cv">
+                                        <InputGroup.Text className='title-cv'>
                                           Địa chỉ
                                         </InputGroup.Text>
                                       </InputGroup.Prepend>
                                       <FormControl
-                                        className="answer"
-                                        style={{ maxHeight: "38px" }}
+                                        className='answer'
+                                        style={{ maxHeight: '38px' }}
                                         value={element.address}
                                       />
                                     </InputGroup>
                                   </div>
-                                  <div className="col-12">
-                                    <InputGroup size="sm" className="mb-2">
+                                  <div className='col-12'>
+                                    <InputGroup size='sm' className='mb-2'>
                                       <InputGroup.Prepend
-                                        style={{ maxHeight: "38px" }}
+                                        style={{ maxHeight: '38px' }}
                                       >
-                                        <InputGroup.Text className="title-cv">
+                                        <InputGroup.Text className='title-cv'>
                                           Kết quả
                                         </InputGroup.Text>
                                       </InputGroup.Prepend>
                                       <FormControl
                                         as={Select}
-                                        size="sm"
-                                        className="answer"
+                                        size='sm'
+                                        className='answer'
                                         options={resultOption}
                                         value={getValueSelect(element.result)}
                                       />
                                     </InputGroup>
                                   </div>
                                 </div>
-                                <hr style={{ border: "1px solid blue" }} />
+                                <hr style={{ border: '1px solid blue' }} />
                               </>
                             );
                           })}
-                          <div className="row ">
-                            <div className="col-md-4 col-sm-12">
-                              <InputGroup size="sm" className="mb-2">
+                          <div className='row '>
+                            <div className='col-md-4 col-sm-12'>
+                              <InputGroup size='sm' className='mb-2'>
                                 <InputGroup.Prepend
-                                  style={{ maxHeight: "38px" }}
+                                  style={{ maxHeight: '38px' }}
                                 >
-                                  <InputGroup.Text className="title-cv">Từ</InputGroup.Text>
+                                  <InputGroup.Text className='title-cv'>
+                                    Từ
+                                  </InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                  className="answer"
-                                  style={{ maxHeight: "38px" }}
-                                  type="month"
+                                  className='answer'
+                                  style={{ maxHeight: '38px' }}
+                                  type='month'
                                   value={formatMonthInput(newProcess.from)}
                                   disabled={
                                     newWork.process.length > 0 ||
@@ -1366,20 +1390,22 @@ function Jobmyresume(props) {
                                 />
                               </InputGroup>
                             </div>
-                            <div className="col-md-4 col-sm-12">
-                              <InputGroup size="sm">
+                            <div className='col-md-4 col-sm-12'>
+                              <InputGroup size='sm'>
                                 <InputGroup.Prepend
-                                  style={{ maxHeight: "38px" }}
+                                  style={{ maxHeight: '38px' }}
                                 >
-                                  <InputGroup.Text className="title-cv">Đến</InputGroup.Text>
+                                  <InputGroup.Text className='title-cv'>
+                                    Đến
+                                  </InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                  className="answer"
-                                  style={{ maxHeight: "38px" }}
-                                  type="month"
+                                  className='answer'
+                                  style={{ maxHeight: '38px' }}
+                                  type='month'
                                   value={formatMonthInput(newProcess.to)}
                                   disabled={
-                                    newProcess.from === "" ||
+                                    newProcess.from === '' ||
                                     newProcess.isCurrent
                                       ? true
                                       : false
@@ -1395,35 +1421,37 @@ function Jobmyresume(props) {
                                 />
                               </InputGroup>
                             </div>
-                            <div className="col-md-4 col-sm-12">
+                            <div className='col-md-4 col-sm-12'>
                               <Form.Group
-                                controlId="formBasicCheckbox"
-                                className="my-2"
+                                controlId='formBasicCheckbox'
+                                className='my-2'
                               >
                                 <Form.Check
-                                  type="checkbox"
-                                  label="Hiện tại"
+                                  type='checkbox'
+                                  label='Hiện tại'
                                   checked={newProcess.isCurrent}
                                   onChange={(e) => {
                                     setNewProcess({
                                       ...newProcess,
                                       isCurrent: e.target.checked,
-                                      to: e.target.checked ? "" : newProcess.to,
+                                      to: e.target.checked ? '' : newProcess.to,
                                     });
                                   }}
                                 />
                               </Form.Group>
                             </div>
-                            <div className="col-12">
-                              <InputGroup size="sm" className="mb-2">
+                            <div className='col-12'>
+                              <InputGroup size='sm' className='mb-2'>
                                 <InputGroup.Prepend
-                                  style={{ maxHeight: "38px" }}
+                                  style={{ maxHeight: '38px' }}
                                 >
-                                  <InputGroup.Text className="title-cv">Công việc</InputGroup.Text>
+                                  <InputGroup.Text className='title-cv'>
+                                    Công việc
+                                  </InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                  className="answer"
-                                  style={{ maxHeight: "38px" }}
+                                  className='answer'
+                                  style={{ maxHeight: '38px' }}
                                   value={newProcess.workDescription}
                                   onChange={(e) => {
                                     setNewProcess({
@@ -1434,19 +1462,19 @@ function Jobmyresume(props) {
                                 />
                               </InputGroup>
                             </div>
-                            <div className="col-12">
-                              <InputGroup size="sm" className="mb-2">
+                            <div className='col-12'>
+                              <InputGroup size='sm' className='mb-2'>
                                 <InputGroup.Prepend
-                                  style={{ maxHeight: "38px" }}
+                                  style={{ maxHeight: '38px' }}
                                 >
-                                  <InputGroup.Text className="title-cv">
+                                  <InputGroup.Text className='title-cv'>
                                     Chuyên nghành
                                   </InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
                                   as={Select}
-                                  size="sm"
-                                  className="answer"
+                                  size='sm'
+                                  className='answer'
                                   options={majors}
                                   value={getValueSelect(newProcess.major)}
                                   onChange={(e) => {
@@ -1458,19 +1486,19 @@ function Jobmyresume(props) {
                                 />
                               </InputGroup>
                             </div>
-                            <div className="col-12">
-                              <InputGroup size="sm" className="mb-2">
+                            <div className='col-12'>
+                              <InputGroup size='sm' className='mb-2'>
                                 <InputGroup.Prepend
-                                  style={{ maxHeight: "38px" }}
+                                  style={{ maxHeight: '38px' }}
                                 >
-                                  <InputGroup.Text className="title-cv">
+                                  <InputGroup.Text className='title-cv'>
                                     Chức danh công việc
                                   </InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
                                   as={Select}
-                                  size="sm"
-                                  className="answer"
+                                  size='sm'
+                                  className='answer'
                                   options={jobTitleOption}
                                   value={getValueSelect(newProcess.jobTitle)}
                                   onChange={(e) => {
@@ -1482,16 +1510,18 @@ function Jobmyresume(props) {
                                 />
                               </InputGroup>
                             </div>
-                            <div className="col-12">
-                              <InputGroup size="sm" className="mb-2">
+                            <div className='col-12'>
+                              <InputGroup size='sm' className='mb-2'>
                                 <InputGroup.Prepend
-                                  style={{ maxHeight: "38px" }}
+                                  style={{ maxHeight: '38px' }}
                                 >
-                                  <InputGroup.Text className="title-cv">Địa chỉ</InputGroup.Text>
+                                  <InputGroup.Text className='title-cv'>
+                                    Địa chỉ
+                                  </InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                  className="answer"
-                                  style={{ maxHeight: "38px" }}
+                                  className='answer'
+                                  style={{ maxHeight: '38px' }}
                                   value={newProcess.address}
                                   onChange={(e) => {
                                     setNewProcess({
@@ -1502,17 +1532,19 @@ function Jobmyresume(props) {
                                 />
                               </InputGroup>
                             </div>
-                            <div className="col-12">
-                              <InputGroup size="sm" className="mb-2">
+                            <div className='col-12'>
+                              <InputGroup size='sm' className='mb-2'>
                                 <InputGroup.Prepend
-                                  style={{ maxHeight: "38px" }}
+                                  style={{ maxHeight: '38px' }}
                                 >
-                                  <InputGroup.Text className="title-cv">Kết quả</InputGroup.Text>
+                                  <InputGroup.Text className='title-cv'>
+                                    Kết quả
+                                  </InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
                                   as={Select}
-                                  size="sm"
-                                  className="answer"
+                                  size='sm'
+                                  className='answer'
                                   options={resultOption}
                                   value={getValueSelect(newProcess.result)}
                                   onChange={(e) => {
@@ -1525,9 +1557,9 @@ function Jobmyresume(props) {
                               </InputGroup>
                             </div>
                           </div>
-                          <div className="d-flex justify-content-center mt-2">
+                          <div className='d-flex justify-content-center mt-2'>
                             <button
-                              className="btn btn-primary"
+                              className='btn btn-primary'
                               onClick={handleAddProcess}
                             >
                               Thêm quá trình làm việc
@@ -1535,15 +1567,15 @@ function Jobmyresume(props) {
                           </div>
                         </Card.Body>
                         <Card.Footer>
-                          <InputGroup size="sm">
-                            <InputGroup.Prepend style={{ maxHeight: "38px" }}>
+                          <InputGroup size='sm'>
+                            <InputGroup.Prepend style={{ maxHeight: '38px' }}>
                               <InputGroup.Text>Nghỉ việc</InputGroup.Text>
                             </InputGroup.Prepend>
 
                             <FormControl
                               as={Select}
-                              size="sm"
-                              className="answer"
+                              size='sm'
+                              className='answer'
                               options={listLeaving}
                               value={getValueSelect(newWork.leaving)}
                               onChange={(e) => {
@@ -1557,10 +1589,10 @@ function Jobmyresume(props) {
                         </Card.Footer>
                       </Card>
                       {/* button primary dài 80% ở giữa */}
-                      <div className="d-flex justify-content-center mt-2">
+                      <div className='d-flex justify-content-center mt-2'>
                         <button
-                          className="btn btn-primary"
-                          style={{ width: "80%" }}
+                          className='btn btn-primary'
+                          style={{ width: '80%' }}
                           onClick={handleAddWorkExperience}
                         >
                           Thêm công việc
@@ -1576,14 +1608,14 @@ function Jobmyresume(props) {
                             <div className="col-md-4 col-sm-12">
                               <InputGroup size="sm" className="mb-2">
                                 <InputGroup.Prepend
-                                  style={{ maxHeight: "38px" }}
+                                  style={{ maxHeight: '38px' }}
                                 >
                                   <InputGroup.Text>Từ</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                  type="month"
-                                  className="answer"
-                                  style={{ maxHeight: "38px" }}
+                                  type='month'
+                                  className='answer'
+                                  style={{ maxHeight: '38px' }}
                                   value={formatMonthInput(newNotWork.start)}
                                   onChange={(e) => {
                                     setNewNotWork({
@@ -1599,17 +1631,17 @@ function Jobmyresume(props) {
                                 />
                               </InputGroup>
                             </div>
-                            <div className="col-md-4 col-sm-12">
-                              <InputGroup size="sm" className="mb-2">
+                            <div className='col-md-4 col-sm-12'>
+                              <InputGroup size='sm' className='mb-2'>
                                 <InputGroup.Prepend
-                                  style={{ maxHeight: "38px" }}
+                                  style={{ maxHeight: '38px' }}
                                 >
                                   <InputGroup.Text>Đến</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
-                                  type="month"
-                                  className="answer"
-                                  style={{ maxHeight: "38px" }}
+                                  type='month'
+                                  className='answer'
+                                  style={{ maxHeight: '38px' }}
                                   value={formatMonthInput(newNotWork.end)}
                                   onChange={(e) => {
                                     setNewNotWork({
@@ -1619,38 +1651,38 @@ function Jobmyresume(props) {
                                   }}
                                   disabled={
                                     newNotWork.isCurrent ||
-                                    newNotWork.start === ""
+                                    newNotWork.start === ''
                                   }
                                 />
                               </InputGroup>
                             </div>
-                            <div className="col-md-4 col-sm-12">
+                            <div className='col-md-4 col-sm-12'>
                               <Form.Group
-                                controlId="formBasicCheckbox"
-                                className="my-2"
+                                controlId='formBasicCheckbox'
+                                className='my-2'
                               >
                                 <Form.Check
-                                  type="checkbox"
-                                  label="Hiện tại"
+                                  type='checkbox'
+                                  label='Hiện tại'
                                   checked={newNotWork.isCurrent}
                                   onChange={(e) => {
                                     setNewNotWork({
                                       ...newNotWork,
                                       isCurrent: e.target.checked,
                                       end: e.target.checked
-                                        ? ""
+                                        ? ''
                                         : newNotWork.end,
                                     });
                                   }}
-                                  disabled={newNotWork.start === ""}
+                                  disabled={newNotWork.start === ''}
                                   min={newNotWork.start}
                                 />
                               </Form.Group>
                             </div>
                           </div>
-                          <div className="d-flex justify-content-center mt-2">
+                          <div className='d-flex justify-content-center mt-2'>
                             <button
-                              className="btn btn-primary"
+                              className='btn btn-primary'
                               onClick={handleAddNotWork}
                             >
                               Thêm thời gian không làm việc
@@ -1686,13 +1718,13 @@ function Jobmyresume(props) {
                             className="mr-auto"
                             style={{color:"black"}}
                           >
-                            {index + 1 + ". " + question.name}{" "}
-                            <i className="fa fa-question-circle ms-0"></i>
+                            {index + 1 + '. ' + question.name}{' '}
+                            <i className='fa fa-question-circle ms-0'></i>
                           </Accordion.Toggle>
                           <Form.Control
-                            className="align-self-center mr-0"
+                            className='align-self-center mr-0'
                             // value={userInformation?.pointList[index]}
-                            style={{ width: "50px" }}
+                            style={{ width: '50px' }}
                             onChange={(e) => {
                               if (isNaN(e.target.value)) e.target.value = 0;
                               if (e.target.value > 10) e.target.value = 10;
@@ -1703,13 +1735,13 @@ function Jobmyresume(props) {
                                 pointList: pointList,
                               });
                             }}
-                            type="number"
-                            min="0"
-                            max="10"
+                            type='number'
+                            min='0'
+                            max='10'
                           ></Form.Control>
                         </Card.Header>
                         <Accordion.Collapse eventKey={index + 1}>
-                          <Card.Body className="border-top">
+                          <Card.Body className='border-top'>
                             {question.detail.map((item, index2) => {
                               return (
                                 <>
@@ -1724,9 +1756,9 @@ function Jobmyresume(props) {
                   })}
                 </Accordion>
                 {/* button bên phải */}
-                <div className="d-flex justify-content-end mt-2">
+                <div className='d-flex justify-content-end mt-2'>
                   <button
-                    className="btn btn-primary"
+                    className='btn btn-primary'
                     onClick={handleUpdatePoint}
                   >
                     Lưu
@@ -1737,45 +1769,45 @@ function Jobmyresume(props) {
                 <div className="d-flex">
                   <h5 className="m-b15">Quá trình học tập</h5>
                   <Link
-                    to={"#"}
+                    to={'#'}
                     onClick={() => setEducation(true)}
-                    className="site-button add-btn button-sm"
+                    className='site-button add-btn button-sm'
                   >
-                    <i className="fa fa-pencil m-r5"></i> Thêm
+                    <i className='fa fa-pencil m-r5'></i> Thêm
                   </Link>
                 </div>
 
-                <Modal
-                  className="modal fade modal-bx-info editor"
+                {/* <Modal
+                  className='modal fade modal-bx-info editor'
                   show={education}
                   onHide={setEducation}
                 >
-                  <div className="modal-dialog my-0" role="document">
-                    <div className="modal-content">
-                      <div className="modal-header">
+                  <div className='modal-dialog my-0' role='document'>
+                    <div className='modal-content'>
+                      <div className='modal-header'>
                         <h5
-                          className="modal-title"
-                          id="EducationModalLongTitle"
+                          className='modal-title'
+                          id='EducationModalLongTitle'
                         >
                           Quá trình học tập
                         </h5>
                         <button
-                          type="button"
-                          className="close"
+                          type='button'
+                          className='close'
                           onClick={() => setEducation(false)}
                         >
-                          <span aria-hidden="true">&times;</span>
+                          <span aria-hidden='true'>&times;</span>
                         </button>
                       </div>
-                      <div className="modal-body">
+                      <div className='modal-body'>
                         <form>
-                          <div className="row">
-                            <div className="col-lg-6 col-md-6">
-                              <div className="form-group">
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6'>
+                              <div className='form-group'>
                                 <label>Từ</label>
                                 <input
-                                  type="month"
-                                  className="form-control"
+                                  type='month'
+                                  className='form-control'
                                   onChange={(e) => {
                                     setNewSchool({
                                       ...newSchool,
@@ -1786,12 +1818,12 @@ function Jobmyresume(props) {
                                 ></input>
                               </div>
                             </div>
-                            <div className="col-lg-6 col-md-6">
-                              <div className="form-group">
+                            <div className='col-lg-6 col-md-6'>
+                              <div className='form-group'>
                                 <label>Đến</label>
                                 <input
-                                  type="month"
-                                  className="form-control"
+                                  type='month'
+                                  className='form-control'
                                   onChange={(e) => {
                                     setNewSchool({
                                       ...newSchool,
@@ -1801,11 +1833,11 @@ function Jobmyresume(props) {
                                 ></input>
                               </div>
                             </div>
-                            <div className="col-lg-12 col-md-12">
-                              <div className="form-group">
+                            <div className='col-lg-12 col-md-12'>
+                              <div className='form-group'>
                                 <label>Cấp bậc</label>
                                 <Select
-                                  placeholder="Chọn cấp bậc"
+                                  placeholder='Chọn cấp bậc'
                                   onChange={(e) =>
                                     setNewSchool((prev) => ({
                                       ...prev,
@@ -1816,11 +1848,11 @@ function Jobmyresume(props) {
                                 />
                               </div>
                             </div>
-                            <div className="col-lg-12 col-md-12">
-                              <div className="form-group">
+                            <div className='col-lg-12 col-md-12'>
+                              <div className='form-group'>
                                 <label>Trường</label>
                                 <Select
-                                  placeholder="Chọn trường"
+                                  placeholder='Chọn trường'
                                   onChange={(e) =>
                                     setNewSchool((prev) => ({
                                       ...prev,
@@ -1831,11 +1863,11 @@ function Jobmyresume(props) {
                                 />
                               </div>
                             </div>
-                            <div className="col-lg-12 col-md-12">
-                              <div className="form-group">
+                            <div className='col-lg-12 col-md-12'>
+                              <div className='form-group'>
                                 <label>Chuyên nghành</label>
                                 <Select
-                                  placeholder="Chọn chuyên nghành"
+                                  placeholder='Chọn chuyên nghành'
                                   onChange={(e) =>
                                     setNewSchool((prev) => ({
                                       ...prev,
@@ -1846,13 +1878,13 @@ function Jobmyresume(props) {
                                 />
                               </div>
                             </div>
-                            <div className="col-lg-12 col-md-12">
-                              <div className="form-group">
+                            <div className='col-lg-12 col-md-12'>
+                              <div className='form-group'>
                                 <label>Chức danh chuyên môn</label>
                                 <input
-                                  className="form-control"
+                                  className='form-control'
                                   required
-                                  placeholder="Nhập chức danh chuyên môn"
+                                  placeholder='Nhập chức danh chuyên môn'
                                   onChange={(e) =>
                                     setNewSchool({
                                       ...newSchool,
@@ -1865,16 +1897,16 @@ function Jobmyresume(props) {
                           </div>
                         </form>
                       </div>
-                      <div className="modal-footer">
+                      <div className='modal-footer'>
                         <button
-                          type="button"
-                          className="site-button"
+                          type='button'
+                          className='site-button'
                           onClick={() => setEducation(false)}
                         >
                           Cancel
                         </button>
                         <button
-                          className="site-button btn"
+                          className='site-button btn'
                           disabled={
                             !newSchool.school ||
                             !newSchool.level ||
@@ -1888,27 +1920,33 @@ function Jobmyresume(props) {
                       </div>
                     </div>
                   </div>
-                </Modal>
-                <div className="row">
-                  <div className="col-lg-12 col-md-12 col-sm-12">
-                    <div className="clearfix m-b20">
+                </Modal> */}
+                <ModalLearningProcess
+                  education={education}
+                  setEducation={setEducation}
+                  optionsSelect={optionsSelect}
+                  handleAddSchool={handleAddSchool}
+                />
+                <div className='row'>
+                  <div className='col-lg-12 col-md-12 col-sm-12'>
+                    <div className='clearfix m-b20'>
                       {/* badge time */}
-                      <div className="badge-time">
-                        <span className="badge badge-primary">
-                          <i className="fa fa-graduation-cap" />
+                      <div className='badge-time'>
+                        <span className='badge badge-primary'>
+                          <i className='fa fa-graduation-cap' />
                           <span>
-                            {getMonthYear(userInformation.startYear)} -{" "}
+                            {getMonthYear(userInformation.startYear)} -{' '}
                             {getMonthYear(userInformation.endYear)}
                           </span>
                         </span>
                       </div>
-                      <div className="d-flex">
-                        <label className="m-b0">{userInformation.school}</label>
+                      <div className='d-flex'>
+                        <label className='m-b0'>{userInformation.school}</label>
                       </div>
-                      <p className="m-b0 font-16">
+                      <p className='m-b0 font-16'>
                         Cấp bậc: {userInformation.level}
                       </p>
-                      <p className="m-b0 font-16">
+                      <p className='m-b0 font-16'>
                         Chuyên nghành: {userInformation.major}
                       </p>
                     </div>
@@ -1916,34 +1954,34 @@ function Jobmyresume(props) {
                       return (
                         <>
                           <hr />
-                          <div className="clearfix m-b20">
-                            <div className="badge-time">
-                              <span className="badge badge-primary">
-                                <i className="fa fa-graduation-cap" />
+                          <div className='clearfix m-b20'>
+                            <div className='badge-time'>
+                              <span className='badge badge-primary'>
+                                <i className='fa fa-graduation-cap' />
                                 <span>
-                                  {getMonthYear(item.start)} -{" "}
+                                  {getMonthYear(item.start)} -{' '}
                                   {getMonthYear(item.end)}
                                 </span>
                               </span>
                             </div>
-                            <div className="d-flex">
-                              <label className="m-b0">{item.school}</label>
+                            <div className='d-flex'>
+                              <label className='m-b0'>{item.school}</label>
                               <Link
-                                to={"#"}
+                                to={'#'}
                                 onClick={() => handleDeleteSchool(item._id)}
-                                className="site-button add-btn button-sm"
-                                style={{ backgroundColor: "red" }}
+                                className='site-button add-btn button-sm'
+                                style={{ backgroundColor: 'red' }}
                               >
-                                <i className="ti-trash m-r5"></i>
+                                <i className='ti-trash m-r5'></i>
                               </Link>
                             </div>
-                            <p className="m-b0 font-16">
+                            <p className='m-b0 font-16'>
                               Cấp bậc: {item.level}
                             </p>
-                            <p className="m-b0 font-16">
+                            <p className='m-b0 font-16'>
                               Chuyên nghành: {item.major}
                             </p>
-                            <p className="m-b0 font-16">
+                            <p className='m-b0 font-16'>
                               Chức danh: {item.jobTitle}
                             </p>
                           </div>
@@ -1958,50 +1996,50 @@ function Jobmyresume(props) {
                 className="job-bx table-job-bx bg-white m-b30"
                 style={{border:"1px solid #000"}}
               >
-                <div className="d-flex">
-                  <h5 className="m-b15">Khóa đào tạo ngắn hạn</h5>
+                <div className='d-flex'>
+                  <h5 className='m-b15'>Khóa đào tạo ngắn hạn</h5>
                   <Link
-                    to={"#"}
+                    to={'#'}
                     onClick={() => setShowShortTraining(true)}
-                    className="site-button add-btn button-sm"
+                    className='site-button add-btn button-sm'
                   >
-                    <i className="fa fa-pencil m-r5"></i> Thêm
+                    <i className='fa fa-pencil m-r5'></i> Thêm
                   </Link>
                 </div>
                 <p>
                   Mention your employment details including your current and
                   previous company work experience
                 </p>
-                <div className="row">
-                  <div className="col-lg-12 col-md-12 col-sm-12">
+                <div className='row'>
+                  <div className='col-lg-12 col-md-12 col-sm-12'>
                     {userInformation.shortTraining?.map((item, index) => {
                       return (
                         <>
-                          <div className="clearfix m-b20">
-                            <div className="badge-time">
-                              <span className="badge badge-primary">
-                                <i className="fa fa-graduation-cap" />
+                          <div className='clearfix m-b20'>
+                            <div className='badge-time'>
+                              <span className='badge badge-primary'>
+                                <i className='fa fa-graduation-cap' />
                                 <span>
-                                  {getMonthYear(item.start)} -{" "}
+                                  {getMonthYear(item.start)} -{' '}
                                   {getMonthYear(item.end)}
                                 </span>
                               </span>
                             </div>
-                            <div className="d-flex">
-                              <label className="m-b0">{item.certificate}</label>
+                            <div className='d-flex'>
+                              <label className='m-b0'>{item.certificate}</label>
                               <Link
-                                to={"#"}
+                                to={'#'}
                                 onClick={() =>
                                   handleDeleteShortTraining(item._id)
                                 }
-                                className="site-button add-btn button-sm"
-                                style={{ backgroundColor: "red" }}
+                                className='site-button add-btn button-sm'
+                                style={{ backgroundColor: 'red' }}
                               >
-                                <i className="ti-trash m-r5"></i>
+                                <i className='ti-trash m-r5'></i>
                               </Link>
                             </div>
-                            <p className="m-b0 font-16">
-                              Đơn vị tổ chức: {item.organizer}
+                            <p className='m-b0 font-16'>
+                              Đơn vị tổ chức: {item.organization}
                             </p>
                           </div>
                           <hr />
@@ -2010,36 +2048,41 @@ function Jobmyresume(props) {
                     })}
                   </div>
                 </div>
-                <Modal
-                  className="modal fade modal-bx-info editor"
+                <ModalShortCourse
+                  setShowShortTraining={setShowShortTraining}
+                  showShortTraining={showShortTraining}
+                  handleAddShortTraining={handleAddShortTraining}
+                />
+                {/* <Modal
+                  className='modal fade modal-bx-info editor'
                   show={showShortTraining}
                   onHide={setShowShortTraining}
                 >
-                  <div className="modal-dialog my-0" role="document">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h5 className="modal-title">Khóa đào tạo ngắn hạn</h5>
+                  <div className='modal-dialog my-0' role='document'>
+                    <div className='modal-content'>
+                      <div className='modal-header'>
+                        <h5 className='modal-title'>Khóa đào tạo ngắn hạn</h5>
                         <button
-                          type="button"
-                          className="close"
+                          type='button'
+                          className='close'
                           onClick={() => setItSkills(false)}
                         >
                           <span>&times;</span>
                         </button>
                       </div>
-                      <div className="modal-body">
+                      <div className='modal-body'>
                         <form
-                          id="addShortTraining"
+                          id='addShortTraining'
                           onSubmit={handleAddShortTraining}
-                          action="javascript:void(0);"
+                          action='javascript:void(0);'
                         >
-                          <div className="row">
-                            <div className="col-lg-6 col-md-6">
-                              <div className="form-group">
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6'>
+                              <div className='form-group'>
                                 <label>Từ</label>
                                 <input
-                                  type="date"
-                                  className="form-control"
+                                  type='date'
+                                  className='form-control'
                                   value={newShortTraining.start}
                                   onChange={(e) => {
                                     setNewShortTraining({
@@ -2051,11 +2094,11 @@ function Jobmyresume(props) {
                                 />
                               </div>
                             </div>
-                            <div className="col-lg-6 col-md-6">
-                              <div className="form-group">
+                            <div className='col-lg-6 col-md-6'>
+                              <div className='form-group'>
                                 <label>Đến</label>
                                 <Form.Control
-                                  type="date"
+                                  type='date'
                                   value={newShortTraining.end}
                                   onChange={(e) => {
                                     setNewShortTraining({
@@ -2067,11 +2110,11 @@ function Jobmyresume(props) {
                                 ></Form.Control>
                               </div>
                             </div>
-                            <div className="col-lg-12 col-md-6">
-                              <div className="form-group">
+                            <div className='col-lg-12 col-md-6'>
+                              <div className='form-group'>
                                 <label>Tên chứng chỉ</label>
                                 <Form.Control
-                                  placeholder="Nhập tên chứng chỉ"
+                                  placeholder='Nhập tên chứng chỉ'
                                   value={newShortTraining.certificate}
                                   onChange={(e) => {
                                     setNewShortTraining({
@@ -2083,12 +2126,12 @@ function Jobmyresume(props) {
                                 ></Form.Control>
                               </div>
                             </div>
-                            <div className="col-lg-12 col-md-12">
-                              <div className="form-group">
+                            <div className='col-lg-12 col-md-12'>
+                              <div className='form-group'>
                                 <label>Đơn vị tổ chức</label>
                                 <input
-                                  className="form-control"
-                                  placeholder="Nhập đơn vị tổ chức"
+                                  className='form-control'
+                                  placeholder='Nhập đơn vị tổ chức'
                                   value={newShortTraining.organizer}
                                   onChange={(e) => {
                                     setNewShortTraining({
@@ -2103,18 +2146,18 @@ function Jobmyresume(props) {
                           </div>
                         </form>
                       </div>
-                      <div className="modal-footer">
+                      <div className='modal-footer'>
                         <button
-                          type="button"
-                          className="site-button"
+                          type='button'
+                          className='site-button'
                           onClick={() => setShowShortTraining(false)}
                         >
                           Cancel
                         </button>
                         <button
-                          type="submit"
-                          className="site-button btn"
-                          form="addShortTraining"
+                          type='submit'
+                          className='site-button btn'
+                          form='addShortTraining'
                           disabled={
                             !newShortTraining.certificate ||
                             !newShortTraining.organizer ||
@@ -2127,7 +2170,7 @@ function Jobmyresume(props) {
                       </div>
                     </div>
                   </div>
-                </Modal>
+                </Modal> */}
               </div>
               <div className="job-bx table-job-bx bg-white m-b30" style={{border:"1px solid #000"}}>
                 <div className="d-flex">
@@ -2385,30 +2428,30 @@ function Jobmyresume(props) {
                     {userInformation.shortTraining?.map((item, index) => {
                       return (
                         <>
-                          <div className="clearfix m-b20">
-                            <div className="badge-time">
-                              <span className="badge badge-primary">
-                                <i className="fa fa-graduation-cap" />
+                          <div className='clearfix m-b20'>
+                            <div className='badge-time'>
+                              <span className='badge badge-primary'>
+                                <i className='fa fa-graduation-cap' />
                                 <span>
-                                  {getMonthYear(item.start)} -{" "}
+                                  {getMonthYear(item.start)} -{' '}
                                   {getMonthYear(item.end)}
                                 </span>
                               </span>
                             </div>
-                            <div className="d-flex">
-                              <label className="m-b0">{item.certificate}</label>
+                            <div className='d-flex'>
+                              <label className='m-b0'>{item.certificate}</label>
                               <Link
-                                to={"#"}
+                                to={'#'}
                                 onClick={() =>
                                   handleDeleteShortTraining(item._id)
                                 }
-                                className="site-button add-btn button-sm"
-                                style={{ backgroundColor: "red" }}
+                                className='site-button add-btn button-sm'
+                                style={{ backgroundColor: 'red' }}
                               >
-                                <i className="ti-trash m-r5"></i>
+                                <i className='ti-trash m-r5'></i>
                               </Link>
                             </div>
-                            <p className="m-b0 font-16">
+                            <p className='m-b0 font-16'>
                               Đơn vị tổ chức: {item.organizer}
                             </p>
                           </div>
@@ -2419,35 +2462,35 @@ function Jobmyresume(props) {
                   </div>
                 </div>
                 <Modal
-                  className="modal fade modal-bx-info editor"
+                  className='modal fade modal-bx-info editor'
                   show={showLanguageCertification}
                   onHide={setShowLanguageCertification}
                 >
-                  <div className="modal-dialog my-0" role="document">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h5 className="modal-title">Chứng chỉ ngoại ngữ</h5>
+                  <div className='modal-dialog my-0' role='document'>
+                    <div className='modal-content'>
+                      <div className='modal-header'>
+                        <h5 className='modal-title'>Chứng chỉ ngoại ngữ</h5>
                         <button
-                          type="button"
-                          className="close"
+                          type='button'
+                          className='close'
                           onClick={() => setShowLanguageCertification(false)}
                         >
                           <span>&times;</span>
                         </button>
                       </div>
-                      <div className="modal-body">
+                      <div className='modal-body'>
                         <form
-                          id="addLanguageCertification"
+                          id='addLanguageCertification'
                           // onSubmit={handleAddShortTraining}
-                          action="javascript:void(0);"
+                          action='javascript:void(0);'
                         >
-                          <div className="row">
-                            <div className="col-lg-6 col-md-6">
-                              <div className="form-group">
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6'>
+                              <div className='form-group'>
                                 <label>Từ</label>
                                 <input
-                                  type="date"
-                                  className="form-control"
+                                  type='date'
+                                  className='form-control'
                                   value={newLanguageCertificate.startTime}
                                   onChange={(e) => {
                                     setNewLanguageCertificate({
@@ -2459,12 +2502,12 @@ function Jobmyresume(props) {
                                 />
                               </div>
                             </div>
-                            <div className="col-lg-6 col-md-6">
-                              <div className="form-group">
+                            <div className='col-lg-6 col-md-6'>
+                              <div className='form-group'>
                                 <label>Đến</label>
                                 <Form.Control
-                                  type="date"
-                                  className="form-control"
+                                  type='date'
+                                  className='form-control'
                                   value={newLanguageCertificate.endTime}
                                   onChange={(e) => {
                                     setNewLanguageCertificate({
@@ -2476,13 +2519,13 @@ function Jobmyresume(props) {
                                 ></Form.Control>
                               </div>
                             </div>
-                            <div className="col-lg-12 col-md-6">
-                              <div className="form-group">
+                            <div className='col-lg-12 col-md-6'>
+                              <div className='form-group'>
                                 <label>Ngoại ngữ</label>
                                 <FormControl
                                   as={Select}
-                                  size="sm"
-                                  className="m-0 p-0"
+                                  size='sm'
+                                  className='m-0 p-0'
                                   options={languageOption}
                                   value={getValueSelect(
                                     newLanguageCertificate.language
@@ -2491,19 +2534,19 @@ function Jobmyresume(props) {
                                     setNewLanguageCertificate({
                                       ...newLanguageCertificate,
                                       language: e.value,
-                                      name: "",
+                                      name: '',
                                     });
                                   }}
                                 />
                               </div>
                             </div>
-                            <div className="col-lg-12 col-md-6">
-                              <div className="form-group">
+                            <div className='col-lg-12 col-md-6'>
+                              <div className='form-group'>
                                 <label>Tên chứng chỉ</label>
                                 <FormControl
                                   as={Select}
-                                  size="sm"
-                                  className="m-0 p-0"
+                                  size='sm'
+                                  className='m-0 p-0'
                                   options={certificateOption}
                                   value={getValueSelect(
                                     newLanguageCertificate.name
@@ -2517,12 +2560,12 @@ function Jobmyresume(props) {
                                 />
                               </div>
                             </div>
-                            <div className="col-lg-12 col-md-12">
-                              <div className="form-group">
+                            <div className='col-lg-12 col-md-12'>
+                              <div className='form-group'>
                                 <label>Đơn vị tổ chức</label>
                                 <input
-                                  className="form-control"
-                                  placeholder="Nhập đơn vị tổ chức"
+                                  className='form-control'
+                                  placeholder='Nhập đơn vị tổ chức'
                                   value={newLanguageCertificate.organizer}
                                   onChange={(e) => {
                                     setNewLanguageCertificate({
@@ -2534,12 +2577,12 @@ function Jobmyresume(props) {
                                 />
                               </div>
                             </div>
-                            <div className="col-lg-12 col-md-12">
-                              <div className="form-group">
+                            <div className='col-lg-12 col-md-12'>
+                              <div className='form-group'>
                                 <label>Điểm</label>
                                 <input
-                                  className="form-control"
-                                  placeholder="Nhập điểm"
+                                  className='form-control'
+                                  placeholder='Nhập điểm'
                                   value={newLanguageCertificate.point}
                                   onChange={(e) => {
                                     setNewLanguageCertificate({
@@ -2554,25 +2597,25 @@ function Jobmyresume(props) {
                           </div>
                         </form>
                       </div>
-                      <div className="modal-footer">
+                      <div className='modal-footer'>
                         <button
-                          type="button"
-                          className="site-button"
+                          type='button'
+                          className='site-button'
                           onClick={() => setShowLanguageCertification(false)}
                         >
                           Cancel
                         </button>
                         <button
-                          type="submit"
-                          className="site-button btn"
-                          form="addLanguageCertification"
+                          type='submit'
+                          className='site-button btn'
+                          form='addLanguageCertification'
                           disabled={
-                            newLanguageCertificate.startTime === "" ||
-                            newLanguageCertificate.endTime === "" ||
-                            newLanguageCertificate.language === "" ||
-                            newLanguageCertificate.name === "" ||
-                            newLanguageCertificate.organizer === "" ||
-                            newLanguageCertificate.point === ""
+                            newLanguageCertificate.startTime === '' ||
+                            newLanguageCertificate.endTime === '' ||
+                            newLanguageCertificate.language === '' ||
+                            newLanguageCertificate.name === '' ||
+                            newLanguageCertificate.organizer === '' ||
+                            newLanguageCertificate.point === ''
                           }
                         >
                           Save
@@ -2587,12 +2630,12 @@ function Jobmyresume(props) {
         </div>
         {/* button center */}
         {userInformation?.confirm2?.confirmed !== 1 && (
-          <div className="row">
-            <div className="col-lg-12 col-md-12">
-              <div className="form-group text-center">
+          <div className='row'>
+            <div className='col-lg-12 col-md-12'>
+              <div className='form-group text-center'>
                 <button
-                  type="button"
-                  className="site-button"
+                  type='button'
+                  className='site-button'
                   onClick={handleSendOTP}
                 >
                   Yêu cầu duyệt hồ sơ

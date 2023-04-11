@@ -12,10 +12,11 @@ import "../../css/jobsave.css"
 function Jobsappliedjob(props) {
   const [jobList, setJobList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     async function fetchData() {
-      gẹtApplyJobForEmployee("employee").then((res) => {
+      gẹtApplyJobForEmployee('employee').then((res) => {
         setJobList(res.data);
         setIsLoading(false);
       });
@@ -38,7 +39,7 @@ function Jobsappliedjob(props) {
                   <h5 className="font-weight-700 pull-left text-uppercase mr-auto my-0 jobposition">
                     Vị trí đã ứng tuyển
                   </h5>
-                  <div className="float-right">
+                  <div className='float-right'>
                     {/* <span className="select-title">Lọc theo</span>
                         <select className="custom-btn">
                           <option>All</option>
@@ -50,18 +51,18 @@ function Jobsappliedjob(props) {
                         </select> */}
                   </div>
                 </div>
-                <ul className="post-job-bx browse-job">
-                  <Table striped bordered hover size="sm">
+                <ul className='post-job-bx browse-job'>
+                  <Table striped bordered hover size='sm'>
                     <thead>
                       <tr>
                         <th className="jobbox">
                           <div className="custom-control custom-checkbox">
                             <input
-                              type="checkbox"
-                              className="custom-control-input"
-                              id="customCheck1"
+                              type='checkbox'
+                              className='custom-control-input'
+                              id='customCheck1'
                             />
-                            <label className="custom-control-label" />
+                            <label className='custom-control-label' />
                           </div>
                         </th>
                         <th className="jobbox">Vị trí tuyển dụng</th>
@@ -76,19 +77,19 @@ function Jobsappliedjob(props) {
                         <tr>
                           <td>
                             {/* checkbox */}
-                            <div className="custom-control custom-checkbox">
+                            <div className='custom-control custom-checkbox'>
                               <input
-                                type="checkbox"
-                                className="custom-control-input"
-                                id="customCheck1"
+                                type='checkbox'
+                                className='custom-control-input'
+                                id='customCheck1'
                               />
-                              <label className="custom-control-label" />
+                              <label className='custom-control-label' />
                             </div>
                           </td>
                           <td>
                             <Link
                               to={`/search-job/job-detail/${item._id}`}
-                              target="_blank"
+                              target='_blank'
                             >
                               {item.jobInfo.title}
                             </Link>
@@ -107,8 +108,8 @@ function Jobsappliedjob(props) {
                               Bạn chưa ứng tuyển công việc nào
                             </h3>
                             <Link
-                              to="/jobs-saved-jobs"
-                              className="site-button button-sm"
+                              to='/jobs-saved-jobs'
+                              className='site-button button-sm'
                             >
                               Tìm kiếm công việc
                             </Link>
@@ -137,9 +138,9 @@ function Jobsappliedjob(props) {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-6">
-                  <div className="d-flex justify-content-end">
-                    <Link to="/jobs-saved-jobs" className="site-button button">
+                <div className='col-md-6'>
+                  <div className='d-flex justify-content-end'>
+                    <Link to='/payment' className='site-button button btn'>
                       Thanh toán
                     </Link>
                   </div>

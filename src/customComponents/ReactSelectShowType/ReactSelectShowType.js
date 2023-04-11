@@ -1,6 +1,6 @@
 import React from 'react';
 import Select, { createFilter } from 'react-select';
-
+import { selectStyle } from '../../../src/constants/common';
 const ReactSelectShowType = ({
   register,
   options,
@@ -10,11 +10,12 @@ const ReactSelectShowType = ({
   onChange = () => {},
   isDisabled = false,
   value = null,
+  className = '',
 }) => {
   const filterOption = (candidate, input) => {
-    console.log('candidate', candidate);
-    console.log('input', input);
-    console.log(candidate.label.search(input));
+    // console.log('candidate', candidate);
+    // console.log('input', input);
+    // console.log(candidate.label.search(input));
     return (
       // Min input length
       input.length >= minInput &&
@@ -46,24 +47,41 @@ const ReactSelectShowType = ({
       filterOption={filterOption}
       placeholder={placeholder}
       options={options}
-      styles={{
-        noOptionsMessage: (baseStyles, state) => ({
-          ...baseStyles,
-          color: 'black',
-          fontWeight: '550',
-        }),
-        singleValue: (baseStyles, state) => ({
-          ...baseStyles,
-          color: 'black',
-          fontWeight: '550',
-        }),
-        optionsSelect: (baseStyles, state) => ({
-          ...baseStyles,
-          color: 'black',
-          fontWeight: '550',
-        }),
-      }}
+      styles={selectStyle}
+      // styles={{
+      //   noOptionsMessage: (baseStyles, state) => ({
+      //     ...baseStyles,
+      //     color: 'black',
+      //     fontWeight: '550',
+      //   }),
+      //   singleValue: (baseStyles, state) => ({
+      //     ...baseStyles,
+      //     color: 'black',
+      //     fontWeight: '550',
+      //   }),
+      //   optionsSelect: (baseStyles, state) => ({
+      //     ...baseStyles,
+      //     color: 'black',
+      //     fontWeight: '550',
+      //   }),
+      //   option: (baseStyles, state) => ({
+      //     ...baseStyles,
+      //     color: 'black',
+      //     fontWeight: '550',
+      //   }),
+      //   placeholder: (baseStyles, state) => ({
+      //     ...baseStyles,
+      //     color: 'black',
+      //     fontWeight: '550',
+      //   }),
+      //   input: (baseStyles, state) => ({
+      //     ...baseStyles,
+      //     color: 'black',
+      //     fontWeight: '550',
+      //   }),
+      // }}
       isDisabled={isDisabled}
+      className={className}
     />
   );
 };

@@ -11,6 +11,7 @@ const CompanyInfo = ({
   getCompanyInfo,
   setChildStep,
   setIsStep2,
+  setOffSelect,
 }) => {
   const checkStepRef = useRef({
     taxCode: false,
@@ -28,12 +29,16 @@ const CompanyInfo = ({
     password: yup
       .string()
       .required('Vui lòng nhập mật khẩu')
-      .min(6, 'Mật khẩu phải có ít nhất 6 ký tự')
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        'Mật khẩu phải có ít nhất 8 ký tự, 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt'
+      )
+      .min(8, 'Mật khẩu phải có ít nhất 6 ký tự')
       .max(20, 'Mật khẩu không được quá 20 ký tự'),
     confirmPassword: yup
       .string()
       .required('Vui lòng nhập lại mật khẩu')
-      .min(6)
+      .min(8)
       .max(20)
       .oneOf([yup.ref('password')], 'Mật khẩu không khớp'),
   });
@@ -45,6 +50,7 @@ const CompanyInfo = ({
     clearErrors,
     formState: { errors },
   } = useForm({
+    mode: 'onChange',
     resolver: yupResolver(schema),
   });
   async function handleGetLegalCompanyInfo(e) {
@@ -69,6 +75,7 @@ const CompanyInfo = ({
   }
   async function onHandleSubmit(data) {
     setInfoRegister1(data);
+    setOffSelect(true);
     setStep(2);
   }
   function handleCheckInput(e) {
@@ -141,11 +148,11 @@ const CompanyInfo = ({
           <div className='text-danger'>
             {errors?.taxCode?.message && <div>{errors.taxCode.message}</div>}
           </div>
-          <div className='text-danger'>
+          {/* <div className='text-danger'>
             {errors?.companyInfo?.message && (
               <div>{errors.companyInfo.message}</div>
             )}
-          </div>
+          </div> */}
         </div>
         <div className='form-group'>
           <p>
@@ -191,7 +198,7 @@ const CompanyInfo = ({
             )}
           </div>
         </div>
-        <div className='form-group text-right register-btn'>
+        <div className='form-group text-right register-btn justify-content-end'>
           <button
             type='submit'
             className='site-button dz-xs-flex m-r5 btn'

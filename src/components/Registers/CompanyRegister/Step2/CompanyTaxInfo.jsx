@@ -5,7 +5,10 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import DropDownSelect from '../../../../customComponents/DropDownSelect/DropDownSelect';
-
+import { selectStyle } from '../../../../constants/common';
+//firebase
+import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { storage } from '../../../../config/firbase.js';
 const CompanyTaxInfo = ({
   infoRegister1,
   setStep,
@@ -42,13 +45,25 @@ const CompanyTaxInfo = ({
   function uploadBusinessLicense(e) {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = async () => {
-        const base64 = reader.result;
-        setValue('businessLicense', base64);
-        clearErrors('businessLicense');
-      };
+      const sotrageRef = ref(storage, `web/${file.name}`);
+      const uploadTask = uploadBytesResumable(sotrageRef, file);
+      uploadTask.on(
+        'state_changed',
+        () => {},
+        (error) => console.log('err ', error),
+        async () => {
+          let url = await getDownloadURL(uploadTask.snapshot.ref);
+          setValue('businessLicense', url);
+          clearErrors('businessLicense');
+        }
+      );
+      // const reader = new FileReader();
+      // reader.readAsDataURL(file);
+      // reader.onload = async () => {
+      //   const base64 = reader.result;
+      //   setValue('businessLicense', base64);
+      //   clearErrors('businessLicense');
+      // };
       if (!checkStepRef.current.businessLicense) {
         setChildStep1((prev) => prev + 1 / 3 / 4);
         checkStepRef.current.businessLicense = true;
@@ -77,6 +92,9 @@ const CompanyTaxInfo = ({
     setInfoRegister2(data);
     setStep(3);
   }
+  function setChild() {
+    setChildStep1((prev) => prev + 1 / 3 / 4);
+  }
   useEffect(() => {
     console.log(errors);
   }, [errors]);
@@ -94,18 +112,7 @@ const CompanyTaxInfo = ({
               render={({ field }) => (
                 <Select
                   {...field}
-                  styles={{
-                    singleValue: (baseStyles, state) => ({
-                      ...baseStyles,
-                      color: 'black',
-                      fontWeight: '550',
-                    }),
-                    optionsSelect: (baseStyles, state) => ({
-                      ...baseStyles,
-                      color: 'black',
-                      fontWeight: '550',
-                    }),
-                  }}
+                  styles={selectStyle}
                   onChange={(value) => {
                     setValue('companyType', value);
                     clearErrors('companyType');
@@ -132,46 +139,12 @@ const CompanyTaxInfo = ({
             Lĩnh vực hoạt động <span className='asterisk'></span>
           </p>
           <div className='select-style'>
-            {' '}
-            {/* <Controller
-              name='field'
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  styles={{
-                    singleValue: (baseStyles, state) => ({
-                      ...baseStyles,
-                      color: 'black',
-                      fontWeight: '550',
-                    }),
-                    optionsSelect: (baseStyles, state) => ({
-                      ...baseStyles,
-                      color: 'black',
-                      fontWeight: '550',
-                    }),
-                  }}
-                  onChange={(value) => {
-                    setValue('field', value);
-                    if (checkStepRef.current.field === false) {
-                      setChildStep1((prev) => prev + 1 / 3 / 4);
-                      checkStepRef.current.field = true;
-                    }
-                  }}
-                  placeholder='Chọn lĩnh vực hoạt động'
-                  options={optionsSelect?.field}
-                  isMulti={true}
-                  closeMenuOnSelect={false}
-                  className={checkStepRef.current.field ? ' filled' : ''}
-                />
-              )}
-            /> */}
             <div className={checkStepRef.current.field ? ' filled' : ''}>
               {' '}
               <DropDownSelect
                 clearErrors={clearErrors}
                 setValueForm={setValue}
-                setChildStep1={setChildStep1}
+                setChildStep1={setChild}
                 checkStepRef={checkStepRef}
                 placeholder='Chọn lĩnh vực hoạt động'
                 options={optionsSelect?.field}
@@ -247,7 +220,7 @@ const CompanyTaxInfo = ({
         <div className='form-group '>
           <button
             type='button'
-            className='site-button dz-xs-flex m-r5 '
+            className='site-button dz-xs-flex m-r5 btn'
             onClick={() => {
               setStep((prev) => prev - 1);
             }}
@@ -256,8 +229,8 @@ const CompanyTaxInfo = ({
           </button>
           <button
             type='submit'
-            className='site-button dz-xs-flex m-r5 float-right btn btn-lg'
-            // disabled={Object.keys(errors).length > 0}
+            className='site-button dz-xs-flex m-r5 float-right btn'
+            disabled={Object.keys(errors).length > 0}
           >
             Tiếp tục <i className='fa fa-arrow-right' aria-hidden='true'></i>
           </button>

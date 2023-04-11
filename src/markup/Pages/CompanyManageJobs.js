@@ -4,8 +4,8 @@ import Header2 from "../Layout/HeaderDepartment";
 import Footer from "../Layout/Footer";
 import { createJob } from "../../services/JobApi";
 import useNeedRecuited from "../../hooks/useNeedRecuited";
-import TabListJobs from "../../components/CompanyManageJobs/TabListJobs";
-import ModalAddNeedPosi from "../../components/CompanyManageJobs/ModalAddNeededPosi/ModalAddNeedPosi";
+import TabListJobs from "../../components/CompanyComponents/CompanyManageJobs/TabListJobs";
+import ModalAddNeedPosi from "../../components/CompanyComponents/CompanyManageJobs/ModalAddNeededPosi/ModalAddNeedPosi";
 
 function Companymanage(props) {
   let search = props.location.search;
