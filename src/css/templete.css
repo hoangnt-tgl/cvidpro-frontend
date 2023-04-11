@@ -1309,6 +1309,7 @@
   line-height: 30px;
   text-align: center;
   margin-left: 5px;
+  cursor: pointer;
 }
 
 .candidate-info .candidate-detail {
