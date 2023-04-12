@@ -13227,7 +13227,7 @@ footer .widget_services ul li {
 
 .footer-bottom {
   background-color: #171d36;
-  padding: 30px 15px;
+  padding: 30px 0;
   color: #c6cffa;
   font-size: 14px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -15799,6 +15799,20 @@ ol.commentlist li .star-rating {
 
 .at-expanding-share-button[data-position="bottom-left"] {
   bottom: 130px !important;
+}
+
+.widthHeader {
+  max-width: 1560px !important;
+}
+
+.widthFooter {
+  max-width: 1560px !important;
+  margin: 0 auto;
+}
+
+.listJob {
+  box-shadow: none !important;
+  margin-top: 10px;
 }
 
 /* Support and Buy Button END */

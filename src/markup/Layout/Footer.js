@@ -151,7 +151,7 @@ function Footer() {
       </div>
 
       <div className="footer-bottom">
-        <div className="row">
+        <div className="row widthFooter">
           <div className="col-lg-12">
             {/* <span>
                 {' '}

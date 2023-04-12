@@ -1,24 +1,28 @@
-.job-pri{
+.job-pri {
     font-weight: 550 !important;
-    border: 1px solid #010101 !important;
 }
-.job-primary{
+
+.job-primary {
     padding: 0px 0px !important;
 }
-.toolbar{
+
+.toolbar {
     max-width: 790px !important;
 }
-.jobbox{
+
+.jobbox {
     background-color: white;
     border: 1px solid #010101 !important;
 }
-.jobposition{
-    color:white !important;
-}
-.jobalert{
-   background-color:white !important;
+
+.jobposition {
+    color: white !important;
 }
 
-.jobalert2{
+.jobalert {
+    background-color: white !important;
+}
+
+.jobalert2 {
     border: 1px solid #000 !important;
- }
+}
