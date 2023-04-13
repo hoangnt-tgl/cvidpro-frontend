@@ -34,7 +34,6 @@ const ModalInfoNeededPosi = ({ company, setCompany, info }) => {
                 <li>
                   <strong>Deseription :</strong>
                   <p>{info.description}</p>
-                  {/* <p>asdkjasd asdnjksand asdnajksdasj dasd naksjda</p> */}
                 </li>
               </ul>
             </div>

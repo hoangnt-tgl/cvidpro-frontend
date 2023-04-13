@@ -34,13 +34,13 @@ const useManageDepartment = (props) => {
   }
   async function handleEditDepartment(data) {
     try {
-      // console.log('data', { ...data, companyId: companyInfo._id });
-      await editDepartment({ ...data, companyId: companyInfo._id });
+      await editDepartment(companyInfo._id, { ...data });
       setCompany(false);
       setReload(!reload);
       toast.success('Sửa thông tin phòng ban thành công');
     } catch (error) {
       toast.error('Vui lòng thử lại');
+      throw error;
     }
   }
   async function handleDeleteDepartment(id) {

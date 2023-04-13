@@ -48,38 +48,6 @@ const ReactSelectShowType = ({
       placeholder={placeholder}
       options={options}
       styles={selectStyle}
-      // styles={{
-      //   noOptionsMessage: (baseStyles, state) => ({
-      //     ...baseStyles,
-      //     color: 'black',
-      //     fontWeight: '550',
-      //   }),
-      //   singleValue: (baseStyles, state) => ({
-      //     ...baseStyles,
-      //     color: 'black',
-      //     fontWeight: '550',
-      //   }),
-      //   optionsSelect: (baseStyles, state) => ({
-      //     ...baseStyles,
-      //     color: 'black',
-      //     fontWeight: '550',
-      //   }),
-      //   option: (baseStyles, state) => ({
-      //     ...baseStyles,
-      //     color: 'black',
-      //     fontWeight: '550',
-      //   }),
-      //   placeholder: (baseStyles, state) => ({
-      //     ...baseStyles,
-      //     color: 'black',
-      //     fontWeight: '550',
-      //   }),
-      //   input: (baseStyles, state) => ({
-      //     ...baseStyles,
-      //     color: 'black',
-      //     fontWeight: '550',
-      //   }),
-      // }}
       isDisabled={isDisabled}
       className={className}
     />

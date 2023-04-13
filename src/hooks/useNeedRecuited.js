@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import React from "react";
-import { getDepartmentByKey } from "../services/DepartmentApi";
-import { createJob, getJobForDepartment } from "../services/JobApi";
+import { useState, useEffect } from 'react';
+import React from 'react';
+import { getDepartmentByKey } from '../services/DepartmentApi';
+import { createJob, getJobForDepartment } from '../services/JobApi';
 import {
   getAllListMajor,
   getListEnvironment,
@@ -11,37 +11,37 @@ import {
   getListPosition,
   getListProvince,
   getListQuestion,
-} from "../services/GetListService";
+} from '../services/GetListService';
 
 const useNeedRecuited = ({ search }) => {
   let params = new URLSearchParams(search);
-  let key = params.get("key");
+  let key = params.get('key');
   if (key) {
-    localStorage.setItem("key", key);
+    localStorage.setItem('key', key);
   }
-  key = localStorage.getItem("key");
+  key = localStorage.getItem('key');
   const objJob = {
-    title: "",
-    position: "",
+    title: '',
+    position: '',
     level: [],
     major: [],
-    industry: "",
-    location: "",
-    workingEnvironment: "",
-    experience: "",
+    industry: '',
+    location: '',
+    workingEnvironment: '',
+    experience: '',
     quantity: null,
     salaryMin: null,
     salaryMax: null,
-    description: "",
+    description: '',
     question: [],
   };
   const initQuestion = {
-    name: "",
+    name: '',
     detail: [],
-    point: "",
+    point: '',
   };
   const [reload, setReload] = useState(false);
-  const [listJob, setListJob] = useState([]);
+  const [listJob, setListJob] = useState(null);
   const [department, setDepartment] = useState({});
   const [levelOptions, setLevelOptions] = useState([]);
   const [provinceOptions, setProvinceOption] = useState([]);
@@ -52,12 +52,12 @@ const useNeedRecuited = ({ search }) => {
   const [questionOptions, setQuestionOptions] = useState([]);
   const [addOnQuestionOptions, setAddOnQuestionOptions] = useState([]);
   const [newQuestion, setNewQuestion] = useState(initQuestion);
-  const [childQuestion, setChildQuestion] = useState("");
+  const [childQuestion, setChildQuestion] = useState('');
   const [environmentOption, setEnvironmentOption] = useState([]);
   const [newJob, setNewJob] = useState(objJob);
   const [preloadValue, setPreloadValue] = useState([]);
   useEffect(() => {
-    // console.log(preloadValue);
+    console.log(preloadValue);
   }, [preloadValue]);
   useEffect(() => {
     // console.log(key);
@@ -79,36 +79,33 @@ const useNeedRecuited = ({ search }) => {
       try {
         setListJob(
           await getJobForDepartment(department._id).then((res) => {
-            // console.log(res.data);
+            console.log(res.data);
             setPreloadValue(
               res.data.map((item) => ({
-                position: [
-                  {
-                    value: item.position,
-                    label: item.position,
-                  },
-                ],
+                position: {
+                  value: item.position,
+                  label: item.position,
+                },
+
                 level: item.level.map((item) => ({ value: item, label: item })),
-                industry: [
-                  {
-                    value: item.industry,
-                    label: item.industry,
-                  },
-                ],
-                location: [{ value: item.location, label: item.location }],
-                environment: [
-                  {
-                    value: item.workingEnvironment,
-                    label: item.workingEnvironment,
-                  },
-                ],
+                industry: {
+                  value: item.industry,
+                  label: item.industry,
+                },
+
+                location: { value: item.location, label: item.location },
+                environment: {
+                  value: item.workingEnvironment,
+                  label: item.workingEnvironment,
+                },
+
                 major: item.major.map((item) => ({ value: item, label: item })),
                 experience: item.experience,
                 salaryMin: item.salaryMin,
                 salaryMax: item.salaryMax,
                 description: item.description,
                 quantity: item.quantity,
-                title: [{ value: item.title, label: item.title }],
+                title: { value: item.title, label: item.title },
                 question0: item.questions[0],
                 question1: item.questions[1],
                 question2: item.questions[2],
@@ -217,7 +214,7 @@ const useNeedRecuited = ({ search }) => {
     let question = newQuestion;
     question.detail.push(childQuestion);
     setAddOnQuestionOptions([...addOnQuestionOptions, question]);
-    setChildQuestion("");
+    setChildQuestion('');
     setNewQuestion(initQuestion);
   };
   const deleteAddOnQuestion = (index) => {

@@ -1,0 +1,7 @@
+.item-score {
+  background-color: #fff !important;
+  padding: 0.75rem 1rem !important;
+}
+.item-score .score-info {
+  flex: 1;
+}

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { deleteJobForDepartment } from "../../../../services/CompanyApi";
-import ModalAddNeedPosi from "../ModalAddNeededPosi/ModalAddNeedPosi";
-import ModalInfoNeededPosi from "../ModalInfoNeededPosi/ModalInfoNeededPosi";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { deleteJobForDepartment } from '../../../../services/CompanyApi';
+import ModalAddNeedPosi from '../ModalAddNeededPosi/ModalAddNeedPosi';
 
 const ItemListNeededPostion = ({
   index,
@@ -34,10 +33,10 @@ const ItemListNeededPostion = ({
   const [isShowEditPositionInfo, setIsShowEditPositionInfo] = useState(false);
 
   function getStatusJob(job) {
-    if (job.confirm1.confirmed === -1) return "Không được duyệt";
-    if (job.confirm2.confirmed !== 1) return "Đang chờ duyệt";
-    if (job.status === 0) return "Dừng tuyển";
-    if (job.status === 1) return "Đang tuyển";
+    if (job.confirm1.confirmed === -1) return 'Không được duyệt';
+    if (job.confirm2.confirmed !== 1) return 'Đang chờ duyệt';
+    if (job.status === 0) return 'Dừng tuyển';
+    if (job.status === 1) return 'Đang tuyển';
   }
   const handleDeleteJob = async (idJob) => {
     await deleteJobForDepartment(keyDepart, idJob);
@@ -46,33 +45,28 @@ const ItemListNeededPostion = ({
 
   return (
     <>
-      <tr>
+      <tr className='appear'>
         <td className='job-name'>
-          <Link to={`company/job-detail/${item._id}`} target='_blank'>
-            {item.title}
-          </Link>
-          <ul className='job-post-info'>
+          {/* <ul className='job-post-info'>
             <li>
               <i className='fa fa-bookmark-o'></i> {item.position}
             </li>
-          </ul>
+          </ul> */}
+          <Link to={`company/job-detail/${item._id}`} target='_blank'>
+            {item.title}
+          </Link>
         </td>
 
         <td className='expired pending'>{getStatusJob(item)} </td>
         <td className='job-links'>
-          <Link to={"#"} onClick={() => setIsShowEditPositionInfo(true)}>
+          <Link to={'#'} onClick={() => setIsShowEditPositionInfo(true)}>
             <i className='fa fa-eye'></i>
           </Link>
-          <Link to={"#"} onClick={() => handleDeleteJob(item._id)}>
+          <Link to={'#'} onClick={() => handleDeleteJob(item._id)}>
             <i className='ti-trash'></i>
           </Link>
         </td>
       </tr>
-      {/* <ModalInfoNeededPosi
-        setCompany={handleToggleModalCompany}
-        company={isShowModalInfo}
-        info={item}
-      /> */}
       <ModalAddNeedPosi
         showAddJob={isShowEditPositionInfo}
         setShowAddJob={setIsShowEditPositionInfo}

@@ -29,8 +29,10 @@ export const getMyCompany = async (history) => {
 export const createDepartment = async (data) => {
   return axiosInstance.post(`department/create`, data).then((res) => res.data);
 };
-export const editDepartment = async (data) => {
-  return axiosInstance.put(`department/update`, data).then((res) => res.data);
+export const editDepartment = async (id, data) => {
+  return axiosInstance
+    .put(`department/update/${id}`, data)
+    .then((res) => res.data);
 };
 export const deleteDepartment = async (id) => {
   return axiosInstance

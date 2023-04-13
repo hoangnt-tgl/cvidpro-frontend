@@ -142,6 +142,7 @@ const CompanyTaxInfo = ({
             <div className={checkStepRef.current.field ? ' filled' : ''}>
               {' '}
               <DropDownSelect
+                register={'field'}
                 clearErrors={clearErrors}
                 setValueForm={setValue}
                 setChildStep1={setChild}
