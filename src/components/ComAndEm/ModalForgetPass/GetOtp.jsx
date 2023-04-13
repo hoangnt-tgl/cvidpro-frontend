@@ -12,6 +12,7 @@ const Step1 = ({
   isMailExist,
   setIsMailExist,
   setIsGetOtp,
+  defaultValues = '',
 }) => {
   const { minutes, seconds } = useCountDown(10, isGetOtp, setIsGetOtp);
   const checkStepRef = useRef({
@@ -23,7 +24,6 @@ const Step1 = ({
         .string()
         .required('Vui lòng nhập email')
         .email('Email không hợp lệ'),
-        
     })
     .required();
 
@@ -66,6 +66,7 @@ const Step1 = ({
               {' '}
               <input
                 {...register('email')}
+                defaultValue={defaultValues}
                 className={
                   checkStepRef.current.email
                     ? 'form-control filled'

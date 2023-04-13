@@ -5,19 +5,17 @@ export const getInfoCompany = async (mst) => {
   return await axiosInstance
     .get(`company/get-info-by-mst/${mst}`)
     .then((res) => res.data);
-  // .catch((error) => {
-  //   console.log(error.message);
-  //   toast.error(error.response?.data?.message || "", {
-  //     style: {
-  //       right: "0px",
-  //       minWidth: "300px",
-  //       fontSize: "20px",
-  //       fontWeight: "500",
-  //     },
-  //   });
-  // });
 };
-
+export const updateEmailCompany = async (data) => {
+  return axiosInstance
+    .patch(`company/update-email`, data)
+    .then((res) => res.data);
+};
+export const updatePhoneCompany = async (data) => {
+  return axiosInstance
+    .patch(`company/update-phone`, data)
+    .then((res) => res.data);
+};
 export const getMyCompany = async (history) => {
   return axiosInstance
     .get(`company/get-my-info`)
@@ -32,9 +30,13 @@ export const createDepartment = async (data) => {
   return axiosInstance.post(`department/create`, data).then((res) => res.data);
 };
 export const editDepartment = async (data) => {
-  return axiosInstance.post(`department/edit`, data).then((res) => res.data);
+  return axiosInstance.put(`department/update`, data).then((res) => res.data);
 };
-
+export const deleteDepartment = async (id) => {
+  return axiosInstance
+    .delete(`department/delete/${id}`)
+    .then((res) => res.data);
+};
 export const getCountCompany = async () => {
   return axiosInstance
     .get(`company/get-count`)

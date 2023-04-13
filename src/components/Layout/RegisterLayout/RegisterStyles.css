@@ -35,8 +35,8 @@
   display: none;
 }
 .appear {
-  animation: smoothAppear 1s ease-in-out forwards;
-  transition: all 0.5s ease-in-out;
+  animation: smoothAppear 0.5s forwards;
+  transition: all 0.5s;
 }
 .header-register {
   height: 15%;
@@ -95,7 +95,6 @@
   }
   100% {
     opacity: 1;
-    display: block;
   }
 }
 @keyframes smoothImg {

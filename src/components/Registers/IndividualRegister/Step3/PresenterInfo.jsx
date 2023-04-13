@@ -49,6 +49,7 @@ const PresenterInfo = ({
     handleSubmit,
     setError,
     clearErrors,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -161,6 +162,7 @@ const PresenterInfo = ({
         message: 'Số điện thoại không hợp lệ',
       });
     } else {
+      setValue('phone', e.target.value);
       clearErrors('phone');
     }
   }

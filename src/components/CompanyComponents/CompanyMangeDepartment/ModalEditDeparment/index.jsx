@@ -88,8 +88,7 @@ const Index = ({
     setTrigger(!trigger);
   }
   async function handleOnSubmit(data) {
-    console.log(data);
-    await handleEditDepartment(data);
+    await handleEditDepartment({ ...data, key: preloadValue.key });
     checkStepRef.current = {
       departmentName: false,
       managerName: false,
