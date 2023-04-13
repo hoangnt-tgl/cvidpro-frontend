@@ -829,9 +829,48 @@
 
 /* Post Job Bx */
 .container-1 {
-  max-width: 960px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 16px;
+}
+
+.job-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-top: 10px;
+}
+
+.listJob {
+  box-shadow: none !important;
+  width: calc(100% - 320px);
+}
+
+.filter {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.filter-item h6 {
+  font-weight: 600;
+}
+
+.filter-item-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.filter-item-checkbox input {
+  width: 16px;
+  height: 16px;
+}
+
+.filter-item-checkbox label {
+  margin-bottom: 0;
 }
 
 .post-job-bx {

@@ -419,71 +419,184 @@ function Jobsavedjobs(props) {
                     </button>
                   </div>
                 </div>
-                <div className="job-bx clearfix job-primary listJob">
-                  {/* <div className="job-bx-title clearfix "></div> */}
-                  <h3>Danh sách việc làm</h3>
-                  <ul className="post-job-bx browse-job-grid post-resume row">
-                    {listJob.length === 0 && resume.jobCriteria?.status && (
-                      <>
-                        <div className="col-lg-12 col-md-12">
-                          <div className="post-bx-1">
-                            <div className="d-flex">
-                              <div className="job-post-info">
-                                <h5 className="m-b0">
-                                  <Link to={'/jobs-profile'}>
-                                    Không có việc làm phù hợp
-                                  </Link>
-                                </h5>
+                <div className="job-container">
+                  <div className="filter">
+                    <div className="filter-item">
+                      <h6>Hình thức làm việc</h6>
+                      <div className="filter-item-checkbox">
+                        <input
+                          type="checkbox"
+                          aria-label="Checkbox for following text input"
+                        ></input>
+                        <label>Toàn thời gian</label>
+                      </div>
+                      <div className="filter-item-checkbox">
+                        <input
+                          type="checkbox"
+                          aria-label="Checkbox for following text input"
+                        ></input>
+                        <label>Bán thời gian</label>
+                      </div>
+                      <div className="filter-item-checkbox">
+                        <input
+                          type="checkbox"
+                          aria-label="Checkbox for following text input"
+                        ></input>
+                        <label>Thực tập sinh</label>
+                      </div>
+                    </div>
+                    <div className="filter-item">
+                      <h6>Kinh nghiệm làm việc</h6>
+                      <div className="filter-item-checkbox">
+                        <input
+                          type="checkbox"
+                          aria-label="Checkbox for following text input"
+                        ></input>
+                        <label>Chưa có kinh nghiệm</label>
+                      </div>
+                      <div className="filter-item-checkbox">
+                        <input
+                          type="checkbox"
+                          aria-label="Checkbox for following text input"
+                        ></input>
+                        <label>1 năm</label>
+                      </div>
+                      <div className="filter-item-checkbox">
+                        <input
+                          type="checkbox"
+                          aria-label="Checkbox for following text input"
+                        ></input>
+                        <label>2 năm</label>
+                      </div>
+                      <div className="filter-item-checkbox">
+                        <input
+                          type="checkbox"
+                          aria-label="Checkbox for following text input"
+                        ></input>
+                        <label>3 năm</label>
+                      </div>
+                    </div>
+                    <div className="filter-item">
+                      <h6>Cấp bậc</h6>
+                      <div className="filter-item-checkbox">
+                        <input
+                          type="checkbox"
+                          aria-label="Checkbox for following text input"
+                        ></input>
+                        <label>Nhân viên</label>
+                      </div>
+                      <div className="filter-item-checkbox">
+                        <input
+                          type="checkbox"
+                          aria-label="Checkbox for following text input"
+                        ></input>
+                        <label>Trưởng phòng</label>
+                      </div>
+                      <div className="filter-item-checkbox">
+                        <input
+                          type="checkbox"
+                          aria-label="Checkbox for following text input"
+                        ></input>
+                        <label>Phó giám đốc</label>
+                      </div>
+                      <div className="filter-item-checkbox">
+                        <input
+                          type="checkbox"
+                          aria-label="Checkbox for following text input"
+                        ></input>
+                        <label>Giám đốc</label>
+                      </div>
+                    </div>
+                    <div className="filter-item">
+                      <h6>Mức lương</h6>
+                      <div className="filter-item-checkbox">
+                        <input
+                          type="checkbox"
+                          aria-label="Checkbox for following text input"
+                        ></input>
+                        <label>Dưới 10 triệu</label>
+                      </div>
+                      <div className="filter-item-checkbox">
+                        <input
+                          type="checkbox"
+                          aria-label="Checkbox for following text input"
+                        ></input>
+                        <label>10 - 20 triệu</label>
+                      </div>
+                      <div className="filter-item-checkbox">
+                        <input
+                          type="checkbox"
+                          aria-label="Checkbox for following text input"
+                        ></input>
+                        <label>Trên 20 triệu</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="job-bx clearfix job-primary listJob">
+                    {/* <div className="job-bx-title clearfix "></div> */}
+                    <h3>Danh sách việc làm</h3>
+                    <ul className="post-job-bx browse-job-grid post-resume row">
+                      {listJob.length === 0 && resume.jobCriteria?.status && (
+                        <>
+                          <div className="col-lg-12 col-md-12">
+                            <div className="post-bx-1">
+                              <div className="d-flex">
+                                <div className="job-post-info">
+                                  <h5 className="m-b0">
+                                    <Link to={'/jobs-profile'}>
+                                      Không có việc làm phù hợp
+                                    </Link>
+                                  </h5>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </>
-                    )}
-                    {listJob.map((item, index) => (
-                      <li className="col-lg-12" key={index}>
-                        <div className="post-bx">
-                          {/* <div className="d-flex m-b20"> */}
-                          <div>
-                            <div className="d-flex">
-                              <div className="job-post-info">
-                                <h5 className="m-b0">
-                                  <Link to={'/employee/job-detail/:09'}>
-                                    {item.title}
-                                  </Link>
-                                </h5>
-                                <p className="m-b5 font-13">
-                                  <Link to={'#'} className="text-primary">
-                                    {item.position}{' '}
-                                  </Link>
-                                </p>
-                                <ul>
-                                  <li>
-                                    <i className="fa fa-map-marker"></i>
-                                    {item.location}
-                                  </li>
-                                  <li>
-                                    <i className="fa fa-money"></i>
-                                    {displaySalary(
-                                      item.minSalary,
-                                      item.maxSalary,
-                                    )}
-                                  </li>
-                                </ul>
+                        </>
+                      )}
+                      {listJob.map((item, index) => (
+                        <li className="col-lg-12" key={index}>
+                          <div className="post-bx">
+                            {/* <div className="d-flex m-b20"> */}
+                            <div>
+                              <div className="d-flex">
+                                <div className="job-post-info">
+                                  <h5 className="m-b0">
+                                    <Link to={'/employee/job-detail/:09'}>
+                                      {item.title}
+                                    </Link>
+                                  </h5>
+                                  <p className="m-b5 font-13">
+                                    <Link to={'#'} className="text-primary">
+                                      {item.position}{' '}
+                                    </Link>
+                                  </p>
+                                  <ul>
+                                    <li>
+                                      <i className="fa fa-map-marker"></i>
+                                      {item.location}
+                                    </li>
+                                    <li>
+                                      <i className="fa fa-money"></i>
+                                      {displaySalary(
+                                        item.minSalary,
+                                        item.maxSalary,
+                                      )}
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <div className="job-time m-t15 m-b10">
+                                {item.major.map((element, index) => (
+                                  <>
+                                    <Link to={'#'} className="mr-1">
+                                      <span>{element}</span>
+                                    </Link>
+                                  </>
+                                ))}
                               </div>
                             </div>
-                            <div className="job-time m-t15 m-b10">
-                              {item.major.map((element, index) => (
-                                <>
-                                  <Link to={'#'} className="mr-1">
-                                    <span>{element}</span>
-                                  </Link>
-                                </>
-                              ))}
-                            </div>
-                          </div>
 
-                          {/* <Link
+                            {/* <Link
                             to={'/files/pdf-sample.pdf'}
                             target="blank"
                             className="job-links"
@@ -491,18 +604,19 @@ function Jobsavedjobs(props) {
                           >
                             <i className="fa fa-download"></i>
                           </Link> */}
-                          <Button
-                            style={{ top: '80%', right: '8px' }}
-                            onClick={() => {
-                              handleSelectJob(item._id)
-                            }}
-                          >
-                            Ứng tuyển
-                          </Button>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
+                            <Button
+                              style={{ top: '80%', right: '8px' }}
+                              onClick={() => {
+                                handleSelectJob(item._id)
+                              }}
+                            >
+                              Ứng tuyển
+                            </Button>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
