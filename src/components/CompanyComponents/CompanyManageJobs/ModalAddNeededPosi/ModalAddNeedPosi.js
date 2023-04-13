@@ -422,7 +422,7 @@ const ModalAddNeedPosi = ({
                         setValueForm={setValue}
                         setChildStep1={() => {}}
                         checkStepRef={checkStepRef}
-                        placeholder='Chọn cấp bậc'
+                        placeholder='Chọn chuyên ngành ứng viên'
                         options={majorOptions}
                         register='major'
                         preValue={preloadValue?.major}
