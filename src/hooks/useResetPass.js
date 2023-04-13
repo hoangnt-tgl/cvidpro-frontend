@@ -10,7 +10,7 @@ import {
   validateOtpEmployee,
 } from '../services/AuthService';
 
-const useResetPass = (isCompany, duaration, duarationOtp) => {
+const useResetPass = (isCompany) => {
   const [email, setEmail] = useState();
   const [isGetOtp, setIsGetOtp] = useState(false);
   const [otp, setOtp] = useState();
@@ -50,7 +50,6 @@ const useResetPass = (isCompany, duaration, duarationOtp) => {
           error.response.data.message.toLowerCase() ===
           'không tìm thấy người dùng'
         ) {
-          console.log('123');
           setIsMailExist(error.response.data.message);
         }
       }

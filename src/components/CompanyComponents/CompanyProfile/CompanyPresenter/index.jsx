@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import './styles.css';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,6 +7,9 @@ import {
   updateEmailCompany,
   updatePhoneCompany,
 } from '../../../../services/CompanyApi';
+import ModalOtp from './ModalOtp';
+import { useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 const EditableField = ({
   type,
   label,
@@ -15,6 +18,8 @@ const EditableField = ({
   isUpdate,
   selectUpdate,
   handleUpdate,
+  openModalOtp,
+  isUpdateSuccess,
 }) => {
   const schemaEmail = yup.object().shape({
     Email: yup
@@ -28,7 +33,7 @@ const EditableField = ({
   const {
     register,
     handleSubmit,
-
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: useMemo(() => {
@@ -36,20 +41,19 @@ const EditableField = ({
     }, []),
     resolver: yupResolver(label === 'Email' ? schemaEmail : schemaPhone),
   });
-  async function handleOnSubmit(data) {
+  function handleOnSubmit(data) {
     console.log(data);
-    // await handleUpdate(data);
+    handleUpdate(data.Email);
     // let e = { target: { dataset: { update: '' } } };
-    new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve();
-      }, 500);
-    }).then(() => {
+    // selectUpdate(e);
+  }
+  useEffect(() => {
+    if (!isUpdateSuccess && !openModalOtp) {
       let e = { target: { dataset: { update: '' } } };
       selectUpdate(e);
-    });
-  }
-
+      setValue(label, value);
+    }
+  }, [isUpdateSuccess, openModalOtp]);
   return (
     <form onSubmit={handleSubmit(handleOnSubmit)}>
       <div className='form-group'>
@@ -108,15 +112,59 @@ const EditableField = ({
   );
 };
 const Index = ({ companyInfo, selectUpdate, isUpdate }) => {
-  async function handeUpdatePhone(data) {
-    let body = { phone: data.Phone, id: companyInfo._id, otp: companyInfo.otp };
-    console.log(body);
-    await updatePhoneCompany(body);
+  const [openModalOtp, setOpenModalOtp] = useState(false);
+  const [newValue, setNewValue] = useState('');
+  const [isUpdateSuccess, setIsUpdateSuccess] = useState(false);
+
+  function getNew(data) {
+    setNewValue(data);
+    if (isUpdate === 'Email') {
+      if (data !== companyInfo.email) {
+        setOpenModalOtp(true);
+      } else {
+        let e = { target: { dataset: { update: '' } } };
+        selectUpdate(e);
+      }
+    } else {
+      if (data !== companyInfo.phone) {
+        setOpenModalOtp(true);
+      } else {
+        let e = { target: { dataset: { update: '' } } };
+        selectUpdate(e);
+      }
+    }
   }
+
   async function handeUpdateEmail(data) {
-    let body = { email: data.Email, id: companyInfo._id, otp: companyInfo.otp };
+    let body = { email: newValue, id: companyInfo._id, otp: data };
+    let e = { target: { dataset: { update: '' } } };
+    try {
+      await updateEmailCompany(body);
+      setIsUpdateSuccess(true);
+      selectUpdate(e);
+      setOpenModalOtp(false);
+      toast.success('Cập nhật thành công');
+    } catch (error) {
+      toast.error(error.response.data.message);
+      setIsUpdateSuccess(false);
+      setOpenModalOtp(false);
+    }
+  }
+  async function handeUpdatePhone(data) {
+    let body = { phone: newValue, id: companyInfo._id, otp: data };
+    let e = { target: { dataset: { update: '' } } };
     console.log(body);
-    await updateEmailCompany(body);
+    try {
+      await updatePhoneCompany(body);
+      setIsUpdateSuccess(true);
+      selectUpdate(e);
+      setOpenModalOtp(false);
+      toast.success('Cập nhật thành công');
+    } catch (error) {
+      toast.error(error.response.data.message);
+      setIsUpdateSuccess(false);
+      setOpenModalOtp(false);
+    }
   }
   return (
     <>
@@ -145,7 +193,9 @@ const Index = ({ companyInfo, selectUpdate, isUpdate }) => {
                 confirm={companyInfo.confirmPhone}
                 selectUpdate={selectUpdate}
                 isUpdate={isUpdate}
-                handleUpdate={handeUpdatePhone}
+                handleUpdate={getNew}
+                openModalOtp={openModalOtp}
+                isUpdateSuccess={isUpdateSuccess}
               />
             )}
           </div>
@@ -158,7 +208,9 @@ const Index = ({ companyInfo, selectUpdate, isUpdate }) => {
                 confirm={companyInfo.confirmEmail}
                 selectUpdate={selectUpdate}
                 isUpdate={isUpdate}
-                handleUpdate={handeUpdateEmail}
+                handleUpdate={getNew}
+                openModalOtp={openModalOtp}
+                isUpdateSuccess={isUpdateSuccess}
               />
             )}
           </div>
@@ -172,6 +224,15 @@ const Index = ({ companyInfo, selectUpdate, isUpdate }) => {
           </div>
         </div>
       </div>
+      <ModalOtp
+        defaultValues={
+          isUpdate === 'Email' ? companyInfo.email : companyInfo.phone
+        }
+        openModal={openModalOtp}
+        setOpenModal={setOpenModalOtp}
+        isCompany={true}
+        handeUpdate={isUpdate === 'Email' ? handeUpdateEmail : handeUpdatePhone}
+      />
     </>
   );
 };
