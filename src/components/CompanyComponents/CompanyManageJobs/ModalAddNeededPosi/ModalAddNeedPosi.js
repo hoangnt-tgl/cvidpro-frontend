@@ -116,6 +116,7 @@ const ModalAddNeedPosi = ({
     }, [preloadValue]),
   });
   function handleOnSubmit(data) {
+    console.log(data);
     const objJob = {
       title: data.title.value,
       position: data.position.value,
@@ -129,7 +130,7 @@ const ModalAddNeedPosi = ({
       salaryMin: data.salaryMin.toString(),
       salaryMax: data.salaryMax.toString(),
       description: data.description,
-      question: [
+      questions: [
         data.question0.toString(),
         data.question1.toString(),
         data.question2.toString(),
@@ -694,7 +695,7 @@ const ModalAddNeedPosi = ({
                     defaultValue={
                       preloadValue?.description && preloadValue.description
                     }
-                    value={newJob.description}
+                    // value={newJob.description}
                     onChange={(e) => {
                       // console.log(e);
                       setValue('description', e);
@@ -797,14 +798,14 @@ const ModalAddNeedPosi = ({
                     ))}
                     {addOnQuestionOptions?.map((question, index) => (
                       <Card key={index}>
-                        <Card.Header className='d-flex w-100 p-1'>
+                        <Card.Header className='d-flex align-items-center w-100 item-score'>
                           <Accordion.Toggle
-                            as={Nav.Link}
+                            as={'div'}
                             eventKey={index + 1}
-                            className='mr-auto'
+                            className='mr-auto px-2 score-info'
                           >
                             {index + 16 + '. ' + question.name}{' '}
-                            <i className='fa fa-question-circle ms-0'></i>
+                            <i className='fa fa-question-circle mx-1'></i>
                             {/* trash */}
                             <i
                               className='fa fa-trash ml-2 text-red'
@@ -814,7 +815,7 @@ const ModalAddNeedPosi = ({
                           <Form.Control
                             className='align-self-center mr-0'
                             value={question.point}
-                            style={{ width: '50px' }}
+                            style={{ width: '70px', textAlign: 'center' }}
                             onChange={(e) => {
                               if (isNaN(e.target.value)) e.target.value = 0;
                               if (e.target.value > 10) e.target.value = 10;
@@ -842,6 +843,7 @@ const ModalAddNeedPosi = ({
                     ))}
                   </Accordion>
                   <button
+                    type='button'
                     className='btn btn-primary mt-2'
                     onClick={() => setIsShowModal(true)}
                   >

@@ -82,33 +82,30 @@ const useNeedRecuited = ({ search }) => {
             console.log(res.data);
             setPreloadValue(
               res.data.map((item) => ({
-                position: [
-                  {
-                    value: item.position,
-                    label: item.position,
-                  },
-                ],
+                position: {
+                  value: item.position,
+                  label: item.position,
+                },
+
                 level: item.level.map((item) => ({ value: item, label: item })),
-                industry: [
-                  {
-                    value: item.industry,
-                    label: item.industry,
-                  },
-                ],
-                location: [{ value: item.location, label: item.location }],
-                environment: [
-                  {
-                    value: item.workingEnvironment,
-                    label: item.workingEnvironment,
-                  },
-                ],
+                industry: {
+                  value: item.industry,
+                  label: item.industry,
+                },
+
+                location: { value: item.location, label: item.location },
+                environment: {
+                  value: item.workingEnvironment,
+                  label: item.workingEnvironment,
+                },
+
                 major: item.major.map((item) => ({ value: item, label: item })),
                 experience: item.experience,
                 salaryMin: item.salaryMin,
                 salaryMax: item.salaryMax,
                 description: item.description,
                 quantity: item.quantity,
-                title: [{ value: item.title, label: item.title }],
+                title: { value: item.title, label: item.title },
                 question0: item.questions[0],
                 question1: item.questions[1],
                 question2: item.questions[2],

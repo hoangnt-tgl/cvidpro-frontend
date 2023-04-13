@@ -34,7 +34,7 @@ const useManageDepartment = (props) => {
   }
   async function handleEditDepartment(data) {
     try {
-      await editDepartment({ ...data, id: companyInfo._id });
+      await editDepartment(companyInfo._id, { ...data });
       setCompany(false);
       setReload(!reload);
       toast.success('Sửa thông tin phòng ban thành công');

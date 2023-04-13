@@ -13,7 +13,7 @@
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px !important;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  padding: 7px 10px;
 }
 .result-box {
   display: flex;
