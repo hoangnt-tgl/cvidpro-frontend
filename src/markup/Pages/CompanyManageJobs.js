@@ -1,40 +1,41 @@
-import React, { useState } from "react";
-import "react-quill/dist/quill.snow.css";
-import Header2 from "../Layout/HeaderDepartment";
-import Footer from "../Layout/Footer";
-import { createJob } from "../../services/JobApi";
-import useNeedRecuited from "../../hooks/useNeedRecuited";
-import TabListJobs from "../../components/CompanyComponents/CompanyManageJobs/TabListJobs";
-import ModalAddNeedPosi from "../../components/CompanyComponents/CompanyManageJobs/ModalAddNeededPosi/ModalAddNeedPosi";
+import React, { useState } from 'react';
+import 'react-quill/dist/quill.snow.css';
+import Header2 from '../Layout/HeaderDepartment';
+import Footer from '../Layout/Footer';
+import { createJob } from '../../services/JobApi';
+import useNeedRecuited from '../../hooks/useNeedRecuited';
+import TabListJobs from '../../components/CompanyComponents/CompanyManageJobs/TabListJobs';
+import ModalAddNeedPosi from '../../components/CompanyComponents/CompanyManageJobs/ModalAddNeededPosi/ModalAddNeedPosi';
+import { toast } from 'react-hot-toast';
 
 function Companymanage(props) {
   let search = props.location.search;
   //??
   let params = new URLSearchParams(search);
-  let key = params.get("key");
+  let key = params.get('key');
   if (key) {
-    localStorage.setItem("key", key);
+    localStorage.setItem('key', key);
   }
-  key = localStorage.getItem("key");
+  key = localStorage.getItem('key');
 
   const objJob = {
-    title: "",
-    position: "",
+    title: '',
+    position: '',
     level: [],
     major: [],
-    industry: "",
-    location: "",
-    workingEnvironment: "",
-    experience: "",
+    industry: '',
+    location: '',
+    workingEnvironment: '',
+    experience: '',
     quantity: 0,
     salaryMin: 0,
     salaryMax: 0,
-    description: "",
+    description: '',
     question: [],
     addOnQuestion: [],
   };
   const initQuestion = {
-    name: "",
+    name: '',
     detail: [],
     point: 0,
   };
@@ -72,15 +73,19 @@ function Companymanage(props) {
   }
   const handleAddJob = async (data) => {
     console.log(data);
-    await createJob({
-      ...data,
-      departmentId: department._id,
-      companyId: department.companyId,
-    });
-   
-    setIsShowModalAddJob(false);
-    setNewJob(objJob);
-    setReload((prev) => !prev);
+    try {
+      await createJob({
+        ...data,
+        departmentId: department._id,
+        companyId: department.companyId,
+      });
+      setIsShowModalAddJob(false);
+      setNewJob(objJob);
+      setReload((prev) => !prev);
+      toast.success('Thêm việc làm thành công');
+    } catch (error) {
+      toast.error('Thêm việc làm thất bại');
+    }
   };
   return (
     <>
