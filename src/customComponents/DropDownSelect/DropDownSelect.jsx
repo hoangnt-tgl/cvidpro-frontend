@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useEffect } from 'react';
 import WrapperClickOutSide from '../WrapperClickOutSide/WrapperClickOutSide';
 import './styles.css';
@@ -34,19 +34,27 @@ const DropDownSelect = ({
   options,
   placeholder,
   clearErrors,
+  register,
+  preValue = [],
 }) => {
-  const [value, setValue] = React.useState([]);
+  const [value, setValue] = React.useState(preValue);
   const [isShow, setIsShow] = React.useState(false);
+  const isFirst = useRef(true);
   useEffect(() => {
-    if (value.length > 0) {
-      setValueForm('field', value);
-      if (checkStepRef.current.field === false) {
-        setChildStep1();
-        checkStepRef.current.field = true;
-      }
-      clearErrors('field');
+    if (isFirst.current) {
+      isFirst.current = false;
+      return;
     } else {
-      setValueForm('field', '');
+      if (value.length > 0) {
+        setValueForm(register, value);
+        if (checkStepRef.current[register] === false) {
+          setChildStep1();
+          checkStepRef.current[register] = true;
+        }
+        clearErrors(register);
+      } else {
+        setValueForm(register, '');
+      }
     }
   }, [value]);
   return (
@@ -58,21 +66,6 @@ const DropDownSelect = ({
             setIsShow(!isShow);
           }}
         >
-          {/* {value.length > 0 && (
-            <div className='result-box'>
-              {value.map((item, idx) => {
-                return idx === 0 ? (
-                  <div className='result-item' key={idx}>
-                    {item.label}{' '}
-                  </div>
-                ) : (
-                  <div className='result-item' key={idx}>
-                    ,{item.label}{' '}
-                  </div>
-                );
-              })}
-            </div>
-          )}{' '} */}
           {value.length > 0 && (
             <div className='result-box'>
               <div className='result-item'>

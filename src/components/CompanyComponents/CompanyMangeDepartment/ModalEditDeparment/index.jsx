@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import NormalInput from '../../../../customComponents/NormalInput/Index.jsx';
 
+
 const Index = ({
   editDepartment,
   setEditDepartment,
@@ -51,6 +52,7 @@ const Index = ({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -88,12 +90,18 @@ const Index = ({
     setTrigger(!trigger);
   }
   async function handleOnSubmit(data) {
-    await handleEditDepartment({ ...data, key: preloadValue.key });
+    try {
+      await handleEditDepartment({ ...data, key: preloadValue.key });
+    } catch (error) {
+      reset(preloadValue);
+    }
+
     checkStepRef.current = {
       departmentName: false,
       managerName: false,
       managerEmail: false,
     };
+    setEditDepartment(false);
   }
   return (
     <Modal

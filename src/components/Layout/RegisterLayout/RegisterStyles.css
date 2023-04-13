@@ -141,6 +141,7 @@
     font-size: 14px !important;
     font-weight: 550;
     color: var(--text-dark);
+    border-radius: 5px;
   }
   .font-size-14 p {
     margin-bottom: 5px;
