@@ -19,8 +19,10 @@ import {
   getListEnvironment,
   getListIndustry,
 } from "../../services/GetListService";
+import "../../css/jobsave.css"
 import { createOrder } from "../../services/OrderApi";
 import swal from "sweetalert";
+import loginbg from "./../../images/bg6.jpg";
 function Jobsavedjobs(props) {
   
   const [modalFindJob, setModalFindJob] = useState(false);
@@ -201,7 +203,11 @@ function Jobsavedjobs(props) {
       <Header2 />
       <div className="page-content bg-white">
         <div className="content-block">
-          <div className="section-full bg-white p-t50 p-b20">
+          <div className="section-full bg-white p-t50 p-b20"
+          style={{
+            backgroundImage: "url(" + loginbg + ")",
+            backgroundSize: "cover",
+          }}>
             <div className="container">
               <div className=" m-b30">
                 <div className="section-full">
@@ -218,6 +224,7 @@ function Jobsavedjobs(props) {
                               options={majorOption}
                               onChange={(e) => setMajor(e)}
                               isDisabled={resume.jobCriteria?.status}
+                              className="job-pri"
                             ></FormControl>
                           </div>
                         </div>
@@ -231,6 +238,7 @@ function Jobsavedjobs(props) {
                               value={jobTitle}
                               onChange={(e) => setJobTitle(e)}
                               isDisabled={resume.jobCriteria?.status}
+                              className="job-pri"
                             ></FormControl>
                           </div>
                         </div>
@@ -247,6 +255,7 @@ function Jobsavedjobs(props) {
                               isMulti={true}
                               closeMenuOnSelect={false}
                               isDisabled={resume.jobCriteria?.status}
+                              className="job-pri"
                             ></FormControl>
                           </div>
                         </div>
@@ -263,6 +272,7 @@ function Jobsavedjobs(props) {
                               isMulti={true}
                               closeMenuOnSelect={false}
                               isDisabled={resume.jobCriteria?.status}
+                              className="job-pri"
                             ></FormControl>
                           </div>
                         </div>
@@ -279,6 +289,7 @@ function Jobsavedjobs(props) {
                               isMulti={true}
                               closeMenuOnSelect={false}
                               isDisabled={resume.jobCriteria?.status}
+                              className="job-pri"
                             ></FormControl>
                           </div>
                         </div>
@@ -293,6 +304,7 @@ function Jobsavedjobs(props) {
                               onChange={(e) => setCompanyType(e)}
                               isClearable={true}
                               isDisabled={resume.jobCriteria?.status}
+                              className="job-pri"
                             ></FormControl>
                           </div>
                         </div>
@@ -307,6 +319,7 @@ function Jobsavedjobs(props) {
                               onChange={(e) => setProvince(e)}
                               isClearable={true}
                               isDisabled={resume.jobCriteria?.status}
+                              className="job-pri"
                             ></FormControl>
                           </div>
                         </div>
@@ -326,11 +339,8 @@ function Jobsavedjobs(props) {
                     </form>
                   </div>
                 </div>
-                <div className="job-bx clearfix">
-                  <div className="job-bx-title clearfix d-flex align-items-center">
-                    <h5 className="font-weight-700 pull-left text-uppercase mr-auto my-0">
-                      {listJob.length} việc làm phù hợp
-                    </h5>
+                <div className="job-bx clearfix job-primary">
+                  <div className="job-bx-title clearfix ">
                     {/* <div className="float-right">
                         <span className="select-title">Sắp xếp: </span>
                         <select className="custom-btn btn-sm">

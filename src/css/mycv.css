@@ -1,12 +1,31 @@
 .title-cv{
     text-align: center;
     font-weight: 600 !important;
-    background-color:aqua !important;
+    background-color:#efeded !important;
+    color: #000 !important;
 }
 .answer{
-    font-weight: 500 !important;
+    font-weight: 550 !important;
 }
 .header-cv{
     text-align: center;
     font-weight: 700 !important;
 }
+.pri{
+    border: 1px solid #000 !important;
+ }
+ .header-sec{
+    font-weight: 500 !important;
+    margin: 10pxv !important;
+    color: black !important;
+ }
+ .header-job{
+    font-weight: 600 !important;
+    color: black !important;
+ }
+ .exp-work{
+    text-align: center;
+ }
+ .nav-link.active{
+    border-color: #000 #000 #fff !important;
+ }

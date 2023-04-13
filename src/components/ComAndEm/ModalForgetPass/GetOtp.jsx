@@ -23,6 +23,7 @@ const Step1 = ({
         .string()
         .required('Vui lòng nhập email')
         .email('Email không hợp lệ'),
+        
     })
     .required();
 

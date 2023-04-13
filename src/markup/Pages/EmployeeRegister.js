@@ -15,6 +15,7 @@ import {
   loadingToggleAction,
   employeeSignupAction,
 } from "../../store/actions/AuthActions";
+import "../../css/Register.css"
 import ReactSelectShowType from "../../customComponents/ReactSelectShowType/ReactSelectShowType";
 
 var bnr = require("./../../images/background/bg6.jpg");
@@ -37,6 +38,13 @@ function Register2(props) {
     email: "",
     password: "",
     confirmPassword: "",
+  };
+  const style={
+    control: base => ({
+      ...base,
+      height: "2px",
+      minHeight: "2px"
+    })
   };
   const [errors, setErrors] = useState(errorsObj);
   const [name, setName] = useState("");
@@ -69,6 +77,7 @@ function Register2(props) {
     { value: "Nam", label: "Nam" },
     { value: "Nữ", label: "Nữ" },
   ];
+
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -282,8 +291,8 @@ function Register2(props) {
                     {props.successMessage && (
                       <div className="">{props.successMessage}</div>
                     )}
-                    <form className=" dez-form p-b30 mx-4" onSubmit={onSignUp}>
-                      <h3 className="form-title m-t0">
+                    <form className=" dez-form p-b30 mx-2" onSubmit={onSignUp} id="Background-Register">
+                      <h3 className="register1">
                         Đăng ký người tìm việc
                       </h3>
                       <div className="dez-separator-outer m-b5">

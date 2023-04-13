@@ -19,7 +19,6 @@ const ForgetPass = ({ isCompany, openModal, setOpenModal }) => {
     setIsOtpStillValid,
   } = useResetPass(isCompany, 10000, 20000);
   const [step, setStep] = useState(1);
-
   return (
     <>
       <Modal
@@ -30,7 +29,7 @@ const ForgetPass = ({ isCompany, openModal, setOpenModal }) => {
         <div className='modal-dialog my-0 w-100' role='document'>
           <div className='modal-content'>
             <div className='modal-header'>
-              <h5 className='modal-title text-center'>Khôi phục mật khẩu</h5>
+              <h5 className='modal-title text-center'>Đặt lại mật khẩu</h5>
               <button
                 type='button'
                 className='close'
