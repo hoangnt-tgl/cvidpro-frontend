@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import './styles.css';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,128 +11,148 @@ import ModalOtp from './ModalOtp';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 const EditableField = ({
+  errors,
+  register,
   type,
   label,
-  value,
   confirm,
   isUpdate,
-  selectUpdate,
-  handleUpdate,
-  openModalOtp,
-  isUpdateSuccess,
+  isUpdatePresenter,
+  name,
 }) => {
-  const schemaEmail = yup.object().shape({
-    Email: yup
+  return (
+    <div className='form-group'>
+      <label className='border-bottom w-100 pb-1 mb-3'>{label}</label>
+      <div
+        className={`row align-items-center edit-able ${
+          isUpdatePresenter && confirm && 'editing'
+        } `}
+      >
+        <input {...register} type={type} />{' '}
+        <>
+          {' '}
+          {label === 'Email' || label === 'Phone' ? (
+            <>
+              {isUpdatePresenter ? (
+                <>
+                  {!confirm && (
+                    <div className='row align-items-center pr-3'>
+                      <p className='col mb-0 text-danger font-14'>
+                        {/* <i class='fa fa-times-circle' aria-hidden='true'></i> */}
+                        Chưa xác thực
+                      </p>
+                      <button className='btn btn-primary btn-md' type='button'>
+                        Xác thực
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  {' '}
+                  {confirm ? (
+                    <div className='row align-items-center pr-3'>
+                      {isUpdate !== label && (
+                        <p className='col mb-0 text-success font-14'>
+                          {/* <i class='fa fa-check-circle' aria-hidden='true'></i> */}
+                          Đã xác thực
+                        </p>
+                      )}
+                    </div>
+                  ) : (
+                    <div className='row align-items-center pr-3'>
+                      <p className='col mb-0 text-danger font-14'>
+                        {/* <i class='fa fa-times-circle' aria-hidden='true'></i> */}
+                        Chưa xác thực
+                      </p>
+                      <button className='btn btn-primary btn-md' type='button'>
+                        Xác thực
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}{' '}
+              {/* {confirm ? (
+                  <div className='row align-items-center pr-3'>
+                    {isUpdate !== label && (
+                      <p className='col mb-0 text-success font-14'>
+                        Đã xác thực
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <div className='row align-items-center pr-3'>
+                    <p className='col mb-0 text-danger font-14'>
+                      Chưa xác thực
+                    </p>
+                    <button className='btn btn-primary btn-md' type='button'>
+                      Xác thực
+                    </button>
+                  </div>
+                )} */}
+            </>
+          ) : (
+            <></>
+          )}
+        </>
+      </div>
+      <div className='text-danger'>
+        {errors[name]?.message && <span>{errors[name].message}</span>}
+      </div>
+    </div>
+  );
+};
+const Index = ({ companyInfo, selectUpdate, isUpdate }) => {
+  const [isUpdatePresenter, setIsUpdatePresenter] = useState(false);
+  const [openModalOtp, setOpenModalOtp] = useState(false);
+  const [newValue, setNewValue] = useState('');
+  const [isUpdateSuccess, setIsUpdateSuccess] = useState(false);
+  const schema = yup.object().shape({
+    email: yup
       .string()
       .required('Vui lòng nhập email')
       .email('Email không hợp lệ'),
-  });
-  const schemaPhone = yup.object().shape({
-    Phone: yup.string().required('Vui lòng nhập số điện thoại').length(10),
+    phone: yup.string().required('Vui lòng nhập số điện thoại').length(10),
+    name: yup.string().required('Vui lòng nhập tên'),
+    position: yup.string().required('Vui lòng nhập chức vụ'),
   });
   const {
     register,
     handleSubmit,
     setValue,
+    setFocus,
     formState: { errors },
   } = useForm({
     defaultValues: useMemo(() => {
-      return { [label]: value };
+      return {
+        email: companyInfo.email,
+        phone: companyInfo.phone,
+        name: companyInfo.name,
+        position: companyInfo.position,
+      };
     }, []),
-    resolver: yupResolver(label === 'Email' ? schemaEmail : schemaPhone),
+    resolver: yupResolver(schema),
   });
-  function handleOnSubmit(data) {
-    console.log(data);
-    handleUpdate(data.Email);
-    // let e = { target: { dataset: { update: '' } } };
-    // selectUpdate(e);
-  }
-  useEffect(() => {
-    if (!isUpdateSuccess && !openModalOtp) {
-      let e = { target: { dataset: { update: '' } } };
-      selectUpdate(e);
-      setValue(label, value);
-    }
-  }, [isUpdateSuccess, openModalOtp]);
-  return (
-    <form onSubmit={handleSubmit(handleOnSubmit)}>
-      <div className='form-group'>
-        <label className='border-bottom w-100 pb-1 mb-3'>{label}</label>
-        <div
-          className={`row align-items-center edit-able ${
-            isUpdate === label && 'editing'
-          } `}
-        >
-          <input {...register(label)} type={type} />{' '}
-          <span className='input-underline' />
-          {confirm ? (
-            <div className='row align-items-center pr-3'>
-              {isUpdate !== label && (
-                <p className='col mb-0 text-success font-20'>
-                  <i class='fa fa-check-circle' aria-hidden='true'></i>
-                </p>
-              )}
-
-              {isUpdate === label ? (
-                <button
-                  className='btn btn-primary btn-md'
-                  data-update=''
-                  type='submit'
-                >
-                  Đồng ý
-                </button>
-              ) : (
-                <button
-                  type='button'
-                  className='btn btn-primary btn-md'
-                  data-update={label}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    selectUpdate(e);
-                  }}
-                >
-                  Cập nhật
-                </button>
-              )}
-            </div>
-          ) : (
-            <div className='row align-items-center pr-3'>
-              <p className='col mb-0 text-danger font-20'>
-                <i class='fa fa-times-circle' aria-hidden='true'></i>
-              </p>
-              <button className='btn btn-primary btn-md'>Xác thực</button>
-            </div>
-          )}
-        </div>
-        <div className='text-danger'>
-          {errors[label]?.message && <span>{errors[label].message}</span>}
-        </div>
-      </div>
-    </form>
-  );
-};
-const Index = ({ companyInfo, selectUpdate, isUpdate }) => {
-  const [openModalOtp, setOpenModalOtp] = useState(false);
-  const [newValue, setNewValue] = useState('');
-  const [isUpdateSuccess, setIsUpdateSuccess] = useState(false);
-
   function getNew(data) {
-    setNewValue(data);
-    if (isUpdate === 'Email') {
-      if (data !== companyInfo.email) {
-        setOpenModalOtp(true);
-      } else {
-        let e = { target: { dataset: { update: '' } } };
-        selectUpdate(e);
-      }
-    } else {
-      if (data !== companyInfo.phone) {
-        setOpenModalOtp(true);
-      } else {
-        let e = { target: { dataset: { update: '' } } };
-        selectUpdate(e);
-      }
-    }
+    console.log(data);
+    setIsUpdatePresenter(false);
+    setOpenModalOtp(true);
+    // setNewValue(data);
+    // if (isUpdate === 'Email') {
+    //   if (data !== companyInfo.email) {
+    //     setOpenModalOtp(true);
+    //   } else {
+    //     let e = { target: { dataset: { update: '' } } };
+    //     selectUpdate(e);
+    //   }
+    // } else {
+    //   if (data !== companyInfo.phone) {
+    //     setOpenModalOtp(true);
+    //   } else {
+    //     let e = { target: { dataset: { update: '' } } };
+    //     selectUpdate(e);
+    //   }
+    // }
   }
 
   async function handeUpdateEmail(data) {
@@ -175,20 +195,37 @@ const Index = ({ companyInfo, selectUpdate, isUpdate }) => {
             Thông tin người liên hệ
           </h5>
         </div>
-        <div className='row m-b30'>
-          <div className='col-lg-12'>
-            <div className='form-group'>
-              <label className='border-bottom w-100 pb-1 mb-3'>Họ và tên</label>
-              <p style={{ minHeight: 38 }} className='mb-0'>
-                {companyInfo.name}
-              </p>
-            </div>
-          </div>
-          <div className='col-lg-12'>
-            {companyInfo.phone && (
+
+        <form onSubmit={handleSubmit(getNew)}>
+          <div
+            className={
+              isUpdatePresenter
+                ? 'presenter-editing row m-b30 form-presenter'
+                : 'row m-b30 form-presenter '
+            }
+          >
+            <div className='col-lg-12'>
               <EditableField
+                errors={errors}
+                register={{ ...register('name') }}
+                label={'Họ và tên'}
+                name='name'
+                type='text'
+                confirm={true}
+                selectUpdate={selectUpdate}
+                isUpdate={isUpdate}
+                handleUpdate={getNew}
+                openModalOtp={openModalOtp}
+                isUpdateSuccess={isUpdateSuccess}
+                isUpdatePresenter={isUpdatePresenter}
+              />
+            </div>
+            <div className='col-lg-12'>
+              <EditableField
+                errors={errors}
+                register={{ ...register('phone') }}
                 label={'Phone'}
-                value={companyInfo.phone}
+                name='phone'
                 type='text'
                 confirm={companyInfo.confirmPhone}
                 selectUpdate={selectUpdate}
@@ -196,14 +233,15 @@ const Index = ({ companyInfo, selectUpdate, isUpdate }) => {
                 handleUpdate={getNew}
                 openModalOtp={openModalOtp}
                 isUpdateSuccess={isUpdateSuccess}
+                isUpdatePresenter={isUpdatePresenter}
               />
-            )}
-          </div>
-          <div className='col-lg-12'>
-            {companyInfo.email && (
+            </div>
+            <div className='col-lg-12'>
               <EditableField
+                errors={errors}
+                register={{ ...register('email') }}
                 label={'Email'}
-                value={companyInfo.email}
+                name='email'
                 type='email'
                 confirm={companyInfo.confirmEmail}
                 selectUpdate={selectUpdate}
@@ -211,18 +249,46 @@ const Index = ({ companyInfo, selectUpdate, isUpdate }) => {
                 handleUpdate={getNew}
                 openModalOtp={openModalOtp}
                 isUpdateSuccess={isUpdateSuccess}
+                isUpdatePresenter={isUpdatePresenter}
               />
-            )}
-          </div>
-          <div className='col-lg-12'>
-            <div className='form-group'>
-              <label className='border-bottom w-100 pb-1 mb-3'>Chức vụ</label>
-              <p style={{ minHeight: 38 }} className='mb-0'>
-                {companyInfo.position}
-              </p>
+            </div>
+            <div className='col-lg-12'>
+              <EditableField
+                errors={errors}
+                register={{ ...register('position') }}
+                label={'Chức vụ'}
+                name='position'
+                type='text'
+                confirm={true}
+                selectUpdate={selectUpdate}
+                isUpdate={isUpdate}
+                handleUpdate={getNew}
+                openModalOtp={openModalOtp}
+                isUpdateSuccess={isUpdateSuccess}
+                isUpdatePresenter={isUpdatePresenter}
+              />
             </div>
           </div>
-        </div>
+          <div className='d-flex justify-content-end'>
+            {' '}
+            {isUpdatePresenter ? (
+              <button type='submit' className='btn btn-primary btn-md'>
+                Xác nhận
+              </button>
+            ) : (
+              <button
+                type='button'
+                className='btn btn-primary btn-md'
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsUpdatePresenter(!isUpdatePresenter);
+                }}
+              >
+                Cập nhật
+              </button>
+            )}
+          </div>
+        </form>
       </div>
       <ModalOtp
         defaultValues={
@@ -238,3 +304,27 @@ const Index = ({ companyInfo, selectUpdate, isUpdate }) => {
 };
 
 export default Index;
+{
+  /* {isUpdate === label ? (
+                <button
+                  className='btn btn-primary btn-md'
+                  data-update=''
+                  type='submit'
+                >
+                  Đồng ý
+                </button>
+              ) : (
+                <button
+                  type='button'
+                  className='btn btn-primary btn-md'
+                  data-update={label}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    selectUpdate(e);
+                    setFocus(label);
+                  }}
+                >
+                  Cập nhật
+                </button>
+              )} */
+}
