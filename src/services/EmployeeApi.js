@@ -135,4 +135,11 @@ export const confirmJob = async (jobId) => {
     .catch((error) => {
       formatError(error.response?.data?.message || "");
     });
-}
+};
+
+export const changePassword = async (data) => {
+  return axiosInstance
+    .put(`employee/change-password/`)
+    .then((res) => res.data)
+    
+};

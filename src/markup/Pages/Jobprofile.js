@@ -15,6 +15,7 @@ import {
   deleteWorkExperience,
 } from '../../services/EmployeeApi';
 import { formatDate } from '../../helperFC/Function';
+import loginbg from "./../../images/bg6.jpg";
 function Jobprofile(props) {
   const [userInformation, setUserInformation] = useState({});
   const [reload, setReload] = useState(false);
@@ -35,11 +36,14 @@ function Jobprofile(props) {
       <Header2 />
       <div className='page-content bg-white'>
         <div className='content-block'>
-          <div className='section-full bg-white browse-job p-t50 p-b20 px-3'>
+          <div className='section-full bg-white browse-job p-t50 p-b20 px-3' style={{
+						backgroundImage: "url(" + loginbg + ")",
+						backgroundSize: "cover",
+					  }}>
             <div className='container'>
               <div className='m-b30'>
-                <div className='job-bx submit-resume row'>
-                  <div className='col-lg-6 col-md-12'>
+                <div className='job-bx submit-resume row bg-white'>
+                  <div className='col-lg-12 col-md-12'>
                     <div
                       className='border-bottom clearfix m-0 mb-4 row align-items-center'
                       style={{ paddingBottom: 10.5 }}
@@ -57,17 +61,17 @@ function Jobprofile(props) {
                     </div>
                     <form>
                       <div className='row m-b30'>
-                        <div className='col-lg-12'>
-                          <div className='form-group'>
+                        <div className='col-lg-6'>
+                          <div className='form-group' style={{marginBottom:"5px"}}>
                             <label className='border-bottom w-100 pb-1 mb-3'>
                               Họ và tên
                             </label>
-                            <p style={{ minHeight: 38 }} className='mb-0'>
+                            <p style={{ minHeight: 30 }} className='form-control'>
                               {userInformation.name}
                             </p>
                           </div>
                         </div>
-                        <div className='col-lg-12'>
+                        <div className='col-lg-6'>
                           <div className='form-group'>
                             <label className='border-bottom w-100 pb-1 mb-3'>
                               Ngày sinh
@@ -77,7 +81,7 @@ function Jobprofile(props) {
                             </p>
                           </div>
                         </div>
-                        <div className='col-lg-12'>
+                        <div className='col-lg-6'>
                           <div className='form-group'>
                             <label className='border-bottom w-100 pb-1 mb-3'>
                               Giới tính
@@ -87,7 +91,7 @@ function Jobprofile(props) {
                             </p>
                           </div>
                         </div>
-                        <div className='col-lg-12'>
+                        <div className='col-lg-6'>
                           <div className='form-group'>
                             <label className='border-bottom w-100 pb-1 mb-3'>
                               Nghề nghiệp
@@ -97,7 +101,7 @@ function Jobprofile(props) {
                             </p>
                           </div>
                         </div>
-                        <div className='col-lg-12'>
+                        <div className='col-lg-6'>
                           <div className='form-group'>
                             <label className='border-bottom w-100 pb-1 mb-3'>
                               Học vấn
@@ -107,7 +111,7 @@ function Jobprofile(props) {
                             </p>
                           </div>
                         </div>
-                        <div className='col-lg-12'>
+                        <div className='col-lg-6'>
                           <div className='form-group'>
                             <label className='border-bottom w-100 pb-1 mb-3'>
                               Tốt nghiệp
@@ -118,7 +122,7 @@ function Jobprofile(props) {
                             </p>
                           </div>
                         </div>
-                        <div className='col-lg-12'>
+                        <div className='col-lg-6'>
                           <div className='form-group'>
                             <label className='border-bottom w-100 pb-1 mb-3'>
                               Trình độ
@@ -151,23 +155,13 @@ function Jobprofile(props) {
                       </div>
                     </form>
                   </div>
-                  <div className='col-lg-6 col-md-12'>
+                  <div className='col-lg-12 col-md-12'>
                     <div className='border-bottom clearfix mb-4'>
                       <h5 className='font-weight-700 pull-left text-uppercase'>
                         Thông tin liên hệ
                       </h5>
                     </div>
                     <div className='row m-b30'>
-                      <div className='col-lg-12'>
-                        <div className='form-group'>
-                          <label className='border-bottom w-100 pb-1 mb-3'>
-                            Họ và tên
-                          </label>
-                          <p style={{ minHeight: 38 }} className='mb-0'>
-                            {userInformation.name}
-                          </p>
-                        </div>
-                      </div>
                       <div className='col-lg-12'>
                         <div className='form-group'>
                           <label className='border-bottom w-100 pb-1 mb-3'>
