@@ -735,7 +735,7 @@
 }
 
 .find-job-bx form {
-  padding: 30px 30px 5px 30px;
+  padding: 30px;
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 4px;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
@@ -873,6 +873,17 @@
   margin-bottom: 0;
 }
 
+.imageJob {
+  margin-right: 20px;
+}
+
+.imageJob img {
+  height: 120px;
+  width: 120px;
+  object-fit: cover;
+  object-position: center;
+}
+
 .post-job-bx {
   margin: 0;
   padding: 0;
@@ -894,6 +905,7 @@
 .cv-manager ul li {
   display: inline-block;
   margin-right: 10px;
+  color: #232323 !important;
 }
 
 .post-job-bx ul li i,
@@ -928,13 +940,12 @@
   display: block;
   position: relative;
   transition: all 0.4s;
-  cursor: pointer;
   border: 1px solid #bebebe;
 }
 
-.post-job-bx .post-bx:hover {
+/* .post-job-bx .post-bx:hover {
   border-color: #2e55fa;
-}
+} */
 
 .post-job-bx>li,
 .cv-manager>li {
