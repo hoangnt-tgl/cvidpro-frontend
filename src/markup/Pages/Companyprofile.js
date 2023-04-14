@@ -16,14 +16,16 @@ function Companyprofile(props) {
           <div className='section-full bg-white p-t50 p-b20 px-3'>
             <div className='container'>
               <div className='m-b30'>
-                <div className='job-bx submit-resume row'>
-                  <CompanyInfo companyInfo={companyInfo} />
-                  <CompanyPresenter
-                    companyInfo={companyInfo}
-                    selectUpdate={selectUpdate}
-                    isUpdate={isUpdate}
-                  />
-                </div>
+                {companyInfo.name && (
+                  <div className='job-bx submit-resume row'>
+                    <CompanyInfo companyInfo={companyInfo} />
+                    <CompanyPresenter
+                      companyInfo={companyInfo}
+                      selectUpdate={selectUpdate}
+                      isUpdate={isUpdate}
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </div>
