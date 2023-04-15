@@ -9,13 +9,11 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { changePassword } from "../../services/EmployeeApi";
-import { toast } from 'react-hot-toast';
-
+import { toast } from "react-hot-toast";
 
 function Changepasswordpage(props, setChildStep) {
   const schema = yup.object().shape({
     password: yup.string().required("Vui lòng nhập mật khẩu"),
-
     newPassword: yup
       .string()
       .required("Vui lòng nhập mật khẩu")
@@ -45,23 +43,25 @@ function Changepasswordpage(props, setChildStep) {
   function onHandleSubmit(data) {
     console.log(data);
     changePassword({ password: data.password, newPassword: data.newPassword })
-      .then((res) =>   toast.success("Thay đổi mật khẩu thành công", {
-		style: {
-		  right: '0px',
-		  minWidth: '300px',
-		  fontSize: '20px',
-		  fontWeight: '500',
-		},
-	  }))
+      .then((res) =>
+        toast.success("Thay đổi mật khẩu thành công", {
+          style: {
+            right: "0px",
+            minWidth: "300px",
+            fontSize: "20px",
+            fontWeight: "500",
+          },
+        })
+      )
       .catch((error) => {
-        toast.success("Mật khẩu không trùng khớp", {
-			style: {
-			  right: '0px',
-			  minWidth: '300px',
-			  fontSize: '20px',
-			  fontWeight: '500',
-			},
-		  });
+        toast.error("Mật khẩu không trùng khớp", {
+          style: {
+            right: "0px",
+            minWidth: "300px",
+            fontSize: "20px",
+            fontWeight: "500",
+          },
+        });
       });
   }
 
