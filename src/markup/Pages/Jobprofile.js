@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Header2 from './../Layout/HeaderEmployee';
 import Footer from './../Layout/Footer';
@@ -17,21 +17,17 @@ import {
 import { formatDate } from '../../helperFC/Function';
 import useUpdateProfile from '../../hooks/useUpdateProfile';
 import ModalUpdateProfile from '../../components/EmployeeComponents/EmployeeProfile/ModalUpdateProfile';
-function Jobprofile(props) {
-  const [openUpdate, setOpenUpdate] = useUpdateProfile(false);
-  const [userInformation, setUserInformation] = useState({});
-  const [reload, setReload] = useState(false);
-  useEffect(() => {
-    async function fetchData() {
-      const response = await getMyResume(props.history);
-      console.log(response);
-      setUserInformation(response);
-    }
-    fetchData();
-  }, [reload]);
 
-  const yearStart = userInformation.startYear;
-  //format date
+function Jobprofile(props) {
+  const {
+    openUpdate,
+    setOpenUpdate,
+    userInformation,
+    register,
+    handleOnSubmit,
+    handleSubmit,
+  } = useUpdateProfile(props);
+  const [reload, setReload] = useState(false);
 
   return (
     <>
@@ -292,6 +288,10 @@ function Jobprofile(props) {
       <ModalUpdateProfile
         openUpdate={openUpdate}
         setOpenUpdate={setOpenUpdate}
+        userInformation={userInformation}
+        register={register}
+        handleSubmit={handleSubmit}
+        handleOnSubmit={handleOnSubmit}
       />
       <Footer />
     </>

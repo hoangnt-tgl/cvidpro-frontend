@@ -1,7 +1,13 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 
-const ModalUpdateProfile = ({ openUpdate, setOpenUpdate }) => {
+const ModalUpdateProfile = ({
+  openUpdate,
+  setOpenUpdate,
+  register,
+  handleOnSubmit,
+  handleSubmit,
+}) => {
   return (
     <Modal
       fullscreen={true}
@@ -12,13 +18,11 @@ const ModalUpdateProfile = ({ openUpdate, setOpenUpdate }) => {
       className='modal fade modal-bx-info'
     >
       <Modal.Header closeButton>
-        <div className='logo-img'>
-          {/* <img alt='' src={icon} /> */}
-        </div>
+        <div className='logo-img'>{/* <img alt='' src={icon} /> */}</div>
         <h5 className='modal-title text-center'>Cập nhật thông tin cá nhân</h5>
       </Modal.Header>
       <Modal.Body>
-        <form></form>
+        <form onSubmit={handleSubmit(handleOnSubmit)}></form>
       </Modal.Body>
       <Modal.Footer>
         {' '}
