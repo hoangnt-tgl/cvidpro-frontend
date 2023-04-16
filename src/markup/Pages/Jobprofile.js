@@ -15,7 +15,10 @@ import {
   deleteWorkExperience,
 } from '../../services/EmployeeApi';
 import { formatDate } from '../../helperFC/Function';
+import useUpdateProfile from '../../hooks/useUpdateProfile';
+import ModalUpdateProfile from '../../components/EmployeeComponents/EmployeeProfile/ModalUpdateProfile';
 function Jobprofile(props) {
+  const [openUpdate, setOpenUpdate] = useUpdateProfile(false);
   const [userInformation, setUserInformation] = useState({});
   const [reload, setReload] = useState(false);
   useEffect(() => {
@@ -47,7 +50,12 @@ function Jobprofile(props) {
                       <h5 className='font-weight-700 pull-left text-uppercase mb-0'>
                         Thông tin cá nhân
                       </h5>
-                      <div style={{ cursor: 'pointer', marginLeft: 16 }}>
+                      <div
+                        style={{ cursor: 'pointer', marginLeft: 16 }}
+                        onClick={() => {
+                          setOpenUpdate(true);
+                        }}
+                      >
                         <i
                           class='fa fa-pencil-square-o'
                           style={{ fontSize: 20, color: '#0275d8' }}
@@ -281,6 +289,10 @@ function Jobprofile(props) {
           </div>
         </div>
       </div>
+      <ModalUpdateProfile
+        openUpdate={openUpdate}
+        setOpenUpdate={setOpenUpdate}
+      />
       <Footer />
     </>
   );
