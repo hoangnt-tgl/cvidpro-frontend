@@ -1,4 +1,4 @@
-import axiosInstance from "../services/AxiosInstance";
+import axiosInstance from '../services/AxiosInstance';
 
 export const getListSchools = async () => {
   return await axiosInstance.get(`school/getall`).then((res) => res.data);
@@ -46,24 +46,31 @@ export const getListCompanyType = async () => {
 
 export const getListIndustry = async () => {
   return axiosInstance.get(`industry/getall`).then((res) => res.data);
-}
+};
 
 export const getListPosition = async () => {
   return axiosInstance.get(`position/getall`).then((res) => res.data);
-}
+};
 
 export const getListEnvironment = async () => {
   return axiosInstance.get(`environment/getall`).then((res) => res.data);
-}
+};
 
 export const getListQuestion = async () => {
   return axiosInstance.get(`question/getall`).then((res) => res.data);
-}
+};
 
 export const getListLanguage = async () => {
-  return axiosInstance.get(`language/get-list-language`).then((res) => res.data);
-}
+  return axiosInstance.get(`language/get-list`).then((res) => {
+    console.log(res.data);
+    return res.data;
+  });
+};
 
 export const getCertificateByLanguage = async (language) => {
-  return axiosInstance.get(`language/certificate/${language}`).then((res) => res.data);
-}
+  return axiosInstance
+    .get(`language/certificate/${language}`)
+    .then((res) => res.data);
+};
+
+// export const

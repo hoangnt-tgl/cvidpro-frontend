@@ -5,3 +5,6 @@
 .item-score .score-info {
   flex: 1;
 }
+.score-info i {
+  cursor: pointer;
+}

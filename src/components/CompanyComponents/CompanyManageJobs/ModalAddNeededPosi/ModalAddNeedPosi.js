@@ -23,11 +23,13 @@ const ModalAddNeedPosi = ({
   positionOptions,
   levelOptions,
   majorOptions,
+  languagesOptions,
   industryOptions,
   provinceOptions,
   environmentOption,
   questionOptions,
   handleAddJob,
+  handleUpdateJob,
   newQuestion,
   setNewQuestion,
   childQuestion,
@@ -52,6 +54,8 @@ const ModalAddNeedPosi = ({
     salaryMax: false,
     description: false,
     location: false,
+    language: false,
+    languageLevel: false,
   });
   const [isShowModal, setIsShowModal] = useState(false);
   const [trigger, setTrigger] = useState(false);
@@ -59,6 +63,8 @@ const ModalAddNeedPosi = ({
     .object({
       position: yup.mixed().required('Vui lòng nhập '),
       level: yup.array().required('Vui lòng nhập ').typeError('Vui lòng nhập '),
+      language: yup.array().typeError('Vui lòng nhập '),
+      languageLevel: yup.array().typeError('Vui lòng nhập '),
       industry: yup.mixed().required('Vui lòng nhập '),
       major: yup.array().required('Vui lòng nhập ').typeError('Vui lòng nhập '),
       environment: yup.mixed().required('Vui lòng nhập '),
@@ -122,32 +128,33 @@ const ModalAddNeedPosi = ({
       position: data.position.value,
       level: data.level.map((item) => item.value),
       major: data.major.map((item) => item.value),
+      language: data.language?.map((item) => item.value),
       industry: data.industry.value,
       location: data.location.value,
       workingEnvironment: data.environment.value,
       experience: data.experience.toString(),
       quantity: data.quantity.toString(),
-      salaryMin: data.salaryMin.toString(),
-      salaryMax: data.salaryMax.toString(),
+      minSalary: data.salaryMin.toString(),
+      maxSalary: data.salaryMax.toString(),
       description: data.description,
       questions: [
-        data.question0.toString(),
-        data.question1.toString(),
-        data.question2.toString(),
-        data.question3.toString(),
-        data.question4.toString(),
-        data.question5.toString(),
-        data.question6.toString(),
-        data.question7.toString(),
-        data.question8.toString(),
-        data.question9.toString(),
-        data.question10.toString(),
-        data.question11.toString(),
-        data.question12.toString(),
-        data.question13.toString(),
-        data.question14.toString(),
+        Number(data.question0),
+        Number(data.question1),
+        Number(data.question2),
+        Number(data.question3),
+        Number(data.question4),
+        Number(data.question5),
+        Number(data.question6),
+        Number(data.question7),
+        Number(data.question8),
+        Number(data.question9),
+        Number(data.question10),
+        Number(data.question11),
+        Number(data.question12),
+        Number(data.question13),
+        Number(data.question14),
       ],
-      addOnQuestionOptions,
+      extendQuestions: addOnQuestionOptions,
     };
     console.log(objJob);
     if (isAddNew) {
@@ -182,7 +189,8 @@ const ModalAddNeedPosi = ({
         question14: '',
       });
     } else {
-      handleAddJob(objJob);
+      // console.log('123');
+      handleUpdateJob(preloadValue.id, objJob);
     }
     checkStepRef.current = {
       position: false,
@@ -238,8 +246,8 @@ const ModalAddNeedPosi = ({
     setTrigger(!trigger);
   }
   useEffect(() => {
-    console.log(errors);
-  }, [errors]);
+    console.log(languagesOptions);
+  }, [languagesOptions]);
   return (
     <>
       {' '}
@@ -434,6 +442,62 @@ const ModalAddNeedPosi = ({
                     {errors?.major?.message && (
                       <p>
                         <>{errors?.major?.message}</>
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div className='form-group'>
+                  <p>Ngoại ngữ</p>
+                  <div className='select-style'>
+                    <div
+                      className={checkStepRef.current.language ? 'filled' : ''}
+                    >
+                      {' '}
+                      <DropDownSelect
+                        clearErrors={clearErrors}
+                        setValueForm={setValue}
+                        setChildStep1={() => {}}
+                        checkStepRef={checkStepRef}
+                        placeholder='Chọn ngoại ngữ ứng viên'
+                        options={languagesOptions}
+                        register='language'
+                        preValue={preloadValue?.language}
+                      />
+                    </div>
+                  </div>
+                  <div className='text-danger'>
+                    {' '}
+                    {errors?.language?.message && (
+                      <p>
+                        <>{errors?.language?.message}</>
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div className='form-group'>
+                  <p>Trình độ ngoại ngữ</p>
+                  <div className='select-style'>
+                    <div
+                      className={checkStepRef.current.language ? 'filled' : ''}
+                    >
+                      {' '}
+                      <DropDownSelect
+                        clearErrors={clearErrors}
+                        setValueForm={setValue}
+                        setChildStep1={() => {}}
+                        checkStepRef={checkStepRef}
+                        placeholder='Chọn ngoại ngữ ứng viên'
+                        options={languagesOptions}
+                        register='language'
+                        preValue={preloadValue?.language}
+                      />
+                    </div>
+                  </div>
+                  <div className='text-danger'>
+                    {' '}
+                    {errors?.language?.message && (
+                      <p>
+                        <>{errors?.language?.message}</>
                       </p>
                     )}
                   </div>

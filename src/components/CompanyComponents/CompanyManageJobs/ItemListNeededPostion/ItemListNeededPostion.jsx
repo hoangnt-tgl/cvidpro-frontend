@@ -20,6 +20,7 @@ const ItemListNeededPostion = ({
   environmentOption,
   questionOptions,
   handleAddJob,
+  handleUpdateJob,
   newQuestion,
   setNewQuestion,
   childQuestion,
@@ -42,16 +43,15 @@ const ItemListNeededPostion = ({
     await deleteJobForDepartment(keyDepart, idJob);
     setReload((prev) => !prev);
   };
+  const handleUpdateJobCloseModal = async (id, data) => {
+    await handleUpdateJob(id, data);
+    setIsShowEditPositionInfo(false);
+  };
 
   return (
     <>
       <tr className='appear'>
-        <td className='job-name'>
-          {/* <ul className='job-post-info'>
-            <li>
-              <i className='fa fa-bookmark-o'></i> {item.position}
-            </li>
-          </ul> */}
+        <td className='job-name '>
           <Link to={`company/job-detail/${item._id}`} target='_blank'>
             {item.title}
           </Link>
@@ -60,7 +60,7 @@ const ItemListNeededPostion = ({
         <td className='expired pending'>{getStatusJob(item)} </td>
         <td className='job-links'>
           <Link to={'#'} onClick={() => setIsShowEditPositionInfo(true)}>
-            <i className='fa fa-eye'></i>
+            <i class='fa fa-pencil-square-o'></i>
           </Link>
           <Link to={'#'} onClick={() => handleDeleteJob(item._id)}>
             <i className='ti-trash'></i>
@@ -81,6 +81,7 @@ const ItemListNeededPostion = ({
         newQuestion={newQuestion}
         environmentOption={environmentOption}
         handleAddQuestion={handleAddQuestion}
+        handleUpdateJob={handleUpdateJobCloseModal}
         setNewJob={setNewJob}
         newJob={newJob}
         handleAddJob={handleAddJob}

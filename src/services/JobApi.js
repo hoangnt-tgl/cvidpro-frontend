@@ -10,6 +10,14 @@ export const createJob = async (data) => {
       formatError(error.response?.data?.message || "");
     });
 };
+export const updateJob = async (id,data) => {
+  return axiosInstance
+    .put(`job/update/${id}`, data)
+    .then((res) => res.data)
+    .catch((error) => {
+      formatError(error.response?.data?.message || "");
+    });
+};
 
 export const getJobForDepartment = async (id, key) => {
   return axiosInstance

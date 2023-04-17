@@ -20,9 +20,9 @@ const ModalMoreOption = ({
         <Modal.Header closeButton>
           <Modal.Title>Thêm tiêu chí đánh giá</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="font-size-14">
           <div className='form-group'>
-            <label for=''>Tên tiêu chí</label>
+            <p for=''>Tên tiêu chí</p>
             <input
               type='text'
               className='form-control' //form-control-sm
@@ -33,7 +33,7 @@ const ModalMoreOption = ({
             />
           </div>
           <div className='form-group'>
-            <label for=''>Tiêu chí con</label>
+            <p for=''>Tiêu chí con</p>
             {newQuestion.detail.map((item, index) => {
               return (
                 <>

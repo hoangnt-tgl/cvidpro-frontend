@@ -20,6 +20,7 @@ const TabListJobs = ({
   environmentOption,
   questionOptions,
   handleAddJob,
+  handleUpdateJob,
   newQuestion,
   setNewQuestion,
   childQuestion,
@@ -80,6 +81,7 @@ const TabListJobs = ({
                       newQuestion={newQuestion}
                       environmentOption={environmentOption}
                       handleAddQuestion={handleAddQuestion}
+                      handleUpdateJob={handleUpdateJob}
                       setNewJob={setNewJob}
                       newJob={newJob}
                       handleAddJob={handleAddJob}
