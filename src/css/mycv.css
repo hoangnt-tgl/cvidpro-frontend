@@ -29,3 +29,6 @@
  .nav-link.active{
     border-color: #000 #000 #fff !important;
  }
+ .department-pri{
+   border-bottom: 1px solid #000 !important;
+ }
