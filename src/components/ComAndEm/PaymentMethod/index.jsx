@@ -4,7 +4,7 @@ import VnPay from './VnPay';
 import Baking from './Baking';
 import atmpic from '../../../images/atm-card.png';
 import './styles.css';
-import Header2 from '../../../markup/Layout/Header2';
+import Header2 from '../../../markup/Layout/HeaderEmployee';
 import Footer from '../../../markup/Layout/Footer';
 import PaymentDes from './PaymentDes';
 import usePayment from '../../../hooks/usePayment';

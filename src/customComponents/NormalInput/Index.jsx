@@ -10,12 +10,14 @@ const Index = ({
   isFilled,
   onBlur,
   defaultValue,
+  disabled = false,
 }) => {
   return (
     <>
       <div className='form-group '>
         <p>
-          {title} <span className='asterisk'></span>
+          {title} <span className='asterisk'></span>{' '}
+          {disabled && <span className='text-danger'>Chưa xác thực</span>}
         </p>
         <input
           {...register}
@@ -26,6 +28,7 @@ const Index = ({
           onBlur={onBlur}
           name={name}
           defaultValue={defaultValue}
+          disabled={disabled}
         />
         <div className='text-danger'>
           {errors[name]?.message && <div>{errors[name].message}</div>}

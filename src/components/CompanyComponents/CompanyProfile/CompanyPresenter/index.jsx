@@ -10,6 +10,8 @@ import {
 import ModalOtp from './ModalOtp';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import useUpdatePresenterCompany from '../../../../hooks/useUpdatePresenterCompany';
+import ModalUpdatePresenter from './ModalUpdatePresenter';
 const EditableField = ({
   errors,
   register,
@@ -103,10 +105,6 @@ const EditableField = ({
   );
 };
 const Index = ({ companyInfo, selectUpdate, isUpdate }) => {
-  const [isUpdatePresenter, setIsUpdatePresenter] = useState(false);
-  const [openModalOtp, setOpenModalOtp] = useState(false);
-  const [newValue, setNewValue] = useState('');
-  const [isUpdateSuccess, setIsUpdateSuccess] = useState(false);
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -119,20 +117,17 @@ const Index = ({ companyInfo, selectUpdate, isUpdate }) => {
   const {
     register,
     handleSubmit,
-    setValue,
-    setFocus,
-    formState: { errors },
-  } = useForm({
-    defaultValues: useMemo(() => {
-      return {
-        email: companyInfo.email,
-        phone: companyInfo.phone,
-        name: companyInfo.name,
-        position: companyInfo.position,
-      };
-    }, []),
-    resolver: yupResolver(schema),
-  });
+    errors,
+    openUpdate,
+    setOpenUpdate,
+    handleOnSubmit,
+    openModalOtp,
+    setOpenModalOtp,
+  } = useUpdatePresenterCompany(companyInfo, schema);
+  const [isUpdatePresenter, setIsUpdatePresenter] = useState(false);
+  const [newValue, setNewValue] = useState('');
+  const [isUpdateSuccess, setIsUpdateSuccess] = useState(false);
+
   function getNew(data) {
     console.log(data);
     setIsUpdatePresenter(false);
@@ -190,109 +185,108 @@ const Index = ({ companyInfo, selectUpdate, isUpdate }) => {
     <>
       {' '}
       <div className='col-lg-6 col-md-12'>
-        <div className='border-bottom clearfix mb-4'>
+        <div className='border-bottom  mb-4 d-flex justify-content-between align-items-center flex-wrap'>
           <h5 className='font-weight-700 pull-left text-uppercase'>
-            Thông tin người liên hệ
+            Thông tin người quản lý tài khoản
           </h5>
+          <button
+            type='button'
+            className='btn btn-primary btn-md'
+            onClick={(e) => {
+              e.preventDefault();
+              setOpenUpdate(true);
+            }}
+          >
+            Thay đổi
+          </button>
         </div>
 
-        <form onSubmit={handleSubmit(getNew)}>
-          <div
-            className={
-              isUpdatePresenter
-                ? 'presenter-editing row m-b30 form-presenter'
-                : 'row m-b30 form-presenter '
-            }
-          >
-            <div className='col-lg-12'>
-              <EditableField
-                errors={errors}
-                register={{ ...register('name') }}
-                label={'Họ và tên'}
-                name='name'
-                type='text'
-                confirm={true}
-                selectUpdate={selectUpdate}
-                isUpdate={isUpdate}
-                handleUpdate={getNew}
-                openModalOtp={openModalOtp}
-                isUpdateSuccess={isUpdateSuccess}
-                isUpdatePresenter={isUpdatePresenter}
-              />
-            </div>
-            <div className='col-lg-12'>
-              <EditableField
-                errors={errors}
-                register={{ ...register('phone') }}
-                label={'Phone'}
-                name='phone'
-                type='text'
-                confirm={companyInfo.confirmPhone}
-                selectUpdate={selectUpdate}
-                isUpdate={isUpdate}
-                handleUpdate={getNew}
-                openModalOtp={openModalOtp}
-                isUpdateSuccess={isUpdateSuccess}
-                isUpdatePresenter={isUpdatePresenter}
-              />
-            </div>
-            <div className='col-lg-12'>
-              <EditableField
-                errors={errors}
-                register={{ ...register('email') }}
-                label={'Email'}
-                name='email'
-                type='email'
-                confirm={companyInfo.confirmEmail}
-                selectUpdate={selectUpdate}
-                isUpdate={isUpdate}
-                handleUpdate={getNew}
-                openModalOtp={openModalOtp}
-                isUpdateSuccess={isUpdateSuccess}
-                isUpdatePresenter={isUpdatePresenter}
-              />
-            </div>
-            <div className='col-lg-12'>
-              <EditableField
-                errors={errors}
-                register={{ ...register('position') }}
-                label={'Chức vụ'}
-                name='position'
-                type='text'
-                confirm={true}
-                selectUpdate={selectUpdate}
-                isUpdate={isUpdate}
-                handleUpdate={getNew}
-                openModalOtp={openModalOtp}
-                isUpdateSuccess={isUpdateSuccess}
-                isUpdatePresenter={isUpdatePresenter}
-              />
-            </div>
+        <div
+          className={
+            isUpdatePresenter
+              ? 'presenter-editing row m-b30 form-presenter'
+              : 'row m-b30 form-presenter '
+          }
+        >
+          <div className='col-lg-12'>
+            <EditableField
+              errors={errors}
+              register={{ ...register('name') }}
+              label={'Họ và tên'}
+              name='name'
+              type='text'
+              confirm={true}
+              selectUpdate={selectUpdate}
+              isUpdate={isUpdate}
+              handleUpdate={getNew}
+              openModalOtp={openModalOtp}
+              isUpdateSuccess={isUpdateSuccess}
+              isUpdatePresenter={isUpdatePresenter}
+            />
           </div>
-          <div className='d-flex justify-content-end'>
-            {' '}
-            {isUpdatePresenter ? (
-              <button type='submit' className='btn btn-primary btn-md'>
-                Xác nhận
-              </button>
-            ) : (
-              <button
-                type='button'
-                className='btn btn-primary btn-md'
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsUpdatePresenter(!isUpdatePresenter);
-                }}
-              >
-                Cập nhật
-              </button>
-            )}
+          <div className='col-lg-12'>
+            <EditableField
+              errors={errors}
+              register={{ ...register('phone') }}
+              label={'Phone'}
+              name='phone'
+              type='text'
+              confirm={companyInfo.confirmPhone}
+              selectUpdate={selectUpdate}
+              isUpdate={isUpdate}
+              handleUpdate={getNew}
+              openModalOtp={openModalOtp}
+              isUpdateSuccess={isUpdateSuccess}
+              isUpdatePresenter={isUpdatePresenter}
+            />
           </div>
-        </form>
+          <div className='col-lg-12'>
+            <EditableField
+              errors={errors}
+              register={{ ...register('email') }}
+              label={'Email'}
+              name='email'
+              type='email'
+              confirm={companyInfo.confirmEmail}
+              selectUpdate={selectUpdate}
+              isUpdate={isUpdate}
+              handleUpdate={getNew}
+              openModalOtp={openModalOtp}
+              isUpdateSuccess={isUpdateSuccess}
+              isUpdatePresenter={isUpdatePresenter}
+            />
+          </div>
+          <div className='col-lg-12'>
+            <EditableField
+              errors={errors}
+              register={{ ...register('position') }}
+              label={'Chức vụ'}
+              name='position'
+              type='text'
+              confirm={true}
+              selectUpdate={selectUpdate}
+              isUpdate={isUpdate}
+              handleUpdate={getNew}
+              openModalOtp={openModalOtp}
+              isUpdateSuccess={isUpdateSuccess}
+              isUpdatePresenter={isUpdatePresenter}
+            />
+          </div>
+        </div>
       </div>
+      <ModalUpdatePresenter
+        openUpdate={openUpdate}
+        setOpenUpdate={setOpenUpdate}
+        errors={errors}
+        register={register}
+        handleSubmit={handleSubmit}
+        handleOnSubmit={handleOnSubmit}
+        phoneConfirm={!companyInfo.confirmPhone}
+        emailConfirm={!companyInfo.confirmEmail}
+      />
       <ModalOtp
         defaultValues={
-          isUpdate === 'Email' ? companyInfo.email : companyInfo.phone
+          'Email' === 'Email' ? companyInfo.email : companyInfo.phone
         }
         openModal={openModalOtp}
         setOpenModal={setOpenModalOtp}
@@ -304,27 +298,3 @@ const Index = ({ companyInfo, selectUpdate, isUpdate }) => {
 };
 
 export default Index;
-{
-  /* {isUpdate === label ? (
-                <button
-                  className='btn btn-primary btn-md'
-                  data-update=''
-                  type='submit'
-                >
-                  Đồng ý
-                </button>
-              ) : (
-                <button
-                  type='button'
-                  className='btn btn-primary btn-md'
-                  data-update={label}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    selectUpdate(e);
-                    setFocus(label);
-                  }}
-                >
-                  Cập nhật
-                </button>
-              )} */
-}
