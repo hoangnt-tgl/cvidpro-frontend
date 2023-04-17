@@ -2693,6 +2693,10 @@
   .job-bx {
     padding: 20px 0;
   }
+
+  .change-pass {
+    padding: 20px 16px;
+  }
 }
 
 @media only screen and (max-width: 360px) {
