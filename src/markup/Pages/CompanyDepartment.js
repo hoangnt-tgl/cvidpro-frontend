@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Header2 from './../Layout/HeaderCompany';
 import Footer from './../Layout/Footer';
 import { Modal } from 'react-bootstrap';
+import '../../css/mycv.css';
 import {
   createDepartment,
   getMyCompany,
@@ -14,6 +15,8 @@ import ModalCreateDepartment from '../../components/CompanyComponents/CompanyMan
 
 import Loader from '../../customComponents/Loader';
 import useManageDepartment from '../../hooks/useManageDepartment';
+import { toast } from 'react-hot-toast';
+var bnr = require('./../../images/background/bg3.jpg');
 function CompanyDepartment(props) {
   const {
     innerWidth,
@@ -36,12 +39,12 @@ function CompanyDepartment(props) {
       <Header2 />
       <div className='page-content bg-white'>
         <div className='content-block'>
-          <div className='section-full bg-white p-t50 p-b20'>
+          <div className='section-full  p-t50 p-b20'   style={{ backgroundImage: 'url(' + bnr + ')' }}>
             <div className='container'>
               <div className='m-b30'>
-                <div className='job-bx browse-job clearfix'>
-                  <div className='job-bx-title  clearfix'>
-                    <h5 className='font-weight-700 pull-left text-uppercase'>
+                <div className='job-bx browse-job bg-white clearfix' style={{border:"1px solid #000"}}>
+                  <div className='job-bx-title  clearfix department-pri' style={{marginBottom:"20px"}}>
+                    <h5 className='font-weight-700 pull-left text-uppercase' style={{fontSize:"25px", marginTop:"10px", fontWeight:"600"}}>
                       Quản lý phòng ban
                     </h5>
 
@@ -50,7 +53,7 @@ function CompanyDepartment(props) {
                       listDepartment && (
                         <div className='float-right'>
                           <button
-                            className='site-button float-right mb-3'
+                            className='site-button float-right mb-3 btn-sm'
                             onClick={() => setAddDepartment(true)}
                           >
                             Tạo phòng ban
@@ -94,7 +97,7 @@ function CompanyDepartment(props) {
                                             rel='noopener noreferrer'
                                             style={{ color: 'blue' }}
                                           >
-                                            {department.departmentName}
+                                            <u>{department.departmentName}</u>
                                           </Link>
                                         </td>
                                         {innerWidth > 768 && (

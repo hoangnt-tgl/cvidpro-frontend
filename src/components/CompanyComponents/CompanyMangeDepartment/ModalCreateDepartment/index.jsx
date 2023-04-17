@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import NormalInput from '../../../../customComponents/NormalInput/Index.jsx';
+import'../../../../css/logoDepart.css'
 
 const Index = ({ addDepartment, setAddDepartment, handleAddDepartment }) => {
   const [trigger, setTrigger] = useState(true);
@@ -22,7 +23,7 @@ const Index = ({ addDepartment, setAddDepartment, handleAddDepartment }) => {
     },
     {
       register: 'managerName',
-      placeholder: 'Nhập người quản lý',
+      placeholder: 'Nhập người quản lý ',
       title: 'Người quản lý',
       type: 'text',
       accept: '',
@@ -107,13 +108,13 @@ const Index = ({ addDepartment, setAddDepartment, handleAddDepartment }) => {
         <div className='modal-dialog my-0 w-100' role='document'>
           <div className='modal-content'>
             <div className='modal-header'>
-              <div className='logo-img'>
+              <div className='logo-img' style={{marginTop:"7px", width:"150px"}}>
                 <img
                   alt=''
-                  src={require('../../../../images/logo/icon2.png')}
+                  src={require('../../../../images/logo/Logo_CVIDPRO_Blue.webp')}
                 />
               </div>
-              <h5 className='modal-title'>Tạo phòng ban</h5>
+              <h5 className='modal-title logoDepart'>Tạo phòng ban</h5>
               <button
                 type='button'
                 className='close'
