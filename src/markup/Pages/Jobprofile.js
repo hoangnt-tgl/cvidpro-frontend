@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import Header2 from './../Layout/HeaderEmployee'
 import Footer from './../Layout/Footer'
@@ -15,21 +15,19 @@ import {
   deleteWorkExperience,
 } from '../../services/EmployeeApi'
 import { formatDate } from '../../helperFC/Function'
-import ModalUpdateProfile from '../../components/EmployeeComponents/ModalUpdateProfile'
-function Jobprofile(props) {
-  const [userInformation, setUserInformation] = useState({})
-  const [reload, setReload] = useState(false)
-  useEffect(() => {
-    async function fetchData() {
-      const response = await getMyResume(props.history)
-      console.log(response)
-      setUserInformation(response)
-    }
-    fetchData()
-  }, [reload])
+import useUpdateProfile from '../../hooks/useUpdateProfile'
+import ModalUpdateProfile from '../../components/EmployeeComponents/EmployeeProfile/ModalUpdateProfile'
 
-  const yearStart = userInformation.startYear
-  //format date
+function Jobprofile(props) {
+  const {
+    openUpdate,
+    setOpenUpdate,
+    userInformation,
+    register,
+    handleOnSubmit,
+    handleSubmit,
+  } = useUpdateProfile(props)
+  const [reload, setReload] = useState(false)
 
   return (
     <>
@@ -48,7 +46,12 @@ function Jobprofile(props) {
                       <h5 className="font-weight-700 pull-left text-uppercase mb-0">
                         Thông tin cá nhân
                       </h5>
-                      <div style={{ cursor: 'pointer', marginLeft: 16 }}>
+                      <div
+                        style={{ cursor: 'pointer', marginLeft: 16 }}
+                        onClick={() => {
+                          setOpenUpdate(true)
+                        }}
+                      >
                         <i
                           class="fa fa-pencil-square-o"
                           style={{ fontSize: 20, color: '#0275d8' }}
@@ -266,6 +269,14 @@ function Jobprofile(props) {
           </div>
         </div>
       </div>
+      <ModalUpdateProfile
+        openUpdate={openUpdate}
+        setOpenUpdate={setOpenUpdate}
+        userInformation={userInformation}
+        register={register}
+        handleSubmit={handleSubmit}
+        handleOnSubmit={handleOnSubmit}
+      />
       <Footer />
     </>
   )

@@ -146,7 +146,7 @@ const Index = ({ companyInfo, selectUpdate, isUpdate }) => {
     //     selectUpdate(e);
     //   }
     // } else {
-    //   if (data !== companyInfo.phone) {
+    //   if (data !== companyInfo.phone) {'
     //     setOpenModalOtp(true);
     //   } else {
     //     let e = { target: { dataset: { update: '' } } };
