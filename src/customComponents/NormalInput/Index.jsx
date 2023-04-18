@@ -15,7 +15,7 @@ const Index = ({
   return (
     <>
       <div className='form-group '>
-        <p>
+        <p style={{color:"red"}}>
           {title} <span className='asterisk'></span>{' '}
           {disabled && <span className='text-danger'>Chưa xác thực</span>}
         </p>
