@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import NormalInput from '../../../../customComponents/NormalInput/Index.jsx';
 import'../../../../css/logoDepart.css'
+import { colors } from '@mui/material';
 
 const Index = ({ addDepartment, setAddDepartment, handleAddDepartment }) => {
   const [trigger, setTrigger] = useState(true);
@@ -128,6 +129,7 @@ const Index = ({ addDepartment, setAddDepartment, handleAddDepartment }) => {
                 return (
                   <>
                     <NormalInput
+                    className="der-pri"
                       key={idx}
                       accept={item.accept}
                       isFilled={checkStepRef.current[item.register]}
@@ -138,6 +140,7 @@ const Index = ({ addDepartment, setAddDepartment, handleAddDepartment }) => {
                       register={{ ...register(item.register) }}
                       errors={errors}
                       onBlur={handleCheckInput}
+                      
                     />
                   </>
                 );

@@ -95,7 +95,7 @@ function CompanyDepartment(props) {
                                             to={`company-manage-jobs?key=${department.key}`}
                                             target='_blank'
                                             rel='noopener noreferrer'
-                                            style={{ color: 'blue' }}
+                                            style={{ color: 'red' }}
                                           >
                                             <u>{department.departmentName}</u>
                                           </Link>

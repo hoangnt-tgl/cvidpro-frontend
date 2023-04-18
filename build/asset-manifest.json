@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.ad51fe46.chunk.css",
-    "main.js": "/static/js/main.d31fd09d.chunk.js",
-    "main.js.map": "/static/js/main.d31fd09d.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.02b5b99e.js",
-    "runtime-main.js.map": "/static/js/runtime-main.02b5b99e.js.map",
+    "main.css": "/static/css/main.27e01854.chunk.css",
+    "main.js": "/static/js/main.eb50e7dc.chunk.js",
+    "main.js.map": "/static/js/main.eb50e7dc.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.efa74149.js",
+    "runtime-main.js.map": "/static/js/runtime-main.efa74149.js.map",
     "static/css/2.1577803a.chunk.css": "/static/css/2.1577803a.chunk.css",
-    "static/js/2.8d9bde87.chunk.js": "/static/js/2.8d9bde87.chunk.js",
-    "static/js/2.8d9bde87.chunk.js.map": "/static/js/2.8d9bde87.chunk.js.map",
-    "static/js/3.0c218894.chunk.js": "/static/js/3.0c218894.chunk.js",
-    "static/js/3.0c218894.chunk.js.map": "/static/js/3.0c218894.chunk.js.map",
+    "static/js/2.c8057862.chunk.js": "/static/js/2.c8057862.chunk.js",
+    "static/js/2.c8057862.chunk.js.map": "/static/js/2.c8057862.chunk.js.map",
+    "static/js/3.8f373f97.chunk.js": "/static/js/3.8f373f97.chunk.js",
+    "static/js/3.8f373f97.chunk.js.map": "/static/js/3.8f373f97.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.7c8682ae93b691322306cad84fd1cd53.js": "/precache-manifest.7c8682ae93b691322306cad84fd1cd53.js",
+    "precache-manifest.76faa20f1323b1f9d7fe477385f17148.js": "/precache-manifest.76faa20f1323b1f9d7fe477385f17148.js",
     "service-worker.js": "/service-worker.js",
     "static/css/2.1577803a.chunk.css.map": "/static/css/2.1577803a.chunk.css.map",
-    "static/css/main.ad51fe46.chunk.css.map": "/static/css/main.ad51fe46.chunk.css.map",
-    "static/js/2.8d9bde87.chunk.js.LICENSE.txt": "/static/js/2.8d9bde87.chunk.js.LICENSE.txt",
-    "static/js/main.d31fd09d.chunk.js.LICENSE.txt": "/static/js/main.d31fd09d.chunk.js.LICENSE.txt",
+    "static/css/main.27e01854.chunk.css.map": "/static/css/main.27e01854.chunk.css.map",
+    "static/js/2.c8057862.chunk.js.LICENSE.txt": "/static/js/2.c8057862.chunk.js.LICENSE.txt",
+    "static/js/main.eb50e7dc.chunk.js.LICENSE.txt": "/static/js/main.eb50e7dc.chunk.js.LICENSE.txt",
     "static/media/Logo_CVIDPRO_Blue.webp": "/static/media/Logo_CVIDPRO_Blue.f34e7474.webp",
     "static/media/atm-card.png": "/static/media/atm-card.9a4ee0e1.png",
     "static/media/bg1.jpg": "/static/media/bg1.b6e866af.jpg",
@@ -54,10 +54,10 @@
     "static/media/thum4.jpg": "/static/media/thum4.4814b339.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.02b5b99e.js",
+    "static/js/runtime-main.efa74149.js",
     "static/css/2.1577803a.chunk.css",
-    "static/js/2.8d9bde87.chunk.js",
-    "static/css/main.ad51fe46.chunk.css",
-    "static/js/main.d31fd09d.chunk.js"
+    "static/js/2.c8057862.chunk.js",
+    "static/css/main.27e01854.chunk.css",
+    "static/js/main.eb50e7dc.chunk.js"
   ]
 }
