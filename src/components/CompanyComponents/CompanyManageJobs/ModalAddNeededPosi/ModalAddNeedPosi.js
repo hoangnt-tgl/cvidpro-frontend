@@ -14,6 +14,7 @@ import { selectStyle } from '../../../../constants/common';
 import DropDownSelect from '../../../../customComponents/DropDownSelect/DropDownSelect';
 import { useRef } from 'react';
 import './styles.css';
+import { getLanguageDes } from '../../../../services/GetListService';
 const ModalAddNeedPosi = ({
   showAddJob,
   setShowAddJob,
@@ -57,14 +58,18 @@ const ModalAddNeedPosi = ({
     language: false,
     languageLevel: false,
   });
+  const formRef = useRef();
+  const [step, setStep] = useState(1);
+  const [preAddOnQuestion, setPreAddOnQuestion] = useState([]);
   const [isShowModal, setIsShowModal] = useState(false);
   const [trigger, setTrigger] = useState(false);
+  const [amountLanguage, setAmountLanguage] = useState([]);
+  const [requiredLanguage, setRequiredLanguage] = useState([]);
+
   const schema = yup
     .object({
       position: yup.mixed().required('Vui lòng nhập '),
       level: yup.array().required('Vui lòng nhập ').typeError('Vui lòng nhập '),
-      language: yup.array().typeError('Vui lòng nhập '),
-      languageLevel: yup.array().typeError('Vui lòng nhập '),
       industry: yup.mixed().required('Vui lòng nhập '),
       major: yup.array().required('Vui lòng nhập ').typeError('Vui lòng nhập '),
       environment: yup.mixed().required('Vui lòng nhập '),
@@ -112,12 +117,12 @@ const ModalAddNeedPosi = ({
     reset,
     control,
     clearErrors,
+    getValues,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: useMemo(() => {
       if (isAddNew) return;
-
       return preloadValue;
     }, [preloadValue]),
   });
@@ -159,6 +164,7 @@ const ModalAddNeedPosi = ({
     console.log(objJob);
     if (isAddNew) {
       handleAddJob(objJob);
+      setStep(1);
       reset({
         position: [],
         level: [],
@@ -190,6 +196,39 @@ const ModalAddNeedPosi = ({
       });
     } else {
       // console.log('123');
+      const objJob = {
+        title: data.title.value,
+        position: data.position.value,
+        level: data.level.map((item) => item.value),
+        major: data.major.map((item) => item.value),
+        language: data.language?.map((item) => item.value),
+        industry: data.industry.value,
+        location: data.location.value,
+        workingEnvironment: data.environment.value,
+        experience: data.experience.toString(),
+        quantity: data.quantity.toString(),
+        minSalary: data.salaryMin.toString(),
+        maxSalary: data.salaryMax.toString(),
+        description: data.description,
+        questions: [
+          Number(data.question0),
+          Number(data.question1),
+          Number(data.question2),
+          Number(data.question3),
+          Number(data.question4),
+          Number(data.question5),
+          Number(data.question6),
+          Number(data.question7),
+          Number(data.question8),
+          Number(data.question9),
+          Number(data.question10),
+          Number(data.question11),
+          Number(data.question12),
+          Number(data.question13),
+          Number(data.question14),
+        ],
+        extendQuestions: preAddOnQuestion,
+      };
       handleUpdateJob(preloadValue.id, objJob);
     }
     checkStepRef.current = {
@@ -207,9 +246,39 @@ const ModalAddNeedPosi = ({
       location: false,
     };
   }
+  const handleAddPreQuestion = () => {
+    let question = newQuestion;
+    question.detail.push(childQuestion);
+    setPreAddOnQuestion([...preAddOnQuestion, question]);
+    setChildQuestion('');
+    setNewQuestion({
+      name: '',
+      detail: [],
+      point: '',
+    });
+  };
+  const deletePreAddOnQuestion = (index) => {
+    let question = preAddOnQuestion;
+    question.splice(index, 1);
+    let newQuestion = new Array(...question);
+    setPreAddOnQuestion(newQuestion);
+  };
   useEffect(() => {
+    if (languagesOptions.length > 0) {
+      setAmountLanguage([[languagesOptions, []]]);
+    }
+  }, [languagesOptions]);
+  useEffect(() => {
+    // console.log(preloadValue);
+    if (isAddNew) return;
     reset(preloadValue);
   }, [preloadValue]);
+  useEffect(() => {
+    if (!isAddNew && preloadValue?.addOnQuestionOptions?.length > 0) {
+      setPreAddOnQuestion(preloadValue.addOnQuestionOptions);
+    }
+  }, [preloadValue]);
+
   function handleCheckInput(e) {
     if (e.target.dataset.testid === 'salaryMin') {
       if (e.target.value !== '' && !checkStepRef.current.salaryMin) {
@@ -246,8 +315,8 @@ const ModalAddNeedPosi = ({
     setTrigger(!trigger);
   }
   useEffect(() => {
-    console.log(languagesOptions);
-  }, [languagesOptions]);
+    console.log(errors);
+  }, [errors]);
   return (
     <>
       {' '}
@@ -259,10 +328,8 @@ const ModalAddNeedPosi = ({
         <div className='modal-dialog my-0 w-100' role='document'>
           <div className='modal-content'>
             <div className='modal-header'>
-              <div className='logo-img'>
-                <img alt='' src={icon} />
-              </div>
-              <h5 className='modal-title'>Tạo vị trí tuyển dụng</h5>
+              <div className='logo-img'>{/* <img alt='' src={icon} /> */}</div>
+              <h5 className='modal-title text-center'>Tạo vị trí tuyển dụng</h5>
               <button
                 type='button'
                 className='close'
@@ -275,661 +342,800 @@ const ModalAddNeedPosi = ({
               <div
                 className='modal-body font-size-14'
                 style={{ maxHeight: '70vh', overflow: 'auto' }}
+                ref={formRef}
               >
-                <div className='form-group'>
-                  <p>Chức danh công việc</p>
-                  <div className='select-style'>
-                    {' '}
-                    <Controller
-                      name='title'
-                      control={control}
-                      // onChange={(e) => {
-                      //   console.log('chay');
-                      //   setNewJob({ ...newJob, title: e.label });
-                      //   if (checkStepRef.current.title === false) {
-                      //     console.log('chay');
-                      //     checkStepRef.current.title = true;
-                      //   }
-                      // }}
-                      render={({ field }) => (
-                        <ReactSelectShowType
-                          {...field}
-                          placeholder='Chọn chức danh công việc'
-                          options={jobTitleOption}
-                          minInput={1}
-                          className={checkStepRef.current.title ? 'filled' : ''}
-                          onChange={(value) => {
-                            setValue('title', value);
-                            setNewJob({ ...newJob, title: value.label });
-                            if (checkStepRef.current.title === false) {
-                              checkStepRef.current.title = true;
-                            }
-                          }}
-                        />
-                      )}
-                    />
-                  </div>
-                  <div className='text-danger'>
-                    {errors?.title?.message && (
-                      <p>
-                        <>{errors?.title?.message}</>
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className='form-group'>
-                  <p>Chức vụ</p>
-                  <div className='select-style'>
-                    {' '}
-                    <Controller
-                      name='position'
-                      control={control}
-                      render={({ field }) => (
-                        <Select
-                          {...field}
-                          styles={selectStyle}
-                          placeholder='Chọn chức vụ'
-                          options={positionOptions}
-                          className={
-                            checkStepRef.current.position ? 'filled' : ''
-                          }
-                          onChange={(value) => {
-                            setValue('position', value);
-                            setNewJob({ ...newJob, position: value.label });
-                            if (checkStepRef.current.position === false) {
-                              checkStepRef.current.position = true;
-                            }
-                          }}
-                        />
-                      )}
-                    />
-                  </div>
-                  <div className='text-danger'>
-                    {' '}
-                    {errors?.position?.message && (
-                      <p>
-                        <>{errors?.position?.message}</>
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className='form-group'>
-                  <p>Cấp bậc</p>{' '}
-                  <div className='select-style'>
-                    {' '}
-                    {/* <Controller
-                      name='level'
-                      control={control}
-                      onChange={(e) => {
-                        setNewJob({
-                          ...newJob,
-                          level: e.map((item) => item.label),
-                        });
-                      }}
-                      render={({ field }) => (
-                        <Select
-                          {...field}
-                          styles={selectStyle}
-                          placeholder='Chọn cấp bậc'
-                          isMulti
-                          options={levelOptions}
-                        />
-                      )}
-                    /> */}
-                    <div className={checkStepRef.current.level ? 'filled' : ''}>
+                <div className={step === 1 ? 'd-block appear' : 'd-none'}>
+                  {' '}
+                  <div className='form-group'>
+                    <p>Chức danh công việc</p>
+                    <div className='select-style'>
                       {' '}
-                      <DropDownSelect
-                        clearErrors={clearErrors}
-                        setValueForm={setValue}
-                        setChildStep1={() => {}}
-                        checkStepRef={checkStepRef}
-                        placeholder='Chọn cấp bậc'
-                        options={levelOptions}
-                        register='level'
-                        preValue={preloadValue?.level}
+                      <Controller
+                        name='title'
+                        control={control}
+                        render={({ field }) => (
+                          <ReactSelectShowType
+                            {...field}
+                            placeholder='Chọn chức danh công việc'
+                            options={jobTitleOption}
+                            minInput={1}
+                            className={
+                              checkStepRef.current.title ? 'filled' : ''
+                            }
+                            onChange={(value) => {
+                              console.log(value);
+                              setValue('title', value);
+                              setNewJob({ ...newJob, title: value.label });
+                              if (checkStepRef.current.title === false) {
+                                checkStepRef.current.title = true;
+                              }
+                            }}
+                          />
+                        )}
                       />
                     </div>
+                    <div className='text-danger'>
+                      {errors?.title?.message && (
+                        <p>
+                          <>{errors?.title?.message}</>
+                        </p>
+                      )}
+                    </div>
                   </div>
-                  <div className='text-danger'>
-                    {' '}
-                    {errors?.level?.message && (
-                      <p>
-                        <>{errors?.level?.message}</>
-                      </p>
-                    )}
+                  <div className='form-group'>
+                    <p>Chức vụ</p>
+                    <div className='select-style'>
+                      {' '}
+                      <Controller
+                        name='position'
+                        control={control}
+                        render={({ field }) => (
+                          <Select
+                            {...field}
+                            styles={selectStyle}
+                            placeholder='Chọn chức vụ'
+                            options={positionOptions}
+                            className={
+                              checkStepRef.current.position ? 'filled' : ''
+                            }
+                            onChange={(value) => {
+                              setValue('position', value);
+                              setNewJob({ ...newJob, position: value.label });
+                              if (checkStepRef.current.position === false) {
+                                checkStepRef.current.position = true;
+                              }
+                            }}
+                          />
+                        )}
+                      />
+                    </div>
+                    <div className='text-danger'>
+                      {' '}
+                      {errors?.position?.message && (
+                        <p>
+                          <>{errors?.position?.message}</>
+                        </p>
+                      )}
+                    </div>
                   </div>
-                </div>
-                <div className='form-group'>
-                  <p>Chuyên nghành ứng viên</p>
-                  <div className='select-style'>
-                    {' '}
-                    {/* <Controller
-                      name='major'
-                      control={control}
-                      onChange={(e) => {
-                        setNewJob({
-                          ...newJob,
-                          major: e.map((item) => item.label),
-                        });
-                      }}
-                      render={({ field }) => (
-                        <ReactSelectShowType
-                          {...field}
-                          // register={{ ...field }}
-                          isMulti={true}
+                  <div className='form-group'>
+                    <p>Cấp bậc</p>{' '}
+                    <div className='select-style'>
+                      <div
+                        className={checkStepRef.current.level ? 'filled' : ''}
+                      >
+                        {' '}
+                        <DropDownSelect
+                          clearErrors={clearErrors}
+                          setValueForm={setValue}
+                          setChildStep1={() => {}}
+                          checkStepRef={checkStepRef}
+                          placeholder='Chọn cấp bậc'
+                          options={levelOptions}
+                          register='level'
+                          preValue={preloadValue?.level}
+                        />
+                      </div>
+                    </div>
+                    <div className='text-danger'>
+                      {' '}
+                      {errors?.level?.message && (
+                        <p>
+                          <>{errors?.level?.message}</>
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className='form-group'>
+                    <p>Chuyên nghành ứng viên</p>
+                    <div className='select-style'>
+                      <div
+                        className={checkStepRef.current.major ? 'filled' : ''}
+                      >
+                        {' '}
+                        <DropDownSelect
+                          clearErrors={clearErrors}
+                          setValueForm={setValue}
+                          setChildStep1={() => {}}
+                          checkStepRef={checkStepRef}
                           placeholder='Chọn chuyên ngành ứng viên'
                           options={majorOptions}
-                          minInput={1}
+                          register='major'
+                          preValue={preloadValue?.major}
                         />
+                      </div>
+                    </div>
+                    <div className='text-danger'>
+                      {' '}
+                      {errors?.major?.message && (
+                        <p>
+                          <>{errors?.major?.message}</>
+                        </p>
                       )}
-                    /> */}
-                    <div className={checkStepRef.current.major ? 'filled' : ''}>
-                      {' '}
-                      <DropDownSelect
-                        clearErrors={clearErrors}
-                        setValueForm={setValue}
-                        setChildStep1={() => {}}
-                        checkStepRef={checkStepRef}
-                        placeholder='Chọn chuyên ngành ứng viên'
-                        options={majorOptions}
-                        register='major'
-                        preValue={preloadValue?.major}
-                      />
                     </div>
                   </div>
-                  <div className='text-danger'>
-                    {' '}
-                    {errors?.major?.message && (
-                      <p>
-                        <>{errors?.major?.message}</>
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className='form-group'>
-                  <p>Ngoại ngữ</p>
-                  <div className='select-style'>
-                    <div
-                      className={checkStepRef.current.language ? 'filled' : ''}
-                    >
+                  {amountLanguage.map((item, index) => {
+                    return (
+                      <div key={index}>
+                        {' '}
+                        <div className='form-group'>
+                          <p className='d-flex justify-content-between'>
+                            Ngoại ngữ{' '}
+                            {index === 0 ? (
+                              <span
+                                className='btn-add'
+                                onClick={() => {
+                                  setAmountLanguage((prev) => [
+                                    ...prev,
+                                    [languagesOptions, 0],
+                                  ]);
+                                }}
+                              >
+                                <i class='fa fa-plus' aria-hidden='true'></i>
+                              </span>
+                            ) : (
+                              <span
+                                className='btn-add'
+                                onClick={() => {
+                                  console.log(index);
+                                  let arr = [...amountLanguage];
+                                  let arrRequired = [...requiredLanguage];
+                                  arr.splice(index, 1);
+                                  arrRequired.splice(index, 1);
+                                  setAmountLanguage(arr);
+                                  setRequiredLanguage(arrRequired);
+                                }}
+                              >
+                                <i class='fa fa-minus' aria-hidden='true'></i>
+                              </span>
+                            )}
+                          </p>
+                          <div className='select-style'>
+                            <Select
+                              styles={selectStyle}
+                              placeholder='Chọn ngoại ngữ ứng viên'
+                              options={item[0]}
+                              className={
+                                requiredLanguage[index]?.length > 0
+                                  ? 'filled'
+                                  : ''
+                              }
+                              onChange={async (value) => {
+                                let languageDes = await getLanguageDes(
+                                  value.value
+                                );
+                                setRequiredLanguage((prev) => [
+                                  ...prev,
+                                  [value.label],
+                                ]);
+                                console.log(languageDes);
+                                let arr = [...amountLanguage];
+                                arr[index][1] = languageDes.levels.map(
+                                  (item) => {
+                                    return {
+                                      value: item.description,
+                                      label: item.name,
+                                    };
+                                  }
+                                );
+                                setAmountLanguage(arr);
+                              }}
+                            />
+                          </div>
+                          <div className='text-danger'>
+                            {' '}
+                            {errors?.language?.message && (
+                              <p>
+                                <>{errors?.language?.message}</>
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <div className='form-group'>
+                          <p>Trình độ ngoại ngữ</p>
+                          <div className='select-style'>
+                            <Select
+                              styles={selectStyle}
+                              placeholder='Chọn trình độ ngoại ngữ'
+                              options={item[1]}
+                              className={
+                                requiredLanguage[index]?.length > 1
+                                  ? 'filled'
+                                  : ''
+                              }
+                              onChange={(value) => {
+                                setRequiredLanguage((prev) => {
+                                  let arr = [...prev];
+                                  arr[index][1] = value;
+                                  return arr;
+                                });
+                              }}
+                            />
+                          </div>
+                          <div>
+                            {' '}
+                            {requiredLanguage[index]?.length > 0 && (
+                              <p>{requiredLanguage[index][1]?.value}</p>
+                            )}
+                          </div>
+                          <div className='text-danger'>
+                            {' '}
+                            {errors?.language?.message && (
+                              <p>
+                                <>{errors?.language?.message}</>
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                  <div className='form-group'>
+                    <p>Lĩnh vực kinh doanh</p>
+                    <div className='select-style'>
                       {' '}
-                      <DropDownSelect
-                        clearErrors={clearErrors}
-                        setValueForm={setValue}
-                        setChildStep1={() => {}}
-                        checkStepRef={checkStepRef}
-                        placeholder='Chọn ngoại ngữ ứng viên'
-                        options={languagesOptions}
-                        register='language'
-                        preValue={preloadValue?.language}
-                      />
-                    </div>
-                  </div>
-                  <div className='text-danger'>
-                    {' '}
-                    {errors?.language?.message && (
-                      <p>
-                        <>{errors?.language?.message}</>
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className='form-group'>
-                  <p>Trình độ ngoại ngữ</p>
-                  <div className='select-style'>
-                    <div
-                      className={checkStepRef.current.language ? 'filled' : ''}
-                    >
-                      {' '}
-                      <DropDownSelect
-                        clearErrors={clearErrors}
-                        setValueForm={setValue}
-                        setChildStep1={() => {}}
-                        checkStepRef={checkStepRef}
-                        placeholder='Chọn ngoại ngữ ứng viên'
-                        options={languagesOptions}
-                        register='language'
-                        preValue={preloadValue?.language}
-                      />
-                    </div>
-                  </div>
-                  <div className='text-danger'>
-                    {' '}
-                    {errors?.language?.message && (
-                      <p>
-                        <>{errors?.language?.message}</>
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className='form-group'>
-                  <p>Lĩnh vực kinh doanh</p>
-                  <div className='select-style'>
-                    {' '}
-                    <Controller
-                      name='industry'
-                      control={control}
-                      render={({ field }) => (
-                        <Select
-                          {...field}
-                          styles={selectStyle}
-                          placeholder='Chọn lĩnh vực kinh doanh'
-                          options={industryOptions}
-                          className={
-                            checkStepRef.current.industry ? 'filled' : ''
-                          }
-                          onChange={(value) => {
-                            setValue('industry', value);
-                            setNewJob({ ...newJob, industry: value.label });
-                            if (checkStepRef.current.industry === false) {
-                              checkStepRef.current.industry = true;
+                      <Controller
+                        name='industry'
+                        control={control}
+                        render={({ field }) => (
+                          <Select
+                            {...field}
+                            styles={selectStyle}
+                            placeholder='Chọn lĩnh vực kinh doanh'
+                            options={industryOptions}
+                            className={
+                              checkStepRef.current.industry ? 'filled' : ''
                             }
-                          }}
-                        />
+                            onChange={(value) => {
+                              setValue('industry', value);
+                              setNewJob({ ...newJob, industry: value.label });
+                              if (checkStepRef.current.industry === false) {
+                                checkStepRef.current.industry = true;
+                              }
+                            }}
+                          />
+                        )}
+                      />
+                    </div>
+                    <div className='text-danger'>
+                      {errors?.industry?.message && (
+                        <p>
+                          <>{errors?.industry?.message}</>
+                        </p>
                       )}
-                    />
+                    </div>
                   </div>
-                  <div className='text-danger'>
-                    {errors?.industry?.message && (
-                      <p>
-                        <>{errors?.industry?.message}</>
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className='form-group'>
-                  <p>Nơi làm việc</p>
-                  <div className='select-style'>
-                    <Controller
-                      name='location'
-                      control={control}
-                      render={({ field }) => (
-                        <ReactSelectShowType
-                          {...field}
-                          placeholder='Chọn nơi làm việc'
-                          options={provinceOptions}
-                          minInput={1}
-                          className={
-                            checkStepRef.current.location ? 'filled' : ''
-                          }
-                          onChange={(value) => {
-                            setValue('location', value);
-                            setNewJob({ ...newJob, location: value.label });
-                            if (checkStepRef.current.location === false) {
-                              checkStepRef.current.location = true;
+                  <div className='form-group'>
+                    <p>Nơi làm việc</p>
+                    <div className='select-style'>
+                      <Controller
+                        name='location'
+                        control={control}
+                        render={({ field }) => (
+                          <ReactSelectShowType
+                            {...field}
+                            placeholder='Chọn nơi làm việc'
+                            options={provinceOptions}
+                            minInput={1}
+                            className={
+                              checkStepRef.current.location ? 'filled' : ''
                             }
-                          }}
-                        />
+                            onChange={(value) => {
+                              setValue('location', value);
+                              setNewJob({ ...newJob, location: value.label });
+                              if (checkStepRef.current.location === false) {
+                                checkStepRef.current.location = true;
+                              }
+                            }}
+                          />
+                        )}
+                      />
+                    </div>
+                    <div className='text-danger'>
+                      {' '}
+                      {errors?.location?.message && (
+                        <p>
+                          <>{errors?.location?.message}</>
+                        </p>
                       )}
-                    />
+                    </div>
                   </div>
-                  <div className='text-danger'>
-                    {' '}
-                    {errors?.location?.message && (
-                      <p>
-                        <>{errors?.location?.message}</>
-                      </p>
-                    )}
+                  <div className='form-group'>
+                    <p>Môi trường làm việc</p>
+                    <div className='select-style'>
+                      {' '}
+                      <Controller
+                        name='environment'
+                        control={control}
+                        onChange={(e) => {
+                          setNewJob({ ...newJob, environment: e.label });
+                          if (!checkStepRef.current.environment) {
+                            checkStepRef.current.environment = true;
+                          }
+                        }}
+                        render={({ field }) => (
+                          <Select
+                            {...field}
+                            styles={selectStyle}
+                            placeholder='Chọn môi trường làm việc'
+                            options={environmentOption}
+                            className={
+                              checkStepRef.current.environment ? 'filled' : ''
+                            }
+                            onChange={(value) => {
+                              setValue('environment', value);
+                              setNewJob({
+                                ...newJob,
+                                environment: value.label,
+                              });
+                              if (checkStepRef.current.environment === false) {
+                                checkStepRef.current.environment = true;
+                              }
+                            }}
+                          />
+                        )}
+                      />
+                    </div>
+                    <div className='text-danger'>
+                      {errors?.environment?.message && (
+                        <p>
+                          <>{errors?.position?.message}</>
+                        </p>
+                      )}
+                    </div>
                   </div>
-                </div>
-                <div className='form-group'>
-                  <p>Môi trường làm việc</p>
-                  <div className='select-style'>
-                    {' '}
-                    <Controller
-                      name='environment'
-                      control={control}
+                  <div className='form-group'>
+                    <p>Yêu cầu kinh nghiệm</p>
+                    <input
+                      data-testid='experience'
+                      name='experience'
                       onChange={(e) => {
-                        setNewJob({ ...newJob, environment: e.label });
-                        if (!checkStepRef.current.environment) {
-                          checkStepRef.current.environment = true;
-                        }
+                        console.log('123');
+                        setNewJob({
+                          ...newJob,
+                          experience: e.target.value,
+                        });
                       }}
-                      render={({ field }) => (
-                        <Select
-                          {...field}
-                          styles={selectStyle}
-                          placeholder='Chọn môi trường làm việc'
-                          options={environmentOption}
-                          className={
-                            checkStepRef.current.environment ? 'filled' : ''
-                          }
-                          onChange={(value) => {
-                            setValue('environment', value);
-                            setNewJob({ ...newJob, environment: value.label });
-                            if (checkStepRef.current.environment === false) {
-                              checkStepRef.current.environment = true;
-                            }
-                          }}
-                        />
-                      )}
+                      {...register('experience')}
+                      type='text'
+                      className={
+                        checkStepRef.current.experience
+                          ? 'form-control filled'
+                          : 'form-control'
+                      }
+                      placeholder='Nhập yêu cầu kinh nghiệm'
+                      onBlur={(e) => {
+                        handleCheckInput(e);
+                      }}
                     />
+                    <div className='text-danger'>
+                      {' '}
+                      {errors?.experience?.message && (
+                        <p>
+                          <>{errors?.experience?.message}</>
+                        </p>
+                      )}
+                    </div>
                   </div>
-                  <div className='text-danger'>
-                    {errors?.environment?.message && (
-                      <p>
-                        <>{errors?.position?.message}</>
-                      </p>
-                    )}
+                  <div className='form-group'>
+                    <p>Số lượng</p>
+                    <input
+                      data-testid='quantity'
+                      name='quantity'
+                      onChange={(e) => {
+                        setNewJob({
+                          ...newJob,
+                          quantity: e.target.value,
+                        });
+                      }}
+                      {...register('quantity')}
+                      type='number'
+                      className={
+                        checkStepRef.current.quantity
+                          ? 'form-control filled'
+                          : 'form-control'
+                      }
+                      placeholder='Nhập số lượng'
+                      value={newJob.quantity}
+                      onBlur={(e) => {
+                        handleCheckInput(e);
+                      }}
+                    />
+                    <div className='text-danger'>
+                      {' '}
+                      {errors?.quantity?.message && (
+                        <p>
+                          <>{errors?.quantity?.message}</>
+                        </p>
+                      )}
+                    </div>
                   </div>
-                </div>
-                <div className='form-group'>
-                  <p>Yêu cầu kinh nghiệm</p>
-                  <input
-                    data-testid='experience'
-                    name='experience'
-                    onChange={(e) => {
-                      console.log('123');
-                      setNewJob({
-                        ...newJob,
-                        experience: e.target.value,
-                      });
-                    }}
-                    {...register('experience')}
-                    type='text'
-                    className={
-                      checkStepRef.current.experience
-                        ? 'form-control filled'
-                        : 'form-control'
-                    }
-                    placeholder='Nhập yêu cầu kinh nghiệm'
-                    onBlur={(e) => {
-                      handleCheckInput(e);
-                    }}
-                  />
-                  <div className='text-danger'>
-                    {' '}
-                    {errors?.experience?.message && (
-                      <p>
-                        <>{errors?.experience?.message}</>
-                      </p>
-                    )}
+                  <div className='form-group'>
+                    <p>Mức lương tối thiểu</p>
+                    <input
+                      data-testid='salaryMin'
+                      name='salaryMin'
+                      onChange={(e) => {
+                        setNewJob({
+                          ...newJob,
+                          salaryMin: e.target.value,
+                        });
+                      }}
+                      {...register('salaryMin')}
+                      type='number'
+                      className={
+                        checkStepRef.current.salaryMin
+                          ? 'form-control filled'
+                          : 'form-control'
+                      }
+                      placeholder='Nhập mức lương tối thiểu'
+                      value={newJob.salaryMin}
+                      onBlur={(e) => {
+                        handleCheckInput(e);
+                      }}
+                    />
+                    <div className='text-danger'>
+                      {' '}
+                      {errors?.salaryMin?.message && (
+                        <p>
+                          <>{errors?.salaryMin?.message}</>
+                        </p>
+                      )}
+                    </div>
                   </div>
-                </div>
-                <div className='form-group'>
-                  <p>Số lượng</p>
-                  <input
-                    data-testid='quantity'
-                    name='quantity'
-                    onChange={(e) => {
-                      setNewJob({
-                        ...newJob,
-                        quantity: e.target.value,
-                      });
-                    }}
-                    {...register('quantity')}
-                    type='number'
-                    className={
-                      checkStepRef.current.quantity
-                        ? 'form-control filled'
-                        : 'form-control'
-                    }
-                    placeholder='Nhập số lượng'
-                    value={newJob.quantity}
-                    onBlur={(e) => {
-                      handleCheckInput(e);
-                    }}
-                  />
-                  <div className='text-danger'>
-                    {' '}
-                    {errors?.quantity?.message && (
-                      <p>
-                        <>{errors?.quantity?.message}</>
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className='form-group'>
-                  <p>Mức lương tối thiểu</p>
-                  <input
-                    data-testid='salaryMin'
-                    name='salaryMin'
-                    onChange={(e) => {
-                      setNewJob({
-                        ...newJob,
-                        salaryMin: e.target.value,
-                      });
-                    }}
-                    {...register('salaryMin')}
-                    type='number'
-                    className={
-                      checkStepRef.current.salaryMin
-                        ? 'form-control filled'
-                        : 'form-control'
-                    }
-                    placeholder='Nhập mức lương tối thiểu'
-                    value={newJob.salaryMin}
-                    onBlur={(e) => {
-                      handleCheckInput(e);
-                    }}
-                  />
-                  <div className='text-danger'>
-                    {' '}
-                    {errors?.salaryMin?.message && (
-                      <p>
-                        <>{errors?.salaryMin?.message}</>
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className='form-group'>
-                  <p>Mức lương tối đa</p>
-                  <input
-                    data-testid='salaryMax'
-                    name='salaryMax'
-                    onChange={(e) => {
-                      setNewJob({
-                        ...newJob,
-                        salaryMax: e.target.value,
-                      });
-                    }}
-                    {...register('salaryMax')}
-                    type='number'
-                    className={
-                      checkStepRef.current.salaryMax
-                        ? 'form-control filled'
-                        : 'form-control'
-                    }
-                    placeholder='Nhập mức lương tối đa'
-                    value={newJob.salaryMax}
-                    onBlur={(e) => {
-                      handleCheckInput(e);
-                    }}
-                  />
-                  <div className='text-danger'>
-                    {' '}
+                  <div className='form-group'>
+                    <p>Mức lương tối đa</p>
+                    <input
+                      data-testid='salaryMax'
+                      name='salaryMax'
+                      onChange={(e) => {
+                        setNewJob({
+                          ...newJob,
+                          salaryMax: e.target.value,
+                        });
+                      }}
+                      {...register('salaryMax')}
+                      type='number'
+                      className={
+                        checkStepRef.current.salaryMax
+                          ? 'form-control filled'
+                          : 'form-control'
+                      }
+                      placeholder='Nhập mức lương tối đa'
+                      value={newJob.salaryMax}
+                      onBlur={(e) => {
+                        handleCheckInput(e);
+                      }}
+                    />
+                    <div className='text-danger'>
+                      {' '}
+                      {errors?.salaryMax?.message && (
+                        <p>
+                          <>{errors?.salaryMax?.message}</>
+                        </p>
+                      )}
+                    </div>
                     {errors?.salaryMax?.message && (
                       <p>
                         <>{errors?.salaryMax?.message}</>
                       </p>
                     )}
                   </div>
-                  {errors?.salaryMax?.message && (
-                    <p>
-                      <>{errors?.salaryMax?.message}</>
-                    </p>
-                  )}
-                </div>
-                <div className='form-group'>
-                  <p>Mô tả công việc</p>
-                  <ReactQuill
-                    name='description'
-                    {...register('description')}
-                    theme='snow'
-                    defaultValue={
-                      preloadValue?.description && preloadValue.description
-                    }
-                    // value={newJob.description}
-                    onChange={(e) => {
-                      // console.log(e);
-                      setValue('description', e);
-                      setNewJob({ ...newJob, description: e });
-                    }}
-                  />
-                  <div className='text-danger'>
-                    {' '}
-                    {errors?.description?.message && (
-                      <p>
-                        <>{errors?.description?.message}</>
-                      </p>
-                    )}
+                  <div className='form-group'>
+                    <p>Mô tả công việc</p>
+                    <ReactQuill
+                      name='description'
+                      {...register('description')}
+                      theme='snow'
+                      defaultValue={
+                        preloadValue?.description && preloadValue.description
+                      }
+                      // value={newJob.description}
+                      onChange={(e) => {
+                        // console.log(e);
+                        setValue('description', e);
+                        setNewJob({ ...newJob, description: e });
+                      }}
+                    />
+                    <div className='text-danger'>
+                      {' '}
+                      {errors?.description?.message && (
+                        <p>
+                          <>{errors?.description?.message}</>
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
-                <div className='form-group'>
-                  <Accordion>
-                    <p>Tiêu chí đánh giá</p>
-                    <Card>
-                      <Card.Header className='d-flex w-100 p-1'>
-                        <Nav.Item
-                          className='mr-auto h5 pl-3 pt-2'
-                          as={Nav.Item}
-                        >
-                          Tiêu chí đánh giá đề xuất
-                        </Nav.Item>
-                        <Nav.Item
-                          className='align-self-center'
-                          style={{ width: '70px' }}
-                        >
-                          Điểm
-                        </Nav.Item>
-                      </Card.Header>
-                    </Card>
-                    {questionOptions?.map((question, index) => (
-                      <Card key={index}>
-                        <Card.Header className='d-flex align-items-center w-100 item-score'>
-                          <Accordion.Toggle
-                            as={'div'}
-                            eventKey={index + 1}
-                            className='mr-auto px-2 score-info'
+
+                <div className={step === 2 ? 'd-block appear' : 'd-none'}>
+                  {' '}
+                  <div className='form-group'>
+                    <Accordion>
+                      <p>Tiêu chí đánh giá</p>
+                      <Card>
+                        <Card.Header className='d-flex w-100 p-1'>
+                          <Nav.Item
+                            className='mr-auto h5 pl-3 pt-2'
+                            as={Nav.Item}
                           >
-                            {index + 1 + '. ' + question.name}{' '}
-                            <i className='fa fa-question-circle mx-1'></i>
-                            {/* trash */}
-                            {index >= 15 && (
-                              <i
-                                className='fa fa-trash mx-1 text-red'
-                                onClick={() => deleteAddOnQuestion(index)}
-                              ></i>
+                            Tiêu chí đánh giá đề xuất
+                          </Nav.Item>
+                          <Nav.Item
+                            className='align-self-center'
+                            style={{ width: '70px' }}
+                          >
+                            Điểm
+                          </Nav.Item>
+                        </Card.Header>
+                      </Card>
+                      {questionOptions?.map((question, index) => (
+                        <Card key={index}>
+                          <Card.Header className='d-flex align-items-center w-100 item-score'>
+                            <Accordion.Toggle
+                              as={'div'}
+                              eventKey={index + 1}
+                              className='mr-auto px-2 score-info'
+                            >
+                              {index + 1 + '. ' + question.name}{' '}
+                              <i className='fa fa-question-circle mx-1'></i>
+                              {/* trash */}
+                              {index >= 15 && (
+                                <i
+                                  className='fa fa-trash mx-1 text-red'
+                                  onClick={() => deleteAddOnQuestion(index)}
+                                ></i>
+                              )}
+                            </Accordion.Toggle>
+                            <Form.Control
+                              name={`question${index}`}
+                              {...register(`question${index}`)}
+                              className='align-self-center mr-0'
+                              placeholder='0-10'
+                              value={newJob.question[index]}
+                              style={{ width: '70px', textAlign: 'center' }}
+                              onChange={(e) => {
+                                if (isNaN(e.target.value)) e.target.value = 0;
+                                if (e.target.value > 10) e.target.value = 10;
+                                let question = newJob.question;
+                                question[index] = e.target.value;
+                                // console.log(question);
+                                // console.log(questionOptions);
+                                let regiserIndex = `question${index}`;
+                                console.log(regiserIndex);
+                                setValue(`${regiserIndex}`, e.target.value);
+                                setNewJob({
+                                  ...newJob,
+                                  question: question,
+                                });
+                              }}
+                              type='number'
+                              min='0'
+                              max='10'
+                            ></Form.Control>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey={index + 1}>
+                            <Card.Body className='border-top'>
+                              {question.detail?.map((item, index2) => {
+                                return (
+                                  <>
+                                    <Nav.Item>{item}</Nav.Item>
+                                  </>
+                                );
+                              })}
+                            </Card.Body>
+                          </Accordion.Collapse>
+                          <div className='text-danger'>
+                            {' '}
+                            {errors[`question${index}`]?.message && (
+                              <p>
+                                <>{errors[`question${index}`]?.message}</>
+                              </p>
                             )}
-                          </Accordion.Toggle>
-                          <Form.Control
-                            name={`question${index}`}
-                            {...register(`question${index}`)}
-                            className='align-self-center mr-0'
-                            placeholder='0-10'
-                            value={newJob.question[index]}
-                            style={{ width: '70px', textAlign: 'center' }}
-                            onChange={(e) => {
-                              if (isNaN(e.target.value)) e.target.value = 0;
-                              if (e.target.value > 10) e.target.value = 10;
-                              let question = newJob.question;
-                              question[index] = e.target.value;
-                              // console.log(question);
-                              // console.log(questionOptions);
-                              let regiserIndex = `question${index}`;
-                              console.log(regiserIndex);
-                              setValue(`${regiserIndex}`, e.target.value);
-                              setNewJob({
-                                ...newJob,
-                                question: question,
-                              });
-                            }}
-                            type='number'
-                            min='0'
-                            max='10'
-                          ></Form.Control>
-                        </Card.Header>
-                        <Accordion.Collapse eventKey={index + 1}>
-                          <Card.Body className='border-top'>
-                            {question.detail?.map((item, index2) => {
-                              return (
-                                <>
-                                  <Nav.Item>{item}</Nav.Item>
-                                </>
-                              );
-                            })}
-                          </Card.Body>
-                        </Accordion.Collapse>
-                        <div className='text-danger'>
+                          </div>
+                        </Card>
+                      ))}
+                      {isAddNew ? (
+                        <>
                           {' '}
-                          {errors[`question${index}`]?.message && (
-                            <p>
-                              <>{errors[`question${index}`]?.message}</>
-                            </p>
-                          )}
-                        </div>
-                      </Card>
-                    ))}
-                    {addOnQuestionOptions?.map((question, index) => (
-                      <Card key={index}>
-                        <Card.Header className='d-flex align-items-center w-100 item-score'>
-                          <Accordion.Toggle
-                            as={'div'}
-                            eventKey={index + 1}
-                            className='mr-auto px-2 score-info'
-                          >
-                            {index + 16 + '. ' + question.name}{' '}
-                            <i className='fa fa-question-circle mx-1'></i>
-                            {/* trash */}
-                            <i
-                              className='fa fa-trash ml-2 text-red'
-                              onClick={() => deleteAddOnQuestion(index)}
-                            ></i>
-                          </Accordion.Toggle>
-                          <Form.Control
-                            className='align-self-center mr-0'
-                            value={question.point}
-                            style={{ width: '70px', textAlign: 'center' }}
-                            onChange={(e) => {
-                              if (isNaN(e.target.value)) e.target.value = 0;
-                              if (e.target.value > 10) e.target.value = 10;
-                              let arrCopy = new Array(...addOnQuestionOptions);
-                              arrCopy[index].point = e.target.value;
-                              setAddOnQuestionOptions(arrCopy);
-                            }}
-                            type='number'
-                            min='0'
-                            max='10'
-                          ></Form.Control>
-                        </Card.Header>
-                        <Accordion.Collapse eventKey={index + 1}>
-                          <Card.Body className='border-top'>
-                            {question.detail?.map((item, index2) => {
-                              return (
-                                <>
-                                  <Nav.Item>{item}</Nav.Item>
-                                </>
-                              );
-                            })}
-                          </Card.Body>
-                        </Accordion.Collapse>
-                      </Card>
-                    ))}
-                  </Accordion>
-                  <button
-                    type='button'
-                    className='btn btn-primary mt-2'
-                    onClick={() => setIsShowModal(true)}
-                  >
-                    Thêm tiêu chí
-                  </button>
+                          {addOnQuestionOptions?.map((question, index) => (
+                            <Card key={index}>
+                              <Card.Header className='d-flex align-items-center w-100 item-score'>
+                                <Accordion.Toggle
+                                  as={'div'}
+                                  eventKey={index + 1}
+                                  className='mr-auto px-2 score-info'
+                                >
+                                  {index + 16 + '. ' + question.name}{' '}
+                                  <i className='fa fa-question-circle mx-1'></i>
+                                  {/* trash */}
+                                  <i
+                                    className='fa fa-trash ml-2 text-red'
+                                    onClick={() => deleteAddOnQuestion(index)}
+                                  ></i>
+                                </Accordion.Toggle>
+                                <Form.Control
+                                  className='align-self-center mr-0'
+                                  value={question.point}
+                                  style={{
+                                    width: '70px',
+                                    textAlign: 'center',
+                                  }}
+                                  onChange={(e) => {
+                                    if (isNaN(e.target.value))
+                                      e.target.value = 0;
+                                    if (e.target.value > 10)
+                                      e.target.value = 10;
+                                    let arrCopy = new Array(
+                                      ...addOnQuestionOptions
+                                    );
+                                    arrCopy[index].point = e.target.value;
+                                    setAddOnQuestionOptions(arrCopy);
+                                  }}
+                                  type='number'
+                                  min='0'
+                                  max='10'
+                                ></Form.Control>
+                              </Card.Header>
+                              <Accordion.Collapse eventKey={index + 1}>
+                                <Card.Body className='border-top'>
+                                  {question.detail?.map((item, index2) => {
+                                    return (
+                                      <>
+                                        <Nav.Item>{item}</Nav.Item>
+                                      </>
+                                    );
+                                  })}
+                                </Card.Body>
+                              </Accordion.Collapse>
+                            </Card>
+                          ))}
+                        </>
+                      ) : (
+                        <>
+                          {' '}
+                          {preAddOnQuestion?.map((question, index) => (
+                            <Card key={index}>
+                              <Card.Header className='d-flex align-items-center w-100 item-score'>
+                                <Accordion.Toggle
+                                  as={'div'}
+                                  eventKey={index + 1}
+                                  className='mr-auto px-2 score-info'
+                                >
+                                  {index + 16 + '. ' + question.name}{' '}
+                                  <i className='fa fa-question-circle mx-1'></i>
+                                  {/* trash */}
+                                  <i
+                                    className='fa fa-trash ml-2 text-red'
+                                    onClick={() =>
+                                      deletePreAddOnQuestion(index)
+                                    }
+                                  ></i>
+                                </Accordion.Toggle>
+                                <Form.Control
+                                  className='align-self-center mr-0'
+                                  value={question.point}
+                                  style={{
+                                    width: '70px',
+                                    textAlign: 'center',
+                                  }}
+                                  onChange={(e) => {
+                                    if (isNaN(e.target.value))
+                                      e.target.value = 0;
+                                    if (e.target.value > 10)
+                                      e.target.value = 10;
+                                    let arrCopy = new Array(
+                                      ...preAddOnQuestion
+                                    );
+                                    arrCopy[index].point = e.target.value;
+                                    setPreAddOnQuestion(arrCopy);
+                                  }}
+                                  type='number'
+                                  min='0'
+                                  max='10'
+                                ></Form.Control>
+                              </Card.Header>
+                              <Accordion.Collapse eventKey={index + 1}>
+                                <Card.Body className='border-top'>
+                                  {question.detail?.map((item, index2) => {
+                                    return (
+                                      <>
+                                        <Nav.Item>{item}</Nav.Item>
+                                      </>
+                                    );
+                                  })}
+                                </Card.Body>
+                              </Accordion.Collapse>
+                            </Card>
+                          ))}
+                        </>
+                      )}
+                    </Accordion>
+                    <button
+                      type='button'
+                      className='btn btn-primary mt-2'
+                      onClick={() => setIsShowModal(true)}
+                    >
+                      Thêm tiêu chí
+                    </button>
+                  </div>
                 </div>
               </div>
               <div className='modal-footer'>
-                <button
-                  type='submit'
-                  className='btn btn-primary'
-                  // onClick={handleAddJob}
-                >
-                  Lưu
-                </button>
-                <button
-                  type='button'
-                  className='btn btn-secondary'
-                  onClick={() => setShowAddJob(false)}
-                >
-                  Hủy
-                </button>
+                {step === 2 && (
+                  <button
+                    type='button'
+                    className='btn btn-secondary'
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setStep(1);
+                      formRef.current.scrollTo({
+                        top: 0,
+                        left: 0,
+                        behavior: 'instant',
+                      });
+                    }}
+                  >
+                    Trở lại
+                  </button>
+                )}
+                {step === 1 ? (
+                  <button
+                    type='button'
+                    className='btn btn-primary'
+                    // disabled={
+                    //   getValues('position') &&
+                    //   getValues('level') &&
+                    //   getValues('major') &&
+                    //   getValues('industry') &&
+                    //   getValues('environment') &&
+                    //   getValues('experience') &&
+                    //   getValues('title') &&
+                    //   getValues('quantity') &&
+                    //   getValues('salaryMin') &&
+                    //   getValues('description') &&
+                    //   getValues('salaryMax') &&
+                    //   getValues('location')
+                    //     ? false
+                    //     : true
+                    // }
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setStep(2);
+                      formRef.current.scrollTo({
+                        top: 0,
+                        left: 0,
+                        behavior: 'instant',
+                      });
+                    }}
+                  >
+                    Tiếp theo
+                  </button>
+                ) : (
+                  <button type='submit' className='btn btn-primary'>
+                    Lưu
+                  </button>
+                )}
               </div>
             </form>
           </div>
@@ -943,7 +1149,7 @@ const ModalAddNeedPosi = ({
         setNewQuestion={setNewQuestion}
         childQuestion={childQuestion}
         setChildQuestion={setChildQuestion}
-        handleAddQuestion={handleAddQuestion}
+        handleAddQuestion={isAddNew ? handleAddQuestion : handleAddPreQuestion}
       />
     </>
   );

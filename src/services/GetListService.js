@@ -67,6 +67,12 @@ export const getListLanguage = async () => {
   });
 };
 
+export const getLanguageDes = async (id) => {
+  return axiosInstance.get(`language/get-detail/${id}`).then((res) => {
+    console.log(res.data);
+    return res.data;
+  });
+};
 export const getCertificateByLanguage = async (language) => {
   return axiosInstance
     .get(`language/certificate/${language}`)

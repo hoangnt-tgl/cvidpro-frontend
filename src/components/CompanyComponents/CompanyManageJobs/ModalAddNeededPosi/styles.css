@@ -8,3 +8,16 @@
 .score-info i {
   cursor: pointer;
 }
+.btn-add {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 0.1rem 0.5rem;
+  font-size: 14px;
+  font-weight: 550;
+  color: #000;
+  cursor: pointer;
+}
+.btn-add i {
+  color: var(--blue);
+}

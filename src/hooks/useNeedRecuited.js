@@ -4,6 +4,7 @@ import { getDepartmentByKey } from '../services/DepartmentApi';
 import { createJob, getJobForDepartment } from '../services/JobApi';
 import {
   getAllListMajor,
+  getLanguageDes,
   getListEnvironment,
   getListIndustry,
   getListJobTitle,
@@ -51,8 +52,10 @@ const useNeedRecuited = ({ search }) => {
   const [positionOptions, setPositionOptions] = useState([]);
   const [majorOptions, setMajorOptions] = useState([]);
   const [languagesOptions, setLanguagesOptions] = useState([]);
+  const [languageDes, setLanguageDes] = useState([]);
   const [questionOptions, setQuestionOptions] = useState([]);
   const [addOnQuestionOptions, setAddOnQuestionOptions] = useState([]);
+  const [preAddOnQuestion, setPreAddOnQuestion] = useState([]);
   const [newQuestion, setNewQuestion] = useState(initQuestion);
   const [childQuestion, setChildQuestion] = useState('');
   const [environmentOption, setEnvironmentOption] = useState([]);
@@ -128,7 +131,11 @@ const useNeedRecuited = ({ search }) => {
                 question12: item.questions[12],
                 question13: item.questions[13],
                 question14: item.questions[14],
-                addOnQuestionOptions: item.extendQuestions,
+                addOnQuestionOptions: item.extendQuestions?.map((item) => ({
+                  name: item.name,
+                  point: item.point,
+                  detail: item.detail,
+                })),
               }))
             );
             return res.data;
@@ -149,15 +156,15 @@ const useNeedRecuited = ({ search }) => {
     getListLanguage()
       .then((res) => res)
       .then((res) => {
-        console.log(
-          res.map((item) => ({
-            value: item.name,
-            label: item.name,
-          }))
-        );
+        // console.log(
+        //   res.map((item) => ({
+        //     value: item.name,
+        //     label: item._id,
+        //   }))
+        // );
         setLanguagesOptions(
           res.map((item) => ({
-            value: item.name,
+            value: item._id,
             label: item.name,
           }))
         );
@@ -233,6 +240,9 @@ const useNeedRecuited = ({ search }) => {
         setQuestionOptions(res);
       });
   }, []);
+  const handleGetLanguageDescription = async (id) => {
+    return await getLanguageDes(id).then((res) => res.data.level);
+  };
   const handleAddQuestion = async () => {
     let question = newQuestion;
     question.detail.push(childQuestion);
@@ -246,6 +256,7 @@ const useNeedRecuited = ({ search }) => {
     let newQuestion = new Array(...question);
     setAddOnQuestionOptions(newQuestion);
   };
+
   return [
     listJob,
     department,
@@ -271,6 +282,7 @@ const useNeedRecuited = ({ search }) => {
     addOnQuestionOptions,
     setAddOnQuestionOptions,
     preloadValue,
+    handleGetLanguageDescription,
   ];
 };
 

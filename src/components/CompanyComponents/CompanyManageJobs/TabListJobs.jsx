@@ -30,7 +30,9 @@ const TabListJobs = ({
   addOnQuestionOptions,
   setAddOnQuestionOptions,
   preloadValue,
+  languagesOptions,
 }) => {
+
   return (
     <>
       {' '}
@@ -91,6 +93,7 @@ const TabListJobs = ({
                       deleteAddOnQuestion={deleteAddOnQuestion}
                       addOnQuestionOptions={addOnQuestionOptions}
                       setAddOnQuestionOptions={setAddOnQuestionOptions}
+                      languagesOptions={languagesOptions}
                       preloadValue={preloadValue}
                     />
                   ))}

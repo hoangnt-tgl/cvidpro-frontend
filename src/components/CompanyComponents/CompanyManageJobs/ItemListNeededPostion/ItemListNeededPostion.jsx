@@ -29,7 +29,9 @@ const ItemListNeededPostion = ({
   deleteAddOnQuestion,
   addOnQuestionOptions,
   setAddOnQuestionOptions,
+  languagesOptions,
   preloadValue,
+  handleGetLanguageDescription,
 }) => {
   const [isShowEditPositionInfo, setIsShowEditPositionInfo] = useState(false);
 
@@ -67,32 +69,39 @@ const ItemListNeededPostion = ({
           </Link>
         </td>
       </tr>
-      <ModalAddNeedPosi
-        showAddJob={isShowEditPositionInfo}
-        setShowAddJob={setIsShowEditPositionInfo}
-        isAddNew={false}
-        levelOptions={levelOptions}
-        provinceOptions={provinceOptions}
-        jobTitleOption={jobTitleOption}
-        industryOptions={industryOptions}
-        positionOptions={positionOptions}
-        majorOptions={majorOptions}
-        questionOptions={questionOptions}
-        newQuestion={newQuestion}
-        environmentOption={environmentOption}
-        handleAddQuestion={handleAddQuestion}
-        handleUpdateJob={handleUpdateJobCloseModal}
-        setNewJob={setNewJob}
-        newJob={newJob}
-        handleAddJob={handleAddJob}
-        setNewQuestion={setNewQuestion}
-        childQuestion={childQuestion}
-        setChildQuestion={setChildQuestion}
-        deleteAddOnQuestion={deleteAddOnQuestion}
-        addOnQuestionOptions={addOnQuestionOptions}
-        setAddOnQuestionOptions={setAddOnQuestionOptions}
-        preloadValue={preloadValue[index]}
-      />
+      {isShowEditPositionInfo && (
+        <>
+          {' '}
+          <ModalAddNeedPosi
+            showAddJob={isShowEditPositionInfo}
+            setShowAddJob={setIsShowEditPositionInfo}
+            isAddNew={false}
+            levelOptions={levelOptions}
+            provinceOptions={provinceOptions}
+            jobTitleOption={jobTitleOption}
+            industryOptions={industryOptions}
+            positionOptions={positionOptions}
+            majorOptions={majorOptions}
+            questionOptions={questionOptions}
+            newQuestion={newQuestion}
+            environmentOption={environmentOption}
+            handleAddQuestion={handleAddQuestion}
+            handleUpdateJob={handleUpdateJobCloseModal}
+            setNewJob={setNewJob}
+            newJob={newJob}
+            handleAddJob={handleAddJob}
+            setNewQuestion={setNewQuestion}
+            childQuestion={childQuestion}
+            setChildQuestion={setChildQuestion}
+            deleteAddOnQuestion={deleteAddOnQuestion}
+            addOnQuestionOptions={addOnQuestionOptions}
+            setAddOnQuestionOptions={setAddOnQuestionOptions}
+            preloadValue={preloadValue[index]}
+            handleGetLanguageDescription={handleGetLanguageDescription}
+            languagesOptions={languagesOptions}
+          />{' '}
+        </>
+      )}
     </>
   );
 };

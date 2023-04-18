@@ -64,6 +64,7 @@ function Companymanage(props) {
     addOnQuestionOptions,
     setAddOnQuestionOptions,
     preloadValue,
+    handleGetLanguageDescription,
   ] = useNeedRecuited(search);
 
   const [isShowModalInfo, setIsShowModalInfo] = useState(true);
@@ -77,8 +78,8 @@ function Companymanage(props) {
     try {
       await createJob({
         ...data,
-        departmentId: department._id,
-        companyId: department.companyId,
+        // departmentId: department._id,
+        // companyId: department.companyId,
         key: key,
       });
       setIsShowModalAddJob(false);
@@ -144,9 +145,12 @@ function Companymanage(props) {
                     addOnQuestionOptions={addOnQuestionOptions}
                     setAddOnQuestionOptions={setAddOnQuestionOptions}
                     preloadValue={preloadValue}
+                    languagesOptions={languagesOptions}
+                    handleGetLanguageDescription={handleGetLanguageDescription}
                   />
                   {/* Modal tạo vị trí tuyển dụng */}
                   <ModalAddNeedPosi
+                    handleGetLanguageDescription={handleGetLanguageDescription}
                     showAddJob={isShowModalAddJob}
                     setShowAddJob={setIsShowModalAddJob}
                     isAddNew={true}
@@ -172,6 +176,7 @@ function Companymanage(props) {
                     deleteAddOnQuestion={deleteAddOnQuestion}
                     addOnQuestionOptions={addOnQuestionOptions}
                     setAddOnQuestionOptions={setAddOnQuestionOptions}
+                    preloadValue={preloadValue}
                   />
                 </div>
               </div>
