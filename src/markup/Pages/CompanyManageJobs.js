@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import Header2 from '../Layout/HeaderDepartment';
 import Footer from '../Layout/Footer';
-import { createJob } from '../../services/JobApi';
+import { createJob, updateJob } from '../../services/JobApi';
 import useNeedRecuited from '../../hooks/useNeedRecuited';
 import TabListJobs from '../../components/CompanyComponents/CompanyManageJobs/TabListJobs';
 import ModalAddNeedPosi from '../../components/CompanyComponents/CompanyManageJobs/ModalAddNeededPosi/ModalAddNeedPosi';
@@ -48,6 +48,7 @@ function Companymanage(props) {
     industryOptions,
     positionOptions,
     majorOptions,
+    languagesOptions,
     questionOptions,
     newQuestion,
     childQuestion,
@@ -63,6 +64,7 @@ function Companymanage(props) {
     addOnQuestionOptions,
     setAddOnQuestionOptions,
     preloadValue,
+    handleGetLanguageDescription,
   ] = useNeedRecuited(search);
 
   const [isShowModalInfo, setIsShowModalInfo] = useState(true);
@@ -76,8 +78,9 @@ function Companymanage(props) {
     try {
       await createJob({
         ...data,
-        departmentId: department._id,
-        companyId: department.companyId,
+        // departmentId: department._id,
+        // companyId: department.companyId,
+        key: key,
       });
       setIsShowModalAddJob(false);
       setNewJob(objJob);
@@ -85,6 +88,22 @@ function Companymanage(props) {
       toast.success('Thêm việc làm thành công');
     } catch (error) {
       toast.error('Thêm việc làm thất bại');
+    }
+  };
+
+  const handleUpdateJob = async (id, data) => {
+    console.log(data);
+    try {
+      await updateJob(id, {
+        ...data,
+        key: key,
+      });
+      setIsShowModalAddJob(false);
+      setNewJob(objJob);
+      setReload((prev) => !prev);
+      toast.success('Sửa việc làm thành công');
+    } catch (error) {
+      toast.error('Sửa việc làm thất bại');
     }
   };
   return (
@@ -118,6 +137,7 @@ function Companymanage(props) {
                     setNewJob={setNewJob}
                     newJob={newJob}
                     handleAddJob={handleAddJob}
+                    handleUpdateJob={handleUpdateJob}
                     setNewQuestion={setNewQuestion}
                     childQuestion={childQuestion}
                     setChildQuestion={setChildQuestion}
@@ -125,9 +145,12 @@ function Companymanage(props) {
                     addOnQuestionOptions={addOnQuestionOptions}
                     setAddOnQuestionOptions={setAddOnQuestionOptions}
                     preloadValue={preloadValue}
+                    languagesOptions={languagesOptions}
+                    handleGetLanguageDescription={handleGetLanguageDescription}
                   />
                   {/* Modal tạo vị trí tuyển dụng */}
                   <ModalAddNeedPosi
+                    handleGetLanguageDescription={handleGetLanguageDescription}
                     showAddJob={isShowModalAddJob}
                     setShowAddJob={setIsShowModalAddJob}
                     isAddNew={true}
@@ -137,6 +160,7 @@ function Companymanage(props) {
                     industryOptions={industryOptions}
                     positionOptions={positionOptions}
                     majorOptions={majorOptions}
+                    languagesOptions={languagesOptions}
                     questionOptions={questionOptions}
                     setQuestionOptions={setQuestionOptions}
                     newQuestion={newQuestion}
@@ -145,12 +169,14 @@ function Companymanage(props) {
                     setNewJob={setNewJob}
                     newJob={newJob}
                     handleAddJob={handleAddJob}
+                    handleUpdateJob={handleUpdateJob}
                     setNewQuestion={setNewQuestion}
                     childQuestion={childQuestion}
                     setChildQuestion={setChildQuestion}
                     deleteAddOnQuestion={deleteAddOnQuestion}
                     addOnQuestionOptions={addOnQuestionOptions}
                     setAddOnQuestionOptions={setAddOnQuestionOptions}
+                    preloadValue={preloadValue}
                   />
                 </div>
               </div>
