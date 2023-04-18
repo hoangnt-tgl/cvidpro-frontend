@@ -39,6 +39,7 @@ const ItemListNeededPostion = ({
   function getStatusJob(job) {
     if (job.confirm1.confirmed === -1) return 'Không được duyệt';
     if (job.confirm2.confirmed !== 1) return 'Đang chờ duyệt';
+    if (job.confirm2.confirmed === 1) return 'Duyệt thành công';
     if (job.status === 0) return 'Dừng tuyển';
     if (job.status === 1) return 'Đang tuyển';
   }
@@ -66,7 +67,15 @@ const ItemListNeededPostion = ({
           </Link>
         </td>
 
-        <td className='expired pending'>{getStatusJob(item)} </td>
+        <td
+          className={
+            item.confirm2.confirmed === 1
+              ? ' expired  success'
+              : ' expired pending'
+          }
+        >
+          {getStatusJob(item)}{' '}
+        </td>
         <td className='job-links'>
           <Link to={'#'} onClick={() => setIsShowEditPositionInfo(true)}>
             <i class='fa fa-pencil-square-o'></i>
