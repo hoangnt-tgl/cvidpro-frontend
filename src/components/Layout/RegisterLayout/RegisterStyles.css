@@ -146,6 +146,10 @@
   .font-size-14 p {
     margin-bottom: 5px;
   }
+  .font-size-14.lessbold p {
+    margin-bottom: 5px;
+    font-weight: 480;
+  }
   .register-wrapper .form-container {
     padding: 1rem 0rem;
   }

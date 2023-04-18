@@ -340,7 +340,7 @@ const ModalAddNeedPosi = ({
             </div>
             <form onSubmit={handleSubmit(handleOnSubmit)}>
               <div
-                className='modal-body font-size-14'
+                className='modal-body font-size-14 lessbold'
                 style={{ maxHeight: '70vh', overflow: 'auto' }}
                 ref={formRef}
               >
