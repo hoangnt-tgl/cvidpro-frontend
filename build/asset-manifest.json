@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.ad85f62d.chunk.css",
-    "main.js": "/static/js/main.8c7a09b6.chunk.js",
-    "main.js.map": "/static/js/main.8c7a09b6.chunk.js.map",
+    "main.css": "/static/css/main.ad51fe46.chunk.css",
+    "main.js": "/static/js/main.d31fd09d.chunk.js",
+    "main.js.map": "/static/js/main.d31fd09d.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.02b5b99e.js",
     "runtime-main.js.map": "/static/js/runtime-main.02b5b99e.js.map",
     "static/css/2.1577803a.chunk.css": "/static/css/2.1577803a.chunk.css",
-    "static/js/2.c97702e1.chunk.js": "/static/js/2.c97702e1.chunk.js",
-    "static/js/2.c97702e1.chunk.js.map": "/static/js/2.c97702e1.chunk.js.map",
+    "static/js/2.8d9bde87.chunk.js": "/static/js/2.8d9bde87.chunk.js",
+    "static/js/2.8d9bde87.chunk.js.map": "/static/js/2.8d9bde87.chunk.js.map",
     "static/js/3.0c218894.chunk.js": "/static/js/3.0c218894.chunk.js",
     "static/js/3.0c218894.chunk.js.map": "/static/js/3.0c218894.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.86796eb649909ab11669a421ec3767a5.js": "/precache-manifest.86796eb649909ab11669a421ec3767a5.js",
+    "precache-manifest.7c8682ae93b691322306cad84fd1cd53.js": "/precache-manifest.7c8682ae93b691322306cad84fd1cd53.js",
     "service-worker.js": "/service-worker.js",
     "static/css/2.1577803a.chunk.css.map": "/static/css/2.1577803a.chunk.css.map",
-    "static/css/main.ad85f62d.chunk.css.map": "/static/css/main.ad85f62d.chunk.css.map",
-    "static/js/2.c97702e1.chunk.js.LICENSE.txt": "/static/js/2.c97702e1.chunk.js.LICENSE.txt",
-    "static/js/main.8c7a09b6.chunk.js.LICENSE.txt": "/static/js/main.8c7a09b6.chunk.js.LICENSE.txt",
+    "static/css/main.ad51fe46.chunk.css.map": "/static/css/main.ad51fe46.chunk.css.map",
+    "static/js/2.8d9bde87.chunk.js.LICENSE.txt": "/static/js/2.8d9bde87.chunk.js.LICENSE.txt",
+    "static/js/main.d31fd09d.chunk.js.LICENSE.txt": "/static/js/main.d31fd09d.chunk.js.LICENSE.txt",
     "static/media/Logo_CVIDPRO_Blue.webp": "/static/media/Logo_CVIDPRO_Blue.f34e7474.webp",
     "static/media/atm-card.png": "/static/media/atm-card.9a4ee0e1.png",
     "static/media/bg1.jpg": "/static/media/bg1.b6e866af.jpg",
@@ -56,8 +56,8 @@
   "entrypoints": [
     "static/js/runtime-main.02b5b99e.js",
     "static/css/2.1577803a.chunk.css",
-    "static/js/2.c97702e1.chunk.js",
-    "static/css/main.ad85f62d.chunk.css",
-    "static/js/main.8c7a09b6.chunk.js"
+    "static/js/2.8d9bde87.chunk.js",
+    "static/css/main.ad51fe46.chunk.css",
+    "static/js/main.d31fd09d.chunk.js"
   ]
 }
