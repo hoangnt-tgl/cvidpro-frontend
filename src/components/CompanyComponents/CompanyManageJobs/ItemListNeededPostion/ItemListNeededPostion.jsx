@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { deleteJobForDepartment } from '../../../../services/CompanyApi';
 import ModalAddNeedPosi from '../ModalAddNeededPosi/ModalAddNeedPosi';
+import { deleteJob } from '../../../../services/JobApi';
+import { toast } from 'react-hot-toast';
 
 const ItemListNeededPostion = ({
   index,
@@ -42,8 +43,14 @@ const ItemListNeededPostion = ({
     if (job.status === 1) return 'Đang tuyển';
   }
   const handleDeleteJob = async (idJob) => {
-    await deleteJobForDepartment(keyDepart, idJob);
-    setReload((prev) => !prev);
+    try {
+      let key = { key: keyDepart };
+      await deleteJob(idJob, key);
+      setReload((prev) => !prev);
+      toast.success('Xóa thành công');
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Xóa thất bại');
+    }
   };
   const handleUpdateJobCloseModal = async (id, data) => {
     await handleUpdateJob(id, data);

@@ -18,7 +18,14 @@ export const updateJob = async (id, data) => {
       formatError(error.response?.data?.message || '');
     });
 };
-
+export const deleteJob = async (id, data) => {
+  return axiosInstance
+    .delete(`job/delete/${id}`, data)
+    .then((res) => res.data)
+    .catch((error) => {
+      throw error;
+    });
+};
 export const getJobForDepartment = async (id, key) => {
   return axiosInstance
     .get(`job/get-job-for-department/${id}/${key}`)

@@ -1103,22 +1103,22 @@ const ModalAddNeedPosi = ({
                   <button
                     type='button'
                     className='btn btn-primary'
-                    // disabled={
-                    //   getValues('position') &&
-                    //   getValues('level') &&
-                    //   getValues('major') &&
-                    //   getValues('industry') &&
-                    //   getValues('environment') &&
-                    //   getValues('experience') &&
-                    //   getValues('title') &&
-                    //   getValues('quantity') &&
-                    //   getValues('salaryMin') &&
-                    //   getValues('description') &&
-                    //   getValues('salaryMax') &&
-                    //   getValues('location')
-                    //     ? false
-                    //     : true
-                    // }
+                    disabled={
+                      getValues('position') &&
+                      getValues('level') &&
+                      getValues('major') &&
+                      getValues('industry') &&
+                      getValues('environment') &&
+                      getValues('experience') &&
+                      getValues('title') &&
+                      getValues('quantity') &&
+                      getValues('salaryMin') &&
+                      getValues('description') &&
+                      getValues('salaryMax') &&
+                      getValues('location')
+                        ? false
+                        : true
+                    }
                     onClick={(e) => {
                       e.preventDefault();
                       setStep(2);
