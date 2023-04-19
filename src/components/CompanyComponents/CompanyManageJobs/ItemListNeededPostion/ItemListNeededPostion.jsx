@@ -79,9 +79,11 @@ const ItemListNeededPostion = ({
           <Link to={'#'} onClick={() => setIsShowEditPositionInfo(true)}>
             <i class='fa fa-pencil-square-o'></i>
           </Link>
-          <Link to={'#'} onClick={() => handleDeleteJob(item._id)}>
-            <i className='ti-trash'></i>
-          </Link>
+          {item.status === false && (
+            <Link to={'#'} onClick={() => handleDeleteJob(item._id)}>
+              <i className='ti-trash'></i>
+            </Link>
+          )}
         </td>
       </tr>
       {isShowEditPositionInfo && (

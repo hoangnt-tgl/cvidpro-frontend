@@ -41,7 +41,7 @@ const ModalUpdatePresenter = ({
       title: 'Số điện thoại',
       type: 'text',
       accept: '',
-      disable: phoneConfirm,
+      disable: false,
     },
     {
       register: 'position',
