@@ -18,9 +18,9 @@ export const updateJob = async (id, data) => {
       formatError(error.response?.data?.message || '');
     });
 };
-export const deleteJob = async (id, data) => {
+export const deleteJob = async (id, key) => {
   return axiosInstance
-    .delete(`job/delete/${id}`, data)
+    .delete(`job/delete/${key}/${id}`)
     .then((res) => res.data)
     .catch((error) => {
       throw error;
@@ -28,7 +28,7 @@ export const deleteJob = async (id, data) => {
 };
 export const getJobForDepartment = async (id, key) => {
   return axiosInstance
-    .get(`job/get-job-for-department/${id}/${key}`)
+    .get(`job/get-job-for-department/${key}`)
     .then((res) => res.data)
     .catch((error) => {
       formatError(error.response?.data?.message || '');

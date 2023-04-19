@@ -778,51 +778,30 @@ const ModalAddNeedPosi = ({
                     <h5>Kỹ năng</h5>
                     {amountLanguage.map((item, index) => {
                       return (
-                        <div key={index}>
+                        <div
+                          key={index}
+                          className='mb-2'
+                          style={{ borderBottom: '1px solid gray' }}
+                        >
                           {' '}
                           <div className='form-group'>
                             <p className='d-flex justify-content-between'>
                               Ngoại ngữ {index + 1}
-                              {index === 0 ? (
+                              {index > 0 && (
                                 <span
-                                  className='btn-add expired success'
+                                  className='btn-add mx-1 text-danger'
                                   onClick={() => {
-                                    setAmountLanguage((prev) => [
-                                      ...prev,
-                                      [languagesOptions, 0],
-                                    ]);
+                                    console.log(index);
+                                    let arr = [...amountLanguage];
+                                    let arrRequired = [...requiredLanguage];
+                                    arr.splice(index, 1);
+                                    arrRequired.splice(index, 1);
+                                    setAmountLanguage(arr);
+                                    setRequiredLanguage(arrRequired);
                                   }}
                                 >
-                                  Thêm ngoại ngữ
+                                  Xóa
                                 </span>
-                              ) : (
-                                <div>
-                                  <span
-                                    className='btn-add mx-1 expired success'
-                                    onClick={() => {
-                                      setAmountLanguage((prev) => [
-                                        ...prev,
-                                        [languagesOptions, 0],
-                                      ]);
-                                    }}
-                                  >
-                                    Thêm ngoại ngữ
-                                  </span>
-                                  <span
-                                    className='btn-add mx-1 text-danger'
-                                    onClick={() => {
-                                      console.log(index);
-                                      let arr = [...amountLanguage];
-                                      let arrRequired = [...requiredLanguage];
-                                      arr.splice(index, 1);
-                                      arrRequired.splice(index, 1);
-                                      setAmountLanguage(arr);
-                                      setRequiredLanguage(arrRequired);
-                                    }}
-                                  >
-                                    Xóa ngoại ngữ
-                                  </span>
-                                </div>
                               )}
                             </p>
                             <div className='select-style'>
@@ -924,14 +903,25 @@ const ModalAddNeedPosi = ({
                         </div>
                       );
                     })}
-                    <button
-                      type='button'
-                      className='btn btn-primary mt-2'
-                      // onClick={() => setIsShowModal(true)}
+                    <span
+                      className='btn-add mx-1 expired success'
+                      onClick={() => {
+                        setAmountLanguage((prev) => [
+                          ...prev,
+                          [languagesOptions, 0],
+                        ]);
+                      }}
                     >
-                      Thêm kỹ năng
-                    </button>
+                      Thêm ngoại ngữ
+                    </span>
                   </div>
+                  <button
+                    type='button'
+                    className='btn btn-primary mt-2'
+                    // onClick={() => setIsShowModal(true)}
+                  >
+                    Thêm kỹ năng
+                  </button>
                 </div>
 
                 <div className={step === 2 ? 'd-block appear' : 'd-none'}>

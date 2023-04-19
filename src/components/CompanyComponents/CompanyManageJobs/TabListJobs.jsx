@@ -32,7 +32,6 @@ const TabListJobs = ({
   preloadValue,
   languagesOptions,
 }) => {
-
   return (
     <>
       {' '}
@@ -65,7 +64,7 @@ const TabListJobs = ({
                 </tr>
               ) : (
                 <>
-                  {listJob?.map((item, idx) => (
+                  {listJob.map((item, idx) => (
                     <ItemListNeededPostion
                       key={idx}
                       index={idx}
