@@ -15,6 +15,7 @@ import DropDownSelect from '../../../../customComponents/DropDownSelect/DropDown
 import { useRef } from 'react';
 import './styles.css';
 import { getLanguageDes } from '../../../../services/GetListService';
+import ModalInfoLanguage from '../ModalInfoLanguage/ModalInfoLanguage';
 const ModalAddNeedPosi = ({
   showAddJob,
   setShowAddJob,
@@ -65,7 +66,7 @@ const ModalAddNeedPosi = ({
   const [trigger, setTrigger] = useState(false);
   const [amountLanguage, setAmountLanguage] = useState([]);
   const [requiredLanguage, setRequiredLanguage] = useState([]);
-
+  const [openModalLanguagueInfo, setOpenModalLanguagueInfo] = useState(false);
   const schema = yup
     .object({
       position: yup.mixed().required('Vui lòng nhập '),
@@ -314,9 +315,7 @@ const ModalAddNeedPosi = ({
     }
     setTrigger(!trigger);
   }
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
+
   return (
     <>
       {' '}
@@ -346,8 +345,11 @@ const ModalAddNeedPosi = ({
               >
                 <div className={step === 1 ? 'd-block appear' : 'd-none'}>
                   {' '}
+                  <h5>Yêu cầu </h5>
                   <div className='form-group'>
-                    <p>Chức danh công việc</p>
+                    <p>
+                      Chức danh công việc<span className='asterisk'></span>
+                    </p>
                     <div className='select-style'>
                       {' '}
                       <Controller
@@ -383,7 +385,9 @@ const ModalAddNeedPosi = ({
                     </div>
                   </div>
                   <div className='form-group'>
-                    <p>Chức vụ</p>
+                    <p>
+                      Chức vụ<span className='asterisk'></span>
+                    </p>
                     <div className='select-style'>
                       {' '}
                       <Controller
@@ -419,7 +423,9 @@ const ModalAddNeedPosi = ({
                     </div>
                   </div>
                   <div className='form-group'>
-                    <p>Cấp bậc</p>{' '}
+                    <p>
+                      Cấp bậc<span className='asterisk'></span>
+                    </p>{' '}
                     <div className='select-style'>
                       <div
                         className={checkStepRef.current.level ? 'filled' : ''}
@@ -447,7 +453,9 @@ const ModalAddNeedPosi = ({
                     </div>
                   </div>
                   <div className='form-group'>
-                    <p>Chuyên nghành ứng viên</p>
+                    <p>
+                      Chuyên nghành ứng viên<span className='asterisk'></span>
+                    </p>
                     <div className='select-style'>
                       <div
                         className={checkStepRef.current.major ? 'filled' : ''}
@@ -474,124 +482,10 @@ const ModalAddNeedPosi = ({
                       )}
                     </div>
                   </div>
-                  {amountLanguage.map((item, index) => {
-                    return (
-                      <div key={index}>
-                        {' '}
-                        <div className='form-group'>
-                          <p className='d-flex justify-content-between'>
-                            Ngoại ngữ{' '}
-                            {index === 0 ? (
-                              <span
-                                className='btn-add'
-                                onClick={() => {
-                                  setAmountLanguage((prev) => [
-                                    ...prev,
-                                    [languagesOptions, 0],
-                                  ]);
-                                }}
-                              >
-                                <i class='fa fa-plus' aria-hidden='true'></i>
-                              </span>
-                            ) : (
-                              <span
-                                className='btn-add'
-                                onClick={() => {
-                                  console.log(index);
-                                  let arr = [...amountLanguage];
-                                  let arrRequired = [...requiredLanguage];
-                                  arr.splice(index, 1);
-                                  arrRequired.splice(index, 1);
-                                  setAmountLanguage(arr);
-                                  setRequiredLanguage(arrRequired);
-                                }}
-                              >
-                                <i class='fa fa-minus' aria-hidden='true'></i>
-                              </span>
-                            )}
-                          </p>
-                          <div className='select-style'>
-                            <Select
-                              styles={selectStyle}
-                              placeholder='Chọn ngoại ngữ ứng viên'
-                              options={item[0]}
-                              className={
-                                requiredLanguage[index]?.length > 0
-                                  ? 'filled'
-                                  : ''
-                              }
-                              onChange={async (value) => {
-                                let languageDes = await getLanguageDes(
-                                  value.value
-                                );
-                                setRequiredLanguage((prev) => [
-                                  ...prev,
-                                  [value.label],
-                                ]);
-                                console.log(languageDes);
-                                let arr = [...amountLanguage];
-                                arr[index][1] = languageDes.levels.map(
-                                  (item) => {
-                                    return {
-                                      value: item.description,
-                                      label: item.name,
-                                    };
-                                  }
-                                );
-                                setAmountLanguage(arr);
-                              }}
-                            />
-                          </div>
-                          <div className='text-danger'>
-                            {' '}
-                            {errors?.language?.message && (
-                              <p>
-                                <>{errors?.language?.message}</>
-                              </p>
-                            )}
-                          </div>
-                        </div>
-                        <div className='form-group'>
-                          <p>Trình độ ngoại ngữ</p>
-                          <div className='select-style'>
-                            <Select
-                              styles={selectStyle}
-                              placeholder='Chọn trình độ ngoại ngữ'
-                              options={item[1]}
-                              className={
-                                requiredLanguage[index]?.length > 1
-                                  ? 'filled'
-                                  : ''
-                              }
-                              onChange={(value) => {
-                                setRequiredLanguage((prev) => {
-                                  let arr = [...prev];
-                                  arr[index][1] = value;
-                                  return arr;
-                                });
-                              }}
-                            />
-                          </div>
-                          <div>
-                            {' '}
-                            {requiredLanguage[index]?.length > 0 && (
-                              <p>{requiredLanguage[index][1]?.value}</p>
-                            )}
-                          </div>
-                          <div className='text-danger'>
-                            {' '}
-                            {errors?.language?.message && (
-                              <p>
-                                <>{errors?.language?.message}</>
-                              </p>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
                   <div className='form-group'>
-                    <p>Lĩnh vực kinh doanh</p>
+                    <p>
+                      Lĩnh vực kinh doanh<span className='asterisk'></span>
+                    </p>
                     <div className='select-style'>
                       {' '}
                       <Controller
@@ -626,7 +520,9 @@ const ModalAddNeedPosi = ({
                     </div>
                   </div>
                   <div className='form-group'>
-                    <p>Nơi làm việc</p>
+                    <p>
+                      Nơi làm việc<span className='asterisk'></span>
+                    </p>
                     <div className='select-style'>
                       <Controller
                         name='location'
@@ -661,7 +557,9 @@ const ModalAddNeedPosi = ({
                     </div>
                   </div>
                   <div className='form-group'>
-                    <p>Môi trường làm việc</p>
+                    <p>
+                      Môi trường làm việc<span className='asterisk'></span>
+                    </p>
                     <div className='select-style'>
                       {' '}
                       <Controller
@@ -705,7 +603,9 @@ const ModalAddNeedPosi = ({
                     </div>
                   </div>
                   <div className='form-group'>
-                    <p>Yêu cầu kinh nghiệm</p>
+                    <p>
+                      Yêu cầu kinh nghiệm<span className='asterisk'></span>
+                    </p>
                     <input
                       data-testid='experience'
                       name='experience'
@@ -738,7 +638,9 @@ const ModalAddNeedPosi = ({
                     </div>
                   </div>
                   <div className='form-group'>
-                    <p>Số lượng</p>
+                    <p>
+                      Số lượng<span className='asterisk'></span>
+                    </p>
                     <input
                       data-testid='quantity'
                       name='quantity'
@@ -771,7 +673,9 @@ const ModalAddNeedPosi = ({
                     </div>
                   </div>
                   <div className='form-group'>
-                    <p>Mức lương tối thiểu</p>
+                    <p>
+                      Mức lương tối thiểu<span className='asterisk'></span>
+                    </p>
                     <input
                       data-testid='salaryMin'
                       name='salaryMin'
@@ -804,7 +708,9 @@ const ModalAddNeedPosi = ({
                     </div>
                   </div>
                   <div className='form-group'>
-                    <p>Mức lương tối đa</p>
+                    <p>
+                      Mức lương tối đa<span className='asterisk'></span>
+                    </p>
                     <input
                       data-testid='salaryMax'
                       name='salaryMax'
@@ -842,7 +748,9 @@ const ModalAddNeedPosi = ({
                     )}
                   </div>
                   <div className='form-group'>
-                    <p>Mô tả công việc</p>
+                    <p>
+                      Mô tả công việc<span className='asterisk'></span>
+                    </p>
                     <ReactQuill
                       name='description'
                       {...register('description')}
@@ -866,10 +774,169 @@ const ModalAddNeedPosi = ({
                       )}
                     </div>
                   </div>
+                  <div className='form-group'>
+                    <h5>Kỹ năng</h5>
+                    {amountLanguage.map((item, index) => {
+                      return (
+                        <div key={index}>
+                          {' '}
+                          <div className='form-group'>
+                            <p className='d-flex justify-content-between'>
+                              Ngoại ngữ {index + 1}
+                              {index === 0 ? (
+                                <span
+                                  className='btn-add expired success'
+                                  onClick={() => {
+                                    setAmountLanguage((prev) => [
+                                      ...prev,
+                                      [languagesOptions, 0],
+                                    ]);
+                                  }}
+                                >
+                                  Thêm ngoại ngữ
+                                </span>
+                              ) : (
+                                <div>
+                                  <span
+                                    className='btn-add mx-1 expired success'
+                                    onClick={() => {
+                                      setAmountLanguage((prev) => [
+                                        ...prev,
+                                        [languagesOptions, 0],
+                                      ]);
+                                    }}
+                                  >
+                                    Thêm ngoại ngữ
+                                  </span>
+                                  <span
+                                    className='btn-add mx-1 text-danger'
+                                    onClick={() => {
+                                      console.log(index);
+                                      let arr = [...amountLanguage];
+                                      let arrRequired = [...requiredLanguage];
+                                      arr.splice(index, 1);
+                                      arrRequired.splice(index, 1);
+                                      setAmountLanguage(arr);
+                                      setRequiredLanguage(arrRequired);
+                                    }}
+                                  >
+                                    Xóa ngoại ngữ
+                                  </span>
+                                </div>
+                              )}
+                            </p>
+                            <div className='select-style'>
+                              <Select
+                                styles={selectStyle}
+                                placeholder='Chọn ngoại ngữ ứng viên'
+                                options={item[0]}
+                                className={
+                                  requiredLanguage[index]?.length > 0
+                                    ? 'filled'
+                                    : ''
+                                }
+                                onChange={async (value) => {
+                                  let languageDes = await getLanguageDes(
+                                    value.value
+                                  );
+                                  setRequiredLanguage((prev) => [
+                                    ...prev,
+                                    [value.label],
+                                  ]);
+                                  console.log(languageDes);
+                                  let arr = [...amountLanguage];
+                                  arr[index][1] = languageDes.levels.map(
+                                    (item) => {
+                                      return {
+                                        value: item.description,
+                                        label: item.name,
+                                      };
+                                    }
+                                  );
+                                  setAmountLanguage(arr);
+                                }}
+                              />
+                            </div>
+                            <div className='text-danger'>
+                              {' '}
+                              {errors?.language?.message && (
+                                <p>
+                                  <>{errors?.language?.message}</>
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                          <div className='form-group'>
+                            <div className='d-flex justify-content-between mb-2'>
+                              <p>
+                                Trình độ{' '}
+                                <span>
+                                  {' '}
+                                  {requiredLanguage[index]?.length > 0
+                                    ? `${requiredLanguage[index][0]}`
+                                    : 'ngoại ngữ'}
+                                </span>
+                              </p>
+                              <span
+                                className='btn-add'
+                                onClick={() => {
+                                  setOpenModalLanguagueInfo(true);
+                                }}
+                              >
+                                xem chi tiết trình độ
+                              </span>
+                            </div>
+
+                            <div className='select-style'>
+                              <Select
+                                styles={selectStyle}
+                                placeholder='Chọn trình độ ngoại ngữ'
+                                options={item[1]}
+                                className={
+                                  requiredLanguage[index]?.length > 1
+                                    ? 'filled'
+                                    : ''
+                                }
+                                onChange={(value) => {
+                                  setRequiredLanguage((prev) => {
+                                    let arr = [...prev];
+                                    arr[index][1] = value;
+                                    return arr;
+                                  });
+                                }}
+                              />
+                            </div>
+                            <div>
+                              {' '}
+                              {requiredLanguage[index]?.length > 0 && (
+                                <p>{requiredLanguage[index][1]?.value}</p>
+                              )}
+                            </div>
+                            <div className='text-danger'>
+                              {' '}
+                              {errors?.language?.message && (
+                                <p>
+                                  <>{errors?.language?.message}</>
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                    <button
+                      type='button'
+                      className='btn btn-primary mt-2'
+                      // onClick={() => setIsShowModal(true)}
+                    >
+                      Thêm kỹ năng
+                    </button>
+                  </div>
                 </div>
 
                 <div className={step === 2 ? 'd-block appear' : 'd-none'}>
                   {' '}
+                  <h5>Tiêu chí</h5>
                   <div className='form-group'>
                     <Accordion>
                       <p>Tiêu chí đánh giá</p>
@@ -1103,22 +1170,22 @@ const ModalAddNeedPosi = ({
                   <button
                     type='button'
                     className='btn btn-primary'
-                    disabled={
-                      getValues('position') &&
-                      getValues('level') &&
-                      getValues('major') &&
-                      getValues('industry') &&
-                      getValues('environment') &&
-                      getValues('experience') &&
-                      getValues('title') &&
-                      getValues('quantity') &&
-                      getValues('salaryMin') &&
-                      getValues('description') &&
-                      getValues('salaryMax') &&
-                      getValues('location')
-                        ? false
-                        : true
-                    }
+                    // disabled={
+                    //   getValues('position') &&
+                    //   getValues('level') &&
+                    //   getValues('major') &&
+                    //   getValues('industry') &&
+                    //   getValues('environment') &&
+                    //   getValues('experience') &&
+                    //   getValues('title') &&
+                    //   getValues('quantity') &&
+                    //   getValues('salaryMin') &&
+                    //   getValues('description') &&
+                    //   getValues('salaryMax') &&
+                    //   getValues('location')
+                    //     ? false
+                    //     : true
+                    // }
                     onClick={(e) => {
                       e.preventDefault();
                       setStep(2);
@@ -1150,6 +1217,10 @@ const ModalAddNeedPosi = ({
         childQuestion={childQuestion}
         setChildQuestion={setChildQuestion}
         handleAddQuestion={isAddNew ? handleAddQuestion : handleAddPreQuestion}
+      />
+      <ModalInfoLanguage
+        open={openModalLanguagueInfo}
+        setOpen={setOpenModalLanguagueInfo}
       />
     </>
   );

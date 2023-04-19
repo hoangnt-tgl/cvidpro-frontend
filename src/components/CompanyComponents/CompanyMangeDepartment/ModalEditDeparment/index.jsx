@@ -5,7 +5,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import NormalInput from '../../../../customComponents/NormalInput/Index.jsx';
 
-
 const Index = ({
   editDepartment,
   setEditDepartment,
@@ -19,13 +18,6 @@ const Index = ({
     managerEmail: false,
   });
   const inputField = [
-    {
-      register: 'departmentName',
-      placeholder: 'Nhập tên phòng ban',
-      title: 'Tên phòng ban',
-      type: 'text',
-      accept: '',
-    },
     {
       register: 'managerName',
       placeholder: 'Nhập người quản lý',
@@ -42,7 +34,6 @@ const Index = ({
     },
   ];
   const schema = yup.object().shape({
-    departmentName: yup.string().required('Vui lòng nhập tên phòng'),
     managerName: yup.string().required('Vui lòng nhập tên'),
     managerEmail: yup
       .string()
@@ -62,14 +53,6 @@ const Index = ({
     }, [preloadValue]),
   });
   function handleCheckInput(e) {
-    if (e.target.dataset.testid === 'departmentName') {
-      if (e.target.value !== '' && !checkStepRef.current.departmentName) {
-        checkStepRef.current.departmentName = true;
-      }
-      if (e.target.value === '' && checkStepRef.current.departmentName) {
-        checkStepRef.current.departmentName = false;
-      }
-    }
     if (e.target.dataset.testid === 'managerName') {
       if (e.target.value !== '' && !checkStepRef.current.managerName) {
         checkStepRef.current.managerName = true;
@@ -91,13 +74,16 @@ const Index = ({
   }
   async function handleOnSubmit(data) {
     try {
-      await handleEditDepartment({ ...data, key: preloadValue.key });
+      await handleEditDepartment({
+        ...data,
+        departmentName: preloadValue.departmentName,
+        key: preloadValue.key,
+      });
     } catch (error) {
       reset(preloadValue);
     }
 
     checkStepRef.current = {
-      departmentName: false,
       managerName: false,
       managerEmail: false,
     };
