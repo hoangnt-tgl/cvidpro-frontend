@@ -102,7 +102,7 @@ class HeaderEmployee extends Component {
                       </Link>
                     </li>
                     <li>
-                      <Link to={'#'} className="dez-page">
+                      <Link to={'/payment'} className="dez-page">
                         Quản lý tuyển dụng
                       </Link>
                     </li>
