@@ -116,7 +116,7 @@ function CompanyDepartment(props) {
                                               handleSelectDepartment(department)
                                             }
                                           >
-                                            <i className='fa fa-eye'></i>
+                                            <i class='fa fa-pencil-square-o'></i>
                                           </div>
                                           <div>
                                             <i
