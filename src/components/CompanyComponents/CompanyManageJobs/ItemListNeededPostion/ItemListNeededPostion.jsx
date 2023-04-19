@@ -45,8 +45,7 @@ const ItemListNeededPostion = ({
   }
   const handleDeleteJob = async (idJob) => {
     try {
-      let key = { key: keyDepart };
-      await deleteJob(idJob, key);
+      await deleteJob(idJob, keyDepart);
       setReload((prev) => !prev);
       toast.success('Xóa thành công');
     } catch (error) {

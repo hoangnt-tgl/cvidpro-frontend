@@ -9,9 +9,9 @@ export const getMyResume = async (history) => {
       history.push('/employee/login');
     });
 };
-export const updateMyPersonalInformation = async (id, data) => {
+export const updateMyPersonalInformation = async (data) => {
   return axiosInstance
-    .post(`employee/update-my-personal-information/${id}`, data)
+    .put(`employee/update/`, data)
     .then((res) => res.data)
     .catch((error) => {
       throw error;
