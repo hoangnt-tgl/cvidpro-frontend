@@ -11,6 +11,7 @@ const Index = ({
   preloadValue,
   handleEditDepartment,
 }) => {
+  console.log('preloadValue', preloadValue);
   const [trigger, setTrigger] = useState(true);
   const checkStepRef = useRef({
     departmentName: false,
@@ -33,7 +34,38 @@ const Index = ({
       accept: '',
     },
   ];
+  const inputField1 = [
+    {
+      register: 'departmentName',
+      placeholder: 'Nhập tên phòng ban',
+      title: 'Tên phòng ban',
+      type: 'text',
+      accept: '',
+    },
+    {
+      register: 'managerName',
+      placeholder: 'Nhập người quản lý',
+      title: 'Người quản lý',
+      type: 'text',
+      accept: '',
+    },
+    {
+      register: 'managerEmail',
+      placeholder: 'Nhập email',
+      title: 'Email',
+      type: 'text',
+      accept: '',
+    },
+  ];
   const schema = yup.object().shape({
+    managerName: yup.string().required('Vui lòng nhập tên'),
+    managerEmail: yup
+      .string()
+      .required('Vui lòng nhập email')
+      .email('email không hợp lệ'),
+  });
+  const schema1 = yup.object().shape({
+    departmentName: yup.string().required('Vui lòng nhập tên phòng ban'),
     managerName: yup.string().required('Vui lòng nhập tên'),
     managerEmail: yup
       .string()
@@ -46,7 +78,7 @@ const Index = ({
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(preloadValue.canDelete ? schema1 : schema),
     defaultValues: useMemo(() => {
       if (!preloadValue.departmentName) return;
       return preloadValue;
@@ -74,11 +106,19 @@ const Index = ({
   }
   async function handleOnSubmit(data) {
     try {
-      await handleEditDepartment({
-        ...data,
-        departmentName: preloadValue.departmentName,
-        key: preloadValue.key,
-      });
+      if (preloadValue.canDelete) {
+        await handleEditDepartment({
+          ...data,
+          key: preloadValue.key,
+        });
+        return;
+      } else {
+        await handleEditDepartment({
+          ...data,
+          departmentName: preloadValue.departmentName,
+          key: preloadValue.key,
+        });
+      }
     } catch (error) {
       reset(preloadValue);
     }
@@ -115,25 +155,53 @@ const Index = ({
               </button>
             </div>
             <div className='modal-body font-size-14'>
-              {inputField.map((item, idx) => {
-                return (
-                  <>
-                    <NormalInput
-                      key={idx}
-                      accept={item.accept}
-                      isFilled={checkStepRef.current[item.register]}
-                      name={item.register}
-                      title={item.title}
-                      placeholder={item.placeholder}
-                      type={item.type}
-                      register={{ ...register(item.register) }}
-                      errors={errors}
-                      onBlur={handleCheckInput}
-                      defaultValue={preloadValue[item.register]}
-                    />
-                  </>
-                );
-              })}
+              {preloadValue.canDelete ? (
+                <>
+                  {' '}
+                  {inputField1.map((item, idx) => {
+                    return (
+                      <>
+                        <NormalInput
+                          key={idx}
+                          accept={item.accept}
+                          isFilled={checkStepRef.current[item.register]}
+                          name={item.register}
+                          title={item.title}
+                          placeholder={item.placeholder}
+                          type={item.type}
+                          register={{ ...register(item.register) }}
+                          errors={errors}
+                          onBlur={handleCheckInput}
+                          defaultValue={preloadValue[item.register]}
+                        />
+                      </>
+                    );
+                  })}
+                </>
+              ) : (
+                <>
+                  {' '}
+                  {inputField.map((item, idx) => {
+                    return (
+                      <>
+                        <NormalInput
+                          key={idx}
+                          accept={item.accept}
+                          isFilled={checkStepRef.current[item.register]}
+                          name={item.register}
+                          title={item.title}
+                          placeholder={item.placeholder}
+                          type={item.type}
+                          register={{ ...register(item.register) }}
+                          errors={errors}
+                          onBlur={handleCheckInput}
+                          defaultValue={preloadValue[item.register]}
+                        />
+                      </>
+                    );
+                  })}
+                </>
+              )}
             </div>
             <div className='modal-footer'>
               <button type='submit' className='btn btn-primary'>

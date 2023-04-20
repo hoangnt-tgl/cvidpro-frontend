@@ -10,6 +10,7 @@ const ModalOtp = ({
   isCompany,
   handeUpdate,
   defaultValues,
+  isOtpPhone = false,
 }) => {
   const {
     getOtpFc,
@@ -49,6 +50,7 @@ const ModalOtp = ({
               isMailExist={isMailExist}
               setIsMailExist={setIsMailExist}
               setIsGetOtp={setIsGetOtp}
+              isOtpPhone={isOtpPhone}
             />
             <ValidateOtp
               isOtpStillValid={isOtpStillValid}
