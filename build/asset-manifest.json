@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/static/css/main.27e01854.chunk.css",
-    "main.js": "/static/js/main.f7aac700.chunk.js",
-    "main.js.map": "/static/js/main.f7aac700.chunk.js.map",
+    "main.js": "/static/js/main.db719a8c.chunk.js",
+    "main.js.map": "/static/js/main.db719a8c.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.efa74149.js",
     "runtime-main.js.map": "/static/js/runtime-main.efa74149.js.map",
     "static/css/2.1577803a.chunk.css": "/static/css/2.1577803a.chunk.css",
-    "static/js/2.4d78418a.chunk.js": "/static/js/2.4d78418a.chunk.js",
-    "static/js/2.4d78418a.chunk.js.map": "/static/js/2.4d78418a.chunk.js.map",
+    "static/js/2.387eee0e.chunk.js": "/static/js/2.387eee0e.chunk.js",
+    "static/js/2.387eee0e.chunk.js.map": "/static/js/2.387eee0e.chunk.js.map",
     "static/js/3.8f373f97.chunk.js": "/static/js/3.8f373f97.chunk.js",
     "static/js/3.8f373f97.chunk.js.map": "/static/js/3.8f373f97.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.be6d4798031cad4e3dceb175095f854e.js": "/precache-manifest.be6d4798031cad4e3dceb175095f854e.js",
+    "precache-manifest.b5a9cea86372370ee27f57ea41e5f81a.js": "/precache-manifest.b5a9cea86372370ee27f57ea41e5f81a.js",
     "service-worker.js": "/service-worker.js",
     "static/css/2.1577803a.chunk.css.map": "/static/css/2.1577803a.chunk.css.map",
     "static/css/main.27e01854.chunk.css.map": "/static/css/main.27e01854.chunk.css.map",
-    "static/js/2.4d78418a.chunk.js.LICENSE.txt": "/static/js/2.4d78418a.chunk.js.LICENSE.txt",
-    "static/js/main.f7aac700.chunk.js.LICENSE.txt": "/static/js/main.f7aac700.chunk.js.LICENSE.txt",
+    "static/js/2.387eee0e.chunk.js.LICENSE.txt": "/static/js/2.387eee0e.chunk.js.LICENSE.txt",
+    "static/js/main.db719a8c.chunk.js.LICENSE.txt": "/static/js/main.db719a8c.chunk.js.LICENSE.txt",
     "static/media/Logo_CVIDPRO_Blue.webp": "/static/media/Logo_CVIDPRO_Blue.f34e7474.webp",
     "static/media/atm-card.png": "/static/media/atm-card.9a4ee0e1.png",
     "static/media/bg1.jpg": "/static/media/bg1.b6e866af.jpg",
@@ -56,8 +56,8 @@
   "entrypoints": [
     "static/js/runtime-main.efa74149.js",
     "static/css/2.1577803a.chunk.css",
-    "static/js/2.4d78418a.chunk.js",
+    "static/js/2.387eee0e.chunk.js",
     "static/css/main.27e01854.chunk.css",
-    "static/js/main.f7aac700.chunk.js"
+    "static/js/main.db719a8c.chunk.js"
   ]
 }
