@@ -118,7 +118,15 @@ const Step1 = ({
               </div>
             )}
           </div>
-          <div>{isGetOtp && <p>Vui lòng kiểm tra mail để nhận mã OTP</p>}</div>
+          {isOtpPhone ? (
+            <div>
+              {isGetOtp && <p>Vui lòng kiểm tra tin nhắn để nhận mã OTP</p>}
+            </div>
+          ) : (
+            <div>
+              {isGetOtp && <p>Vui lòng kiểm tra mail để nhận mã OTP</p>}
+            </div>
+          )}
         </div>
       </form>
     </>
