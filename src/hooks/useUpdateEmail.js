@@ -7,7 +7,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useMemo } from 'react';
 import { toast } from 'react-hot-toast';
-import { updateEmailEmployee, updatePhoneEmployee } from '../services/EmployeeApi';
+import {
+  updateEmailEmployee,
+  updatePhoneEmployee,
+} from '../services/EmployeeApi';
 
 const useUpdateEmail = (userInformation) => {
   const [openUpdateEmail, setOpenUpdateEmail] = useState(false);
@@ -36,11 +39,12 @@ const useUpdateEmail = (userInformation) => {
   });
 
   function handleOnSubmitEmail(data) {
+    setOpenUpdateEmail(false);
     setOpenModalOtpEmail(true);
     setNewEmail(data.email);
   }
   async function updateEmail(data) {
-    let body = { email: newEmail, id: '', otp: data };
+    let body = { email: newEmail, id: userInformation._id, otp: data };
     try {
       await updateEmailEmployee(body);
       setOpenModalOtpEmail(false);
@@ -98,6 +102,7 @@ export const useUpdatePhone = (userInformation) => {
   });
 
   async function handleOnSubmitPhone(data) {
+    setOpenUpdatePhone(false);
     setOpenModalOtpPhone(true);
     setNewPhone(data.email);
   }

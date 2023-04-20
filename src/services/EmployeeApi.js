@@ -20,7 +20,7 @@ export const updateMyPersonalInformation = async (data) => {
 };
 export const updatePhoneEmployee = async (data) => {
   return axiosInstance
-    .put(`employee/update-phone`, data)
+    .patch(`employee/update-phone`, data)
     .then((res) => res.data)
     .catch((error) => {
       throw error;
@@ -28,7 +28,7 @@ export const updatePhoneEmployee = async (data) => {
 };
 export const updateEmailEmployee = async (data) => {
   return axiosInstance
-    .put(`employee/update-email`, data)
+    .patch(`employee/update-email`, data)
     .then((res) => res.data)
     .catch((error) => {
       throw error;

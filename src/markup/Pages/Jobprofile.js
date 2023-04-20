@@ -360,7 +360,7 @@ function Jobprofile(props) {
         }
         openModal={isPhone ? openModalOtpPhone : openModalOtpEmail}
         setOpenModal={isPhone ? setOpenModalOtpPhone : setOpenModalOtpEmail}
-        isCompany={true}
+        isCompany={false}
         handeUpdate={isPhone ? updatePhone : updateEmail}
       />
       <Footer />
