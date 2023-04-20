@@ -16,6 +16,8 @@ import { storage } from '../config/firbase.js';
 const useUpdateProfile = (props) => {
   const [userInformation, setUserInformation] = useState({});
   const [openUpdate, setOpenUpdate] = useState(false);
+  const [openUpdatePhoneOrEmail, setOpenUpdatePhoneOrEmail] = useState(false);
+  const [chooseModal, setChooseModal] = useState(0);
   const schema = yup.object().shape({
     name: yup.string().required('Vui lòng nhập tên'),
     birthday: yup.string().required('Vui lòng nhập ngày sinh'),
@@ -25,6 +27,15 @@ const useUpdateProfile = (props) => {
     district: yup.string().required('Vui lòng nhập quận'),
     province: yup.string().required('Vui lòng nhập tỉnh'),
     avatar: yup.string().required('Vui lòng nhập ảnh đại diện'),
+  });
+  const schemaEmail = yup.object().shape({
+    email: yup
+      .string()
+      .required('Vui lòng nhập email')
+      .email('Email không hợp lệ'),
+  });
+  const schemaPhone = yup.object().shape({
+    phone: yup.string().required('Vui lòng nhập số điện thoại').length(10),
   });
   const {
     register,
@@ -40,6 +51,7 @@ const useUpdateProfile = (props) => {
     }, [userInformation]),
     resolver: yupResolver(schema),
   });
+
   function uploadAvatar(e) {
     console.log(e.target.files[0]);
     const file = e.target.files[0];
@@ -67,6 +79,22 @@ const useUpdateProfile = (props) => {
     }
     console.log(data);
   }
+  async function handleOnSubmitEmail(data) {
+    try {
+      toast.success('Cập nhật thành công');
+    } catch (error) {
+      toast.error(error.response?.data?.message || '');
+    }
+    console.log(data);
+  }
+  async function handleOnSubmitPhone(data) {
+    try {
+      toast.success('Cập nhật thành công');
+    } catch (error) {
+      toast.error(error.response?.data?.message || '');
+    }
+    console.log(data);
+  }
   useEffect(() => {
     console.log(errors);
   }, [errors]);
@@ -84,6 +112,7 @@ const useUpdateProfile = (props) => {
         avatar: response.avatar,
         ward: response.ward,
       });
+
       setUserInformation(response);
     }
     fetchData();
@@ -98,6 +127,14 @@ const useUpdateProfile = (props) => {
     handleSubmit,
     uploadAvatar,
     control,
+    handleOnSubmitEmail,
+
+    handleOnSubmitPhone,
+
+    openUpdatePhoneOrEmail,
+    setOpenUpdatePhoneOrEmail,
+    chooseModal,
+    setChooseModal,
   };
 };
 

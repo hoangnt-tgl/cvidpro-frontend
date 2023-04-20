@@ -13,6 +13,7 @@ const Step1 = ({
   setIsMailExist,
   setIsGetOtp,
   defaultValues = '',
+  isOtpPhone,
 }) => {
   const { minutes, seconds } = useCountDown(10, isGetOtp, setIsGetOtp);
   const checkStepRef = useRef({
@@ -58,9 +59,16 @@ const Step1 = ({
       {' '}
       <form onSubmit={handleSubmit(handleOnSubmit)}>
         <div className='form-group'>
-          <p>
-            Email <span className='asterisk'></span>
-          </p>
+          {isOtpPhone ? (
+            <p>
+              Số điện thoại <span className='asterisk'></span>
+            </p>
+          ) : (
+            <p>
+              Email <span className='asterisk'></span>
+            </p>
+          )}
+
           <div className='wrapper-opt'>
             <div className='email-otp'>
               {' '}

@@ -315,7 +315,9 @@ const ModalAddNeedPosi = ({
     }
     setTrigger(!trigger);
   }
-
+  useEffect(() => {
+    console.log(requiredLanguage);
+  }, [requiredLanguage]);
   return (
     <>
       {' '}
@@ -818,11 +820,24 @@ const ModalAddNeedPosi = ({
                                   let languageDes = await getLanguageDes(
                                     value.value
                                   );
-                                  setRequiredLanguage((prev) => [
-                                    ...prev,
-                                    [value.label],
-                                  ]);
-                                  console.log(languageDes);
+                                  if (!requiredLanguage[index]) {
+                                    setRequiredLanguage((prev) => [
+                                      ...prev,
+                                      [value.label],
+                                    ]);
+                                  } else {
+                                    let arr = [...requiredLanguage];
+                                    arr[index][0] = value.label;
+                                    setRequiredLanguage(arr);
+                                  }
+                                  setAmountLanguage((prev) => {
+                                    console.log(
+                                      prev[index].filter(
+                                        (item) => item.name !== value.label
+                                      )
+                                    );
+                                    return prev;
+                                  });
                                   let arr = [...amountLanguage];
                                   arr[index][1] = languageDes.levels.map(
                                     (item) => {
@@ -856,14 +871,16 @@ const ModalAddNeedPosi = ({
                                     : 'ngoại ngữ'}
                                 </span>
                               </p>
-                              <span
-                                className='btn-add'
-                                onClick={() => {
-                                  setOpenModalLanguagueInfo(true);
-                                }}
-                              >
-                                xem chi tiết trình độ
-                              </span>
+                              {index === 0 && (
+                                <span
+                                  className='btn-add'
+                                  onClick={() => {
+                                    setOpenModalLanguagueInfo(true);
+                                  }}
+                                >
+                                  xem chi tiết trình độ
+                                </span>
+                              )}
                             </div>
 
                             <div className='select-style'>
@@ -885,12 +902,7 @@ const ModalAddNeedPosi = ({
                                 }}
                               />
                             </div>
-                            <div>
-                              {' '}
-                              {requiredLanguage[index]?.length > 0 && (
-                                <p>{requiredLanguage[index][1]?.value}</p>
-                              )}
-                            </div>
+
                             <div className='text-danger'>
                               {' '}
                               {errors?.language?.message && (

@@ -18,6 +18,22 @@ export const updateMyPersonalInformation = async (data) => {
       // formatError(error.response?.data?.message || '');
     });
 };
+export const updatePhoneEmployee = async (data) => {
+  return axiosInstance
+    .put(`employee/update-phone`, data)
+    .then((res) => res.data)
+    .catch((error) => {
+      throw error;
+    });
+};
+export const updateEmailEmployee = async (data) => {
+  return axiosInstance
+    .put(`employee/update-email`, data)
+    .then((res) => res.data)
+    .catch((error) => {
+      throw error;
+    });
+};
 export const addSchool = async (id, newSchool) => {
   return axiosInstance
     .post(`employee/add-school/${id}`, newSchool)

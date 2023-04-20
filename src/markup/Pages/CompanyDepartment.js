@@ -115,16 +115,18 @@ function CompanyDepartment(props) {
                                           >
                                             <i class='fa fa-pencil-square-o'></i>
                                           </div>
-                                          <div>
-                                            <i
-                                              className='ti-trash'
-                                              onClick={() =>
-                                                handleDeleteDepartment(
-                                                  department._id
-                                                )
-                                              }
-                                            ></i>
-                                          </div>
+                                          {department.canDelete && (
+                                            <div>
+                                              <i
+                                                className='ti-trash'
+                                                onClick={() =>
+                                                  handleDeleteDepartment(
+                                                    department._id
+                                                  )
+                                                }
+                                              ></i>
+                                            </div>
+                                          )}
                                         </td>
                                       </tr>
                                     );
