@@ -36,15 +36,15 @@ function Jobsalert(props) {
       <Header2 />
       <div className="page-content bg-white">
         <div className="content-block">
-          <div className="section-full bg-white p-t50 p-b20"   
+          <div className="section-full  p-t50 p-b20"   
           style={{
-            backgroundImage: "url(" + brg1 + ")",
+            backgroundColor:"#3333FF",
             backgroundSize: "cover",
           }}>
             <div className="container">
               <div className="m-b30 jobposition">
                 <div className="job-bx table-job-bx browse-job clearfix jobalert">
-                  <div className="job-bx-title clearfix">
+                  <div className="job-bx-title clearfix" style={{borderBottom:"1px solid #000"}}>
                     <h5 className="font-weight-700 pull-left text-uppercase" style={{fontWeight:'600'}}>
                       Lời mời
                     </h5>

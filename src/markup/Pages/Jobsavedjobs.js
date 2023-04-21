@@ -206,7 +206,7 @@ function Jobsavedjobs(props) {
           <div
             className="section-full bg-white p-t50 p-b20"
             style={{
-              backgroundImage: 'url(' + loginbg + ')',
+              backgroundColor:"#777777",
               backgroundSize: 'cover',
             }}
           >

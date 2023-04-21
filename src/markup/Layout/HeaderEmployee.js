@@ -57,7 +57,7 @@ class HeaderEmployee extends Component {
           <div className="sticky-header main-bar-wraper navbar-expand-lg">
             <div className="main-bar clearfix">
               <div
-                className="container clearfix toolbar widthHeader"
+                className="container clearfix"
               >
                 <div className="logo-header mostion">
                   <Link to={'./'}>
