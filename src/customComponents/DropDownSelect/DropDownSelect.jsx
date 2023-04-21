@@ -23,7 +23,7 @@ const ItemSelect = ({ value, option, setValue, search }) => {
   return (
     <div className='dropdown-item' onClick={handleCheck}>
       <div className='item-checkbox'>
-        <input type='checkbox' checked={checked} />
+        <input type='checkbox' checked={checked} value={option.label} />
       </div>
       <div className='item-label'> {option.label}</div>
     </div>
@@ -39,6 +39,7 @@ const DropDownSelect = ({
   clearErrors,
   register,
   preValue = [],
+  typeToShow = false,
 }) => {
   const search = useRef();
   const [displayOptions, setDisplayOptions] = useState(options);
@@ -46,7 +47,6 @@ const DropDownSelect = ({
   const [isShow, setIsShow] = React.useState(false);
   const isFirst = useRef(true);
   function handleSearch(search) {
-    console.log(search);
     if (search.length > 0) {
       const result = options.filter(
         (item) => item.label.toLowerCase().search(search.toLowerCase()) !== -1
@@ -118,18 +118,43 @@ const DropDownSelect = ({
           </div>
         </div>{' '}
         <div className={isShow ? 'dropdown-box show' : 'dropdown-box'}>
-          <WrapperClickOutSide isShow={isShow} setIsShow={setIsShow}>
-            {displayOptions?.map((option, idx) => (
-              <ItemSelect
-                option={option}
-                setValue={setValue}
-                idx={idx}
-                key={idx}
-                value={value}
-                search={search}
-              />
-            ))}
-          </WrapperClickOutSide>
+          {typeToShow ? (
+            <>
+              {search?.current?.value?.length === 0 ? (
+                <div className='dropdown-item'>Gõ để tìm kiếm</div>
+              ) : (
+                <>
+                  {' '}
+                  <WrapperClickOutSide isShow={isShow} setIsShow={setIsShow}>
+                    {displayOptions?.map((option, idx) => (
+                      <ItemSelect
+                        option={option}
+                        setValue={setValue}
+                        key={option.value}
+                        value={value}
+                        search={search}
+                      />
+                    ))}
+                  </WrapperClickOutSide>
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              {' '}
+              <WrapperClickOutSide isShow={isShow} setIsShow={setIsShow}>
+                {displayOptions?.map((option, idx) => (
+                  <ItemSelect
+                    option={option}
+                    setValue={setValue}
+                    key={option.value}
+                    value={value}
+                    search={search}
+                  />
+                ))}
+              </WrapperClickOutSide>
+            </>
+          )}
         </div>
       </div>
     </>

@@ -472,6 +472,7 @@ const ModalAddNeedPosi = ({
                           options={majorOptions}
                           register='major'
                           preValue={preloadValue?.major}
+                          typeToShow={true}
                         />
                       </div>
                     </div>
